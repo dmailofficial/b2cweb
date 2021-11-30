@@ -1,8 +1,14 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { ethers } from "ethers"
 import styled, { createGlobalStyle } from 'styled-components';
 import info from '@/static/images/account-info.png'
 import axios from '@/utils/axios';
+
+// import Web3 from "web3"
+import { Contract, ethers } from "ethers"
+import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
+import { InjectedConnector } from '@web3-react/injected-connector';
+
+import { abi } from './abis'
 
 const baseUrl = 'http://139.162.50.86'
 export const emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
@@ -217,40 +223,57 @@ export const getDetail = async (id) => {
   })
 }
 
-export const sendTransaction = async (from, value, gasPrice, gas) => {
-  console.log({
-    to: '0x868BF417E38f9264426ebA9f5e4F5ac274e0988e',
-    from,
-    value,
-    gasPrice,
-    gas,
-  })
-  if (window.ethereum) {
-    window.ethereum
-      .request({
-        method: 'eth_sendTransaction',
-        params: [
-          {
-            to: '0x868BF417E38f9264426ebA9f5e4F5ac274e0988e',
-            from,
-            // value,
-            // gasPrice,
-            // gas,
-            value: '0x29a2241af62c0000',
-            gasPrice: '0x09184e72a000',
-            gas: '0x2710',
-          },
-        ],
-      })
-      .then((txHash) => console.log(txHash))
-      .catch((error) => console.error);
-  } else {
-    return {
-      code: 2,
-      msg: 'Please install MetaMask!'
+export const detectTransferIsSuccess = async (hash, address, price, product_name, jwt, network = '3') => {
+  return axios({
+    url: `${baseUrl}/transfer`,
+    method: 'post',
+    data: {
+      address, price, product_name, tx: hash, jwt, network
     }
-  }
+    // errorTitle: '',
+  }).then((res) => {
+    try {
+      const { code, data, msg, success } = res.data
+      return { success, msg, data }
+    } catch (error) {
+      return { success: false, msg: error, data: null }
+    }
+  })
 }
+
+// export const sendTransaction = async (from, value) => {
+//   console.log({
+//     to: '0x868BF417E38f9264426ebA9f5e4F5ac274e0988e',
+//     from,
+//     value,
+//     // gasPrice,
+//     // gas,
+//   })
+//   if (window.ethereum) {
+//     window.ethereum
+//       .request({
+//         method: 'eth_sendTransaction',
+//         params: [
+//           {
+//             to: '0x868BF417E38f9264426ebA9f5e4F5ac274e0988e',
+//             from,
+//             // value: parseInt(Web3.utils.toWei(`${value}`, 'ether')).toString(16),
+
+//             // value: '0x29a2241af62c0000',
+//             // gasPrice: '0x09184e72a000',
+//             // gas: '0x2710',
+//           },
+//         ],
+//       })
+//       .then((txHash) => console.log(txHash))
+//       .catch((error) => console.error);
+//   } else {
+//     return {
+//       code: 2,
+//       msg: 'Please install MetaMask!'
+//     }
+//   }
+// }
 
 export const metaMaskAuth = async () => {
   if (window.ethereum) {
@@ -286,6 +309,7 @@ export const metaMaskSign = async (sign) => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const signature = await signer.signMessage(sign);
+      console.log('metaMaskSign', signer, signature)
       return signature
     } catch (error) {
       return {
@@ -305,4 +329,17 @@ export const metaMaskSign = async (sign) => {
   //     msg: 'Please install MetaMask!'
   //   }
   // }
+}
+
+
+function str2hex(str) {
+  if (str === "") {
+    return "";
+  }
+  var arr = [];
+  arr.push("0x");
+  for (var i = 0; i < str.length; i++) {
+    arr.push(str.charCodeAt(i).toString(16));
+  }
+  return arr.join('');
 }

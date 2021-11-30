@@ -1,8 +1,20 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import styled, { createGlobalStyle, useTheme } from 'styled-components';
+
+const Email = styled.div`
+  color: #fff;
+  font-size: 18px;
+`
+
+const Login = styled.div`
+  cursor: pointer;
+  color: #fff;
+  font-size: 24px;
+`
 
 const Header = (props) => {
-  const { location: { pathname } } = props
+  const { location: { pathname }, userEmail, toLogin } = props
 
   const onCommingSoon = () => {
     alert('comming soon...')
@@ -39,7 +51,9 @@ const Header = (props) => {
             <div className="nav_item"><Link to="/account" className={pathname === '/account' ? 'on' : ''} >Account</Link></div>
           </div>
         </div>
-        {pathname === '/' ? <div className="contact" onClick={onContactClick}></div> : <>&nbsp;</>}
+        {pathname === '/' ? <div className="contact" onClick={onContactClick}></div> : (
+          userEmail ? <Email>{userEmail}</Email> : <Login onClick={toLogin}>login</Login>
+        )}
       </div>
     </>
   )

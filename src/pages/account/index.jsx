@@ -2,8 +2,14 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Header from '@/components/header'
 import styled, { createGlobalStyle, useTheme } from 'styled-components';
 import Cookies from 'js-cookie'
+import { Web3Provider } from '@ethersproject/providers';
+import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
+import { InjectedConnector } from '@web3-react/injected-connector';
+import { abi } from './abis'
+import reportWebVitals from './reportWebVitals';
 
-import { emailReg, Pop, metaMaskAuth, metaMaskSign, login, verifySign, setEmailRequest, searchEmail, getDetail, sendTransaction } from './utils'
+
+import { emailReg, Pop, metaMaskAuth, metaMaskSign, login, verifySign, setEmailRequest, searchEmail, getDetail, detectTransferIsSuccess } from './utils'
 import axios from '@/utils/axios';
 
 import logo from '@/static/images/logo-big.png'
@@ -14,6 +20,17 @@ import countdown from '@/static/images/countdown.png'
 import card from '@/static/images/card.png'
 import close from '@/static/images/close.png'
 import to from '@/static/images/to.png'
+
+const injectedConnector = new InjectedConnector({
+  // supportedChainIds: [256, 269],
+  supportedChainIds: [3],
+});
+
+const getLibrary = (provider) => {
+  const library = new Web3Provider(provider);
+  library.pollingInterval = 12000;
+  return library;
+};
 
 const GlobalStyle = createGlobalStyle`
   html, body, #root {
@@ -537,6 +554,8 @@ const UserEmail = ({ setuserEmail }) => {
 }
 
 const Account = () => {
+  const { Contract, ethers } = require('ethers');
+
   const [loginInfo, setloginInfo] = useState(null)
   const loginInfoRef = useRef(null)
 
@@ -601,6 +620,7 @@ const Account = () => {
     async auth() {
       // metaMask auth
       const res = await metaMaskAuth();
+      console.log('metaMaskAuth', res)
       // get accounts failed
       if (!Array.isArray(res) || !res.length) {
         setconnectWait(false)
@@ -694,8 +714,9 @@ const Account = () => {
 
 
   const verifyLogin = async (ignoreEmail = false) => {
-    if (loginInfo && loginInfo.jwt) {
-      if (!ignoreEmail && !loginInfo.email) {
+    console.log('verifyLogin', loginInfo && loginInfo.jwt)
+    if (loginInfo && loginInfo.jwt, loginInfo && loginInfo.jwt) {
+      if (!ignoreEmail && !loginInfo.userEmail) {
         loginSteps.updateEmail()
       }
       return
@@ -716,8 +737,6 @@ const Account = () => {
   }
 
   const onSearch = async () => {
-    // verifyLogin(); return;
-
     if (!email.trim().length) {
       return
     }
@@ -758,21 +777,40 @@ const Account = () => {
     const { id, name, price, exp_date, symbal } = data
     setpayShow(true)
     setcurrentDetail({
-      id, name, price, exp_date, symbal
+      id, name, price: `43320000`, exp_date, symbal
     })
   }
 
-  const onAdd = () => {
+  const onAdd = async () => {
+    if (!loginInfo || !loginInfo.jwt || !loginInfo.address || !loginInfo.userEmail) {
+      await verifyLogin()
+    }
     setconnectShow(true)
   }
 
+  const contractAddress = '0x74F5B6802c2E3752255936B7546284FF1f66f945'; // contract address
+  const toAddress = '0x868BF417E38f9264426ebA9f5e4F5ac274e0988e';
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const contract = new Contract(contractAddress, abi, provider);
+
   const toPay = async () => {
     const loginInfo = loginInfoRef.current
-    console.log(loginInfo)
     if (!loginInfo || !loginInfo.jwt || !loginInfo.address || !loginInfo.userEmail) {
       await verifyLogin()
-    } else {
-      await sendTransaction(loginInfo.address, '1', currentDetail.price, currentDetail.symbal)
+    }
+
+    const signer = provider.getSigner();
+    const daiWithSigner = contract.connect(signer);
+    try {
+      daiWithSigner.transfer(toAddress, currentDetail.price).then(async ({
+        from,
+        hash,
+      }) => {
+        const { success, msg, data } = await detectTransferIsSuccess(hash, from, currentDetail.price, currentDetail.name, loginInfo.jwt)
+        showPop(success ? 'Congratulations! buy success' : msg)
+      })
+    } catch (error) {
+      console.log('error', error)
     }
   }
 
@@ -784,10 +822,6 @@ const Account = () => {
   useEffect(() => {
     const jwt = Cookies.get('jwt')
     const address = Cookies.get('address')
-    // console.log('jwt, address', jwt, address)
-    // if (!jwt || !address) {
-    //   verifyLogin()
-    // }
 
     const userEmail = Cookies.get('userEmail')
     if (jwt && address) {
@@ -796,10 +830,10 @@ const Account = () => {
         address,
       })
       if (!userEmail) {
-        loginSteps.updateEmail({
-          jwt,
-          address,
-        })
+        // loginSteps.updateEmail({
+        //   jwt,
+        //   address,
+        // })
       } else {
         setloginInfo({
           jwt,
@@ -810,67 +844,74 @@ const Account = () => {
     }
   }, [])
 
+  const toLogin = async () => {
+    await verifyLogin()
+  }
+
   return (
-    <Wrapper>
-      <GlobalStyle />
-      <Header />
-      <Content className={payShow ? '' : 'on'}>
-        <div className="account-chunk">
-          <div className="logo-big"></div>
-          <div className="input-wrap">
-            <span></span>
-            <input value={email} onInput={onInput} type="text" placeholder="www" />
-            <a onClick={onSearch} className={searching ? 'waiting' : ''}>search</a>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <Wrapper>
+        <GlobalStyle />
+        <Header toLogin={toLogin} userEmail={loginInfo ? loginInfo.userEmail : ''} />
+        {/* <Wallet /> */}
+        <Content className={payShow ? '' : 'on'}>
+          <div className="account-chunk">
+            <div className="logo-big"></div>
+            <div className="input-wrap">
+              <span></span>
+              <input value={email} onInput={onInput} type="text" placeholder="www" />
+              <a onClick={onSearch} className={searching ? 'waiting' : ''}>search</a>
+            </div>
+            <EmailList className={emailList.length ? 'on' : ''}>
+              {emailList.map(({ id, name }) => (
+                <li key={name} onClick={chooseEmail({ id, name })}>{name}@ic.dmail.ai</li>
+              ))}
+            </EmailList>
+            <Generated className={selectedEmail ? 'on' : ''}>
+              <span>{(selectedEmail && selectedEmail.name) || ''}@ic.dmail.ai has been generated！</span>
+              <a onClick={toView}>Click to view</a>
+            </Generated>
+            <Error className={errorShow ? 'on' : ''}>
+              <i></i>
+              <span>Try another account. This account is not open for registration.</span>
+            </Error>
           </div>
-          <EmailList className={emailList.length ? 'on' : ''}>
-            {emailList.map(({ id, name }) => (
-              <li key={name} onClick={chooseEmail({ id, name })}>{name}@ic.dmail.ai</li>
-            ))}
-          </EmailList>
-          <Generated className={selectedEmail ? 'on' : ''}>
-            <span>{(selectedEmail && selectedEmail.name) || ''}@ic.dmail.ai has been generated！</span>
-            <a onClick={toView}>Click to view</a>
-          </Generated>
-          <Error className={errorShow ? 'on' : ''}>
-            <i></i>
-            <span>Try another account. This account is not open for registration.</span>
-          </Error>
-        </div>
-      </Content>
-      <PayWrap className={payShow ? 'on' : ''}>
-        <div className="pay-img">
-          <img src={card} />
-        </div>
-        <div className="pay-chunk">
-          {currentDetail ? (
-            <>
-              <div className="pay-info">
-                <div className="name"><i /><span>{currentDetail.name}@ic.dmail.ai</span></div>
-                <div className="left"><i />{currentDetail.exp_date} days left!</div>
-                <div className="price">Current Price: &nbsp; {currentDetail.price} {currentDetail.symbal}</div>
-                {/* <div className="limit">
+        </Content>
+        <PayWrap className={payShow ? 'on' : ''}>
+          <div className="pay-img">
+            <img src={card} />
+          </div>
+          <div className="pay-chunk">
+            {currentDetail ? (
+              <>
+                <div className="pay-info">
+                  <div className="name"><i /><span>{currentDetail.name}@ic.dmail.ai</span></div>
+                  <div className="left"><i />{currentDetail.exp_date} days left!</div>
+                  <div className="price">Current Price: &nbsp; {currentDetail.price} {currentDetail.symbal}</div>
+                  {/* <div className="limit">
                   <span>Remaining limit:  &nbsp; 1800 USDT</span>
                   <span className="get-more">Get more</span>
                 </div>
                 <div className="offer">Add  Price:  &nbsp; 10 USDT</div> */}
-              </div>
-              <a className="pay-btn" onClick={onAdd}>Add auction</a>
-            </>
-          ) : null}
-        </div>
-      </PayWrap>
-      <Pop show={popShow} disabled={popDisabled} setShow={setpopShow} text={popText} name={popName} okText={popOkText} okCb={popOkCallback} cancelText={cancelText} />
-      <Connect className={connectShow ? 'on' : ''}>
-        <div className="connect-title">
-          <strong>Connect Wallet</strong>
-          <i className="pop-close" onClick={() => setconnectShow(false)}></i>
-        </div>
-        <div className="connect-list">
-          <div className={`connect-item ${connectWait ? 'wait' : ''}`} onClick={toPay}><i></i></div>
-          <div className="connect-item" onClick={switchNetwork}><i></i></div>
-        </div>
-      </Connect>
-    </Wrapper>
+                </div>
+                <a className="pay-btn" onClick={onAdd}>Add auction</a>
+              </>
+            ) : null}
+          </div>
+        </PayWrap>
+        <Pop show={popShow} disabled={popDisabled} setShow={setpopShow} text={popText} name={popName} okText={popOkText} okCb={popOkCallback} cancelText={cancelText} />
+        <Connect className={connectShow ? 'on' : ''}>
+          <div className="connect-title">
+            <strong>Connect Wallet</strong>
+            <i className="pop-close" onClick={() => setconnectShow(false)}></i>
+          </div>
+          <div className="connect-list">
+            <div className={`connect-item ${connectWait ? 'wait' : ''}`} onClick={toPay}><i></i></div>
+            <div className="connect-item" onClick={switchNetwork}><i></i></div>
+          </div>
+        </Connect>
+      </Wrapper>
+    </Web3ReactProvider>
   )
 }
 
