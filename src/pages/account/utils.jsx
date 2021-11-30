@@ -10,7 +10,7 @@ import { InjectedConnector } from '@web3-react/injected-connector';
 
 import { abi } from './abis'
 
-const baseUrl = 'http://139.162.50.86'
+const baseUrl = 'http://pay.dmail.ai/api'
 export const emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
 
 const Info = styled.div`
