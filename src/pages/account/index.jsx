@@ -11,7 +11,7 @@ import BigNumber from "bignumber.js";
 import { setByNumber } from './setByNumber'
 import Web3 from "web3"
 
-import { emailReg, Pop, metaMaskAuth, metaMaskSign, login, verifySign, setEmailRequest, searchEmail, getDetail, detectTransferIsSuccess } from './utils'
+import { emailReg, Pop, metaMaskAuth, tronLinkAuth, metaMaskSign, login, verifySign, setEmailRequest, searchEmail, getDetail, detectTransferIsSuccess } from './utils'
 import axios from '@/utils/axios';
 
 import logo from '@/static/images/logo-big.png'
@@ -753,20 +753,34 @@ const Account = () => {
   }
 
   const loginSteps = {
-    async auth() {
+    async auth(name) {
       // metaMask auth
-      const res = await metaMaskAuth();
+      let res = null
+      if (name === 'MetaMask') {
+        res = await metaMaskAuth();
+      } else if (name === 'TronLink') {
+        res = await tronLinkAuth();
+      }
       // get accounts failed
       if (!Array.isArray(res) || !res.length) {
         setconnectWait(false)
         if (res && res.code === 2) {
           showPop(res.msg, 'install', () => Promise.resolve(() => {
-            window.open('https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn')
+            const install = ''
+            if (name === 'MetaMask') {
+              install = 'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn'
+            } else if (name === 'TronLink') {
+              install = 'https://chrome.google.com/webstore/detail/tronlink%EF%BC%88%E6%B3%A2%E5%AE%9D%E9%92%B1%E5%8C%85%EF%BC%89/ibnejdfjmmkpcnlpebklmnkoeoihofec';
+            }
+            window.open(install)
           }))
         }
 
         return false
       }
+      setloginInfo({
+        address: res[0]
+      })
       return res[0]
     },
     async login(address) {
@@ -781,38 +795,47 @@ const Account = () => {
 
       return { id, nonce, address, sign: signmessage }
     },
-    async sign({ id, nonce, address, sign }) {
-      // sign
-      const signRes = await metaMaskSign(sign)
-      // sign failed
-      if (typeof signRes !== 'string') {
-        if (signRes && signRes.code === 2) {
-          showPop(signRes.msg)
-        }
-        return false
+    // async sign({ id, nonce, address, sign }, name) {
+    //   if (name === 'TronLink') {
+    //     return { id, nonce, address, sign }
+    //   }
+    //   // sign
+    //   const signRes = await metaMaskSign(sign)
+    //   // sign failed
+    //   if (typeof signRes !== 'string') {
+    //     if (signRes && signRes.code === 2) {
+    //       showPop(signRes.msg)
+    //     }
+    //     return false
+    //   }
+    //   return {
+    //     id, nonce, address, sign: signRes
+    //   }
+    // },
+    // async verifySign({ id, nonce, address, sign }, name) {
+    //   if (name === 'TronLink') {
+    //     return { id, nonce, address, sign }
+    //   }
+    //   const { success, msg, data } = await verifySign(address, sign)
+    //   if (!success) {
+    //     setconnectWait(false)
+    //     showPop(msg)
+    //     return false
+    //   }
+    //   const { jwt } = data
+    //   setloginInfo({
+    //     id, nonce, address, sign, jwt
+    //   })
+    //   // Cookies.set('jwt', jwt, { expires: 1 })
+    //   // Cookies.set('address', address, { expires: 1 })
+    //   return { id, nonce, sign, jwt, address }
+    // },
+    async updateEmail() {
+      const userEmail = userEmailRef.current || Cookies.get('userEmail')
+      if (!userEmail) {
+        // setpopDisabled(!emailReg.test(userEmail))
+        showPop(<UserEmail userEmail={userEmail} setuserEmail={setuserEmail} setpopDisabled={setpopDisabled} />, 'Set', onSetEmail, 'Set Email', 'Cancel')
       }
-      return {
-        id, nonce, address, sign: signRes
-      }
-    },
-    async verifySign({ id, nonce, address, sign }) {
-      const { success, msg, data } = await verifySign(address, sign)
-      if (!success) {
-        setconnectWait(false)
-        showPop(msg)
-        return false
-      }
-      const { jwt } = data
-      setloginInfo({
-        id, nonce, address, sign, jwt
-      })
-      Cookies.set('jwt', jwt, { expires: 1 })
-      Cookies.set('address', address, { expires: 1 })
-      return { id, nonce, sign, jwt, address }
-    },
-    async updateEmail(obj) {
-      // setpopDisabled(!emailReg.test(userEmail))
-      showPop(<UserEmail userEmail={userEmail} setuserEmail={setuserEmail} setpopDisabled={setpopDisabled} />, 'Set', onSetEmail, 'Set Email', 'Cancel')
     }
   }
 
@@ -820,9 +843,10 @@ const Account = () => {
     const loginInfo = loginInfoRef.current
     const userEmail = userEmailRef.current
     console.log(loginInfo, userEmail)
-    if (!loginInfo || !loginInfo.jwt || !loginInfo.address) {
-      await verifyLogin(true)
-    } else if (emailReg.test(userEmail)) {
+    // if (!loginInfo || !loginInfo.jwt || !loginInfo.address) {
+    //   await verifyLogin(true)
+    // } else 
+    if (emailReg.test(userEmail)) {
       const { address, jwt } = loginInfo
       const { success, msg, data } = await setEmailRequest(address, jwt, userEmail)
       close()
@@ -848,19 +872,19 @@ const Account = () => {
   // }, [userEmail])
 
 
-  const verifyLogin = async (ignoreEmail = false) => {
-    console.log('verifyLogin', loginInfo && loginInfo.jwt)
-    if (loginInfo && loginInfo.jwt, loginInfo && loginInfo.jwt) {
-      if (!ignoreEmail && !loginInfo.userEmail) {
-        loginSteps.updateEmail()
-      }
-      return
-    }
+  const verifyLogin = async (name) => {
+    // console.log('verifyLogin', loginInfo && loginInfo.jwt)
+    // if (loginInfo && loginInfo.jwt, loginInfo && loginInfo.jwt) {
+    //   if (!ignoreEmail && !loginInfo.userEmail) {
+    //     loginSteps.updateEmail()
+    //   }
+    //   return
+    // }
 
     setconnectWait(true)
 
     const steps = Object.values(loginSteps)
-    let res = false
+    let res = name
     while (steps.length) {
       res = await steps.shift()(res)
       if (!res) {
@@ -918,14 +942,11 @@ const Account = () => {
   }
 
   const onAdd = async () => {
-    if (!loginInfo || !loginInfo.jwt || !loginInfo.address || !loginInfo.userEmail) {
-      await verifyLogin()
-    }
+    // if (!loginInfo || !loginInfo.jwt || !loginInfo.address || !loginInfo.userEmail) {
+    //   await verifyLogin()
+    // }
     setconnectShow(true)
   }
-
-  // const contractAddress = '0x74F5B6802c2E3752255936B7546284FF1f66f945'; // contract address
-  // const toAddress = '0xe4F13c05FdBF3Fa8149b8980742f0E7e9E4749eC';
 
   const getChainId = () => {
     return new Promise((resolve, reject) => {
@@ -972,20 +993,37 @@ const Account = () => {
           return false
         }
       }
-    } else {    // comming soon
+    } else if (name === 'TronLink') {    // comming soon
+      chainInfo = TronAbiMap
+    } else {
       return
     }
-    const { abi, contractAddress, toAddress } = chainInfo
-    const contract = new Contract(contractAddress, abi, provider);
-    console.log('getChainId', chainId, contractAddress, toAddress)
 
     const loginInfo = loginInfoRef.current
-    if (!loginInfo || !loginInfo.jwt || !loginInfo.address || !loginInfo.userEmail) {
-      await verifyLogin()
+    // if (!loginInfo || !loginInfo.jwt || !loginInfo.address || !loginInfo.userEmail) {
+    if (!loginInfo || !loginInfo.address || !loginInfo.userEmail) {
+      await verifyLogin(name)
     }
 
-    const signer = provider.getSigner();
-    const daiWithSigner = contract.connect(signer);
+
+    const { abi, contractAddress, toAddress } = chainInfo
+    // console.log(name, contractAddress, toAddress)
+    let contract = null
+    if (name === 'MetaMask') {
+      contract = new Contract(contractAddress, abi, provider);
+    } else if (name === 'TronLink') {
+      // console.log('window.tronWeb.defaultAddress.base58', window.tronWeb.defaultAddress.base58)
+      contract = await window.tronWeb.contract(abi, contractAddress);
+    }
+
+    const tronWebSetByNumber = (value) => {
+      let primitiveValue = new BigNumber(value);
+      let decimals = 6; // TRC20 USDT decimals is 6  https://tronscan.org/#/contract/TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t/code
+      let assetScale = new BigNumber(10).pow(decimals).toFixed();
+      return primitiveValue.times(assetScale).decimalPlaces(0).toFixed();
+    }
+
+    console.log('getChainId', chainId, contractAddress, toAddress)
     try {
       console.log(1, currentDetail.price)
       // const primitiveValue = new BigNumber(currentDetail.price);
@@ -997,17 +1035,37 @@ const Account = () => {
       // let assetScale = new BigNumber(10).pow(decimals).toFixed();
       // let tokenAmount = primitiveValue.times(assetScale).decimalPlaces(0).toFixed();
       // daiWithSigner.transfer(toAddress, tokenAmount).then(async ({
-
-
-      daiWithSigner.transfer(toAddress, setByNumber(+currentDetail.price, 6)).then(async ({
-        from,
-        hash,
-      }) => {
-        const { success, msg, data } = await detectTransferIsSuccess(hash, from, currentDetail.price, currentDetail.name, loginInfo.jwt, chainId)
-        showPop(success ? 'Congratulation！' : msg, '', () => {
-          success && window.location.reload()
+      if (name === 'MetaMask') {
+        const signer = provider.getSigner();
+        const daiWithSigner = contract.connect(signer);
+        daiWithSigner.transfer(toAddress, setByNumber(+currentDetail.price, 6)).then(async ({
+          from,
+          hash,
+        }) => {
+          const { success, msg, data } = await detectTransferIsSuccess(hash, from, currentDetail.price, currentDetail.name, loginInfo.jwt, chainId)
+          showPop(success ? 'Congratulation！' : msg, '', () => {
+            success && window.location.reload()
+          })
         })
-      })
+      } else if (name === 'TronLink') {
+        const tokenAmount = tronWebSetByNumber(currentDetail.price)
+        console.log(`contractAddress => ${contractAddress}, from => ${window.tronWeb.defaultAddress.base58}, toAddress => ${toAddress}, amount => ${tokenAmount}`);
+        let result = await contract.transfer(
+          toAddress, //address _to
+          tokenAmount   //amount
+        ).send().then(async output => {
+          console.log('- Output:', output, '\n');
+          const { success, msg, data } = await detectTransferIsSuccess(output, loginInfo.address, currentDetail.price, currentDetail.name, 'loginInfo.jwt', 'chainId')
+          showPop(success ? 'Congratulation！' : msg, '', () => {
+            success && window.location.reload()
+          })
+          // const { success, msg, data } = await detectTransferIsSuccess(hash, from, currentDetail.price, currentDetail.name, loginInfo.jwt, chainId)
+          // showPop(success ? 'Congratulation！' : msg, '', () => {
+          //   success && window.location.reload()
+          // })
+        });
+      }
+
     } catch (error) {
       console.log('error', error)
     }
@@ -1019,39 +1077,39 @@ const Account = () => {
   }
 
   useEffect(() => {
-    const jwt = Cookies.get('jwt')
-    const address = Cookies.get('address')
+    // const jwt = Cookies.get('jwt')
+    // const address = Cookies.get('address')
 
     const userEmail = Cookies.get('userEmail')
-    if (jwt && address) {
+    if (userEmail) {
       setloginInfo({
-        jwt,
-        address,
+        // jwt,
+        userEmail,
       })
-      if (!userEmail) {
-        // loginSteps.updateEmail({
-        //   jwt,
-        //   address,
-        // })
-      } else {
-        setloginInfo({
-          jwt,
-          address,
-          userEmail
-        })
-      }
+      // if (!userEmail) {
+      //   // loginSteps.updateEmail({
+      //   //   jwt,
+      //   //   address,
+      //   // })
+      // } else {
+      //   setloginInfo({
+      //     jwt,
+      //     address,
+      //     userEmail
+      //   })
+      // }
     }
   }, [])
 
-  const toLogin = async () => {
-    await verifyLogin()
-  }
+  // const toLogin = async () => {
+  //   await verifyLogin()
+  // }
 
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <Wrapper>
         <GlobalStyle />
-        <Header toLogin={toLogin} userEmail={loginInfo ? loginInfo.userEmail : ''} />
+        <Header userEmail={loginInfo ? loginInfo.userEmail : ''} />
         {/* <Wallet /> */}
         <Content className={payShow ? '' : 'on'}>
           <div className="account-chunk">

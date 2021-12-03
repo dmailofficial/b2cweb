@@ -55,8 +55,9 @@ const Header = (props) => {
           </div>
         </div>
         {pathname === '/' ? <div className="contact" onClick={onContactClick}></div> : (
-          userEmail ? <Email>{userEmail}</Email> : <Login onClick={toLogin}></Login>
+          userEmail ? <Email>{userEmail}</Email> : null
         )}
+        {/* <Login onClick={toLogin}></Login> */}
       </div>
     </>
   )

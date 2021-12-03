@@ -295,6 +295,19 @@ export const metaMaskAuth = async () => {
   }
 }
 
+export const tronLinkAuth = async () => {
+  if (window.tronWeb && window.tronLink) {
+    const res = await window.tronLink.request({ method: 'tron_requestAccounts' });
+    const account = window.tronWeb.defaultAddress.base58;
+    return [account]
+  } else {
+    return {
+      code: 2,
+      msg: 'Please install TronLink!'
+    }
+  }
+}
+
 export const metaMaskSign = async (sign) => {
   if (!sign) {
     return {
