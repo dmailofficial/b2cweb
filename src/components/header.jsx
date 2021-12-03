@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import styled, { createGlobalStyle, useTheme } from 'styled-components';
+import ava from '@/static/images/ava.png'
 
 const Email = styled.div`
   color: #fff;
@@ -8,9 +9,11 @@ const Email = styled.div`
 `
 
 const Login = styled.div`
+  width: 44px;
+  height: 44px;
+  background: url(${ava}) no-repeat;
+  background-size: cover;
   cursor: pointer;
-  color: #fff;
-  font-size: 24px;
 `
 
 const Header = (props) => {
@@ -52,7 +55,7 @@ const Header = (props) => {
           </div>
         </div>
         {pathname === '/' ? <div className="contact" onClick={onContactClick}></div> : (
-          userEmail ? <Email>{userEmail}</Email> : <Login onClick={toLogin}>login</Login>
+          userEmail ? <Email>{userEmail}</Email> : <Login onClick={toLogin}></Login>
         )}
       </div>
     </>

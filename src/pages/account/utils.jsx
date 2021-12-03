@@ -134,21 +134,21 @@ export const Pop = ({ show, setShow, name, text, okText, okCb, cancelText, disab
 }
 
 export const searchEmail = async (key) => {
-  return axios({
-    url: `${baseUrl}/products`,
-    dat: {
-      key
-    },
-    method: 'post',
-    // errorTitle: '',
-  }).then((res) => {
-    try {
+  try {
+    return axios({
+      url: `${baseUrl}/products`,
+      data: {
+        key
+      },
+      method: 'post',
+      // errorTitle: '',
+    }).then((res) => {
       const { code, data, msg, success } = res.data
-      return { success, msg, data }
-    } catch (error) {
-      return { success: false, msg: error, data: null }
-    }
-  })
+      return { code, success, msg, data }
+    })
+  } catch (error) {
+    return { success: false, msg: error, data: null }
+  }
 }
 
 export const login = async (address) => {
@@ -208,9 +208,9 @@ export const setEmailRequest = async (address, jwt, email) => {
   })
 }
 
-export const getDetail = async (id) => {
+export const getDetail = async (name) => {
   return axios({
-    url: `${baseUrl}/products/${id}`,
+    url: `${baseUrl}/products/${name}`,
     method: 'get',
     // errorTitle: '',
   }).then((res) => {
@@ -309,7 +309,6 @@ export const metaMaskSign = async (sign) => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const signature = await signer.signMessage(sign);
-      console.log('metaMaskSign', signer, signature)
       return signature
     } catch (error) {
       return {

@@ -8,23 +8,23 @@ axiosInstance.defaults.timeout = 120000;
 
 axiosInstance.interceptors.response.use(
   res => {
-    if (res.config.method === 'get' && res.status !== 200 || (res.config.method === 'post' && res.status !== 201)) {
-      // notification.error({
-        // message: `${res.data.errorTitle}请求失败`,
-      // });
+    // if (res.config.method === 'get' && res.status !== 200 || (res.config.method === 'post' && res.status !== 201)) {
+    //   // notification.error({
+    //     // message: `${res.data.errorTitle}请求失败`,
+    //   // });
 
-      return Promise.reject(res);
-    } else if (!res.data.success && res.data.code === '-1') {
-      // notification.error({
-        // message: `${res.data.errorTitle}错误：${res.data.msg}`,
-      // });
+    //   return Promise.reject(res);
+    // } else if (!res.data.success && res.data.code === '-1') {
+    //   // notification.error({
+    //     // message: `${res.data.errorTitle}错误：${res.data.msg}`,
+    //   // });
 
-      return Promise.reject(res);
-    } else if (!res.data.success && res.data.code === '401') {
-      // window.location.href = __LoginHost;
-    } else if (!res.data.success && res.data.code === '9') {
-      // router.push('/ErrorPage?code=403');
-    }
+    //   return Promise.reject(res);
+    // } else if (!res.data.success && res.data.code === '401') {
+    //   // window.location.href = __LoginHost;
+    // } else if (!res.data.success && res.data.code === '9') {
+    //   // router.push('/ErrorPage?code=403');
+    // }
     return res;
   },
   error => {

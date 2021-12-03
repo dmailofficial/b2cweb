@@ -5,9 +5,11 @@ import Cookies from 'js-cookie'
 import { Web3Provider } from '@ethersproject/providers';
 import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
-import { abi } from './abis'
+import { BSC_abi, ERC_abi, TRC_abi } from './abis'
 import reportWebVitals from './reportWebVitals';
-
+import BigNumber from "bignumber.js";
+import { setByNumber } from './setByNumber'
+import Web3 from "web3"
 
 import { emailReg, Pop, metaMaskAuth, metaMaskSign, login, verifySign, setEmailRequest, searchEmail, getDetail, detectTransferIsSuccess } from './utils'
 import axios from '@/utils/axios';
@@ -17,14 +19,17 @@ import bg from '@/static/images/account-bg.png'
 import tip from '@/static/images/tip.png'
 import name from '@/static/images/name.png'
 import countdown from '@/static/images/countdown.png'
-import card from '@/static/images/card.png'
+import card from '@/static/images/card3.png'
 import close from '@/static/images/close.png'
 import to from '@/static/images/to.png'
+import metamask from '@/static/images/metamask.png'
+import tronlink from '@/static/images/tronlink.png'
+import plug from '@/static/images/plug.png'
 
-const injectedConnector = new InjectedConnector({
-  // supportedChainIds: [256, 269],
-  supportedChainIds: [3],
-});
+// const injectedConnector = new InjectedConnector({
+//   // supportedChainIds: [256, 269],
+//   supportedChainIds: [3],
+// });
 
 const getLibrary = (provider) => {
   const library = new Web3Provider(provider);
@@ -64,7 +69,20 @@ const Content = styled.div`
     position: relative;
     z-index: 100;
     width: 909px;
-    margin: 0 auto;
+    margin: 50px auto;
+    padding-bottom: 100px;
+  }
+
+  @media screen and (min-width: 1600px) {
+    .account-chunk {
+      margin-top:  100px;
+    }
+  }
+
+  @media screen and (min-width: 1920px) {
+    .account-chunk {
+      margin-top: 10%;
+    }
   }
 
   .logo-big {
@@ -72,7 +90,7 @@ const Content = styled.div`
     height: 90px;
     background: url(${logo});
     background-size: 100%;
-    margin: 18% auto 50px;
+    margin: 0 auto 50px;
   }
 
   .input-wrap {
@@ -119,13 +137,29 @@ const Content = styled.div`
       }
     }
   }
+
+  .desc {
+    padding-left: 20px;
+    margin-top: 90px;
+    color: rgba(255, 255, 255, .7);
+    line-height: 36px;
+    font-size: 20px;
+
+    p:first-child {
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: #5581FF;
+    }
+  }
 `
 
 const Error = styled.div`
   position: absolute;
-  top: 100%;
+  top: 205px;
   left: 0;
-  margin-top: 35px;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   font-size: 24px;
@@ -136,7 +170,7 @@ const Error = styled.div`
 
   &.on {
     opacity: 1;
-    display: block;
+    display: flex;
   }
 
   i {
@@ -180,7 +214,7 @@ const EmailList = styled.ul`
 
 const Generated = styled.div`
   position: absolute;
-  top: 100%;
+  top: 196px;
   left: 0;
   right: 0;
   background: #fff;
@@ -273,42 +307,50 @@ const PayWrap = styled.div`
   }
 
   .pay-info > div {
-    margin-bottom: 20px;
     display: flex;
     align-items: center;
   }
 
-  div.name {
-    font-size: 40px;
-    margin-bottom: 28px;
+  .name {
+    font-size: 64px;
     position: relative;
-    left: -58px;
+    margin-bottom: 2px;
 
-    i {
-      width: 38px;
-      height: 38px; 
-      background: url(${name}) no-repeat;
-      background-size: 100%;
-      margin-right: 20px;
-    }
+    // i {
+    //   width: 38px;
+    //   height: 38px; 
+    //   background: url(${name}) no-repeat;
+    //   background-size: 100%;
+    //   margin-right: 20px;
+    // }
   }
 
-  div.left {
-    color: #FF8C38;
+  .tips {
+    margin-top: -2px;
     font-weight: 600;
-    font-size: 30px;
-    margin-bottom: 45px;
+    font-size: 28px;
 
-    i {
-      width: 28px;
-      height: 28px; 
-      background: url(${countdown}) no-repeat;
-      background-size: 100%;
-      margin-right: 20px;
-    }
+    // i {
+    //   width: 28px;
+    //   height: 28px; 
+    //   background: url(${countdown}) no-repeat;
+    //   background-size: 100%;
+    //   margin-right: 20px;
+    // }
+  }
+
+  .price-tip {
+    font-size: 34px;
+    margin-top: 48px;
+    font-weight: 600;
   }
 
   .price {
+    margin-top: -5px;
+    color: #FF8C38;
+    font-size: 48px;
+    text-transform: uppercase;
+    font-weight: bold;
   }
 
   .limit {
@@ -338,7 +380,7 @@ const PayWrap = styled.div`
   .pay-btn {
     background-color: #FA5F51;
     color: #fff;
-    width: 330px;
+    width: 400px;
     height: 52px;
     line-height: 52px;
     text-align: center;
@@ -373,17 +415,16 @@ const PayWrap = styled.div`
       margin-bottom: 30px;
     }
   
-    div.name {
-      font-size: 50px;
-      margin-bottom: 36px;
-      left: -68px;
+    // div.name {
+    //   font-size: 50px;
+    //   margin-bottom: 36px;
   
-      i {
-        width: 48px;
-        height: 48px; 
-        margin-right: 20px;
-      }
-    }
+    //   i {
+    //     width: 48px;
+    //     height: 48px; 
+    //     margin-right: 20px;
+    //   }
+    // }
   
     div.left {
       font-size: 36px;
@@ -413,17 +454,17 @@ const PayWrap = styled.div`
       margin-bottom: 10px;
     }
   
-    div.name {
-      font-size: 32px;
-      margin-bottom: 20px;
-      left: -50px;
+    // div.name {
+    //   font-size: 32px;
+    //   margin-bottom: 20px;
+    //   left: -50px;
   
-      i {
-        width: 30px;
-        height: 30px; 
-        margin-right: 20px;
-      }
-    }
+    //   i {
+    //     width: 30px;
+    //     height: 30px; 
+    //     margin-right: 20px;
+    //   }
+    // }
   
     div.left {
       font-size: 26px;
@@ -443,13 +484,15 @@ const Connect = styled.div`
   z-index: 100;
   left: 50%;
   top: 50%;
+  width: 390px;
   background: #fff;
   border-radius: 25px;
-  padding: 50px 35px 50px;
+  padding: 22px 35px 35px;
   transform: translateX(-50%) translateY(-50%);
   transition: opacity .3s ease-out;
   opacity: 0;
   display: none;
+  color: #1A071F;
 
   &.on {
     display: block;
@@ -459,7 +502,14 @@ const Connect = styled.div`
   .connect-title {
     font-size: 36px;
     font-weight: bold;
-    color: #1A071F;
+    line-height: 1;
+  }
+
+  .connect-desc {
+    margin-top: 20px;
+    margin-bottom: 24px;
+    font-size: 20px;
+    line-height: 24px;
   }
 
   .pop-close {
@@ -478,28 +528,70 @@ const Connect = styled.div`
   }
 
   .connect-item {
-    width: 300px;
-    height: 100px;
-    background: linear-gradient(to right, #FCA9A3 , #FEE1A8);
+    height: 80px;
     display: flex;
-    flex-direction: row-reverse;
     align-items: center;
+    justify-content: space-between;
+    font-size: 26px;
     margin-bottom: 20px;
     border-radius: 20px;
     padding: 0 36px;
     cursor: pointer;
+    border-radius: 25px;
+
+    strong {
+      font-weight: 500; 
+    }
 
     &.wait {
       cursor: wait;
+    }
+
+    &:nth-child(1) {
+      background: linear-gradient(to right, #FCA9A3 , #FEE1A8);
     }
 
     &:nth-child(2) {
       background: linear-gradient(to right, #B2C5FB , #DCECFE);
     }
 
+    &:nth-child(3) {
+      background: linear-gradient(to right, #CBAEFB , #EDE3FE );
+    }
+
     &:last-child {
       margin-bottom: 0;
     }
+
+    .item-left {
+      display: flex;
+      align-items: center;
+    }
+
+    span {
+      display: inline-block;
+      background-size: 100%;
+      margin-right: 20px;
+    }
+
+    .MetaMask {
+      width: 50px;
+      height: 46px;
+      background-image: url(${metamask});
+    }
+
+    .TronLink {
+      width: 45px;
+      height: 45px;
+      background-image: url(${tronlink});
+    }
+
+    .Plug {
+      width: 50px;
+      height: 46px;
+      background-image: url(${plug});
+    }
+    
 
     i {
       display: inline-block;
@@ -530,6 +622,11 @@ const UserEmailSet = styled.div`
   }
 `
 
+const Text = styled.div`
+  margin-bottom: 20px;
+  font-size: 16px;
+`
+
 const Input = styled.input`
   line-height: 40px;
   width: 300px;
@@ -539,29 +636,55 @@ const Input = styled.input`
   font-size: 18px;
 `
 
-const UserEmail = ({ setuserEmail }) => {
+const UserEmail = ({ setuserEmail, setpopDisabled }) => {
   const [email, setEmail] = useState('')
 
   const onInput = (ev) => {
     const value = ev.target.value
     setEmail(value)
     setuserEmail(value)
+    setpopDisabled(!emailReg.test(value))
   }
 
   return (
-    <Input value={email} onInput={onInput} />
+    <>
+      <Text>Please enter your email address and the Dmail team will notify you when it is time to collect</Text>
+      <Input value={email} onInput={onInput} />
+    </>
   )
 }
 
 const Account = () => {
   const { Contract, ethers } = require('ethers');
 
+  const MetaMaskChainAbiMap = {
+    '1': {
+      contractAddress: '0x74F5B6802c2E3752255936B7546284FF1f66f945',
+      abi: ERC_abi,
+      toAddress: '0xe4F13c05FdBF3Fa8149b8980742f0E7e9E4749eC'
+    },
+    '56': {
+      contractAddress: '0x55d398326f99059fF775485246999027B3197955',
+      abi: BSC_abi,
+      toAddress: '0xe4F13c05FdBF3Fa8149b8980742f0E7e9E4749eC'
+    },
+  }
+
+  const TronAbiMap = {
+    contractAddress: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
+    abi: TRC_abi,
+    toAddress: 'TGQeDqyZk4hW6FLjq8h6adZ9xaCMWPXozt'
+  }
+
+  const ChainNames = ['MetaMask', 'TronLink']
+  // const ChainNames = ['MetaMask', 'TronLink', 'Plug']
+
   const [loginInfo, setloginInfo] = useState(null)
   const loginInfoRef = useRef(null)
 
   const [email, setEmail] = useState('')
-  const [selectedEmail, setSelectedEmail] = useState(null)
-  const [emailList, setEmailList] = useState([])
+  // const [selectedEmail, setSelectedEmail] = useState(null)
+  const [emailData, setEmailData] = useState(null)
   const [searching, setsearching] = useState(false)
   const [userEmail, setuserEmail] = useState('')
   const userEmailRef = useRef('')
@@ -583,6 +706,19 @@ const Account = () => {
   const [popOkCallback, setpopOkCallback] = useState(null)
   const [cancelText, setcancelText] = useState('')
 
+  // record chainId when chain changed
+  // const [currentChainId, setcurrentChainId] = useState('')
+  // const currentChainIdRef = useRef('')
+  // useEffect(() => {
+  //   window.ethereum && window.ethereum.on('chainChanged', (chainId) => {
+  //     // https://docs.metamask.io/guide/ethereum-provider.html#ethereum-networkversion-deprecated
+  //     window.ethereum.request({ method: 'net_version' }).then((chainId) => {
+  //       // console.log(chainId, typeof chainId)
+  //       currentChainIdRef.current = chainId
+  //     })
+  //   });
+  // }, [])
+
   useEffect(() => {
     loginInfoRef.current = { ...loginInfo }
   }, [loginInfo])
@@ -592,9 +728,9 @@ const Account = () => {
   }, [userEmail])
 
   useEffect(() => {
-    setEmailList([])
+    setEmailData(null)
     setErrorShow(false)
-    setSelectedEmail(null)
+    // setSelectedEmail(null)
   }, [email])
 
   useEffect(() => {
@@ -620,7 +756,6 @@ const Account = () => {
     async auth() {
       // metaMask auth
       const res = await metaMaskAuth();
-      console.log('metaMaskAuth', res)
       // get accounts failed
       if (!Array.isArray(res) || !res.length) {
         setconnectWait(false)
@@ -677,7 +812,7 @@ const Account = () => {
     },
     async updateEmail(obj) {
       // setpopDisabled(!emailReg.test(userEmail))
-      showPop(<UserEmail userEmail={userEmail} setuserEmail={setuserEmail} />, 'SET', onSetEmail, 'set email', 'cancel')
+      showPop(<UserEmail userEmail={userEmail} setuserEmail={setuserEmail} setpopDisabled={setpopDisabled} />, 'Set', onSetEmail, 'Set Email', 'Cancel')
     }
   }
 
@@ -708,9 +843,9 @@ const Account = () => {
   //   loginSteps.updateEmail()
   // }, [])
 
-  useEffect(() => {
-    setpopDisabled(!emailReg.test(userEmail))
-  }, [userEmail])
+  // useEffect(() => {
+  //   // setpopDisabled(!emailReg.test(userEmail))
+  // }, [userEmail])
 
 
   const verifyLogin = async (ignoreEmail = false) => {
@@ -742,34 +877,35 @@ const Account = () => {
     }
 
     setsearching(true)
-    const { success, msg, data } = await searchEmail(email)
+    const { code, success, msg, data } = await searchEmail(email)
     setsearching(false)
+    if (code === 90) {
+      setErrorShow(true)
+      return
+    }
     if (!success) {
       showPop(msg)
       return
-    } else if (!Array.isArray(data)) {
+    } else if (!data || !data.name) {
       showPop('something is error')
       return
     }
-    setEmailList(data)
-    if (!data.length) {
-      setErrorShow(true)
-    }
+    setEmailData(data)
   }
   const onInput = (ev) => {
     setEmail(ev.target.value)
   }
 
-  const chooseEmail = (o) => () => {
-    setSelectedEmail(o)
-    setEmailList([])
-  }
+  // const chooseEmail = (o) => () => {
+  //   // setSelectedEmail(o)
+  //   setEmailData(null)
+  // }
 
   const toView = async () => {
-    if (!selectedEmail) {
-      return
-    }
-    const { success, msg, data } = await getDetail(selectedEmail.id)
+    // if (!selectedEmail) {
+    //   return
+    // }
+    const { success, msg, data } = await getDetail(email)
     if (!success) {
       showPop(msg)
       return
@@ -777,7 +913,7 @@ const Account = () => {
     const { id, name, price, exp_date, symbal } = data
     setpayShow(true)
     setcurrentDetail({
-      id, name, price: `43320000`, exp_date, symbal
+      id, name, price, exp_date, symbal
     })
   }
 
@@ -788,12 +924,61 @@ const Account = () => {
     setconnectShow(true)
   }
 
-  const contractAddress = '0x74F5B6802c2E3752255936B7546284FF1f66f945'; // contract address
-  const toAddress = '0x868BF417E38f9264426ebA9f5e4F5ac274e0988e';
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const contract = new Contract(contractAddress, abi, provider);
+  // const contractAddress = '0x74F5B6802c2E3752255936B7546284FF1f66f945'; // contract address
+  // const toAddress = '0xe4F13c05FdBF3Fa8149b8980742f0E7e9E4749eC';
 
-  const toPay = async () => {
+  const getChainId = () => {
+    return new Promise((resolve, reject) => {
+      // https://docs.metamask.io/guide/ethereum-provider.html#ethereum-networkversion-deprecated
+      window.ethereum.request({ method: 'net_version' }).then((chainId) => {
+        console.log('get chainId', chainId)
+        resolve(chainId)
+      })
+    })
+  }
+
+  const toPay = async (name) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    let chainId = ''
+    let chainInfo = null
+    if (name === 'MetaMask') {
+      try {
+        chainId = await getChainId()
+      } catch (error) {
+        return
+      }
+      if (chainId && chainId in MetaMaskChainAbiMap) { // if the chain already has 
+        chainInfo = MetaMaskChainAbiMap[chainId]
+      } else {
+        // help to switch chain
+        try {
+          if (window.ethereum) {
+            window.ethereum
+              .request({
+                method: 'wallet_switchEthereumChain',
+                params: [
+                  {
+                    chainId: '0x1'
+                  },
+                ],
+              })
+            // need to click to pay again
+            return
+          } else {
+            return
+          }
+        } catch (error) {
+          console.log(error)
+          return false
+        }
+      }
+    } else {    // comming soon
+      return
+    }
+    const { abi, contractAddress, toAddress } = chainInfo
+    const contract = new Contract(contractAddress, abi, provider);
+    console.log('getChainId', chainId, contractAddress, toAddress)
+
     const loginInfo = loginInfoRef.current
     if (!loginInfo || !loginInfo.jwt || !loginInfo.address || !loginInfo.userEmail) {
       await verifyLogin()
@@ -802,12 +987,26 @@ const Account = () => {
     const signer = provider.getSigner();
     const daiWithSigner = contract.connect(signer);
     try {
-      daiWithSigner.transfer(toAddress, currentDetail.price).then(async ({
+      console.log(1, currentDetail.price)
+      // const primitiveValue = new BigNumber(currentDetail.price);
+      // const tokenAmount = primitiveValue.times(18).decimalPlaces(0).toFixed();
+      // console.log(2, tokenAmount)
+
+      // let primitiveValue = new BigNumber(currentDetail.price);
+      // let decimals = 6; // TRC20 USDT decimals 为6  https://tronscan.org/#/contract/TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t/code
+      // let assetScale = new BigNumber(10).pow(decimals).toFixed();
+      // let tokenAmount = primitiveValue.times(assetScale).decimalPlaces(0).toFixed();
+      // daiWithSigner.transfer(toAddress, tokenAmount).then(async ({
+
+
+      daiWithSigner.transfer(toAddress, setByNumber(+currentDetail.price, 6)).then(async ({
         from,
         hash,
       }) => {
-        const { success, msg, data } = await detectTransferIsSuccess(hash, from, currentDetail.price, currentDetail.name, loginInfo.jwt)
-        showPop(success ? 'Congratulations! buy success' : msg)
+        const { success, msg, data } = await detectTransferIsSuccess(hash, from, currentDetail.price, currentDetail.name, loginInfo.jwt, chainId)
+        showPop(success ? 'Congratulation！' : msg, '', () => {
+          success && window.location.reload()
+        })
       })
     } catch (error) {
       console.log('error', error)
@@ -859,21 +1058,30 @@ const Account = () => {
             <div className="logo-big"></div>
             <div className="input-wrap">
               <span></span>
-              <input value={email} onInput={onInput} type="text" placeholder="www" />
+              <input value={email} onInput={onInput} type="text" placeholder="Check the domain account of your choice" />
               <a onClick={onSearch} className={searching ? 'waiting' : ''}>search</a>
             </div>
-            <EmailList className={emailList.length ? 'on' : ''}>
+            <div className="desc">
+              <p>Current opening progress:</p>
+              <p>1-3 bits awaiting auction.</p>
+              <p>4-7 bits partially open.</p>
+              <p>8 bits and above, not open yet.</p>
+              <p>Follow <a href="https://twitter.com/dmailofficial" target="_blank">twitter</a> to be the first to get the latest notifications about the release.</p>
+              <p>What is DMAIL? Click to jump to Medium article <a href="https://medium.com/@dmail_official" target="_blank">https://medium.com/@dmail_official</a></p>
+            </div>
+            {/* <EmailList className={emailList ? 'on' : ''}>
               {emailList.map(({ id, name }) => (
                 <li key={name} onClick={chooseEmail({ id, name })}>{name}@ic.dmail.ai</li>
-              ))}
-            </EmailList>
-            <Generated className={selectedEmail ? 'on' : ''}>
-              <span>{(selectedEmail && selectedEmail.name) || ''}@ic.dmail.ai has been generated！</span>
+              ))} 
+            </EmailList> */}
+            <Generated className={emailData ? 'on' : ''}>
+              {/* <span>{(selectedEmail && selectedEmail.name) || ''}@ic.dmail.ai has been generated！</span> */}
+              <span>Congratulations, this domain account is open!</span>
               <a onClick={toView}>Click to view</a>
             </Generated>
             <Error className={errorShow ? 'on' : ''}>
               <i></i>
-              <span>Try another account. This account is not open for registration.</span>
+              <span>Try another one, this domain account is not open for registration yet.</span>
             </Error>
           </div>
         </Content>
@@ -885,16 +1093,19 @@ const Account = () => {
             {currentDetail ? (
               <>
                 <div className="pay-info">
-                  <div className="name"><i /><span>{currentDetail.name}@ic.dmail.ai</span></div>
-                  <div className="left"><i />{currentDetail.exp_date} days left!</div>
-                  <div className="price">Current Price: &nbsp; {currentDetail.price} {currentDetail.symbal}</div>
+                  <div className="name"><span>{currentDetail.name}@dmail.ai</span></div>
+                  {/* <div className="left">{currentDetail.exp_date} days left!</div> */}
+                  <div className="tips">Owner: None</div>
+                  <div className="tips">Registiation Period: Permanent</div>
+                  <div className="price-tip">Registiation price to pay</div>
+                  <div className="price">{currentDetail.price} {currentDetail.symbal}</div>
                   {/* <div className="limit">
                   <span>Remaining limit:  &nbsp; 1800 USDT</span>
                   <span className="get-more">Get more</span>
                 </div>
                 <div className="offer">Add  Price:  &nbsp; 10 USDT</div> */}
                 </div>
-                <a className="pay-btn" onClick={onAdd}>Add auction</a>
+                <a className="pay-btn" onClick={onAdd}>Sign Up</a>
               </>
             ) : null}
           </div>
@@ -905,9 +1116,18 @@ const Account = () => {
             <strong>Connect Wallet</strong>
             <i className="pop-close" onClick={() => setconnectShow(false)}></i>
           </div>
+          <div className="connect-desc">Own your first identity in the Web3 era, <br />Please select the payment network you are currently using.</div>
           <div className="connect-list">
-            <div className={`connect-item ${connectWait ? 'wait' : ''}`} onClick={toPay}><i></i></div>
-            <div className="connect-item" onClick={switchNetwork}><i></i></div>
+            {ChainNames.map((name) => (
+              <div className={`connect-item  ${connectWait ? 'wait' : ''}`} key={name} onClick={() => toPay(name)}>
+                <div className="item-left">
+                  <span className={name}></span>
+                  <strong>{name}</strong>
+                </div>
+                <i></i>
+              </div>
+            ))}
+            {/* <div className="connect-item" onClick={switchNetwork}><i></i></div> */}
           </div>
         </Connect>
       </Wrapper>
