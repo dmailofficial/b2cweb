@@ -10,8 +10,8 @@ import { InjectedConnector } from '@web3-react/injected-connector';
 
 import { abi } from './abis'
 
-const baseUrl = 'http://pay.dmail.ai'
-export const emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+const baseUrl = 'https://pay.dmail.ai'
+export const emailReg = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/
 
 const Info = styled.div`
   position: absolute;
@@ -100,7 +100,7 @@ const Info = styled.div`
   }
 `
 
-export const Pop = ({ show, setShow, name, text, okText, okCb, cancelText, disabled }) => {
+export const Pop = ({ show, setShow, name, text, okText, okCb, cancelCb, cancelText, disabled }) => {
   const onOk = () => {
     if (okCb) {
       okCb.then(async (cb) => {
@@ -114,6 +114,9 @@ export const Pop = ({ show, setShow, name, text, okText, okCb, cancelText, disab
   }
 
   const onCancel = () => {
+    if (cancelCb) {
+      cancelCb()
+    }
     setShow(false)
   }
 
@@ -143,8 +146,8 @@ export const searchEmail = async (key) => {
       method: 'post',
       // errorTitle: '',
     }).then((res) => {
-      const { code, data, msg, success } = res.data
-      return { code, success, msg, data }
+      const { code, data, message, success } = res.data
+      return { code, success, msg: message, data }
     })
   } catch (error) {
     return { success: false, msg: error, data: null }
@@ -161,8 +164,8 @@ export const login = async (address) => {
     // errorTitle: '',
   }).then((res) => {
     try {
-      const { code, data, msg, success } = res.data
-      return { success, msg, data }
+      const { code, data, message, success } = res.data
+      return { success, msg: message, data }
     } catch (error) {
       return { success: false, msg: error, data: null }
     }
@@ -180,28 +183,29 @@ export const verifySign = async (address, signature) => {
     // errorTitle: '',
   }).then((res) => {
     try {
-      const { code, data, msg, success } = res.data
-      return { success, msg, data }
+      const { code, data, message, success } = res.data
+      return { success, msg: message, data }
     } catch (error) {
       return { success: false, msg: error, data: null }
     }
   })
 }
 
-export const setEmailRequest = async (address, jwt, email) => {
+export const setEmailRequest = async (address, jwt, email, tron = false) => {
   return axios({
     url: `${baseUrl}/update`,
     method: 'post',
     data: {
       address,
       jwt,
-      email
+      email,
+      tron
     },
     // errorTitle: '',
   }).then((res) => {
     try {
-      const { code, data, msg, success } = res.data
-      return { success, msg, data }
+      const { code, data, message, success } = res.data
+      return { success, msg: message, data }
     } catch (error) {
       return { success: false, msg: error, data: null }
     }
@@ -215,65 +219,31 @@ export const getDetail = async (name) => {
     // errorTitle: '',
   }).then((res) => {
     try {
-      const { code, data, msg, success } = res.data
-      return { success, msg, data }
+      const { code, data, message, success } = res.data
+      return { success, msg: message, data }
     } catch (error) {
       return { success: false, msg: error, data: null }
     }
   })
 }
 
-export const detectTransferIsSuccess = async (hash, address, price, product_name, jwt, network = '3') => {
+export const detectTransferIsSuccess = async (hash, address, price, product_name, jwt, network = '3', tron = false) => {
   return axios({
     url: `${baseUrl}/transfer`,
     method: 'post',
     data: {
-      address, price, product_name, tx: hash, jwt, network
+      address, price, product_name, tx: hash, jwt, network, tron
     }
     // errorTitle: '',
   }).then((res) => {
     try {
-      const { code, data, msg, success } = res.data
-      return { success, msg, data }
+      const { code, data, message, success } = res.data
+      return { success, msg: message, data }
     } catch (error) {
       return { success: false, msg: error, data: null }
     }
   })
 }
-
-// export const sendTransaction = async (from, value) => {
-//   console.log({
-//     to: '0x868BF417E38f9264426ebA9f5e4F5ac274e0988e',
-//     from,
-//     value,
-//     // gasPrice,
-//     // gas,
-//   })
-//   if (window.ethereum) {
-//     window.ethereum
-//       .request({
-//         method: 'eth_sendTransaction',
-//         params: [
-//           {
-//             to: '0x868BF417E38f9264426ebA9f5e4F5ac274e0988e',
-//             from,
-//             // value: parseInt(Web3.utils.toWei(`${value}`, 'ether')).toString(16),
-
-//             // value: '0x29a2241af62c0000',
-//             // gasPrice: '0x09184e72a000',
-//             // gas: '0x2710',
-//           },
-//         ],
-//       })
-//       .then((txHash) => console.log(txHash))
-//       .catch((error) => console.error);
-//   } else {
-//     return {
-//       code: 2,
-//       msg: 'Please install MetaMask!'
-//     }
-//   }
-// }
 
 export const metaMaskAuth = async () => {
   if (window.ethereum) {
@@ -308,6 +278,29 @@ export const tronLinkAuth = async () => {
   }
 }
 
+export const plugAuth = async () => {
+  if (window.ic && window.ic.plug) {
+    try {
+      const res = await window.ic.plug.requestConnect();
+      console.log(res)
+      // const connectionState = res ? "allowed" : "denied";
+      return [true]
+    } catch (error) {
+      // denied
+      console.log('plugAuth', error)
+      return {
+        code: 1,
+        msg:  error
+      }
+    }
+  } else {
+    return {
+      code: 2,
+      msg: 'Please install TronLink!'
+    }
+  }
+}
+
 export const metaMaskSign = async (sign) => {
   if (!sign) {
     return {
@@ -322,7 +315,7 @@ export const metaMaskSign = async (sign) => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const signature = await signer.signMessage(sign);
-      return signature
+      return [signature, signer]
     } catch (error) {
       return {
         code: 2,
@@ -335,23 +328,4 @@ export const metaMaskSign = async (sign) => {
       msg: 'Please install MetaMask!'
     }
   }
-  // } else {
-  //   return {
-  //     code: 2,
-  //     msg: 'Please install MetaMask!'
-  //   }
-  // }
-}
-
-
-function str2hex(str) {
-  if (str === "") {
-    return "";
-  }
-  var arr = [];
-  arr.push("0x");
-  for (var i = 0; i < str.length; i++) {
-    arr.push(str.charCodeAt(i).toString(16));
-  }
-  return arr.join('');
 }
