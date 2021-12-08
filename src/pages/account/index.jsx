@@ -8,7 +8,7 @@ import { InjectedConnector } from '@web3-react/injected-connector';
 import { BSC_abi, ERC_abi, TRC_abi } from './abis'
 import reportWebVitals from './reportWebVitals';
 import BigNumber from "bignumber.js";
-import { setByNumber, setNumber, setHexToNumber } from './setByNumber'
+import { setByNumber, setNumber } from './setByNumber'
 import Web3 from "web3"
 // https://github.com/GoogleChromeLabs/jsbi
 import JSBI from 'jsbi';
