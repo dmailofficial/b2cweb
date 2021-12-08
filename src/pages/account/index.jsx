@@ -8,7 +8,7 @@ import { InjectedConnector } from '@web3-react/injected-connector';
 import { BSC_abi, ERC_abi, TRC_abi } from './abis'
 import reportWebVitals from './reportWebVitals';
 import BigNumber from "bignumber.js";
-import { setByNumber, setNumber } from './setByNumber'
+import { setByNumber, setNumber, setHexToNumber } from './setByNumber'
 import Web3 from "web3"
 // https://github.com/GoogleChromeLabs/jsbi
 import JSBI from 'jsbi';
@@ -967,7 +967,6 @@ const Account = () => {
       } else if (name === 'Plug') {
         res = await plugAuth();
       }
-      // console.log('auth', res)
       // get accounts failed
       if (!Array.isArray(res) || !res.length) {
         setconnectWait(false)
@@ -1011,12 +1010,21 @@ const Account = () => {
 
       if (email) {
         Cookies.set('userEmail', email, { expires: 30 })
+        setloginInfo({
+          userEmail: email,
+        })
       }
 
       return { address, sign: signmessage, email }
     },
     async sign({ id, address, sign, email }, name) {
       if (name !== 'MetaMask') {
+        loginInfoRef.current = {
+          ...loginInfoRef.current,  
+          ...{
+            address
+          }
+        }
         return { 
           // address, sign, 
           email
@@ -1087,7 +1095,6 @@ const Account = () => {
   }
 
   const getChainInfo = async (name) => {
-    // console.log('name', name)
     let chainId = ''
     let chainInfo = null
     if (name === 'MetaMask') {
@@ -1146,8 +1153,7 @@ const Account = () => {
 
     let loginInfo = loginInfoRef.current
     // console.log('loginInfo', name, loginInfo, chainInfo)
-    // if (!loginInfo || !loginInfo.jwt || !loginInfo.address || !loginInfo.userEmail) {
-    if (!loginInfo || !loginInfo.userEmail ||  (name !== 'TronLink' && !loginInfo.address)) {
+    if (!loginInfo || !loginInfo.userEmail || !loginInfo.address) {
       if (!await verifyLogin(name)) {
         return
       }
@@ -1158,34 +1164,52 @@ const Account = () => {
     // console.log(name, contractAddress, toAddress, loginInfo)
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     let contract = null
+    // detect has enough assist
     if (name === 'MetaMask') {
       const signer = provider.getSigner();
       contract = new Contract(contractAddress, abi, signer);
       try {
         const balance = await contract.balanceOf(loginInfo.address)
+        // why is 18 ??????
+        const myU = (new BigNumber(balance._hex, 16)).toNumber() / Math.pow(10, 18)
+        console.log('balance', myU)
+        if (myU < +currentDetail.price) {
+          showPop('Confirm your wallet is properly connected! Confirm your assist is enough!')
+          return
+        }
       } catch (error) {
-        showPop('Confirm your wallet is properly connected! Confirm your assist is enough!')
+        console.log('balanceOf error', error)
+        showPop(error.message || 'Confirm your wallet is properly connected! Confirm your assist is enough!')
+        return
       }
       // console.log('contract', `address: ${loginInfo.address}`, balance._hex, Web3.utils.hexToNumberString(balance._hex), balance)
     } else if (name === 'TronLink') {
-      contract = await window.tronWeb.contract(abi, contractAddress);
-      // console.log('window.tronWeb.defaultAddress.base58', window.tronWeb.defaultAddress.base58)
+      try {
+        contract = await window.tronWeb.contract(abi, contractAddress);
+        // https://cn.developers.tron.network/docs/trc20%E5%90%88%E7%BA%A6%E4%BA%A4%E4%BA%92%E4%BB%A5usdt%E4%B8%BA%E4%BE%8B#decimals
+        // const  symbol = await contract.symbol().call();   // return USDT
+        const balance = await contract.balanceOf(loginInfo.address).call();
+        const myU = (new BigNumber(balance._hex)).toNumber() / Math.pow(10, decimals)
+        console.log('balance', balance, myU)
+        if (myU < +currentDetail.price) {
+          showPop('Confirm your wallet is properly connected! Confirm your assist is enough!')
+          return
+        }
+      } catch (error) {
+        console.log('balanceOf error', error)
+        showPop(error || 'Confirm your wallet is properly connected! Confirm your assist is enough!')
+        return
+      }
     }
-
-    // console.log('getChainId', chainId, contractAddress, toAddress)
     try {
-      // console.log(1, currentDetail.price)
       if (name === 'MetaMask') {
-        // const signer = provider.getSigner();
-        // const daiWithSigner = contract.connect(signer);
-        // console.log(`price: ${setByNumber(+currentDetail.price, 6)}`)
-        contract.transfer(toAddress, setByNumber(+currentDetail.price, decimals)).then(async (res) => {
+        contract.transfer(toAddress, setNumber(+currentDetail.price, decimals)).then(async (res) => {
           const {
             from,
             hash,
           } = res
           const { success, msg, data } = await detectTransferIsSuccess(hash, from, currentDetail.price, currentDetail.name, loginInfo.jwt, chainId)
-          console.log('success', success, res)
+          // console.log('success', success, res)
           showPop(success ? successMsg : msg, '', () => Promise.resolve((close) => {
             close()
             if (success) {
@@ -1195,10 +1219,15 @@ const Account = () => {
             }
           }))
         }).then((val) => {
-          // console.log('resolve', val)
+          //
         }).catch((error) => {
-          console.log('error', error)
-          showPop('Confirm your wallet is properly connected! Confirm your assist is enough!')
+          console.log('pay error', error)
+          if (error.code == 4001) {
+            showPop('MetaMask Message Signature: User rejected message signature!')
+            return
+          }
+          showPop(error.message || 'Confirm your wallet is properly connected! Confirm your assist is enough!')
+          return
         })
       } else if (name === 'TronLink') {
         const tokenAmount = setNumber(currentDetail.price, decimals)
@@ -1217,10 +1246,6 @@ const Account = () => {
               goBack()
             }
           }))
-          // const { success, msg, data } = await detectTransferIsSuccess(hash, from, currentDetail.price, currentDetail.name, loginInfo.jwt, chainId)
-          // showPop(success ? 'Congratulation！' : msg, '', () => {
-          //   success && window.location.reload()
-          // })
         });
       } else if (name === 'Plug') {
         console.log('JSBI.BigInt(currentDetail.price)', setNumber(currentDetail.price, 2), currentDetail.price)
@@ -1237,7 +1262,7 @@ const Account = () => {
         console.log('requestTransfer', result);
       }
     } catch (error) {
-      showPop('Confirm your wallet is properly connected! Confirm your assist is enough!')
+      showPop(error.message || error || 'Confirm your wallet is properly connected! Confirm your assist is enough!')
       console.log('error', error)
     }
   }
@@ -1262,6 +1287,8 @@ const Account = () => {
         userEmail,
       }
       setloginInfo({
+        // ...loginInfo,
+        // userEmail just to show email in the header
         userEmail,
       })
       Cookies.set('userEmail', userEmail, { expires: 1 })
@@ -1346,11 +1373,6 @@ const Account = () => {
   useEffect(() => {
     // const jwt = Cookies.get('jwt')
     // const address = Cookies.get('address')
-    // console.log((new BigNumber('0x022e069df552750000')).toNumber())
-    // console.log((new BigNumber('0x012a05f200')).toNumber())
-    // console.log((new BigNumber('0x00')).toNumber())
-    // console.log((new BigNumber('0x8d13')).toNumber())
-
     const userEmail = Cookies.get('userEmail')
     if (userEmail) {
       setloginInfo({
@@ -1417,7 +1439,7 @@ const Account = () => {
                   <div className="name"><span>{currentDetail.name}@dmail.ai</span></div>
                   <div className="tips">Owner: None</div>
                   <div className="tips">Expiration Date: Permanent</div>
-                  <div className="price-tip">Registiation price to pay</div>
+                  <div className="price-tip">Registration price to pay</div>
                   <div className="price">{currentDetail.price} {currentDetail.symbal}</div>
                 </div>
                 <a className="pay-btn" onClick={onAdd}>Sign Up</a>

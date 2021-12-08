@@ -36,3 +36,10 @@ export const setNumber = (value, decimals) => {
     let assetScale = new BigNumber(10).pow(decimals).toFixed();
     return primitiveValue.times(assetScale).decimalPlaces(0).toFixed();
 }
+
+export const setHexToNumber = (hex, decimals) =>  {
+    const value = (new BigNumber(hex , 16))
+    // console.log(value, BigNumber(10).pow(-3))
+    const _value = value.div(10 ** decimals).toString()
+    console.log(value, _value)
+}
