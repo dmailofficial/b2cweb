@@ -9,8 +9,8 @@ const Routes = () => (
   <Suspense fallback={'loading...'}>
     <Switch>
       < Route exact path='/' component={Index} />
-      < Route exact path='/account' component={Account} />
-      < Route exact path='/accountTest' component={Account2} />
+      < Route exact path='/account' component={Account2} />
+      {/* < Route exact path='/accountTest' component={Account2} /> */}
       <Redirect from="*" to='/' />
     </Switch>
   </Suspense>

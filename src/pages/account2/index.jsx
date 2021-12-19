@@ -783,7 +783,7 @@ const EndWrapper = styled.div`
 const End = () => {
   return (
     <EndWrapper>
-      <div className="end-text">If you have any problem on presale, please contact <span>contact@damil.ai</span> and stay tuned 2nd Presale!</div>
+      <div className="end-text">If you have any problem on presale, please contact <span>contact@dmail.ai</span> and stay tuned 2nd Presale!</div>
       <br />
       <div className="wish">Wish to see you in web3!</div>
     </EndWrapper>
