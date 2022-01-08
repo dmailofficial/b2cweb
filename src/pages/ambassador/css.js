@@ -193,8 +193,10 @@ const Step1 = styled.div`
         }
         .banner {
             margin: 0;
-            height: 478px;
+            min-height: 478px;
+            height: auto;
             background: #1D1D1F;
+            padding-bottom: 40px;
             h1 {
                 padding-top: 50px;
                 font-size: 30px;
@@ -304,7 +306,6 @@ const Step2 = styled.div`
         line-height: 57px;
         h1{
             display: inline-block;
-            height: 57px;
             font-size: 48px;
             font-family: Montserrat-Bold, Montserrat;
             font-weight: bold;
@@ -510,7 +511,7 @@ const Step2 = styled.div`
             height: auto;
             h1{
                 display: block;
-                height: 40px;
+                height: auto;
                 font-size: 22px;
                 line-height: 40px;
             } 
@@ -528,8 +529,10 @@ const Step2 = styled.div`
                 }
                 .gcontent{
                     .checkboxWrap.expertise{
-                        .MuiFormControlLabel-root{
-                            width: 45%;
+                        .MuiFormGroup-root{
+                            .MuiFormControlLabel-root{
+                                width: 100%;
+                            }
                         }
                     }
                     .checkboxWrap.channels{

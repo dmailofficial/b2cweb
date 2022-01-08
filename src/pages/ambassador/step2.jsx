@@ -126,7 +126,7 @@ const channels = [
 const rules = {
   referralEmail: {
     name: "referralEmail",
-    value: "12313eee13123",
+    value: "",
     required: false,
     error: false,
     message: ""
@@ -341,14 +341,14 @@ class Step2Component extends React.Component{
                     <FormControl variant="standard"> 
                       <MyTextField id="outlined-basic" 
                         className="input" 
-                        placeholder="Last" 
+                        placeholder="State/Region/Province"
                         variant="outlined"
                         onChange={this.handleChange('state')}
                       />
                     </FormControl>
                   </div>
                   <FormControl sx={{ m: 1, width: 300 }} className="mt24">
-                    <InputLabel id="country">Name</InputLabel>
+                    <InputLabel id="country">Country</InputLabel>
                     <Select
                       labelId="country"
                       id="country"

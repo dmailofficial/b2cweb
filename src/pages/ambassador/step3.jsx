@@ -8,7 +8,7 @@ const Step3Component = (param) => {
         <h2>Thank you! Your response has been submitted.</h2>
         <p>Due to the high demand, we will endeavor to evaluate your application as soon as possible.</p>
         <p className="mt20">Best Regards,</p>
-        <p><b>Dmail team</b></p>
+        <p><b>Dmail Network Team</b></p>
         <div className="btnWrap"><span className="backBtn" onClick={()=>{param.preStep("pre")}}>Back</span></div>
       </div>
       
