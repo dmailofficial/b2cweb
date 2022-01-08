@@ -5,7 +5,7 @@ import p3 from '@/static/images/p3.png'
 import p4 from '@/static/images/p4.png'
 import p5 from '@/static/images/p5.png'
 
-const Step1Component = () => {
+const Step1Component = (param) => {
   
 
   return (
@@ -16,7 +16,7 @@ const Step1Component = () => {
           By applying for this program, we will add you to the waiting list as Ambassador Candidates. 
         </p>
         <p>This is a volunteer program for true fans who are passionate about what we do.</p>
-        <span className="applyBtn">Apply Now</span>
+        <span className="applyBtn" onClick={()=>{param.nextStep("next")}}>Apply Now</span>
       </div>
       <div className="culture">
         <div className="cheader">

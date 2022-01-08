@@ -1,23 +1,42 @@
 import React, {useEffect, useState} from 'react';
 
-import Header from '@/components/header'
+import Header from '@/components/newheader'
 import Step1 from './step1'
 import Step2 from './step2'
 import Step3 from './step3'
-import p1 from '@/static/images/p1.png'
 
 const Index = () => {
   const [step1, setStep1] = useState(true);
-  const [step2, setStep2] = useState(true);
-  const [step3, setStep3] = useState(true);
+  const [step2, setStep2] = useState(false);
+  const [step3, setStep3] = useState(false);
 
+  const toStep1 = () => {
+    setStep3(false)
+    setStep2(false)
+    setStep1(true)
+  }
+
+  const toStep2 = (direction) => {
+    if(direction == "next"){
+      setStep1(false)
+      setStep2(true)
+    }else{
+      setStep3(false)
+      setStep2(true)
+    }
+  }
+
+  const toStep3 = () => {
+    setStep2(false)
+    setStep3(true)
+  }
 
   return (
     <>
-      {/* <Header /> */}
-      { step1 ?  <Step1></Step1> : null }
-      { step2 ?  <Step2></Step2> : null }
-      { step3 ?  <Step3></Step3> : null }
+      <Header />
+      { step1 ?  <Step1 nextStep={toStep2} ></Step1> : null }
+      { step2 ?  <Step2 nextStep={toStep3} preStep={toStep1}></Step2> : null }
+      { step3 ?  <Step3 preStep={toStep1}></Step3> : null }
     </>
   );
 }
