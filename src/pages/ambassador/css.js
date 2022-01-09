@@ -341,6 +341,9 @@ const Step2 = styled.div`
                     line-height: 56px;
                     padding-left: 20px;
                 }
+                span{
+                    color: #E84118;
+                }
             }
             .gcontent{
                 position:relative;

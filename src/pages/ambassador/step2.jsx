@@ -105,19 +105,19 @@ const channels = [
   {
     checked: true,
     name: "Referred by a friend",
-    value: "1",
+    value: "Referred by a friend",
     disabled: true
   },
   {
     checked: true,
     name: "Twitter",
-    value: "2",
+    value: "Twitter",
     disabled: true
   },
   {
     checked: true,
     name: "Telegram",
-    value: "3",
+    value: "Telegram",
     disabled: true
   },
 ]
@@ -229,20 +229,57 @@ class Step2Component extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      formData: {...rules}
+      formData: {...rules},
+      showOther: false
     }
   }
 
 
   handleChange = (prop) => (event) => {
     if(prop == "expertise" || prop == "channel"){
-      this.state.formData[prop].value = event.target.defaultValue
+      let _v = event.target.defaultValue
+      this.state.formData[prop].value = _v
+
+      if(prop === "channel" && _v === "Other"){
+        this.setState({showOther:true});
+      }else if(prop === "channel" && _v != "Other"){
+        this.setState({showOther:false});
+      }
+      
     }else{
       this.state.formData[prop].value = event.target.value
     }
 
     this.setState({formData: {...this.state.formData}})
   }
+
+
+  verification = () => {
+
+    return true;
+  }
+
+  makeParam = () => {
+    let _param = {}
+    Object.keys(this.state.formData).forEach((key)=>{
+      // console.log(key)
+      // console.log(key,this.state.formData[key].value);
+      _param[key] = this.state.formData[key].value;
+    });
+
+    console.log("_param: ",_param)
+    return _param;
+  }
+
+  submit = () => {
+    this.makeParam();
+    if(!this.verification()){
+      return;
+    }
+
+  }
+
+
 
   renderCheckboxCom = (list, itemname, value) => {
     return (
@@ -322,13 +359,13 @@ class Step2Component extends React.Component{
                     <FormControl variant="standard">
                       <MyTextField id="email" 
                         className="input" 
-                        placeholder="" 
+                        placeholder="E-mail address" 
                         variant="outlined" 
                         onChange={this.handleChange('email')}
                       />
                     </FormControl>
                   </div>
-                  <div className="label mt9">Your Location</div>
+                  <div className="label mt9">Your Location*</div>
                   <div className="multiColumn">
                     <FormControl variant="standard"  className="mr20">
                       <MyTextField id="city" 
@@ -385,7 +422,7 @@ class Step2Component extends React.Component{
                     <FormControl variant="standard">
                       <MyTextField id="community" 
                         className="input" 
-                        placeholder="" 
+                        placeholder="Please enter the community size" 
                         variant="outlined"
                         onChange={this.handleChange('community')}
                       />
@@ -419,7 +456,7 @@ class Step2Component extends React.Component{
 
           <div className="formGroupWrap mt24">
             <div className="gheader">
-              <h2>Your area of expertise</h2>
+              <h2>Your area of expertise<span>*</span></h2>
             </div>
             <div className="gcontent">
               <div className="checkboxWrap expertise">
@@ -433,7 +470,6 @@ class Step2Component extends React.Component{
                       {this.renderCheckboxCom(expertise)}
                     </RadioGroup>
                 </FormControl>
-                <p className="tip mt24">Select a choice</p>
               </div>
             </div>
           </div>
@@ -468,7 +504,7 @@ class Step2Component extends React.Component{
                 >
                 {this.renderCheckboxCom(channels)}
                   <div className="otherChannel">
-                    <FormControlLabel value="other" 
+                    <FormControlLabel value="Other" 
                       control={<Radio sx={{
                           color: orange,
                         '&.Mui-checked': {
@@ -476,15 +512,18 @@ class Step2Component extends React.Component{
                         },
                       }}/>} label="Other" />
                     <div>
-                      <FormControl variant="standard">
-                          <MyTextField 
-                            id="otherchannel" 
-                            className="input" 
-                            placeholder="Fill in your own" 
-                            variant="outlined" 
-                            onChange={this.handleChange('otherchannel')}
-                          />
-                      </FormControl>
+                      {this.state.showOther ? 
+                        <FormControl variant="standard">
+                            <MyTextField 
+                              id="otherchannel" 
+                              className="input" 
+                              placeholder="Fill in your own" 
+                              variant="outlined" 
+                              onChange={this.handleChange('otherchannel')}
+                            />
+                        </FormControl>
+                        : null 
+                      }
                     </div>
                   </div>
                 </RadioGroup>
@@ -493,7 +532,7 @@ class Step2Component extends React.Component{
             </div>
           </div>
           <div className="formGroupWrap mt35">
-            <Button variant="contained" className="btn submit" onClick={this.props.nextStep}>
+            <Button variant="contained" className="btn submit" onClick={this.submit}>
               submit
             </Button>
             <Button variant="outlined" className="btn back" onClick={this.props.preStep}>
