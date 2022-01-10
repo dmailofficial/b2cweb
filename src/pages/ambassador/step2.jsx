@@ -15,9 +15,10 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormLabel from '@mui/material/FormLabel';
 import Country from './country'
+import {submit} from './utils'
 
 // overflows style
-const MyTextField = styled(OutlinedInput)({
+const MyTextField = styled(TextField)({
   
   '&:hover': {
     borderColor: 'rgba(171, 171, 171, 0.4)',
@@ -27,12 +28,26 @@ const MyTextField = styled(OutlinedInput)({
   },
   '&.Mui-focused': {
     '& fieldset.MuiOutlinedInput-notchedOutline': {
+      borderColor: 'rgba(232,65,24, 0.3)',
+    },
+    '& fieldset.MuiOutlinedInput-notchedOutline.Mui-focused': {
       borderColor: 'rgba(232,65,24, 0.3) !important',
+    },
+    '& fieldset.MuiOutlinedInput-notchedOutline.Mui-error': {
+      borderColor: "#d32f2f !important"
     },
   },
   '& fieldset.MuiOutlinedInput-notchedOutline': {
     borderColor: 'rgba(171, 171, 171, 0.3) !important',
   },
+  '& fieldset.MuiOutlinedInput-notchedOutline.Mui-focused': {
+    borderColor: 'rgba(232,65,24, 0.3) !important',
+  },
+  '& fieldset.MuiOutlinedInput-notchedOutline.Mui-error': {
+    borderColor: "#d32f2f !important"
+  },
+  
+  
 });
 // base color
 const orange = "#E84118";
@@ -136,84 +151,84 @@ const rules = {
     value: "",
     required: true,
     error: false,
-    message: ""
+    message: "Required"
   },
   lastname: {
     name: "lastname",
     value: "",
-    required: false,
+    required: true,
     error: false,
-    message: ""
+    message: "Required"
   },
   email: {
     name: "email",
     value: "",
-    required: false,
+    required: true,
     error: false,
-    message: ""
+    message: "Required"
   },
   city: {
     name: "city",
     value: "",
-    required: false,
+    required: true,
     error: false,
-    message: ""
+    message: "Required"
   },
   state: {
     name: "state",
     value: "",
-    required: false,
+    required: true,
     error: false,
-    message: ""
+    message: "Required"
   },
   country: {
     name: "country",
     value: "",
-    required: false,
+    required: true,
     error: false,
-    message: ""
+    message: "Required"
   },
   community: {
     name: "community",
     value: "",
-    required: false,
+    required: true,
     error: false,
-    message: ""
+    message: "Required"
   },
   twitter: {
     name: "twitter",
     value: "",
     required: true,
     error: false,
-    message: ""
+    message: "Required"
   },
   linkedin: {
     name: "linkedin",
     value: "",
     required: false,
     error: false,
-    message: ""
+    message: "Required"
   },
   expertise: {
     name: "expertise",
     value: "",
-    required: false,
+    required: true,
     error: false,
-    message: ""
+    message: "Select a choice"
   },
   briefly: {
     name: "briefly",
     value: "",
-    required: false,
+    required: true,
     error: false,
-    message: ""
+    message: "Required"
   },
   channel: {
     name: "channel",
     value: "",
-    required: false,
+    required: true,
     error: false,
-    message: ""
+    message: "Select a choice"
   },
   otherchannel: {
     name: "otherchannel",
@@ -229,7 +244,7 @@ class Step2Component extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      formData: {...rules},
+      formData: {...JSON.parse(JSON.stringify(rules))},
       showOther: false
     }
   }
@@ -254,31 +269,71 @@ class Step2Component extends React.Component{
   }
 
 
-  verification = () => {
+  validate = () => {
+    let _formData = Object.assign({},this.state.formData)
+    let _flag = true;
 
-    return true;
+    Object.keys(_formData).forEach((key)=>{
+      if(_formData[key].required && !_formData[key].value){
+        _formData[key].error = true;
+        _flag = false;
+      }else{
+        _formData[key].error = false;
+      }
+    });
+
+    this.setState({formData: _formData})
+
+    return _flag;
   }
 
   makeParam = () => {
     let _param = {}
-    Object.keys(this.state.formData).forEach((key)=>{
-      // console.log(key)
-      // console.log(key,this.state.formData[key].value);
-      _param[key] = this.state.formData[key].value;
-    });
+    // Object.keys(this.state.formData).forEach((key)=>{
+      // if(key = "referralEmail"){
+      //   _param['refemail'] = this.state.formData[key].value;
+      // }else{
+      //   _param[key] = this.state.formData[key].value;
+      // }
+    // });
+    _param.refemail   = this.state.formData.referralEmail.value
+    _param.email      = this.state.formData.email.value
+    _param.firstname  = this.state.formData.firstname.value
+    _param.lastname   = this.state.formData.lastname.value
+    _param.contry     = this.state.formData.country.value
+    _param.city       = this.state.formData.city.value
+    _param.state      = this.state.formData.state.value
+    _param.twitter    = this.state.formData.twitter.value
+    _param.linkedin   = this.state.formData.linkedin.value
+    _param.socialsize = this.state.formData.community.value
+    _param.expertise  = this.state.formData.expertise.value
+    _param.about      = this.state.formData.briefly.value
+    _param.hearfrom   = this.state.formData.channel.value
+    if(this.state.formData.channel.value == "Other"){
+      _param.hearfrom   = this.state.formData.otherchannel.value
+    }
+    
 
-    console.log("_param: ",_param)
     return _param;
   }
 
   submit = () => {
-    this.makeParam();
-    if(!this.verification()){
+    let _param = this.makeParam();
+    let _validate = this.validate();
+    if(!_validate){
       return;
     }
 
+    submit(_param).then((res)=>{
+      if(res.code == 1){
+        this.props.nextStep();
+        let _d = {...JSON.parse(JSON.stringify(rules))}
+        this.setState({formData: _d})
+      }
+    }).catch((e)=>{
+      console.log("e:",e)
+    })
   }
-
 
 
   renderCheckboxCom = (list, itemname, value) => {
@@ -331,7 +386,7 @@ class Step2Component extends React.Component{
           <div className="multiColumn mt24">
             <div className="formGroupWrap contactInfo">
               <div className="gheader">
-                <h2>Contact information*</h2>
+                <h2>Contact information<span>*</span></h2>
               </div>
               <div className="gcontent">
                   <span className="orangeBlock"></span>
@@ -342,6 +397,10 @@ class Step2Component extends React.Component{
                           className="input" 
                           placeholder="First" 
                           variant="outlined" 
+                          value = {this.state.formData.firstname.value}
+                          error = {this.state.formData.firstname.error}
+                          helperText={this.state.formData.firstname.error ? 
+                                  this.state.formData.firstname.message : ''}
                           onChange={this.handleChange('firstname')}
                         />
                       </FormControl>
@@ -350,6 +409,10 @@ class Step2Component extends React.Component{
                           className="input" 
                           placeholder="Last" 
                           variant="outlined"
+                          value = {this.state.formData.lastname.value}
+                          error = {this.state.formData.lastname.error}
+                          helperText= {this.state.formData.lastname.error ? 
+                              this.state.formData.lastname.message : null}
                           onChange={this.handleChange('lastname')}
                         />
                       </FormControl>
@@ -357,21 +420,29 @@ class Step2Component extends React.Component{
                   <div className="label mt9">Your E-mail</div>
                   <div >
                     <FormControl variant="standard">
-                      <MyTextField id="email" 
-                        className="input" 
-                        placeholder="E-mail address" 
-                        variant="outlined" 
+                      <MyTextField id="email"
+                        className="input"
+                        placeholder="E-mail address"
+                        variant="outlined"
+                        value = {this.state.formData.email.value}
+                        error = {this.state.formData.email.error}
+                        helperText= {this.state.formData.email.error ? 
+                            this.state.formData.email.message:null}
                         onChange={this.handleChange('email')}
                       />
                     </FormControl>
                   </div>
-                  <div className="label mt9">Your Location*</div>
+                  <div className="label mt9">Your Location</div>
                   <div className="multiColumn">
                     <FormControl variant="standard"  className="mr20">
-                      <MyTextField id="city" 
-                        className="input" 
-                        placeholder="City" 
-                        variant="outlined" 
+                      <MyTextField id="city"
+                        className="input"
+                        placeholder="City"
+                        variant="outlined"
+                        value = {this.state.formData.city.value}
+                        error = {this.state.formData.city.error}
+                        helperText= {this.state.formData.city.error ? 
+                            this.state.formData.city.message : null}
                         onChange={this.handleChange('city')}
                       />
                     </FormControl>
@@ -380,6 +451,10 @@ class Step2Component extends React.Component{
                         className="input" 
                         placeholder="State/Region/Province"
                         variant="outlined"
+                        value = {this.state.formData.state.value}
+                        error = {this.state.formData.state.error}
+                        helperText= {this.state.formData.state.error ?
+                            this.state.formData.state.message: null}
                         onChange={this.handleChange('state')}
                       />
                     </FormControl>
@@ -389,8 +464,11 @@ class Step2Component extends React.Component{
                     <Select
                       labelId="country"
                       id="country"
+                      className="select"
                       // multiple
                       value={this.state.formData.country.value}
+                      // error = {this.state.formData.country.error}
+                      helperText= {this.state.formData.country.message}
                       // onChange={handleChange}
                       onChange={this.handleChange('country')}
                       input={<OutlinedInput label="Name" />}
@@ -406,6 +484,11 @@ class Step2Component extends React.Component{
                         </MenuItem>
                       ))}
                     </Select>
+                    {
+                    this.state.formData.country.error ?
+                    <p className="tip">{this.state.formData.country.message}</p>
+                    : null
+                  }
                 </FormControl>
               </div>
             </div>
@@ -417,24 +500,32 @@ class Step2Component extends React.Component{
               <div className="gcontent">
                   <span className="orangeBlock"></span>
 
-                  <div className="label mt9">What is the size of the community you can reach directly*</div>
+                  <div className="label mt9">What is the size of the community you can reach directly<span>*</span></div>
                   <div >
                     <FormControl variant="standard">
                       <MyTextField id="community" 
                         className="input" 
                         placeholder="Please enter the community size" 
                         variant="outlined"
+                        value={this.state.formData.community.value}
+                        error = {this.state.formData.community.error}
+                        helperText= {this.state.formData.community.error ?
+                           this.state.formData.community.message : null}
                         onChange={this.handleChange('community')}
                       />
                     </FormControl>
                   </div>
-                  <div className="label mt9">Your Twitter URL*</div>
+                  <div className="label mt9">Your Twitter URL<span>*</span></div>
                   <div >
                     <FormControl variant="standard">
                       <MyTextField id="twitter" 
                         className="input" 
                         placeholder="Your Twitter URL" 
                         variant="outlined" 
+                        value={this.state.formData.twitter.value}
+                        error = {this.state.formData.twitter.error}
+                        helperText= {this.state.formData.twitter.error ? 
+                            this.state.formData.twitter.message: null}
                         onChange={this.handleChange('twitter')}
                       />
                     </FormControl>
@@ -465,18 +556,25 @@ class Step2Component extends React.Component{
                       aria-label="gender"
                       name="controlled-radio-buttons-group"
                       value={this.state.formData.expertise.value}
+                      // error = {this.state.formData.expertise.error}
+                      helperText= {this.state.formData.expertise.message}
                       onChange={this.handleChange("expertise")}
                     >
                       {this.renderCheckboxCom(expertise)}
                     </RadioGroup>
                 </FormControl>
+                  {
+                    this.state.formData.expertise.error ?
+                    <p className="tip">{this.state.formData.expertise.message}</p>
+                    : null
+                  }
               </div>
             </div>
           </div>
 
           <div className="formGroupWrap mt24">
             <div className="gheader">
-              <h2>Please briefly tell us about yourself*</h2>
+              <h2>Please briefly tell us about yourself<span>*</span></h2>
             </div>
             <div className="gcontent">
                 <span className="orangeBlock"></span>
@@ -484,14 +582,21 @@ class Step2Component extends React.Component{
                     placeholder="You can share your relavant experience and resources"
                     className="input userBriefly"
                     id="briefly"
+                    value={this.state.formData.briefly.value}
                     onChange={this.handleChange('briefly')}
                   ></textarea>
+                  {
+                    this.state.formData.briefly.error ?
+                    <p className="tip">{this.state.formData.briefly.message}</p>
+                    : null
+                  }
+                  
             </div>
           </div>
 
           <div className="formGroupWrap mt24">
             <div className="gheader">
-              <h2>How did you hear about Dmail*</h2>
+              <h2>How did you hear about Dmail<span>*</span></h2>
             </div>
             <div className="gcontent">
               <div className="checkboxWrap channels">
@@ -528,6 +633,11 @@ class Step2Component extends React.Component{
                   </div>
                 </RadioGroup>
               </FormControl>
+                {
+                    this.state.formData.channel.error ?
+                    <p className="tip">{this.state.formData.channel.message}</p>
+                    : null
+                }
               </div>
             </div>
           </div>

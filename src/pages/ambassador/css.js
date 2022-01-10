@@ -67,6 +67,7 @@ const Step1 = styled.div`
             line-height: 60px;
             text-align: center;
             margin-top: 50px;
+            cursor: pointer;
         }
     }
     .culture{
@@ -367,6 +368,9 @@ const Step2 = styled.div`
                     color: #9A9A9A;
                     line-height: 20px;
                     padding: 15px 0 12px;
+                    span{
+                        color: #E84118;
+                    }
                 }
                 .MuiFormControl-root{
                     width:100%;
@@ -420,6 +424,11 @@ const Step2 = styled.div`
                     color: #E84118;
                     line-height: 14px;
                     margin-top: 5px;
+                }
+                .select {
+                    .MuiOutlinedInput-notchedOutline{
+                        border-color: rgba(171, 171, 171, 0.4);
+                    }
                 }
                 .checkboxWrap{
                     .MuiFormControlLabel-label{
@@ -612,6 +621,7 @@ const Step3 = styled.div`
             line-height: 32px;
             text-align: center;
             margin-top: 30px;
+            cursor: pointer;
         }
         .mt20 {
             margin-top: 30px;

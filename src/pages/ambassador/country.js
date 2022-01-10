@@ -33,7 +33,7 @@ const country =  [
     ["CF", "Central African Republic"],   
     ["TD", "Chad"],   
     ["CL", "Chile"],   
-    // ["CN", "China"],   
+    ["CN", "China"],   
     ["CO", "Colombia"],   
     ["CG", "Congo"],   
     ["CK", "Cook Is."],   
