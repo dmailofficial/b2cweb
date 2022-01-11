@@ -575,12 +575,12 @@ const Step2 = styled.div`
         }
         .multiColumn {
             display: flex;
-            flex-direction: row;
+            align-items: center;
             justify-content: space-between;
+            // justify-content: space-evenly;
 
-            >.MuiFormControl-root{
-                width:48%  !important;
-                margin:0;
+            >.controlWrap{
+                width:48%;
             }
         }
         .mt24{
@@ -651,6 +651,10 @@ const Step2 = styled.div`
             }
             .multiColumn {
                 display: block;
+                >.controlWrap{
+                    width:100%;
+                    margin-bottom: 20px;
+                }
             }
         }
     }
@@ -665,7 +669,7 @@ const Step3 = styled.div`
     background-position: 50% 10%;
     background-repeat: no-repeat;
     color: #fff;
-    height: 100vh;
+    height: calc(100vh - 67px);
     .content {
         padding-top: 50vh;
         h2 {

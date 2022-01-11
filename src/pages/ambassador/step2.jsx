@@ -163,9 +163,12 @@ const rules = {
   email: {
     name: "email",
     value: "",
+    reg: /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,6})$/,
     required: true,
     error: false,
-    message: "Required"
+    regerror: false,
+    message: "Required",
+    regmessage: "Email address is required"
   },
   city: {
     name: "city",
@@ -280,6 +283,16 @@ class Step2Component extends React.Component{
       }else{
         _formData[key].error = false;
       }
+
+      if(key == "email" && _formData[key].value){
+        let _reg = new RegExp(_formData[key].reg);
+        if(!(_reg.test(_formData[key].value))){
+          _formData[key].regerror = true;
+          _flag = false;
+        }else{
+          _formData[key].regerror = false;
+        }
+      }
     });
 
     this.setState({formData: _formData})
@@ -392,30 +405,34 @@ class Step2Component extends React.Component{
                   <span className="orangeBlock"></span>
                   <div className="label">Your Name</div>
                   <div className="multiColumn">
-                      <FormControl variant="standard"  className="mr20">
-                        <MyTextField id="firstname" 
-                          className="input" 
-                          placeholder="First" 
-                          variant="outlined" 
-                          value = {this.state.formData.firstname.value}
-                          error = {this.state.formData.firstname.error}
-                          helperText={this.state.formData.firstname.error ? 
-                                  this.state.formData.firstname.message : ''}
-                          onChange={this.handleChange('firstname')}
-                        />
-                      </FormControl>
-                      <FormControl variant="standard"> 
-                        <MyTextField id="lastname" 
-                          className="input" 
-                          placeholder="Last" 
-                          variant="outlined"
-                          value = {this.state.formData.lastname.value}
-                          error = {this.state.formData.lastname.error}
-                          helperText= {this.state.formData.lastname.error ? 
-                              this.state.formData.lastname.message : null}
-                          onChange={this.handleChange('lastname')}
-                        />
-                      </FormControl>
+                      <div className="controlWrap">
+                        <FormControl variant="standard"  className="mr20">
+                          <MyTextField id="firstname" 
+                            className="input" 
+                            placeholder="First" 
+                            variant="outlined" 
+                            value = {this.state.formData.firstname.value}
+                            error = {this.state.formData.firstname.error}
+                            helperText={this.state.formData.firstname.error ? 
+                                    this.state.formData.firstname.message : ''}
+                            onChange={this.handleChange('firstname')}
+                          />
+                        </FormControl>
+                      </div>
+                      <div className="controlWrap">
+                        <FormControl variant="standard"> 
+                          <MyTextField id="lastname" 
+                            className="input" 
+                            placeholder="Last" 
+                            variant="outlined"
+                            value = {this.state.formData.lastname.value}
+                            error = {this.state.formData.lastname.error}
+                            helperText= {this.state.formData.lastname.error ? 
+                                this.state.formData.lastname.message : null}
+                            onChange={this.handleChange('lastname')}
+                          />
+                        </FormControl>
+                      </div>
                   </div>
                   <div className="label mt9">Your E-mail</div>
                   <div >
@@ -425,39 +442,45 @@ class Step2Component extends React.Component{
                         placeholder="E-mail address"
                         variant="outlined"
                         value = {this.state.formData.email.value}
-                        error = {this.state.formData.email.error}
+                        error = {this.state.formData.email.error || this.state.formData.email.regerror}
                         helperText= {this.state.formData.email.error ? 
-                            this.state.formData.email.message:null}
+                            this.state.formData.email.message: 
+                              (this.state.formData.email.regerror ? 
+                              this.state.formData.email.regmessage : null)}
                         onChange={this.handleChange('email')}
                       />
                     </FormControl>
                   </div>
                   <div className="label mt9">Your Location</div>
                   <div className="multiColumn">
-                    <FormControl variant="standard"  className="mr20">
-                      <MyTextField id="city"
-                        className="input"
-                        placeholder="City"
-                        variant="outlined"
-                        value = {this.state.formData.city.value}
-                        error = {this.state.formData.city.error}
-                        helperText= {this.state.formData.city.error ? 
-                            this.state.formData.city.message : null}
-                        onChange={this.handleChange('city')}
-                      />
-                    </FormControl>
-                    <FormControl variant="standard"> 
-                      <MyTextField id="outlined-basic" 
-                        className="input" 
-                        placeholder="State/Region/Province"
-                        variant="outlined"
-                        value = {this.state.formData.state.value}
-                        error = {this.state.formData.state.error}
-                        helperText= {this.state.formData.state.error ?
-                            this.state.formData.state.message: null}
-                        onChange={this.handleChange('state')}
-                      />
-                    </FormControl>
+                    <div className="controlWrap">
+                      <FormControl variant="standard"  className="mr20">
+                        <MyTextField id="city"
+                          className="input"
+                          placeholder="City"
+                          variant="outlined"
+                          value = {this.state.formData.city.value}
+                          error = {this.state.formData.city.error}
+                          helperText= {this.state.formData.city.error ? 
+                              this.state.formData.city.message : null}
+                          onChange={this.handleChange('city')}
+                        />
+                      </FormControl>
+                    </div>
+                    <div className="controlWrap">
+                      <FormControl variant="standard"> 
+                        <MyTextField id="outlined-basic" 
+                          className="input" 
+                          placeholder="State/Region/Province"
+                          variant="outlined"
+                          value = {this.state.formData.state.value}
+                          error = {this.state.formData.state.error}
+                          helperText= {this.state.formData.state.error ?
+                              this.state.formData.state.message: null}
+                          onChange={this.handleChange('state')}
+                        />
+                      </FormControl>
+                    </div>
                   </div>
                   <FormControl sx={{ m: 1, width: 300 }} className="mt24 selectWrap">
                     <InputLabel id="country">Country</InputLabel>
