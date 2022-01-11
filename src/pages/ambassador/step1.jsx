@@ -24,12 +24,13 @@ const Step1Component = (param) => {
             <h2>Culture & Mission</h2>
         </div>
         <div className="citem">
-            <div className="img"><img src={p1}></img></div>
+            <div className="img h5"><img src={p1}></img></div>
             <div className="desc">
               <span>Dmail</span>
               <h3>Our Culture</h3>
               <p>The enforcer of Web3</p>
             </div>
+            <div className="img pc"><img src={p1}></img></div>
             
         </div>
         <div className="citem">

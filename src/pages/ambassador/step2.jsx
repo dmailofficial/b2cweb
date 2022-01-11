@@ -20,37 +20,37 @@ import {submit} from './utils'
 // overflows style
 const MyTextField = styled(TextField)({
   
-  '&:hover': {
-    borderColor: 'rgba(171, 171, 171, 0.4)',
-  },
-  '& fieldset': {
-    borderColor: 'rgba(171, 171, 171, 0.21)',
-  },
-  '&.Mui-focused': {
-    '& fieldset.MuiOutlinedInput-notchedOutline': {
-      borderColor: 'rgba(232,65,24, 0.3)',
-    },
-    '& fieldset.MuiOutlinedInput-notchedOutline.Mui-focused': {
-      borderColor: 'rgba(232,65,24, 0.3) !important',
-    },
-    '& fieldset.MuiOutlinedInput-notchedOutline.Mui-error': {
-      borderColor: "#d32f2f !important"
-    },
-  },
-  '& fieldset.MuiOutlinedInput-notchedOutline': {
-    borderColor: 'rgba(171, 171, 171, 0.3) !important',
-  },
-  '& fieldset.MuiOutlinedInput-notchedOutline.Mui-focused': {
-    borderColor: 'rgba(232,65,24, 0.3) !important',
-  },
-  '& fieldset.MuiOutlinedInput-notchedOutline.Mui-error': {
-    borderColor: "#d32f2f !important"
-  },
+  // '&:hover': {
+  //   borderColor: 'rgba(171, 171, 171, 0.4)',
+  // },
+  // '& fieldset': {
+  //   borderColor: 'rgba(171, 171, 171, 0.21)',
+  // },
+  // '&.Mui-focused': {
+  //   '& fieldset.MuiOutlinedInput-notchedOutline': {
+  //     borderColor: 'rgba(232,65,24, 0.3)',
+  //   },
+  //   '& fieldset.MuiOutlinedInput-notchedOutline.Mui-focused': {
+  //     borderColor: 'rgba(232,65,24, 0.3) !important',
+  //   },
+  //   '& fieldset.MuiOutlinedInput-notchedOutline.Mui-error': {
+  //     borderColor: "#d32f2f !important"
+  //   },
+  // },
+  // '& fieldset.MuiOutlinedInput-notchedOutline': {
+  //   borderColor: 'rgba(171, 171, 171, 0.3) !important',
+  // },
+  // '& fieldset.MuiOutlinedInput-notchedOutline.Mui-focused': {
+  //   borderColor: 'rgba(232,65,24, 0.3) !important',
+  // },
+  // '& fieldset.MuiOutlinedInput-notchedOutline.Mui-error': {
+  //   borderColor: "#d32f2f !important"
+  // },
   
   
 });
-// base color
-const orange = "#E84118";
+// main color
+const orange = "#FF6633";
 
  // expertise sets
 const expertise = [
@@ -459,7 +459,7 @@ class Step2Component extends React.Component{
                       />
                     </FormControl>
                   </div>
-                  <FormControl sx={{ m: 1, width: 300 }} className="mt24">
+                  <FormControl sx={{ m: 1, width: 300 }} className="mt24 selectWrap">
                     <InputLabel id="country">Country</InputLabel>
                     <Select
                       labelId="country"

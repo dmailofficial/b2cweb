@@ -32,7 +32,7 @@ const HeaderWrap = styled.div`
   position: relative;
   z-index: 20;
   .on{
-    color: #E84118;
+    color: #FF6633;
   }
   .nav_wrapper{
     background-color: #1D1D1F;

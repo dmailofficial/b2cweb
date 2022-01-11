@@ -857,3 +857,35 @@ html,
         margin-top: 12px;
       }
     }
+
+
+    @font-face {
+      font-family: "Montserrat";
+      src: url(../font/Roboto-Black.ttf);
+      src: url(../font/Roboto-Black.ttf)  format('truetype');
+    }
+    @font-face {
+          font-family: "Montserrat-Bold";
+          src: url(../font/Roboto-Bold.ttf);
+          src: url(../font/Roboto-Bold.ttf)  format('truetype');
+    }
+    @font-face {
+          font-family: "Montserrat-Light";
+          src: url(../font/Roboto-Light.ttf);
+          src: url(../font/Roboto-Light.ttf)  format('truetype');
+    }
+    @font-face {
+          font-family: "Montserrat-Medium";
+          src: url(../font/Roboto-Medium.ttf);
+          src: url(../font/Roboto-Medium.ttf)  format('truetype');
+    }
+    @font-face {
+          font-family: "Montserrat-Regular";
+          src: url(../font/Roboto-Regular.ttf);
+          src: url(../font/Roboto-Regular.ttf)  format('truetype');
+    }
+    @font-face {
+          font-family: "Montserrat-Thin";
+          src: url(../font/Roboto-Thin.ttf);
+          src: url(../font/Roboto-Thin.ttf)  format('truetype');
+    }

@@ -2,6 +2,9 @@ import styled  from 'styled-components';
 import successImg from '@/static/images/ambassador/success@2x.png'
 import backImg from '@/static/images/ambassador/back.jpg'
 
+const mainColor = "#FF6633";
+const mainGray = "#9A9A9A";
+
 const Step1 = styled.div`
     position: relative;
     background: #1D1D1F;
@@ -15,7 +18,7 @@ const Step1 = styled.div`
             font-size: 16px;
             font-family: Montserrat-Bold, Montserrat;
             font-weight: bold;
-            color: #E84118;
+            color: ${mainColor};
             line-height: 19px;
             letter-spacing: 5px;
             text-align: center;
@@ -58,7 +61,7 @@ const Step1 = styled.div`
             height: 60px;
             display: block;
             margin: 0 auto;
-            background: #E84118;
+            background: ${mainColor};
             border-radius: 4px;
             font-size: 14px;
             font-family: Montserrat-SemiBold, Montserrat;
@@ -84,25 +87,34 @@ const Step1 = styled.div`
             margin: 0 auto;
             min-height: 424px; 
             margin-top: 100px;
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
             .img{
                 width: 60%;
                 float: right;
                 img{
-                    width:669px;
-                    height:424px;
-                    float:right;
+                    width: 100%;
+                    max-width:669px;
+                    height:auto;
                 }
             }
+            .img.h5{
+                display: none;
+            }
+            .img.pc{
+                display: block;
+            }
             .desc {
+                width: 40%;
                 float: left;
                 padding: 56px 0 0 70px;
                 span {
                     font-size: 16px;
                     font-family: Montserrat-Regular, Montserrat;
                     font-weight: bold;
-                    color: #E84118;
+                    color: ${mainColor};
                     line-height: 32px;
                     letter-spacing: 3px;
                 }
@@ -123,15 +135,14 @@ const Step1 = styled.div`
         }
         .citem:last-child {
             .desc{
-                float: left;
                 padding: 136px 0 0 70px;
             }
             .img{
-                float: left;
                 img {
-                    width: 666px;
-                    height: 544px;
-                    margin-left: 70px;
+                    width: 100%;
+                    max-width: 666px;
+                    height: auto;
+                    margin-left: 0px;
                 }
             }
         }
@@ -141,24 +152,28 @@ const Step1 = styled.div`
         .content {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-evenly;
             padding-top: 95px;
+            max-width: 1200px;
+            margin: 0 auto;
 
             .citem {
                 display: flex;
                 flex-direction: column;
-                width: 378px;
-                height: 369px;
+                width: 30%;
+                max-width: 378px;
+                min-height: 369px;
+                paddding-bottom: 20px;
                 background: #FFFFFF;
                 box-shadow: 0px 4px 32px 0px rgba(34, 41, 77, 0.02), 0px 8px 64px 0px rgba(33, 39, 75, 0.1);
                 border-radius: 8px;
-                margin-right: 48px;
+                // margin-right: 48px;
 
                 h3{
                     height: 64px;
                     padding-left: 33px;
                     margin-bottom: 10px;
-                    background: #E84118;
+                    background: ${mainColor};
                     border-radius: 8px 8px 0px 0px;
                     font-size: 24px;
                     font-family: Montserrat-Regular, Montserrat;
@@ -182,7 +197,7 @@ const Step1 = styled.div`
             }
         }
     }
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 1080px) {
         color: #fff;
         .cheader {
             padding-top: 60px;
@@ -213,6 +228,53 @@ const Step1 = styled.div`
             padding: 0 20px 60px;
             .citem {
                 margin-top: 60px;
+                .desc {
+                    padding: 0px 0 0 20px;
+                    h3 {
+                        font-size: 30px;
+                        // line-height: 28px;
+                    }
+                    p {
+                        // font-size: 18px;
+                        // line-height: 18px;
+                        // margin-top: 10px;
+                    }
+                }
+            }
+        }
+        .criteria {
+            padding-bottom: 40px;
+            .content {
+                .citem {
+                    height: 400px;
+                    h3{
+                        height: 40px;
+                        padding-left: 15px;
+                        border-radius: 4px 4px 0px 0px;
+                        font-size: 20px;
+                        line-height: 40px;
+                        margin-bottom: 10px;
+                    }
+                    p {
+                        line-height: 18px;
+                        padding: 0 20px;
+                        margin-top: 15px;
+                    }
+                }
+                .citem:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+        
+    }
+
+    @media screen and (max-width: 720px) {
+        .culture{
+            padding: 0 20px 60px;
+            .citem {
+                margin-top: 60px;
+                display: block;
                 .img{
                     width: 100%;
                     float: none;
@@ -223,14 +285,22 @@ const Step1 = styled.div`
                         float:none;
                     }
                 }
+                .img.pc{
+                    display: none;
+                }
+                .img.h5{
+                    display: block;
+                }
                 .desc {
-                    padding: 0px 0 0 20px;
+                    padding: 0 0 100px;
+                    text-align: center;
+                    width: 100%;
                     span {
                         
                     }
                     h3 {
-                        font-size: 22px;
-                        line-height: 28px;
+                        font-size: 30px;
+                        line-height: 30px;
                     }
                     p {
                         font-size: 18px;
@@ -243,7 +313,7 @@ const Step1 = styled.div`
                 margin-top: 0px;
                 .desc{
                     float: none;
-                    padding: 30px 0 0 30px;
+                    padding: 0;
                 }
                 .img{
                     width: 100%;
@@ -258,7 +328,6 @@ const Step1 = styled.div`
             }
         }
         .criteria {
-            padding-bottom: 40px;
             .content {
                 display: block;
                 padding: 60px 30px;
@@ -266,17 +335,14 @@ const Step1 = styled.div`
                 .citem {
                     display: block;
                     width: 100%;
+                    max-width: 100%;
                     height: auto;
+                    min-height: auto;
                     margin-right: 0;
                     margin-top: 30px;
                     padding-bottom: 40px;
 
                     h3{
-                        height: 40px;
-                        padding-left: 15px;
-                        border-radius: 4px 4px 0px 0px;
-                        font-size: 20px;
-                        line-height: 40px;
                         margin-bottom: 30px;
                     }
                     p {
@@ -297,20 +363,19 @@ const Step2 = styled.div`
     position: relative;
     background: #fff;
     color: #fff;
-    padding-top: 64px;
-    padding-bottom: 100px;
+    padding: 64px 25px 100px;
     .cheader{
         max-width: 1200px;
         margin: 0 auto;
         height: 57px;
-        color: #E84118;
+        color: ${mainColor};
         line-height: 57px;
         h1{
             display: inline-block;
             font-size: 48px;
             font-family: Montserrat-Bold, Montserrat;
             font-weight: bold;
-            color: #E84118;
+            color: ${mainColor};
             line-height: 57px;
         } 
         .back{
@@ -343,7 +408,7 @@ const Step2 = styled.div`
                     padding-left: 20px;
                 }
                 span{
-                    color: #E84118;
+                    color: ${mainColor};
                 }
             }
             .gcontent{
@@ -356,7 +421,7 @@ const Step2 = styled.div`
                 .orangeBlock {
                     width: 4px;
                     height: 100%;
-                    background: #E84118;
+                    background: ${mainColor};
                     position:absolute;
                     left: -1px;
                     top: -1px;
@@ -365,11 +430,11 @@ const Step2 = styled.div`
                     font-size: 17px;
                     font-family: Roboto-Regular, Roboto;
                     font-weight: 400;
-                    color: #9A9A9A;
+                    color: ${mainGray};
                     line-height: 20px;
                     padding: 15px 0 12px;
                     span{
-                        color: #E84118;
+                        color: ${mainColor};
                     }
                 }
                 .MuiFormControl-root{
@@ -380,7 +445,14 @@ const Step2 = styled.div`
                     width:100%;
                     height: 40px;
                     .MuiOutlinedInput-root{
-                        
+                        fieldset.MuiOutlinedInput-notchedOutline{
+                            border-color: rgba(171, 171, 171, 0.21);
+                        }
+                    }
+                    .MuiOutlinedInput-root.Mui-error{
+                        fieldset.MuiOutlinedInput-notchedOutline{
+                            border-color: ${mainColor};
+                        }
                     }
                     .MuiOutlinedInput-input{
                         line-height: 20px;
@@ -390,7 +462,7 @@ const Step2 = styled.div`
                         border-radius: 4px;
                     }
                     .MuiOutlinedInput-input.Mui-focused{
-                        border: 1px solid #333;
+                        
                     }
                     
                     .MuiInputLabel-root{
@@ -410,6 +482,9 @@ const Step2 = styled.div`
                             border:none
                         }
                     }
+                    .MuiFormHelperText-root.Mui-error{
+                        color: ${mainColor};
+                    }
                 }
                 .input.userBriefly {
                     height: 260px !important;
@@ -421,21 +496,27 @@ const Step2 = styled.div`
                     font-size: 12px;
                     font-family: Roboto-Regular, Roboto;
                     font-weight: 400;
-                    color: #E84118;
+                    color: ${mainColor};
                     line-height: 14px;
                     margin-top: 5px;
                 }
-                .select {
-                    .MuiOutlinedInput-notchedOutline{
-                        border-color: rgba(171, 171, 171, 0.4);
+                .selectWrap{
+                    .MuiInputLabel-root{
+                        color: ${mainGray};
+                    }
+                    .select {
+                        .MuiOutlinedInput-notchedOutline{
+                            border-color: rgba(171, 171, 171, 0.4);
+                        }
                     }
                 }
+                
                 .checkboxWrap{
                     .MuiFormControlLabel-label{
                         color: #4A4A4A;
                     }
                     .MuiFormControlLabel-label.Mui-disabled {
-                        color: #9A9A9A;
+                        color: ${mainGray};
                     }
                     .formgroup{
                         display: flex;
@@ -474,7 +555,7 @@ const Step2 = styled.div`
         }
         .submit.MuiButton-root{
             margin-right:16px;
-            background-color: #E84118;
+            background-color: ${mainColor};
             font-size: 16px;
             font-family: Montserrat-SemiBold, Montserrat;
             font-weight: bold;
@@ -482,15 +563,15 @@ const Step2 = styled.div`
             line-height: 19px;
         }
         .back.MuiButton-root{
-            color: #E84118;
-            border-color: #E84118;
+            color: ${mainColor};
+            border-color: ${mainColor};
         }
         .contactInfo, .socialMedia{
-            width: 578px;
+            width: 48%;
+            max-width: 578px;
             .gcontent{
                 min-height: 400px;
             }
-            
         }
         .multiColumn {
             display: flex;
@@ -516,7 +597,7 @@ const Step2 = styled.div`
         }
     }
     @media screen and (max-width: 1024px) {
-        padding: 60px 20px;
+        padding: 60px 25px;
         .cheader{
             max-width: 100%;
             margin: 0 auto;
@@ -559,6 +640,7 @@ const Step2 = styled.div`
             }
             .contactInfo, .socialMedia{
                 width: 100%;
+                max-width: 100%;
                 .gcontent{
                     min-height: auto;
                     padding: 0 10px 40px 10px;
@@ -617,7 +699,7 @@ const Step3 = styled.div`
             font-family: PingFangSC-Regular, PingFang SC;
             font-weight: bold;
             color: #FFFFFF;
-            background-color: #E84118;
+            background-color: ${mainColor};
             line-height: 32px;
             text-align: center;
             margin-top: 30px;
