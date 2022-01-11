@@ -1,6 +1,6 @@
 import styled  from 'styled-components';
 import successImg from '@/static/images/ambassador/success@2x.png'
-import backImg from '@/static/images/ambassador/back.jpg'
+import backImg from '@/static/images/ambassador/arrow-left@2x.png'
 
 const mainColor = "#FF6633";
 const mainGray = "#9A9A9A";
@@ -387,6 +387,8 @@ const Step2 = styled.div`
             background-position: 50% 0%;
             background-repeat: no-repeat;
             text-indent: -9999rem;
+            margin-right: 20px;
+            cursor: pointer;
         }
     }
     .form {

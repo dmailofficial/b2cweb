@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import styled, { createGlobalStyle, useTheme } from 'styled-components';
 import hot from '@/static/images/hot.png'
 import ava from '@/static/images/ava.png'
+import logo from '@/static/images/logo@2x.png'
 
 const Email = styled.div`
   color: #fff;
@@ -38,6 +39,19 @@ const HeaderWrap = styled.div`
     background-color: #1D1D1F;
     top: 65px;
   }
+  .logo{
+    background-image: none;
+    img{
+      width: auto;
+      height: 32px;
+    }
+  }
+  @media screen and (max-width: 1024px){
+    .logo{
+      width: auto;
+      height: 32px;
+    }
+  }
 `
 
 const Header = (props) => {
@@ -58,7 +72,9 @@ const Header = (props) => {
   return (
     <>
       <HeaderWrap className="header">
-        <div className="logo"></div>
+        <div className="logo">
+          <img src={logo} alt="Dmail logo"></img>
+        </div>
         <div className="nav">
           <span onClick={onShowNavs}><i></i></span>
           <div className="nav_wrapper">
