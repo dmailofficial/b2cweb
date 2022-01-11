@@ -88,7 +88,8 @@ const Step1 = styled.div`
             min-height: 424px; 
             margin-top: 100px;
             display: flex;
-            align-items: center;
+            // align-items: center;
+            align-items: flex-start
             justify-content: space-between;
 
             .img{
@@ -108,8 +109,7 @@ const Step1 = styled.div`
             }
             .desc {
                 width: 40%;
-                float: left;
-                padding: 56px 0 0 70px;
+                padding: 67px 0 0 70px;
                 span {
                     font-size: 16px;
                     font-family: Montserrat-Regular, Montserrat;
@@ -135,7 +135,7 @@ const Step1 = styled.div`
         }
         .citem:last-child {
             .desc{
-                padding: 136px 0 0 70px;
+                padding: 150px 0 0 70px;
             }
             .img{
                 img {
@@ -229,7 +229,7 @@ const Step1 = styled.div`
             .citem {
                 margin-top: 60px;
                 .desc {
-                    padding: 0px 0 0 20px;
+                    padding: 55px 0 0 20px;
                     h3 {
                         font-size: 30px;
                         // line-height: 28px;
@@ -239,6 +239,11 @@ const Step1 = styled.div`
                         // line-height: 18px;
                         // margin-top: 10px;
                     }
+                }
+            }
+            .citem:last-child {
+                .desc{
+                    padding: 67px 0 0 70px;
                 }
             }
         }
