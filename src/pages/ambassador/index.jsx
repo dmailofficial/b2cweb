@@ -10,10 +10,15 @@ const Index = () => {
   const [step2, setStep2] = useState(false);
   const [step3, setStep3] = useState(false);
 
+  const gotoTop = () => {
+    console.log("gotoTop")
+    document.documentElement.scrollTo({left: 0, top: 0, behavior: "smooth"});
+  }
   const toStep1 = () => {
     setStep3(false)
     setStep2(false)
     setStep1(true)
+    gotoTop()
   }
 
   const toStep2 = (direction) => {
@@ -24,11 +29,13 @@ const Index = () => {
       setStep3(false)
       setStep2(true)
     }
+    gotoTop()
   }
 
   const toStep3 = () => {
     setStep2(false)
     setStep3(true)
+    gotoTop()
   }
 
   return (

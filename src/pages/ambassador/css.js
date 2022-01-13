@@ -98,6 +98,7 @@ const Step1 = styled.div`
                 img{
                     width: 100%;
                     max-width:669px;
+                    min-width: 490px;
                     height:auto;
                 }
             }
@@ -141,6 +142,7 @@ const Step1 = styled.div`
                 img {
                     width: 100%;
                     max-width: 666px;
+                    min-width: 490px;
                     height: auto;
                     margin-left: 0px;
                 }
@@ -231,7 +233,7 @@ const Step1 = styled.div`
                 .desc {
                     padding: 55px 0 0 20px;
                     h3 {
-                        font-size: 30px;
+                        font-size: 40px;
                         // line-height: 28px;
                     }
                     p {
@@ -286,6 +288,8 @@ const Step1 = styled.div`
                     margin: 0 auto;
                     img{
                         width:100%;
+                        max-width: 100%;
+                        min-width: 100%;
                         height:auto;
                         float:none;
                     }
@@ -322,7 +326,8 @@ const Step1 = styled.div`
                 }
                 .img{
                     width: 100%;
-                    float: none;
+                    max-width: 100%;
+                    min-width: 100%;
                     margin: 0 auto;
                     img {
                         width: 100%;
