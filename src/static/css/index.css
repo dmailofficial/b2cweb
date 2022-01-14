@@ -11,7 +11,8 @@ html,
     }
 
     body {
-      background-color: #090438;
+      /* background-color: #090438; */
+      background-color: #1D1D1F;
     }
 
     p,
@@ -62,7 +63,7 @@ html,
 
     .header {
       height: 122px;
-      background-color: rgba(0, 0, 0, 0.1);
+      /* background-color: rgba(0, 0, 0, 0.1); */
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -886,6 +887,37 @@ html,
     }
     @font-face {
           font-family: "Montserrat-Thin";
+          src: url(../font/Roboto-Thin.ttf);
+          src: url(../font/Roboto-Thin.ttf)  format('truetype');
+    }
+
+    @font-face {
+      font-family: "Roboto";
+      src: url(../font/Roboto-Black.ttf);
+      src: url(../font/Roboto-Black.ttf)  format('truetype');
+    }
+    @font-face {
+          font-family: "Roboto-Bold";
+          src: url(../font/Roboto-Bold.ttf);
+          src: url(../font/Roboto-Bold.ttf)  format('truetype');
+    }
+    @font-face {
+          font-family: "Roboto-Light";
+          src: url(../font/Roboto-Light.ttf);
+          src: url(../font/Roboto-Light.ttf)  format('truetype');
+    }
+    @font-face {
+          font-family: "Roboto-Medium";
+          src: url(../font/Roboto-Medium.ttf);
+          src: url(../font/Roboto-Medium.ttf)  format('truetype');
+    }
+    @font-face {
+          font-family: "Roboto-Regular";
+          src: url(../font/Roboto-Regular.ttf);
+          src: url(../font/Roboto-Regular.ttf)  format('truetype');
+    }
+    @font-face {
+          font-family: "Roboto-Thin";
           src: url(../font/Roboto-Thin.ttf);
           src: url(../font/Roboto-Thin.ttf)  format('truetype');
     }

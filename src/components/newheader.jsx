@@ -22,7 +22,6 @@ const Login = styled.div`
   background-size: cover;
   cursor: pointer;
 `
-
 const HeaderWrap = styled.div`
   height: 67px;
   background-color: #1D1D1F;
@@ -36,11 +35,11 @@ const HeaderWrap = styled.div`
     color: #FF6633;
   }
   .nav_wrapper{
-    background-color: #1D1D1F;
     top: 65px;
   }
   .logo{
     background-image: none;
+    background: none;
     img{
       width: auto;
       height: 32px;
@@ -78,7 +77,7 @@ const Header = (props) => {
         <div className="nav">
           <span onClick={onShowNavs}><i></i></span>
           <div className="nav_wrapper">
-            <div className="nav_item"><Link to="/" className={pathname === '/' ? 'on' : ''}>Home</Link></div>
+            <div className="nav_item"><Link to="/" className={(pathname === '/' || pathname === '/newhome') ? 'on' : ''}>Home</Link></div>
             <div className="nav_item"><a onClick={onCommingSoon}>Mail</a></div>
             <div className="nav_item"><a onClick={onCommingSoon}>NFTs</a></div>
             <div className="nav_item"><Link to="/ambassador" className={pathname === '/ambassador' ? 'on ' : ''} >Ambassador</Link></div>
