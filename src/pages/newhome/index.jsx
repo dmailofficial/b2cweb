@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { NewHome } from './css'
 import Header from '@/components/newheader'
 
@@ -19,90 +19,82 @@ import highlightIcon7 from '@/static/images/home/highlights/messageNotification/
 import highlightIcon8 from '@/static/images/home/highlights/compatibleWeb2/icon@2x.png'
 import highlightIcon9 from '@/static/images/home/highlights/messageSubscription/icon@2x.png'
 
+class Index extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        curPage: 0,
+        scrolling: false
+      };
+    }
+    gotoTop = () => {
+      document.documentElement.scrollTo({left: 0, top: 0, behavior: "smooth"});
+    }
 
-const Index = () => {
-  const [curPage, setCurPage] = useState(0);
-  const [scrolling, setScrolling] = useState(false)
-console.log("asdfasdas:")
-  const gotoTop = () => {
-    document.documentElement.scrollTo({left: 0, top: 0, behavior: "smooth"});
+    scrollToAnchor = (anchorName) => {
+      console.log("name:", anchorName)
+      if (anchorName) {
+          let anchorElement = document.getElementById(anchorName);
+          console.log("element:", anchorElement)
+          if(anchorElement) {
+              anchorElement.scrollIntoView(
+                  {behavior: 'smooth'}
+              );
+          }
+      }
+    }
+
+  scrollToPre =  () =>{
+      if(this.state.scrolling){return}
+      if(this.state.curPage > 0){
+        // setCurPage(curPage-1);
+      }
+      
+      let _anchor = "anchor"+this.state.curPage;
+     this.scrollToAnchor(_anchor)   
   }
 
-  const scrollToAnchor = (anchorName) => {
-    console.log("name:", anchorName)
-    if (anchorName) {
-        let anchorElement = document.getElementById(anchorName);
-        console.log("element:", anchorElement)
-        if(anchorElement) {
-            anchorElement.scrollIntoView(
-                {behavior: 'smooth'}
-            );
-        }
+  scrollToNext =  () =>{
+    if(this.state.scrolling){return}
+    console.log("scrollToNext11:",this.state.curPage)
+      console.log("scrollToNext scrolling:",this.state.scrolling)
+      // setScrolling(true)
+      let _c = this.state.curPage
+    if(this.state.curPage < 4){
+      _c = _c+1;
+      console.log("ccc:",_c)
     }
-  }
+    console.log("scrollToNext:",this.state.curPage)
+    // setScrolling(true)
+    
+    let _anchor = "anchor"+_c;
+    this.scrollToAnchor(_anchor)
 
-const scrollToPre =  () =>{
-    if(scrolling){return}
-    console.log("scrollToPre:",curPage)
-    setScrolling(true)
-    console.log("scrollToPre scrolling:",scrolling)
-    setScrolling(true)
-    if(curPage > 0){
-       setCurPage(curPage-1);
-    }
-    
-    let _anchor = "anchor"+curPage;
-    scrollToAnchor(_anchor)   
-    
-    
     // setTimeout(()=>{
     //   setScrolling(false)
-    // }, 3000)
-}
-
-const scrollToNext =  () =>{
-  if(scrolling){return}
-  console.log("scrollToNext11:",curPage)
-   setScrolling(true)
-    console.log("scrollToNext scrolling:",scrolling)
-    // setScrolling(true)
-    let _c = curPage
-  if(curPage < 4){
-    _c = _c+1;
-    console.log("ccc:",_c)
-     setCurPage(_c);
+    // }, 3000)   
   }
-  console.log("scrollToNext:",curPage)
-  // setScrolling(true)
-  
-  let _anchor = "anchor"+_c;
-  scrollToAnchor(_anchor)
 
-  // setTimeout(()=>{
-  //   setScrolling(false)
-  // }, 3000)   
-}
-
-const windowAddMouseWheel = () => {
+  windowAddMouseWheel = () => {
     const scrollFunc = function (e) {
         e = e || window.event;
-        console.log("scrolling:",scrolling)
-        if(scrolling){return}
+        console.log("scrolling:",this.state.scrolling)
+        if(this.state.scrolling){return}
 
         if (e.wheelDelta) {
             
             if (e.wheelDelta > 0) {
-              scrollToPre()
+              this.scrollToPre()
             }
             if (e.wheelDelta < 0) {
-              scrollToNext()
+              this.scrollToNext()
             }
         } else if (e.detail) {  //Firefox
             if (e.detail> 0) {
-              scrollToPre()
+              this.scrollToPre()
             }
             if (e.detail< 0) {
-              scrollToNext()
+              this.scrollToNext()
             }
         }
     };
@@ -112,15 +104,14 @@ const windowAddMouseWheel = () => {
     }
 
     window.onmousewheel = document.onmousewheel = scrollFunc;
-}
+  }
 
-useEffect(()=>{
-  scrollToAnchor("anchor0");
-  windowAddMouseWheel();
-}, [])
+  componentDidMount(){
+    this.scrollToAnchor("anchor0")
+  }
 
   
-
+render(){
   return (
     <NewHome>
       <a href="#" id='anchor0'></a>
@@ -134,7 +125,7 @@ useEffect(()=>{
               <p>Dmail guarantees a safe&private environment for your<br></br> communication, storage, and tokens&NFTs transfer on the web 3.0</p>
               <span className="launchBtn" >Launch Demo <img src={rightArrow}></img></span>
             </div>
-            <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor1")}}>
+            <div className="nextBtn" onClick={()=>{this.scrollToAnchor("anchor1")}}>
                 <img src={arrow}></img>
                 <span className="txt">Scroll down to explore more</span>
             </div>
@@ -176,7 +167,7 @@ useEffect(()=>{
                   </div>
               </div>
             </div>
-            <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor2")}}>
+            <div className="nextBtn" onClick={()=>{this.scrollToAnchor("anchor2")}}>
                 <img src={arrow}></img>
                 <span className="txt">Scroll down to explore more</span>
             </div>
@@ -193,7 +184,7 @@ useEffect(()=>{
                 The feature of asset delivery reflects the characteristic of Dmail and blockchain. Since Dmail deploys on Dfinity, every mailbox in Dmail corresponds to a private Canister. Meanwhile, with the help of Dfinity Digital Signature System, user’s information stored in Canister could be kept in privacy. Every time, mailing activity means the interaction between Canisters, which are equivalent to smart contracts. In the process of interaction, token assets, coding in the canister, can be transferred with email as an attachment, while the principle ID in each canister, a representative of DID, allows each user to interact with all kinds of  DApps without hindrance.
               </p>
             </div>
-            <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor3")}}>
+            <div className="nextBtn" onClick={()=>{this.scrollToAnchor("anchor3")}}>
                 <img src={arrow}></img>
                 <span className="txt">Scroll down to explore more</span>
             </div>
@@ -287,7 +278,7 @@ useEffect(()=>{
                   </div>
               </div>
             </div>
-            <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor4")}}>
+            <div className="nextBtn" onClick={()=>{this.scrollToAnchor("anchor4")}}>
                 <img src={arrow}></img>
                 <span className="txt">Scroll down to explore more</span>
             </div>
@@ -342,7 +333,7 @@ useEffect(()=>{
         </div>
       </div>
     </NewHome>
-  );
+  )}
 }
 
 export default Index;
