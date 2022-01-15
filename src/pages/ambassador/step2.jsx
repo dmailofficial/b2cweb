@@ -1,54 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Step2} from './css'
 import TextField from '@mui/material/TextField';
-import { alpha, styled } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
 import Button from '@mui/material/Button';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import FormLabel from '@mui/material/FormLabel';
 import Country from './country'
 import {submit} from './utils'
 
-// overflows style
-const MyTextField = styled(TextField)({
-  
-  // '&:hover': {
-  //   borderColor: 'rgba(171, 171, 171, 0.4)',
-  // },
-  // '& fieldset': {
-  //   borderColor: 'rgba(171, 171, 171, 0.21)',
-  // },
-  // '&.Mui-focused': {
-  //   '& fieldset.MuiOutlinedInput-notchedOutline': {
-  //     borderColor: 'rgba(232,65,24, 0.3)',
-  //   },
-  //   '& fieldset.MuiOutlinedInput-notchedOutline.Mui-focused': {
-  //     borderColor: 'rgba(232,65,24, 0.3) !important',
-  //   },
-  //   '& fieldset.MuiOutlinedInput-notchedOutline.Mui-error': {
-  //     borderColor: "#d32f2f !important"
-  //   },
-  // },
-  // '& fieldset.MuiOutlinedInput-notchedOutline': {
-  //   borderColor: 'rgba(171, 171, 171, 0.3) !important',
-  // },
-  // '& fieldset.MuiOutlinedInput-notchedOutline.Mui-focused': {
-  //   borderColor: 'rgba(232,65,24, 0.3) !important',
-  // },
-  // '& fieldset.MuiOutlinedInput-notchedOutline.Mui-error': {
-  //   borderColor: "#d32f2f !important"
-  // },
-  
-  
-});
 // main color
 const orange = "#FF6633";
 
@@ -386,7 +350,7 @@ class Step2Component extends React.Component{
             </div>
             <div className="gcontent">
                 <span className="orangeBlock"></span>
-                <MyTextField id="referralEmail" 
+                <TextField id="referralEmail" 
                     className="input" 
                     variant="outlined"
                     placeholder="Not required, please enter the name of the referrer" 
@@ -407,7 +371,7 @@ class Step2Component extends React.Component{
                   <div className="multiColumn">
                       <div className="controlWrap">
                         <FormControl variant="standard"  className="mr20">
-                          <MyTextField id="firstname" 
+                          <TextField id="firstname" 
                             className="input" 
                             placeholder="First" 
                             variant="outlined" 
@@ -421,7 +385,7 @@ class Step2Component extends React.Component{
                       </div>
                       <div className="controlWrap">
                         <FormControl variant="standard"> 
-                          <MyTextField id="lastname" 
+                          <TextField id="lastname" 
                             className="input" 
                             placeholder="Last" 
                             variant="outlined"
@@ -437,7 +401,7 @@ class Step2Component extends React.Component{
                   <div className="label mt9">Your E-mail</div>
                   <div >
                     <FormControl variant="standard">
-                      <MyTextField id="email"
+                      <TextField id="email"
                         className="input"
                         placeholder="E-mail address"
                         variant="outlined"
@@ -455,7 +419,7 @@ class Step2Component extends React.Component{
                   <div className="multiColumn">
                     <div className="controlWrap">
                       <FormControl variant="standard"  className="mr20">
-                        <MyTextField id="city"
+                        <TextField id="city"
                           className="input"
                           placeholder="City"
                           variant="outlined"
@@ -469,7 +433,7 @@ class Step2Component extends React.Component{
                     </div>
                     <div className="controlWrap">
                       <FormControl variant="standard"> 
-                        <MyTextField id="outlined-basic" 
+                        <TextField id="outlined-basic" 
                           className="input" 
                           placeholder="State/Region/Province"
                           variant="outlined"
@@ -526,7 +490,7 @@ class Step2Component extends React.Component{
                   <div className="label mt9">What is the size of the community you can reach directly<span>*</span></div>
                   <div >
                     <FormControl variant="standard">
-                      <MyTextField id="community" 
+                      <TextField id="community" 
                         className="input" 
                         placeholder="Please enter the community size" 
                         variant="outlined"
@@ -541,7 +505,7 @@ class Step2Component extends React.Component{
                   <div className="label mt9">Your Twitter URL<span>*</span></div>
                   <div >
                     <FormControl variant="standard">
-                      <MyTextField id="twitter" 
+                      <TextField id="twitter" 
                         className="input" 
                         placeholder="Your Twitter URL" 
                         variant="outlined" 
@@ -556,7 +520,7 @@ class Step2Component extends React.Component{
                   <div className="label mt9">Your Linkedin URL</div>
                   <div >
                     <FormControl variant="standard">
-                      <MyTextField id="linkedin" 
+                      <TextField id="linkedin" 
                         className="input" 
                         placeholder="Not required，Your Linkedin URL" 
                         variant="outlined" 
@@ -642,7 +606,7 @@ class Step2Component extends React.Component{
                     <div>
                       {this.state.showOther ? 
                         <FormControl variant="standard">
-                            <MyTextField 
+                            <TextField 
                               id="otherchannel" 
                               className="input" 
                               placeholder="Fill in your own" 

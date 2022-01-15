@@ -31,6 +31,7 @@ const HeaderWrap = styled.div`
   padding: 0 30px;
   position: relative;
   z-index: 20;
+  box-sizing: border-box;
   .on{
     color: #FF6633;
   }

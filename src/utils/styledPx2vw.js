@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
 const pxRe = /-?\d*[.\d]*px/g;
+const pxRe2 = /([a-z]*-?[a-z]*)\s*\:\s*\d*[.\d]*px/g;
 const base64Re = /^data:\w+\/[a-zA-Z+\-.]+;base64,/i;
 
 const px2vw = px => Number(px) ? `${Math.round(Number(px) / 14.4 * 100000) / 100000}vw` : 0;
 
 const convertStringPx2vw = style => {
+    console.log("style::", style)
     if (!style) return style;
 
     if (
@@ -14,6 +16,16 @@ const convertStringPx2vw = style => {
     ) {
 
         return style.replace(pxRe, value => px2vw(value.replace('px', '')))
+        // return style.replace(pxRe2, value => { 
+                
+        //         if(value.indexOf("max-width") < 0){
+        //             console.log("value:",value)
+        //             return value.replace(pxRe, val => px2vw(val.replace('px', '')))
+        //         }
+        //         if(value.indexOf("max-width") > -1){
+        //             return value.replace(pxRe, val => val )
+        //         }
+        //     } )
     }
 
     return style;
