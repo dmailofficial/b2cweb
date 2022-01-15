@@ -576,7 +576,7 @@ const NewHome = styled.div`
             }
             
             .dmailBlock{
-                background-size:  90%  auto;
+                background-size:  100%  auto;
                 background-position: 100% 100%;
             }
     
@@ -638,7 +638,7 @@ const NewHome = styled.div`
             }
 
             .workBlock{
-                background-size: 80% auto;
+                background-size: 100% auto;
                 background-position: 100% 100%;
             }
     
@@ -673,8 +673,8 @@ const NewHome = styled.div`
             .highlightContent{
                 .title{
                     top: ${20/baseWidth750}vw;
-                    left: ${30/baseWidth750}vw;
-                    right: auto;
+                    left: auto;
+                    right: ${30/baseWidth750}vw;
                     margin-left: 0;
                     p{
                         font-size: ${16/baseWidth750}vw;
@@ -691,7 +691,7 @@ const NewHome = styled.div`
                     margin-left: 0;
                     padding-left: ${20/baseWidth750}vw;
                     padding-right: ${20/baseWidth750}vw;
-                    padding-top: ${100/baseWidth750}vw;
+                    padding-top: ${50/baseWidth750}vw;
                     .highlightItem{
                         .item{
                             width: 33%;
@@ -772,9 +772,9 @@ const NewHome = styled.div`
                     }
                 }
                 .nextBtn{
-                    left: ${30/baseWidth750}vw;
-                    right: auto;
-                    bottom: ${10/baseWidth750}vw;
+                    left: auto;
+                    right: ${30/baseWidth750}vw;
+                    bottom: ${15/baseWidth750}vw;
                 }
             }
     
@@ -915,7 +915,7 @@ const NewHome = styled.div`
                 position: relative;
     
                 .nextBtn{
-                    bottom: ${40*2/baseWidth750}vw;
+                    bottom: ${40/baseWidth750}vw;
                     left: ${40/baseWidth750}vw;
                     img{
                         width: ${45/baseWidth750}vw;
@@ -923,7 +923,7 @@ const NewHome = styled.div`
                         margin-right: ${16/baseWidth750}vw;
                     }
                     .txt{
-                        font-size: ${18*1.5/baseWidth750}vw;
+                        font-size: ${18/baseWidth750}vw;
                         line-height: ${40/baseWidth750}vw;
                     }
                 }
@@ -944,15 +944,15 @@ const NewHome = styled.div`
                     margin-left: 0;
                     box-sizing: border-box;
                     p{
-                        font-size: ${18*2/baseWidth750}vw;
-                        line-height: ${24*2/baseWidth750}vw;
+                        font-size: ${12*2/baseWidth750}vw;
+                        line-height: ${16*2/baseWidth750}vw;
                     }
                     .desc{
-                        line-height: ${22*2/baseWidth750}vw;
+                        line-height: ${16*2/baseWidth750}vw;
                     }
                     h2,h3{
-                        font-size: ${30*1.8/baseWidth750}vw;
-                        line-height: ${38*2/baseWidth750}vw;
+                        font-size: ${26*1.8/baseWidth750}vw;
+                        line-height: ${34*2/baseWidth750}vw;
                     }
                     h2{
                         margin-top: 5px;
@@ -961,15 +961,15 @@ const NewHome = styled.div`
                         margin-bottom:15px;
                     }
                     .launchBtn{
-                        width: ${180*2/baseWidth750}vw;
-                        height: ${40*2/baseWidth750}vw;
-                        margin-top: ${55*2/baseWidth750}vw;
-                        font-size: ${14*2/baseWidth750}vw;
-                        line-height: ${40*2/baseWidth750}vw;
+                        width: ${100*2/baseWidth750}vw;
+                        height: ${25*2/baseWidth750}vw;
+                        margin-top: ${55/baseWidth750}vw;
+                        font-size: ${16/baseWidth750}vw;
+                        line-height: ${25*2/baseWidth750}vw;
                         img{
-                            margin-left: ${32*2/baseWidth750}vw;
-                            width: ${17*2/baseWidth750}vw;
-                            height: ${14*2/baseWidth750}vw;
+                            margin-left: ${32/baseWidth750}vw;
+                            width: ${17/baseWidth750}vw;
+                            height: ${14/baseWidth750}vw;
                         }
                     }
                 }
@@ -987,51 +987,51 @@ const NewHome = styled.div`
                     padding: ${50/baseWidth750}vw ${50/baseWidth750}vw 0;
                     box-sizing: border-box;
                     p{
-                        font-size: ${14*2/baseWidth750}vw;
-                        line-height: ${18*2/baseWidth750}vw;
+                        font-size: ${14*1.5/baseWidth750}vw;
+                        line-height: ${18*1.5/baseWidth750}vw;
                     }
                     p.desc{
-                        line-height: ${24*2/baseWidth750}vw;
+                        line-height: ${24*1.5/baseWidth750}vw;
                     }
                     h2{
-                        font-size: ${32*2/baseWidth750}vw;
-                        line-height: ${38*2/baseWidth750}vw;
-                        margin: 5px 0 ${10*2/baseWidth750}vw;
+                        font-size: ${32*1.5/baseWidth750}vw;
+                        line-height: ${38*1.5/baseWidth750}vw;
+                        margin: 5px 0 ${10*1.5/baseWidth750}vw;
                     }
                     .dmailItem{
-                        margin-top: ${15*2/baseWidth750}vw;
+                        margin-top: ${15*1.5/baseWidth750}vw;
                         .item{
-                            margin-top: ${20*2/baseWidth750}vw;
+                            margin-top: ${20*1.5/baseWidth750}vw;
                             >div{
-                                width: ${40*2/baseWidth750}vw;
-                                margin-right: ${10*2/baseWidth750}vw;
+                                width: ${40*1.5/baseWidth750}vw;
+                                margin-right: ${10*1.5/baseWidth750}vw;
                                 display: block;
                             }
                             img{
-                                width: ${56*2/1.5/baseWidth750}vw;
-                                height: ${54*2/1.5/baseWidth750}vw;
+                                width: ${56/baseWidth750}vw;
+                                height: ${54/baseWidth750}vw;
                             }
                             .txt{
-                                font-size: ${14*2/baseWidth750}vw;
-                                line-height: ${20*2/baseWidth750}vw;
+                                font-size: ${14*1.5/baseWidth750}vw;
+                                line-height: ${20*1.5/baseWidth750}vw;
                             }
                         }
                         .item2{
                             img{
-                                width: ${56*2/1.5/baseWidth750}vw;
-                                height: ${62*2/1.5/baseWidth750}vw;
+                                width: ${56/baseWidth750}vw;
+                                height: ${62/baseWidth750}vw;
                             }
                         }
                         .item3{
                             img{
-                                width: ${65*2/1.5/baseWidth750}vw;
-                                height: ${57*2/1.5/baseWidth750}vw;
+                                width: ${65/baseWidth750}vw;
+                                height: ${57/baseWidth750}vw;
                             }
                         }
                         .item4{
                             img{
-                                width: ${42*2/1.5/baseWidth750}vw;
-                                height: ${61*2/1.5/baseWidth750}vw;
+                                width: ${42/baseWidth750}vw;
+                                height: ${61/baseWidth750}vw;
                             }
                         }
                     }
@@ -1040,7 +1040,7 @@ const NewHome = styled.div`
             }
 
             .workBlock{
-                background-size: 80% auto;
+                background-size: 120% auto;
                 background-position: 100% 100%;
             }
     
@@ -1052,130 +1052,130 @@ const NewHome = styled.div`
                     padding: ${50*2/baseWidth750}vw ${30*2/baseWidth750}vw 0;
                     box-sizing: border-box;
                     p{
-                        font-size: ${16*2/baseWidth750}vw;
-                        line-height: ${18*2/baseWidth750}vw;
+                        font-size: ${16*1.5/baseWidth750}vw;
+                        line-height: ${18*1.5/baseWidth750}vw;
                     }
                     p.desc{
-                        font-size: ${14*2/baseWidth750}vw;
-                        line-height: ${20*2/baseWidth750}vw;
+                        font-size: ${14*1.5/baseWidth750}vw;
+                        line-height: ${20*1.5/baseWidth750}vw;
                         letter-spacing: 1px;
                     }
                     h2{
-                        font-size: ${32*2/baseWidth750}vw;
-                        line-height: ${38*2/baseWidth750}vw;
-                        margin: 5px 0 ${20*2/baseWidth750}vw;
+                        font-size: ${32*1.5/baseWidth750}vw;
+                        line-height: ${38*1.5/baseWidth750}vw;
+                        margin: 5px 0 ${20*1.5/baseWidth750}vw;
                     }
                 }
             }
 
             .highlightBlock{
                 background-image: linear-gradient(to top, rgba(29,29,31, .8), rgba(29,29,31, .8)), url(${highBackground});
-                background-size: 100% auto;
+                background-size: 150% auto;
                 background-position: 100% 50%;
             }
     
             .highlightContent{
                 .title{
                     position: relative;
-                    top: ${20*2/baseWidth750}vw;
-                    left: ${30*2/baseWidth750}vw;
+                    top: ${20*1.5/baseWidth750}vw;
+                    left: ${30*1.5/baseWidth750}vw;
                     right: auto;
                     margin-left: 0;
                     p{
-                        font-size: ${16*2/baseWidth750}vw;
-                        line-height: ${22*2/baseWidth750}vw;
+                        font-size: ${16*1.5/baseWidth750}vw;
+                        line-height: ${22*1.5/baseWidth750}vw;
                     }
                     h2{
-                        font-size: ${38*2/baseWidth750}vw;
-                        line-height: ${45*2/baseWidth750}vw;
+                        font-size: ${38*1.5/baseWidth750}vw;
+                        line-height: ${45*1.5/baseWidth750}vw;
                     }
                 }
                 .content{
                     width: 100%;
                     box-sizing: border-box;
                     margin-left: 0;
-                    padding-left: ${20*2/baseWidth750}vw;
-                    padding-right: ${20*2/baseWidth750}vw;
-                    padding-top: ${20*2/baseWidth750}vw;
+                    padding-left: ${30*1.5/baseWidth750}vw;
+                    padding-right: ${30*1.5/baseWidth750}vw;
+                    padding-top: ${20*1.5/baseWidth750}vw;
                     .highlightItem{
                         display: block;
                         .item{
                             width: 100%;
                             padding: 0 5px 0;
-                            margin-top: ${5*2/baseWidth750}vw;
+                            margin-top: ${5*1.5/baseWidth750}vw;
                             >div{
-                                height: ${62*2/1.5/baseWidth750}vw;
-                                width: ${62*2/1.5/baseWidth750}vw;
+                                height: ${62/baseWidth750}vw;
+                                width: ${62/baseWidth750}vw;
                                 float: left;
                                 align-items: center;
                                 text-align: center;
                             }
                             img{
-                                width: ${59/baseWidth750}vw;
-                                height: ${64/baseWidth750}vw;
+                                width: ${59/1.5/baseWidth750}vw;
+                                height: ${64/1.5/baseWidth750}vw;
                                 display: inline-block;
                                 vertical-align: middle;
                                 
                             }
                             h3{
-                                font-size: ${14*2/baseWidth750}vw;
-                                line-height: ${18*2/baseWidth750}vw;
-                                margin: ${8*2/baseWidth750}vw 0 ${4/baseWidth750}vw;
-                                margin-left: ${62*2/1.5/baseWidth750}vw;
+                                font-size: ${14*1.5/baseWidth750}vw;
+                                line-height: ${18*1.5/baseWidth750}vw;
+                                margin: ${8*1.5/baseWidth750}vw 0 ${4/baseWidth750}vw;
+                                margin-left: ${62/baseWidth750}vw;
                             }
                             p{
                                 display: none;
-                                font-size: ${12*2/baseWidth750}vw;
-                                line-height: ${14*2/baseWidth750}vw;
-                                margin-left: ${62*2/1.5/baseWidth750}vw;
+                                font-size: ${12*1.5/baseWidth750}vw;
+                                line-height: ${14*1.5/baseWidth750}vw;
+                                margin-left: ${62/baseWidth750}vw;
                             }
                         }
                         .item2{
                             img{
-                                width: ${62/baseWidth750}vw;
-                                height: ${54/baseWidth750}vw;
+                                width: ${62/1.5/baseWidth750}vw;
+                                height: ${54/1.5/baseWidth750}vw;
                             }
                         }
                         .item3{
                             img{
-                                width: ${49/baseWidth750}vw;
-                                height: ${63/baseWidth750}vw;
+                                width: ${49/1.5/baseWidth750}vw;
+                                height: ${63/1.5/baseWidth750}vw;
                             }
                         }
                         .item4{
                             img{
-                                width: ${55/baseWidth750}vw;
-                                height: ${58/baseWidth750}vw;
+                                width: ${55/1.5/baseWidth750}vw;
+                                height: ${58/1.5/baseWidth750}vw;
                             }
                         }
                         .item5{
                             img{
-                                width: ${52/baseWidth750}vw;
-                                height: ${61/baseWidth750}vw;
+                                width: ${52/1.5/baseWidth750}vw;
+                                height: ${61/1.5/baseWidth750}vw;
                             }
                         }
                         .item6{
                             img{
-                                width: ${59/baseWidth750}vw;
-                                height: ${56/baseWidth750}vw;
+                                width: ${59/1.5/baseWidth750}vw;
+                                height: ${56/1.5/baseWidth750}vw;
                             }
                         }
                         .item7{
                             img{
-                                width: ${55/baseWidth750}vw;
-                                height: ${60/baseWidth750}vw;
+                                width: ${55/1.5/baseWidth750}vw;
+                                height: ${60/1.5/baseWidth750}vw;
                             }
                         }
                         .item8{
                             img{
-                                width: ${58/baseWidth750}vw;
-                                height: ${56/baseWidth750}vw;
+                                width: ${58/1.5/baseWidth750}vw;
+                                height: ${56/1.5/baseWidth750}vw;
                             }
                         }
                         .item9{
                             img{
-                                width: ${44/baseWidth750}vw;
-                                height: ${56/baseWidth750}vw;
+                                width: ${44/1.5/baseWidth750}vw;
+                                height: ${56/1.5/baseWidth750}vw;
                             }
                         }
                         .item:nth-child(1), .item:nth-child(2){
@@ -1187,7 +1187,7 @@ const NewHome = styled.div`
                     }
                 }
                 .nextBtn{
-                    left: ${30*2/baseWidth750}vw;
+                    // left: ${30*2/baseWidth750}vw;
                     right: auto;
                 }
             }
@@ -1197,17 +1197,17 @@ const NewHome = styled.div`
                 padding-top: 0;
                 .content{
                     width: 100%;
-                    min-height: ${100*2/baseWidth750}vw;
-                    margin-left: ${30*2/baseWidth750}vw;
-                    padding-top: ${50*2/baseWidth750}vw;
+                    min-height: ${100*1.5/baseWidth750}vw;
+                    margin-left: ${30*1.5/baseWidth750}vw;
+                    padding-top: ${50*1.5/baseWidth750}vw;
                     p{
-                        font-size: ${18*2/baseWidth750}vw;
-                        line-height: ${20*2/baseWidth750}vw;
+                        font-size: ${18*1.5/baseWidth750}vw;
+                        line-height: ${20*1.5/baseWidth750}vw;
                     }
                     h2{
-                        font-size: ${36*2/baseWidth750}vw;
-                        line-height: ${45*2/baseWidth750}vw;
-                        margin: 5px 0 ${20*2/baseWidth750}vw;
+                        font-size: ${36*1.5/baseWidth750}vw;
+                        line-height: ${45*1.5/baseWidth750}vw;
+                        margin: 5px 0 ${20*1.5/baseWidth750}vw;
                     }
                 }
                 .roadMap{
@@ -1215,9 +1215,9 @@ const NewHome = styled.div`
                     background-image: none;
                     background-size: 100% auto;
                     background-position: 100% 50%;
-                    height: calc(100vh - ${290*2/baseWidth750}vw);
+                    height: calc(100vh - ${290/baseWidth750}vw);
                     .line{
-                        height: calc(100vh - ${290*2/baseWidth750}vw);
+                        height: calc(100vh - ${290/baseWidth750}vw);
                         border-left: 1px solid #FF6633;
                         left: 50%;
                         bottom: 0;
@@ -1234,18 +1234,18 @@ const NewHome = styled.div`
                         margin-right: -${8/baseWidth750}vw;
                         box-sizing: border-box;
                         text-align: right;
-                        padding-right: ${35*2/baseWidth750}vw;
+                        padding-right: ${35*1.5/baseWidth750}vw;
                        h3{
-                        font-size: ${16*2/baseWidth750}vw;
-                        line-height: ${20*2/baseWidth750}vw;
-                        margin-bottom: ${6*2/baseWidth750}vw;
+                        font-size: ${16*1.5/baseWidth750}vw;
+                        line-height: ${20*1.5/baseWidth750}vw;
+                        margin-bottom: ${6*1.5/baseWidth750}vw;
                        }
                        p{
-                        font-size: ${12*2/baseWidth750}vw;
-                        line-height: ${18*2/baseWidth750}vw;
+                        font-size: ${12*1.5/baseWidth750}vw;
+                        line-height: ${18*1.5/baseWidth750}vw;
                        }
                        .line{
-                            width: ${27*2/baseWidth750}vw;
+                            width: ${27*1.5/baseWidth750}vw;
                             height: 0;
                             bottom: auto;
                             top: ${16/baseWidth750}vw;
@@ -1270,13 +1270,13 @@ const NewHome = styled.div`
                         left: 50%;
                         right: auto;
                         margin-left: -${8/baseWidth750}vw;
-                        padding: 0 0 0 ${35*2/baseWidth750}vw;
+                        padding: 0 0 0 ${35*1.5/baseWidth750}vw;
                         .line{
                             bottom: auto;
                             top: ${16/baseWidth750}vw;
                             left: 0;
                             right: auto;
-                            width: ${27*2/baseWidth750}vw;
+                            width: ${27*1.5/baseWidth750}vw;
                             height: 0;
                             border-top: 1px solid #FF6633;
                             margin-left:0;
@@ -1288,7 +1288,7 @@ const NewHome = styled.div`
                         }
                     }
                     .item2.bottom{
-                       top: 10%;
+                       top: 13%;
                     }
                     .item3{
                         top: 30%;
@@ -1348,6 +1348,9 @@ const NewHome = styled.div`
                     box-sizing: border-box;
                     p{
                         font-size: ${18*2/baseWidth750}vw;
+                        line-height: ${24*2/baseWidth750}vw;
+                    }
+                    .desc{
                         line-height: ${24*2/baseWidth750}vw;
                     }
                     h2,h3{
