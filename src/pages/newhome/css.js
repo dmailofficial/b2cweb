@@ -1465,20 +1465,20 @@ const NewHome = styled.div`
                     }
                     p.desc{
                         font-size: ${14*2/baseWidth750}vw;
-                        line-height: ${20*2/baseWidth750}vw;
+                        line-height: ${18*2/baseWidth750}vw;
                         letter-spacing: 1px;
                     }
                     h2{
                         font-size: ${32*2/baseWidth750}vw;
                         line-height: ${38*2/baseWidth750}vw;
-                        margin: 5px 0 ${20*2/baseWidth750}vw;
+                        margin: 5px 0 ${10*2/baseWidth750}vw;
                     }
                 }
             }
 
             .highlightBlock{
                 background-image: linear-gradient(to top, rgba(29,29,31, .8), rgba(29,29,31, .8)), url(${highBackground});
-                background-size: 100% auto;
+                background-size: 150% auto;
                 background-position: 100% 50%;
             }
     
@@ -1495,8 +1495,8 @@ const NewHome = styled.div`
                         line-height: ${22*2/baseWidth750}vw;
                     }
                     h2{
-                        font-size: ${38*2/baseWidth750}vw;
-                        line-height: ${45*2/baseWidth750}vw;
+                        font-size: ${34*2/baseWidth750}vw;
+                        line-height: ${40*2/baseWidth750}vw;
                     }
                 }
                 .content{
@@ -1505,13 +1505,13 @@ const NewHome = styled.div`
                     margin-left: 0;
                     padding-left: ${20*2/baseWidth750}vw;
                     padding-right: ${20*2/baseWidth750}vw;
-                    padding-top: ${20*2/baseWidth750}vw;
+                    padding-top: ${10*2/baseWidth750}vw;
                     .highlightItem{
                         display: block;
                         .item{
                             width: 100%;
                             padding: 0 5px 0;
-                            margin-top: ${5*2/baseWidth750}vw;
+                            margin-top: ${5/baseWidth750}vw;
                             >div{
                                 height: ${62*2/1.5/baseWidth750}vw;
                                 width: ${62*2/1.5/baseWidth750}vw;
@@ -1596,7 +1596,7 @@ const NewHome = styled.div`
                     }
                 }
                 .nextBtn{
-                    left: ${30*2/baseWidth750}vw;
+                    // left: ${30*2/baseWidth750}vw;
                     right: auto;
                 }
             }

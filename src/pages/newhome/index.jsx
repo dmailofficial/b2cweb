@@ -149,7 +149,8 @@ const windowAddMouseWheel = () => {
             <div className="content">
               <p>Introducing Dmail</p>
               <h2>What is Dmail</h2>
-              <p className="desc">Utilizing Dfinity as the engine to realize decentralized storage and privacy protection, Dmail identifies user identity and interests with NFT domain account, accomplishes the connection among message, asset, storage, and DApp, eliminates the data silos, and becomes an important information interaction tool in Web3 era.</p>
+              {/* <p className="desc">In web 3.0, every user and application coexist in a frame of open standards and protocols, which can connected each other freely and form the internet of everything.</p> */}
+              <p className="desc">Utilizing Dfinity as the engine to realize decentralized storage and privacy protection, Dmail identifies user identity and User rights with NFT domain account, making connections between information, assets, storage and Dapps. Dmail is striving to eliminate data barriers and become the most important interaction tool for the Web 3.0 era. </p>
               
               <div className="dmailItem">
                   <div className="item item1">
@@ -190,9 +191,9 @@ const windowAddMouseWheel = () => {
         <div className="contentWrap workContent">
             <div className="content">
             <p>Introducing Dmail</p>
-              <h2>How to work</h2>
+              <h2>How does Dmail Work？</h2>
               <p className="desc">
-                The feature of asset delivery reflects the characteristic of Dmail and blockchain. Since Dmail deploys on Dfinity, every mailbox in Dmail corresponds to a private Canister. Meanwhile, with the help of Dfinity Digital Signature System, user’s information stored in Canister could be kept in privacy. Every time, mailing activity means the interaction between Canisters, which are equivalent to smart contracts. In the process of interaction, token assets, coding in the canister, can be transferred with email as an attachment, while the principle ID in each canister, a representative of DID, allows each user to interact with all kinds of  DApps without hindrance.
+                Dmail is an on-chain E-mail tool which enables the asset transfer function. Deployed on Dfinigty, every Dmail mailbox corresponds to a private “Canister”. The Dfinity digital signature system ensures the safety of user information stored in the "canister" and is not leaked. Each email sending is equivalent to the interaction of the smart contract, which is the interaction of the "canister" corresponding to each mailbox. During the interaction, encrypted assets can not only be used as information in the "canister" to interact, but also sent with emails; the Principal ID corresponding to the “canister" can form the fundamental decentralized identity (DID), allowing users to freely access information and assets and various DApps.
               </p>
             </div>
             <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor3")}}>
@@ -207,7 +208,7 @@ const windowAddMouseWheel = () => {
         <div className="contentWrap highlightContent">
             <div className="title">
               <p>Dmail</p>
-              <h2>Highlights</h2>
+              <h2>What’s unique about Dmail?</h2>
             </div>
             <div className="content">
               <div className="highlightItem">
@@ -243,7 +244,7 @@ const windowAddMouseWheel = () => {
                       <img src={highlightIcon4}></img>
                     </div>
                     <h3>Multichain assets</h3>
-                    <p>Conveniently send/receive messages and token assets, binding with multichain wallets</p>
+                    <p>Bind with multichain wallets, enables users to send & receive messages and assets seamlessly. </p>
                   </div>
                   <div className="item item5">
                     {/* <img src={highlightIcon5}></img> */}
@@ -251,15 +252,15 @@ const windowAddMouseWheel = () => {
                       <img src={highlightIcon5}></img>
                     </div>
                     <h3>Data storage permanently</h3>
-                    <p>Data in decentralized form stores on chain permanently</p>
+                    <p>Data is stored on chain decentralized and Permanently </p>
                   </div>
                   <div className="item item6">
                     {/* <img src={highlightIcon6}></img> */}
                     <div>
                       <img src={highlightIcon6}></img>
                     </div>
-                    <h3>Exchangeable NFT domain account</h3>
-                    <p>Building NFT domain account exchange system defines the mailbox as a new asset</p>
+                    <h3>Tradable NFT domain account</h3>
+                    <p>Build an NFT domain market, in which your e-mail can be an asset as well</p>
                   </div>
               </div>
               <div className="highlightItem">
@@ -277,7 +278,7 @@ const windowAddMouseWheel = () => {
                       <img src={highlightIcon8}></img>
                     </div>
                     <h3>Compatible with web2 emails</h3>
-                    <p>Various types of emails can be login through Dmail APP, realizing a part of DID functions</p>
+                    <p>Dmail's DID function will support logins through web 2.0 emails</p>
                   </div>
                   <div className="item item9">
                     {/* <img src={highlightIcon9}></img> */}
@@ -307,7 +308,7 @@ const windowAddMouseWheel = () => {
                 <div className="line"></div>
                 <div className="item item1">
                     <h3>2021 Q2</h3>
-                    <p>Start project<br></br>Dmail demo<br></br>Dfinty identity</p>
+                    <p>Project kickoff<br></br>Dmail demo<br></br>Dfinty identity</p>
                     <span className="line"></span>
                     <span className="circle"></span>
                  </div>
