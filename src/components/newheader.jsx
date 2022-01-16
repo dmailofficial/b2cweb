@@ -24,12 +24,12 @@ const Login = styled.div`
 `
 const HeaderWrap = styled.div`
   height: 67px;
+  width: 100%;
   background-color: #1D1D1F;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 30px;
-  position: relative;
   z-index: 20;
   box-sizing: border-box;
   .on{
@@ -50,6 +50,10 @@ const HeaderWrap = styled.div`
     .logo{
       width: auto;
       height: 32px;
+    }
+    .nav_wrapper{
+      background-color: #1D1D1F;
+      box-shadow: 0 3px 5px 3px #1D1D1F;
     }
   }
 `

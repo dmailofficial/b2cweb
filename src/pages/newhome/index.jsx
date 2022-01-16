@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { NewHome } from './css'
+import ReactPageScroller from "./scroller/index";
 import Header from '@/components/newheader'
 
 import arrow from '@/static/images/home/banner/arrow@2x.png'
@@ -123,9 +124,10 @@ const windowAddMouseWheel = () => {
 
   return (
     <NewHome>
-      <a href="#" id='anchor0'></a>
+      <Header />
+      <ReactPageScroller>
+      {/* <a href="#" id='anchor0'></a> */}
       <div className="pageWrap bannerBlock">
-        <Header />
         <div className="contentWrap bannerContent">
             <div className="content">
               <p>Introducing Dmail</p>
@@ -141,7 +143,7 @@ const windowAddMouseWheel = () => {
         </div>
       </div>
 
-      <a href="#" id='anchor1'></a>
+      {/* <a href="#" id='anchor1'></a> */}
       <div className="pageWrap dmailBlock">
         <div className="contentWrap dmailContent">
             <div className="content">
@@ -183,7 +185,7 @@ const windowAddMouseWheel = () => {
         </div>
       </div>
 
-      <a href="#" id='anchor2'></a>
+      {/* <a href="#" id='anchor2'></a> */}
       <div className="pageWrap workBlock">
         <div className="contentWrap workContent">
             <div className="content">
@@ -200,7 +202,7 @@ const windowAddMouseWheel = () => {
         </div>
       </div>
 
-      <a href="#" id='anchor3'></a>
+      {/* <a href="#" id='anchor3'></a> */}
       <div className="pageWrap highlightBlock">
         <div className="contentWrap highlightContent">
             <div className="title">
@@ -294,7 +296,7 @@ const windowAddMouseWheel = () => {
         </div>
       </div>
 
-      <a href="#" id='anchor4'></a>
+      {/* <a href="#" id='anchor4'></a> */}
       <div className="pageWrap roadmapBlock">
         <div className="contentWrap roadmapContent">
             <div className="content">
@@ -343,7 +345,7 @@ const windowAddMouseWheel = () => {
         </div>
       </div>
 
-
+      </ReactPageScroller>
       
     </NewHome>
   );

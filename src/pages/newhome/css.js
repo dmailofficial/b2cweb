@@ -13,23 +13,25 @@ const NewHome = styled.div`
         height: 100vh;
         width: 100%;
         background-color: #1D1D1F;
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            border-bottom: 1px solid #888888;
+        }
         .pageWrap {
-            height: calc(100vh - 67px);
+            height: 100vh;
             width: 100%;
             margin: 0 auto;
             background-color: #1D1D1F;
-            .header {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                border-bottom: 1px solid #888888;
-            }
+            
         }
         .contentWrap{
-            height: calc(100vh - 67px);
+            height: 100vh;
             padding-top: 0;
             position: relative;
+            box-sizing: border-box;
 
             .nextBtn{
                 cursor: pointer;
@@ -54,7 +56,7 @@ const NewHome = styled.div`
         .bannerBlock{
             height: 100vh;
             background-image: url(${bannerBackground});
-            background-size: ${1215/baseWidth}vw ${803/baseWidth}vw;
+            background-size: ${1440/baseWidth}vw ${836/baseWidth}vw;
             background-position: 100% 50%;
             background-repeat: no-repeat;
         }
@@ -116,7 +118,7 @@ const NewHome = styled.div`
         
         .dmailBlock{
             background-image: url(${dmailBackground});
-            background-size:  ${1185/baseWidth}vw  ${676/baseWidth}vw;
+            background-size:  ${1440/baseWidth}vw  ${836/baseWidth}vw;
             background-position: 100% 50%;
             background-repeat: no-repeat;
         }
@@ -126,7 +128,7 @@ const NewHome = styled.div`
                 width: 55%;
                 min-height: 300px;
                 margin-left: ${160/baseWidth}vw;
-                padding-top: ${76/baseWidth}vw;
+                padding-top: ${150/baseWidth}vw;
                 p{
                     font-size: ${18/baseWidth}vw;
                     font-family: Roboto-Regular, Roboto;
@@ -199,7 +201,7 @@ const NewHome = styled.div`
 
         .workBlock{
             background-image: url(${workBackground});
-            background-size: ${1174/baseWidth}vw ${693/baseWidth}vw;
+            background-size: ${1440/baseWidth}vw ${836/baseWidth}vw;
             background-position: 100% 50%;
             background-repeat: no-repeat;
         }
@@ -209,7 +211,7 @@ const NewHome = styled.div`
                 width: 50%;
                 min-height: 300px;
                 margin-left: ${160/baseWidth}vw;
-                padding-top: ${76/baseWidth}vw;
+                padding-top: ${150/baseWidth}vw;
                 p{
                     font-size: ${18/baseWidth}vw;
                     font-family: Roboto-Regular, Roboto;
@@ -237,7 +239,7 @@ const NewHome = styled.div`
 
         .highlightBlock{
             background-image: url(${highBackground});
-            background-size: ${1153/baseWidth}vw ${678/baseWidth}vw;
+            background-size: ${1440/baseWidth}vw ${836/baseWidth}vw;
             background-position: 100% 50%;
             background-repeat: no-repeat;
         }
@@ -247,7 +249,7 @@ const NewHome = styled.div`
             .title{
                 position: absolute;
                 left: 50%;
-                top: ${50/baseWidth}vw;
+                top: ${150/baseWidth}vw;
                 margin-left: ${320/baseWidth}vw;
                 p{
                     font-size: ${27/baseWidth}vw;
@@ -268,7 +270,7 @@ const NewHome = styled.div`
                 width: 50%;
                 min-height: 300px;
                 margin-left: ${87/baseWidth}vw;
-                padding-top: ${50/baseWidth}vw;
+                padding-top: ${150/baseWidth}vw;
                 .highlightItem{
                     display: flex;
                     flex-direction: row;
@@ -366,18 +368,18 @@ const NewHome = styled.div`
 
         .roadmapBlock{
             background-image: none;
-            height: calc(100vh - 67px);
+            height: 100vh;
             padding-top: 0;
         }
 
         .roadmapContent{
-            height: calc(100vh - 67px);
+            height: 100vh;
             padding-top: 0;
             .content{
                 width: 50%;
                 min-height: ${150/baseWidth}vw;
                 margin-left: ${160/baseWidth}vw;
-                padding-top: 67px;
+                padding-top: ${160/baseWidth}vw;
                 p{
                     font-size: ${18/baseWidth}vw;
                     font-family: Roboto-Regular, Roboto;
@@ -517,6 +519,7 @@ const NewHome = styled.div`
         }
         @media screen and (max-width: 1024px) {
             .contentWrap{
+                height: 100vh;
                 .nextBtn{
                     bottom: ${30/baseWidth750}vw;
                     left: ${30/baseWidth750}vw;
@@ -584,7 +587,7 @@ const NewHome = styled.div`
                 .content{
                     width: 65%;
                     margin-left: ${30/baseWidth750}vw;
-                    padding-top: ${50/baseWidth750}vw;
+                    padding-top: ${100/baseWidth750}vw;
                     p{
                         font-size: ${16/baseWidth750}vw;
                         line-height: ${18/baseWidth750}vw;
@@ -647,7 +650,7 @@ const NewHome = styled.div`
                     width: 70%;
                     min-height: 300px;
                     margin-left: ${30/baseWidth750}vw;
-                    padding-top: ${50/baseWidth750}vw;
+                    padding-top: ${100/baseWidth750}vw;
                     p{
                         font-size: ${16/baseWidth750}vw;
                         line-height: ${18/baseWidth750}vw;
@@ -672,10 +675,12 @@ const NewHome = styled.div`
     
             .highlightContent{
                 .title{
-                    top: ${20/baseWidth750}vw;
-                    left: auto;
-                    right: ${30/baseWidth750}vw;
+                    position: relative;
+                    top: 0;
+                    left: 0;
+                    right: auto;
                     margin-left: 0;
+                    padding: ${70/baseWidth750}vw ${30/baseWidth750}vw 0;
                     p{
                         font-size: ${16/baseWidth750}vw;
                         line-height: ${22/baseWidth750}vw;
@@ -696,7 +701,7 @@ const NewHome = styled.div`
                         .item{
                             width: 33%;
                             padding: 0 5px 0;
-                            margin-top: ${10/baseWidth750}vw;
+                            margin-top: ${5/baseWidth750}vw;
                             >div{
                                 height: ${62/1.5/baseWidth750}vw;
                             }
@@ -779,13 +784,13 @@ const NewHome = styled.div`
             }
     
             .roadmapContent{
-                height: calc(100vh - 67px);
+                height: 100vh;
                 padding-top: 0;
                 .content{
                     width: 50%;
                     min-height: ${150/baseWidth750}vw;
                     margin-left: ${30/baseWidth750}vw;
-                    padding-top: 67px;
+                    padding-top: ${100/baseWidth750}vw;
                     p{
                         font-size: ${18/baseWidth750}vw;
                         line-height: ${20/baseWidth750}vw;
@@ -906,13 +911,14 @@ const NewHome = styled.div`
 
         @media screen and (max-width: 750px) {
             .pageWrap {
-                height: calc(100vh - 67px);
+                height: 100vh;
                 width: 100%;
             }
             .contentWrap{
-                height: calc(100vh - 67px);
+                height: 100vh;
                 padding-top: 0;
                 position: relative;
+                box-sizing: border-box;
     
                 .nextBtn{
                     bottom: ${40/baseWidth750}vw;
@@ -934,13 +940,13 @@ const NewHome = styled.div`
                 background-position: 50% 100%;
             }
             .bannerContent {
-                padding-top: ${30/baseWidth750}vw;
+                padding-top: 0;
                 height: 100vh;
                 .content{
                     width: 100%;
                     min-height: 300px;
-                    padding:0 ${30/baseWidth750}vw;
-                    margin-top: 19vh;
+                    padding:${150/baseWidth750}vw ${30/baseWidth750}vw 0;
+                    margin-top: 0;
                     margin-left: 0;
                     box-sizing: border-box;
                     p{
@@ -976,7 +982,7 @@ const NewHome = styled.div`
             }
             
             .dmailBlock{
-                background-size:  90%  auto;
+                background-size:  100%  auto;
                 background-position: 100% 100%;
             }
     
@@ -984,7 +990,7 @@ const NewHome = styled.div`
                 .content{
                     width: 100%;
                     margin-left: 0;
-                    padding: ${50/baseWidth750}vw ${50/baseWidth750}vw 0;
+                    padding: ${150/baseWidth750}vw ${30/baseWidth750}vw 0;
                     box-sizing: border-box;
                     p{
                         font-size: ${14*1.5/baseWidth750}vw;
@@ -1049,7 +1055,7 @@ const NewHome = styled.div`
                     width: 100%;
                     min-height: 300px;
                     margin-left: 0;
-                    padding: ${50*2/baseWidth750}vw ${30*2/baseWidth750}vw 0;
+                    padding: ${150/baseWidth750}vw ${30/baseWidth750}vw 0;
                     box-sizing: border-box;
                     p{
                         font-size: ${16*1.5/baseWidth750}vw;
@@ -1077,10 +1083,11 @@ const NewHome = styled.div`
             .highlightContent{
                 .title{
                     position: relative;
-                    top: ${20*1.5/baseWidth750}vw;
-                    left: ${30*1.5/baseWidth750}vw;
+                    top: 0;
+                    left: 0;
                     right: auto;
                     margin-left: 0;
+                    padding: ${150/baseWidth750}vw ${30/baseWidth750}vw 0;
                     p{
                         font-size: ${16*1.5/baseWidth750}vw;
                         line-height: ${22*1.5/baseWidth750}vw;
@@ -1094,9 +1101,7 @@ const NewHome = styled.div`
                     width: 100%;
                     box-sizing: border-box;
                     margin-left: 0;
-                    padding-left: ${30*1.5/baseWidth750}vw;
-                    padding-right: ${30*1.5/baseWidth750}vw;
-                    padding-top: ${20*1.5/baseWidth750}vw;
+                    padding: ${20*1.5/baseWidth750}vw ${30/baseWidth750}vw;
                     .highlightItem{
                         display: block;
                         .item{
@@ -1193,13 +1198,12 @@ const NewHome = styled.div`
             }
     
             .roadmapContent{
-                height: calc(100vh - 67px);
                 padding-top: 0;
                 .content{
                     width: 100%;
                     min-height: ${100*1.5/baseWidth750}vw;
                     margin-left: ${30*1.5/baseWidth750}vw;
-                    padding-top: ${50*1.5/baseWidth750}vw;
+                    padding-top: ${150/baseWidth750}vw;
                     p{
                         font-size: ${18*1.5/baseWidth750}vw;
                         line-height: ${20*1.5/baseWidth750}vw;
@@ -1309,13 +1313,14 @@ const NewHome = styled.div`
 
         @media screen and (max-width: 414px) {
             .pageWrap {
-                height: calc(100vh - 67px);
+                height: 100vh;
                 width: 100%;
             }
             .contentWrap{
-                height: calc(100vh - 67px);
-                padding-top: 0;
+                height: 100vh;
+                padding-top: 67px;
                 position: relative;
+                box-sizing: border-box;
     
                 .nextBtn{
                     bottom: ${40*2/baseWidth750}vw;
@@ -1337,13 +1342,13 @@ const NewHome = styled.div`
                 background-position: 50% 100%;
             }
             .bannerContent {
-                padding-top: ${30/baseWidth750}vw;
+                padding-top: 67px;
                 height: 100vh;
                 .content{
                     width: 100%;
                     min-height: 300px;
-                    padding:0 ${30/baseWidth750}vw;
-                    margin-top: 19vh;
+                    padding: ${50/baseWidth750}vw ${30*2/baseWidth750}vw 0;
+                    margin-top: 0;
                     margin-left: 0;
                     box-sizing: border-box;
                     p{
@@ -1354,7 +1359,7 @@ const NewHome = styled.div`
                         line-height: ${24*2/baseWidth750}vw;
                     }
                     h2,h3{
-                        font-size: ${30*1.8/baseWidth750}vw;
+                        font-size: ${30*1.5/baseWidth750}vw;
                         line-height: ${38*2/baseWidth750}vw;
                     }
                     h2{
@@ -1387,7 +1392,7 @@ const NewHome = styled.div`
                 .content{
                     width: 100%;
                     margin-left: 0;
-                    padding: ${50/baseWidth750}vw ${50/baseWidth750}vw 0;
+                    padding: ${50/baseWidth750}vw ${30*2/baseWidth750}vw 0;
                     box-sizing: border-box;
                     p{
                         font-size: ${14*2/baseWidth750}vw;
@@ -1452,7 +1457,7 @@ const NewHome = styled.div`
                     width: 100%;
                     min-height: 300px;
                     margin-left: 0;
-                    padding: ${50*2/baseWidth750}vw ${30*2/baseWidth750}vw 0;
+                    padding: ${50/baseWidth750}vw ${30*2/baseWidth750}vw 0;
                     box-sizing: border-box;
                     p{
                         font-size: ${16*2/baseWidth750}vw;
@@ -1480,10 +1485,11 @@ const NewHome = styled.div`
             .highlightContent{
                 .title{
                     position: relative;
-                    top: ${20*2/baseWidth750}vw;
-                    left: ${30*2/baseWidth750}vw;
+                    top: 0;
+                    left: 0;
                     right: auto;
                     margin-left: 0;
+                    padding: ${30/baseWidth750}vw ${40/baseWidth750}vw 0;
                     p{
                         font-size: ${16*2/baseWidth750}vw;
                         line-height: ${22*2/baseWidth750}vw;
@@ -1596,13 +1602,14 @@ const NewHome = styled.div`
             }
     
             .roadmapContent{
-                height: calc(100vh - 67px);
-                padding-top: 0;
+                height: 100vh;
+                box-sizing: border-box;
+                padding-top: 67px;
                 .content{
                     width: 100%;
                     min-height: ${100*2/baseWidth750}vw;
                     margin-left: ${30*2/baseWidth750}vw;
-                    padding-top: ${50*2/baseWidth750}vw;
+                    padding-top: ${50/baseWidth750}vw;
                     p{
                         font-size: ${18*2/baseWidth750}vw;
                         line-height: ${20*2/baseWidth750}vw;
