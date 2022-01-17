@@ -46,6 +46,47 @@ const HeaderWrap = styled.div`
       height: 32px;
     }
   }
+  .support{
+    width: 152px;
+    height: 32px;
+    position: relative;
+    border: 1px solid #888888;
+    font-size: 14px;
+    font-family: Roboto-Regular, Roboto;
+    font-weight: 400;
+    color: #FFFFFF;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    ul{
+      display: none;
+      background-color: #1D1D1F;
+      padding: 10px;
+      border-radius: 4px;
+      position: absolute;
+      width: 152px;
+      box-sizing: border-box;
+      top: 32px;
+      border: 1px solid #333;
+      li{
+        width: 100%;
+        font-size: 14px;
+        font-family: Roboto-Regular, Roboto;
+        font-weight: 400;
+        color: #FFFFFF;
+        line-height: 32px;
+        border-bottom: 1px solid #666;
+      }
+      li:last-child{
+        border-bottom: none;
+      }
+    }
+  }
+  .support:hover{
+    ul{
+      display: block;
+    }
+  }
   @media screen and (max-width: 1024px){
     .logo{
       width: auto;
@@ -92,6 +133,15 @@ const Header = (props) => {
           userEmail ? <Email onClick={onChangeEmail}>{userEmail}</Email> : <div>&nbsp;</div>
         )}
         {/* <Login onClick={toLogin}></Login> */}
+        <div className="support">
+          <span>support</span>
+          <ul>
+            <li>Demo</li>
+            <li>litepaper</li>
+            <li>Docs</li>
+            <li>API</li>
+          </ul>
+        </div>
       </HeaderWrap>
     </>
   )

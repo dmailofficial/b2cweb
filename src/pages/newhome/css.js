@@ -209,6 +209,7 @@ const NewHome = styled.div`
         .workContent{
             .content{
                 width: 50%;
+                max-width: 594px;
                 min-height: 300px;
                 margin-left: ${160/baseWidth}vw;
                 padding-top: ${150/baseWidth}vw;
@@ -221,7 +222,7 @@ const NewHome = styled.div`
                 }
                 p.desc{
                     color: #FFFFFF;
-                    line-height: ${27/baseWidth}vw;
+                    line-height: ${28/baseWidth}vw;
                     letter-spacing: 2px;
                 }
                 h2{
@@ -270,7 +271,7 @@ const NewHome = styled.div`
                 width: 50%;
                 min-height: 300px;
                 margin-left: ${87/baseWidth}vw;
-                padding-top: ${150/baseWidth}vw;
+                padding-top: ${110/baseWidth}vw;
                 .highlightItem{
                     display: flex;
                     flex-direction: row;
@@ -379,7 +380,7 @@ const NewHome = styled.div`
                 width: 50%;
                 min-height: ${150/baseWidth}vw;
                 margin-left: ${160/baseWidth}vw;
-                padding-top: ${160/baseWidth}vw;
+                padding-top: ${130/baseWidth}vw;
                 p{
                     font-size: ${18/baseWidth}vw;
                     font-family: Roboto-Regular, Roboto;

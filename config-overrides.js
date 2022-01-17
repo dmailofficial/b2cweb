@@ -22,12 +22,18 @@ const addProxy = () => (configFunction) => {
   return configFunction;
 }
 
+const closedMap = config => {
+   config.devtool = config.mode === 'development' ? 'cheap-module-source-map' : false;
+   return config;
+ }; 
+
 module.exports = {
   webpack: override(
       removeManifest(),
       addWebpackAlias({
         ['@']: resolve('src')
-      })
+      }),
+      closedMap
       // addLessLoader(),
   ),
   devServer: overrideDevServer(

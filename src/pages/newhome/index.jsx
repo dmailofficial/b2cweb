@@ -193,7 +193,7 @@ const windowAddMouseWheel = () => {
             <p>Introducing Dmail</p>
               <h2>How does Dmail Work？</h2>
               <p className="desc">
-                Dmail is an on-chain E-mail tool which enables the asset transfer function. Deployed on Dfinigty, every Dmail mailbox corresponds to a private “Canister”. The Dfinity digital signature system ensures the safety of user information stored in the "canister" and is not leaked. Each email sending is equivalent to the interaction of the smart contract, which is the interaction of the "canister" corresponding to each mailbox. During the interaction, encrypted assets can not only be used as information in the "canister" to interact, but also sent with emails; the Principal ID corresponding to the “canister" can form the fundamental decentralized identity (DID), allowing users to freely access information and assets and various DApps.
+                Dmail is an on-chain E-mail tool with the function of web 3.0 asset transfer. Deployed on Dfinity,  each Dmail mailbox corresponds to a private “canister”. Dmail guarantees the safety of user information, and forms the fundamental decentralized identity (DID). With Dmail, users can access information, assets and DApps securely and seamlessly.
               </p>
             </div>
             <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor3")}}>
