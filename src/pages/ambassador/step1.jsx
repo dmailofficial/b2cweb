@@ -55,15 +55,19 @@ const Step1Component = (param) => {
             <p>Having a passion of web3,our vision and mission.</p>
             <p>Very active and enraging on Discord, Telegram, and Twitter.</p>
             <p>Experience of community engagement on social media & meetups.</p>
-            <p>Experience of Dfinity ecosystem.</p>
+            <p>Experience of working with Dfinity ecosystem.</p>
             <p>Content creation skills.</p>
           </div>
 
           <div className="citem">
             <h3>Benefits</h3>
-            <p>We will promote your cognitive on web3, and Dfinity from our resources.</p>
-            <p>We will secure a spot for you in the official ambassador district! That is a special area on the network.</p>
-            <p>You will get an 1-3bits NFT domain account from us.</p>
+            <p>Competitive salary and rewards incentives.</p>
+            <p>Commission from the Dmail presale in your area.</p>
+            <p>Invitations to our events as a privileged guest organizer .</p>
+            <p>Access to Dmail Network alums.</p>
+            <p>You may visit any of our offices at any time.</p>
+            <p>Your feedback has a chance to be written to the Dmail Roadmap.</p>
+            <p>Limited edition swags.</p>
           </div>
 
           <div className="citem">
