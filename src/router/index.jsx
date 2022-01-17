@@ -5,6 +5,7 @@ import Account from '@/pages/account/index'
 import Account2 from '@/pages/account2/index'
 import Ambassador from '@/pages/ambassador/index'
 import NewHome from '@/pages/newhome/index'
+import Presale from '@/pages/presale/index'
 // import Loading from '@/components/Loading';
 
 const Routes = () => (
@@ -15,6 +16,7 @@ const Routes = () => (
       {/* < Route exact path='/accountTest' component={Account2} /> */}
       < Route exact path='/ambassador' component={Ambassador} />
       < Route exact path='/newhome' component={NewHome} />
+      < Route exact path='/presale' component={Presale} />
       
       <Redirect from="*" to='/' />
     </Switch>

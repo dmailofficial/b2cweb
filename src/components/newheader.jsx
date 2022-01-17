@@ -30,6 +30,7 @@ const HeaderWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 30px;
+  border-bottom: 1px solid #888888;
   z-index: 20;
   box-sizing: border-box;
   .on{
