@@ -164,8 +164,8 @@ const Step1 = styled.div`
                 flex-direction: column;
                 width: 30%;
                 max-width: 378px;
-                min-height: 369px;
-                paddding-bottom: 20px;
+                min-height: 440px;
+                padding-bottom: 20px;
                 background: #FFFFFF;
                 box-shadow: 0px 4px 32px 0px rgba(34, 41, 77, 0.02), 0px 8px 64px 0px rgba(33, 39, 75, 0.1);
                 border-radius: 8px;
