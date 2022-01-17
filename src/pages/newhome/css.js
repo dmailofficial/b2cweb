@@ -268,7 +268,7 @@ const NewHome = styled.div`
                 }
             }
             .content{
-                width: 50%;
+                width:  ${868/baseWidth}vw;
                 min-height: 300px;
                 margin-left: ${87/baseWidth}vw;
                 padding-top: ${110/baseWidth}vw;
