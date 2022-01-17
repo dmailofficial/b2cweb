@@ -208,8 +208,7 @@ const NewHome = styled.div`
 
         .workContent{
             .content{
-                width: 50%;
-                max-width: 594px;
+                width: ${594/baseWidth}vw;
                 min-height: 300px;
                 margin-left: ${160/baseWidth}vw;
                 padding-top: ${150/baseWidth}vw;
