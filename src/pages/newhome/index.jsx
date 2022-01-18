@@ -20,6 +20,19 @@ import highlightIcon7 from '@/static/images/home/highlights/messageNotification/
 import highlightIcon8 from '@/static/images/home/highlights/compatibleWeb2/icon@2x.png'
 import highlightIcon9 from '@/static/images/home/highlights/messageSubscription/icon@2x.png'
 
+import partnerIcon1 from '@/static/images/home/partner/logos/HASHKEY.png'
+import partnerIcon2 from '@/static/images/home/partner/logos/CapAMINO.png'
+import partnerIcon3 from '@/static/images/home/partner/logos/DraperDragon.png'
+import partnerIcon4 from '@/static/images/home/partner/logos/outliers.png'
+import partnerIcon5 from '@/static/images/home/partner/logos/parallelVentures.png'
+import partnerIcon6 from '@/static/images/home/partner/logos/FBG.png'
+import partnerIcon7 from '@/static/images/home/partner/logos/paka.png'
+import partnerIcon8 from '@/static/images/home/partner/logos/sparkCap.png'
+import partnerIcon9 from '@/static/images/home/partner/logos/TsingTingCap.png'
+import partnerIcon10 from '@/static/images/home/partner/logos/kretosVentures.png'
+import partnerIcon11 from '@/static/images/home/partner/logos/HG-ventures.png'
+import partnerIcon12 from '@/static/images/home/partner/logos/DfinityCommunity.png'
+
 
 const Index = () => {
   const [curPage, setCurPage] = useState(0);
@@ -217,24 +230,24 @@ const windowAddMouseWheel = () => {
                     <div>
                       <img src={highlightIcon1}></img>
                     </div>
-                    <h3>Data sovereign</h3>
-                    <p>Decentralized storage formation keeps the data sovereign under users’ control</p>
+                    <h3>Data Sovereignty</h3>
+                    <p>Decentralized storage keeps data sovereignty under user’s control.</p>
                   </div>
                   <div className="item item2">
                     {/* <img src={highlightIcon2}></img> */}
                     <div>
                       <img src={highlightIcon2}></img>
                     </div>
-                    <h3>Decentralized identity</h3>
-                    <p>The important component to form DID in Web3</p>
+                    <h3>Decentralized Identity</h3>
+                    <p>The important component to form DID in Web3.</p>
                   </div>
                   <div className="item item3">
                     {/* <img src={highlightIcon3}></img> */}
                     <div>
                       <img src={highlightIcon3}></img>
                     </div>
-                    <h3>Encrypted&Privacy</h3>
-                    <p>The combination of "VRF (measurable random function) + BLS (non-interactive threshold signature) + container" ensure the user`s information encrypted and privacy protection</p>
+                    <h3>Encrypted & Privacy</h3>
+                    <p>VRF (measurable random function) + BLS (non-interactive threshold signature) + Container.</p>
                   </div>
               </div>
               <div className="highlightItem">
@@ -243,7 +256,7 @@ const windowAddMouseWheel = () => {
                     <div>
                       <img src={highlightIcon4}></img>
                     </div>
-                    <h3>Multichain assets</h3>
+                    <h3>Multichain Assets</h3>
                     <p>Bind with multichain wallets, enables users to send & receive messages and assets seamlessly. </p>
                   </div>
                   <div className="item item5">
@@ -251,16 +264,16 @@ const windowAddMouseWheel = () => {
                     <div>
                       <img src={highlightIcon5}></img>
                     </div>
-                    <h3>Data storage permanently</h3>
-                    <p>Data is stored on chain decentralized and Permanently </p>
+                    <h3>Permanent Data Storage</h3>
+                    <p>Data is stored on chain decentralized and Permanently.</p>
                   </div>
                   <div className="item item6">
                     {/* <img src={highlightIcon6}></img> */}
                     <div>
                       <img src={highlightIcon6}></img>
                     </div>
-                    <h3>Tradable NFT domain account</h3>
-                    <p>Build an NFT domain market, in which your e-mail can be an asset as well</p>
+                    <h3>Tradable NFT Domain Account</h3>
+                    <p>Build an NFT domain market, in which your e-mail can be an asset as well.</p>
                   </div>
               </div>
               <div className="highlightItem">
@@ -270,14 +283,14 @@ const windowAddMouseWheel = () => {
                       <img src={highlightIcon7}></img>
                     </div>
                     <h3>Message Notification API</h3>
-                    <p>Open API to provide the messages interaction smoothly in web3 world</p>
+                    <p>OOpen API to provide the messages interaction smoothly in web3 world</p>
                   </div>
                   <div className="item item8">
                     {/* <img src={highlightIcon8}></img> */}
                     <div>
                       <img src={highlightIcon8}></img>
                     </div>
-                    <h3>Compatible with web2 emails</h3>
+                    <h3>Compatible with Web2 Emails</h3>
                     <p>Dmail's DID function will support logins through web 2.0 emails</p>
                   </div>
                   <div className="item item9">
@@ -285,8 +298,8 @@ const windowAddMouseWheel = () => {
                     <div>
                       <img src={highlightIcon9}></img>
                     </div>
-                    <h3>Message subscription</h3>
-                    <p>Monitor new messages from projects or contract address in Dfinity ecosystem</p>
+                    <h3>Message Subscription</h3>
+                    <p>Monitor new messages from projects or contract address in Dfinity ecosystem.</p>
                   </div>
               </div>
             </div>
@@ -346,9 +359,57 @@ const windowAddMouseWheel = () => {
         </div>
       </div>
 
+      {/* <a href="#" id='anchor2'></a> */}
+      <div className="pageWrap partnerBlock">
+        <div className="contentWrap partnerContent">
+            <div className="content">
+              <h2>Partners</h2>
+              <div className="partners">
+                <div className="pitem">
+                  <img src={partnerIcon1} alt="HASHKEY"></img>
+                </div>
+                <div className="pitem">
+                  <img src={partnerIcon2} alt="CapAMINO"></img>
+                </div>
+                <div className="pitem">
+                  <img src={partnerIcon3} alt="DraperDragon"></img>
+                </div>
+                <div className="pitem">
+                  <img src={partnerIcon4} alt="outliers"></img>
+                </div>
+                <div className="pitem">
+                  <img src={partnerIcon5} alt="parallelVentures"></img>
+                </div>
+                <div className="pitem">
+                  <img src={partnerIcon6} alt="FBG"></img>
+                </div>
+                <div className="pitem">
+                  <img src={partnerIcon7} alt="paka"></img>
+                </div>
+                <div className="pitem">
+                  <img src={partnerIcon8} alt="sparkCap"></img>
+                </div>
+                <div className="pitem">
+                  <img src={partnerIcon9} alt="TsingTingCap"></img>
+                </div>
+                <div className="pitem">
+                  <img src={partnerIcon10} alt="kretosVentures"></img>
+                </div>
+                <div className="pitem">
+                  <img src={partnerIcon11} alt="HG ventures"></img>
+                </div>
+                <div className="pitem">
+                  <img src={partnerIcon12} alt="DfinityCommunity"></img>
+                </div>
+              </div>
+            </div>
+           
+        </div>
+      </div>
+
       </ReactPageScroller>
-      
     </NewHome>
+    
   );
 }
 

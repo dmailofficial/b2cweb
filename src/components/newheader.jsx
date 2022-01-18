@@ -23,14 +23,14 @@ const Login = styled.div`
   cursor: pointer;
 `
 const HeaderWrap = styled.div`
-  height: 67px;
+  height: 60px;
   width: 100%;
   background-color: #1D1D1F;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 30px;
-  border-bottom: 1px solid #888888;
+  border-bottom: 1px solid #979797;
   z-index: 20;
   box-sizing: border-box;
   .on{
@@ -45,6 +45,19 @@ const HeaderWrap = styled.div`
     img{
       width: auto;
       height: 32px;
+    }
+  }
+  .nav{
+    .nav_item{
+      a{
+        font-size: 14px;
+        font-family: Roboto-Bold, Roboto;
+        font-weight: bold;
+        color: #ffffff;
+      }
+      a.on{
+        color: #FF6633;
+      }
     }
   }
   .support{
@@ -131,7 +144,7 @@ const Header = (props) => {
           </div>
         </div>
         {pathname === '/' ? <div className="contact" onClick={onContactClick}></div> : (
-          userEmail ? <Email onClick={onChangeEmail}>{userEmail}</Email> : <div>&nbsp;</div>
+          userEmail ? <Email onClick={onChangeEmail}>{userEmail}</Email> : null
         )}
         {/* <Login onClick={toLogin}></Login> */}
         <div className="support">
