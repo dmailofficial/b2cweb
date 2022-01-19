@@ -90,6 +90,9 @@ const HeaderWrap = styled.div`
         color: #FFFFFF;
         line-height: 32px;
         border-bottom: 1px solid #666;
+        a{
+          color: #FFFFFF;
+        }
       }
       li:last-child{
         border-bottom: none;
@@ -150,9 +153,9 @@ const Header = (props) => {
         <div className="support">
           <span>support</span>
           <ul>
-            <li>Demo</li>
-            <li>litepaper</li>
-            <li>Docs</li>
+            <li><a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank">Demo</a></li>
+            <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Litepaper</a></li>
+            <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank" class="docs">Docs</a></li>
             <li>API</li>
           </ul>
         </div>

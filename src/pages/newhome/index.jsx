@@ -33,20 +33,29 @@ import partnerIcon10 from '@/static/images/home/partner/logos/kretosVentures.png
 import partnerIcon11 from '@/static/images/home/partner/logos/HG-ventures.png'
 import partnerIcon12 from '@/static/images/home/partner/logos/DfinityCommunity.png'
 
+import footerlogo from '@/static/images/home/footer/logo.png'
+import footericon1 from '@/static/images/home/footer/twitter.png'
+import footericon2 from '@/static/images/home/footer/telegram.png'
+import footericon3 from '@/static/images/home/footer/medium.png'
+import footericon4 from '@/static/images/home/footer/discord.png'
+
 
 const Index = () => {
   const [curPage, setCurPage] = useState(0);
   const [scrolling, setScrolling] = useState(false)
+  const [showFooter, setShowFooter] = useState(false)
+
+
+
   console.log("asdfasdas:")
-  const gotoTop = () => {
-    document.documentElement.scrollTo({left: 0, top: 0, behavior: "smooth"});
+  const gotoPostion = (top) => {
+    document.documentElement.scrollTo({left: 0, top: top, behavior: "smooth"});
+    document.body.scrollTo({left: 0, top: top, behavior: "smooth"});
   }
 
   const scrollToAnchor = (anchorName) => {
-    console.log("name:", anchorName)
     if (anchorName) {
         let anchorElement = document.getElementById(anchorName);
-        console.log("element:", anchorElement)
         if(anchorElement) {
             anchorElement.scrollIntoView(
                 {behavior: 'smooth'}
@@ -55,77 +64,27 @@ const Index = () => {
     }
   }
 
-const scrollToPre =  () =>{
-    if(scrolling){return}
-    console.log("scrollToPre:",curPage)
-    setScrolling(true)
-    console.log("scrollToPre scrolling:",scrolling)
-    setScrolling(true)
-    if(curPage > 0){
-       setCurPage(curPage-1);
-    }
-    
-    let _anchor = "anchor"+curPage;
-    scrollToAnchor(_anchor)   
-    
-    
-    // setTimeout(()=>{
-    //   setScrolling(false)
-    // }, 3000)
-}
-
-const scrollToNext =  () =>{
-  if(scrolling){return}
-  console.log("scrollToNext11:",curPage)
-   setScrolling(true)
-    console.log("scrollToNext scrolling:",scrolling)
-    // setScrolling(true)
-    let _c = curPage
-  if(curPage < 4){
-    _c = _c+1;
-    console.log("ccc:",_c)
-     setCurPage(_c);
-  }
-  console.log("scrollToNext:",curPage)
-  // setScrolling(true)
   
-  let _anchor = "anchor"+_c;
-  scrollToAnchor(_anchor)
 
-  // setTimeout(()=>{
-  //   setScrolling(false)
-  // }, 3000)   
+const handleScrollUnavailable = (i) => {
+  
+  if(curPage == 5 && !showFooter){
+    setShowFooter(true);
+    setTimeout(()=>{
+      gotoPostion(700)
+    },10)
+  }
 }
 
-const windowAddMouseWheel = () => {
-    const scrollFunc = function (e) {
-        e = e || window.event;
-        console.log("scrolling:",scrolling)
-        if(scrolling){return}
+const handlePageChange = number => {
+  setCurPage(number)
+  if(showFooter && number !== 5){
+    setShowFooter(false);
+  }
+};
 
-        if (e.wheelDelta) {
-            
-            if (e.wheelDelta > 0) {
-              scrollToPre()
-            }
-            if (e.wheelDelta < 0) {
-              scrollToNext()
-            }
-        } else if (e.detail) {  //Firefox
-            if (e.detail> 0) {
-              scrollToPre()
-            }
-            if (e.detail< 0) {
-              scrollToNext()
-            }
-        }
-    };
-
-    if (document.addEventListener) {
-        document.addEventListener('DOMMouseScroll', scrollFunc, false);
-    }
-
-    window.onmousewheel = document.onmousewheel = scrollFunc;
+const onBeforePageScroll = () => {
+  setShowFooter(false);
 }
 
 // useEffect(()=>{
@@ -138,7 +97,11 @@ const windowAddMouseWheel = () => {
   return (
     <NewHome>
       <Header />
-      <ReactPageScroller>
+      <ReactPageScroller
+        handleScrollUnavailable = {handleScrollUnavailable}
+        pageOnChange={handlePageChange}
+        onBeforePageScroll = {onBeforePageScroll}
+      >
       {/* <a href="#" id='anchor0'></a> */}
       <div className="pageWrap bannerBlock">
         <div className="contentWrap bannerContent">
@@ -147,7 +110,7 @@ const windowAddMouseWheel = () => {
               <h2>Construct DID in Web 3.0</h2>
               <h3>Not Just an Email </h3>
               <p className="desc">Dmail guarantees a safe&private environment for your<br></br> communication, storage, and tokens&NFTs transfer on the web 3.0</p>
-              <span className="launchBtn" >Launch Demo <img src={rightArrow}></img></span>
+              <a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank" className="launchBtn" >Launch Demo <img src={rightArrow}></img></a>
             </div>
             <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor1")}}>
                 <img src={arrow}></img>
@@ -406,8 +369,50 @@ const windowAddMouseWheel = () => {
            
         </div>
       </div>
-
       </ReactPageScroller>
+      {showFooter ? 
+        <div className="footWrap" >
+          <div className="signWrap">
+              <p>Sign up and stay informed</p>
+              <div className="inputWrap">
+                <input placeholder="Your email address"></input>
+                <span className="signBtn">Sign up</span>
+              </div>
+          </div>
+          <div className="footerInfo">
+            <div className="footerLogo">
+              <img src={footerlogo} alt="Dmail"></img>
+              <p>@Dmail Network Foundation LTD.</p>
+            </div>
+            <div className="bref">
+              <p>Dmail guarantees a safe & private environment for your communication, storage, tokens & NFTs transfer on Web 3.0</p>
+              <p>contact@dmail.ai</p>
+            </div>
+            <div className="links">
+              <ul>
+                <li>Product</li>
+                <li><a href="#" target="_blank">Mailbox</a></li>
+                <li><a href="#" target="_blank">NFTs</a></li>
+                <li><a href="#" target="_blank">Dapps</a></li>
+              </ul>
+              <ul>
+                <li>Supprot</li>
+                <li><a href="#" target="_blank">Demo</a></li>
+                <li><a href="#" target="_blank">Litepaper</a></li>
+                <li><a href="#" target="_blank">Docs</a></li>
+                <li><a href="#" target="_blank">API</a></li>
+              </ul>
+              <ul>
+                <li>Community</li>
+                <li><a href="#" target="_blank"><img src={footericon1}></img>Twitter</a></li>
+                <li><a href="#" target="_blank"><img src={footericon2}></img>Telegram</a></li>
+                <li><a href="#" target="_blank"><img src={footericon3}></img>Medium</a></li>
+                <li><a href="#" target="_blank"><img src={footericon4}></img>Discord</a></li>
+              </ul>
+            </div>
+          </div>
+        </div> 
+        : null }
     </NewHome>
     
   );
