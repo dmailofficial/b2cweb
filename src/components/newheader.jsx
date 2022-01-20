@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState}from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import styled, { createGlobalStyle, useTheme } from 'styled-components';
 import hot from '@/static/images/hot.png'
 import ava from '@/static/images/ava.png'
 import logo from '@/static/images/logo@2x.png'
+
+import rocket from '@/static/images/home/toast/rocket@2x.png'
 
 const Email = styled.div`
   color: #fff;
@@ -104,7 +106,75 @@ const HeaderWrap = styled.div`
       display: block;
     }
   }
+  .toastWrap{
+    position: fixed;
+    width: 360px;
+    height: 148px;
+    background: #FFFFFF;
+    border-radius: 6px;
+    top: 90px;
+    left: 50%;
+    margin-left: -180px;
+    padding: 16px;
+    box-sizing: border-box;
+    .closeBtn{
+        width: 16px;
+        height: 16px;
+        display: block;
+        position: relative;
+        float: right;
+        margin-bottom: 16px;
+        cursor: pointer;
+        span{
+            position: absolute;
+            top: 8px;
+            height:1px;
+            width:16px;
+            display: block;
+            background: #888888;
+            transform: rotate(45deg);
+        }
+        span:nth-child(2){
+            transform: rotate(-45deg);
+        }
+    }
+    .content{
+        padding: 32px 20px 0;
+    }
+    img{
+        width: 55px;
+        height: 56px;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 20px 0 0;
+    }
+    span.tip{
+        display: inline-block;
+        font-size: 20px;
+        font-family: Roboto-Regular, Roboto;
+        font-weight: 400;
+        color: #111111;
+        height: 56px;
+        line-height: 56px;
+    }
+}
   @media screen and (max-width: 1024px){
+      padding: 0 5px;
+      .logo{
+          order: 1;
+      }
+      .nav{
+          order: 0;
+      }
+      .support{
+          width: auto;
+          padding: 0 15px;
+          order: 2;
+          ul{
+              width: 100%;
+              left: 0;
+          }
+      }
     .logo{
       width: auto;
       height: 32px;
@@ -113,14 +183,60 @@ const HeaderWrap = styled.div`
       background-color: #1D1D1F;
       box-shadow: 0 3px 5px 3px #1D1D1F;
     }
+    .toastWrap{
+      width: 280px;
+      height: auto;
+      border-radius: 6px;
+      left: 50%;
+      padding: 16px 16px 32px;
+      margin-left: -140px;
+      .content{
+          padding: 32px 20px 0;
+      }
+      img{
+          width: 45px;
+          height: 46px;
+      }
+      span.tip{
+          font-size: 16px;
+          height: 46px;
+          line-height: 46px;
+      }
+    }
+  }
+  @media screen and (max-width: 750px){
+    padding: 0 5px;
+    .logo{
+        order: 1;
+    }
+    .nav{
+        order: 0;
+    }
+    .support{
+        width: auto;
+        padding: 0 15px;
+        order: 2;
+        ul{
+            width: 100%;
+            left: 0;
+        }
+    }
   }
 `
 
 const Header = (props) => {
   const { location: { pathname }, userEmail, toLogin, onChangeEmail } = props
+  const [showToast, setShowToast] = useState(false)
 
   const onCommingSoon = () => {
-    alert('comming soon...')
+    setShowToast(true)
+    setTimeout(()=>{
+      setShowToast(false)
+    }, 3000)
+  }
+
+  const onhandleClose = () => {
+    setShowToast(false)
   }
 
   const onShowNavs = () => {
@@ -155,10 +271,23 @@ const Header = (props) => {
           <ul>
             <li><a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank">Demo</a></li>
             <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Litepaper</a></li>
-            <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank" class="docs">Docs</a></li>
+            <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank" className="docs">Docs</a></li>
             <li>API</li>
           </ul>
         </div>
+          {showToast ? 
+            <div className="toastWrap">
+              <span className="closeBtn" onClick={onhandleClose}>
+                <span></span>
+                <span></span>
+              </span>
+              <div className="content">
+                <img src={rocket}></img>
+                <span className="tip">Coming Soon！</span>
+              </div>
+            </div>
+          : null}
+        
       </HeaderWrap>
     </>
   )

@@ -39,32 +39,19 @@ import footericon2 from '@/static/images/home/footer/telegram.png'
 import footericon3 from '@/static/images/home/footer/medium.png'
 import footericon4 from '@/static/images/home/footer/discord.png'
 
+import success from '@/static/images/home/toast/success.png'
 
 const Index = () => {
   const [curPage, setCurPage] = useState(0);
   const [scrolling, setScrolling] = useState(false)
   const [showFooter, setShowFooter] = useState(false)
+  const [showToast, setShowToast] = useState(false)
 
 
-
-  console.log("asdfasdas:")
   const gotoPostion = (top) => {
     document.documentElement.scrollTo({left: 0, top: top, behavior: "smooth"});
     document.body.scrollTo({left: 0, top: top, behavior: "smooth"});
   }
-
-  const scrollToAnchor = (anchorName) => {
-    if (anchorName) {
-        let anchorElement = document.getElementById(anchorName);
-        if(anchorElement) {
-            anchorElement.scrollIntoView(
-                {behavior: 'smooth'}
-            );
-        }
-    }
-  }
-
-  
 
 const handleScrollUnavailable = (i) => {
   
@@ -76,22 +63,50 @@ const handleScrollUnavailable = (i) => {
   }
 }
 
-const handlePageChange = number => {
+const gotoPage = (number) => {
+  console.log("gottopage::", number)
   setCurPage(number)
-  if(showFooter && number !== 5){
+}
+
+const handlePageChange = number => {
+  console.log("handlePageChange:",number)
+  let _num = number;
+  if(_num < 0){
+    _num = 0;
+    gotoPage(0);
+  }
+  if(_num > 5){
+    _num = 5;
+    gotoPage(5);
+  }
+  
+  setCurPage(_num)
+  if(showFooter && _num !== 5){
     setShowFooter(false);
   }
+  return false;
 };
 
 const onBeforePageScroll = () => {
   setShowFooter(false);
 }
 
-// useEffect(()=>{
-//   scrollToAnchor("anchor0");
-//   windowAddMouseWheel();
-// }, [])
 
+
+
+const onSignClick = () => {
+  console.log("click sign click")
+  setTimeout(() => {
+    setShowToast(true)
+    setTimeout(()=>{
+      setShowToast(false)
+    }, 3000)
+  }, 200)
+}
+
+const onhandleClose = () => {
+  setShowToast(false)
+}
   
 
   return (
@@ -101,6 +116,9 @@ const onBeforePageScroll = () => {
         handleScrollUnavailable = {handleScrollUnavailable}
         pageOnChange={handlePageChange}
         onBeforePageScroll = {onBeforePageScroll}
+        customPageNumber={curPage}
+        animationTimerBuffer = {300}
+        animationTimer ={1500}
       >
       {/* <a href="#" id='anchor0'></a> */}
       <div className="pageWrap bannerBlock">
@@ -112,7 +130,7 @@ const onBeforePageScroll = () => {
               <p className="desc">Dmail guarantees a safe&private environment for your<br></br> communication, storage, and tokens&NFTs transfer on the web 3.0</p>
               <a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank" className="launchBtn" >Launch Demo <img src={rightArrow}></img></a>
             </div>
-            <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor1")}}>
+            <div className="nextBtn" onClick={()=>{gotoPage(1)}}>
                 <img src={arrow}></img>
                 <span className="txt">Scroll down to explore more</span>
             </div>
@@ -155,7 +173,7 @@ const onBeforePageScroll = () => {
                   </div>
               </div>
             </div>
-            <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor2")}}>
+            <div className="nextBtn" onClick={()=>{gotoPage(2)}}>
                 <img src={arrow}></img>
                 <span className="txt">Scroll down to explore more</span>
             </div>
@@ -172,7 +190,7 @@ const onBeforePageScroll = () => {
                 Dmail is an on-chain E-mail tool with the function of web 3.0 asset transfer. Deployed on Dfinity,  each Dmail mailbox corresponds to a private “canister”. Dmail guarantees the safety of user information, and forms the fundamental decentralized identity (DID). With Dmail, users can access information, assets and DApps securely and seamlessly.
               </p>
             </div>
-            <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor3")}}>
+            <div className="nextBtn" onClick={()=>{gotoPage(3)}}>
                 <img src={arrow}></img>
                 <span className="txt">Scroll down to explore more</span>
             </div>
@@ -266,7 +284,7 @@ const onBeforePageScroll = () => {
                   </div>
               </div>
             </div>
-            <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor4")}}>
+            <div className="nextBtn" onClick={()=>{gotoPage(4)}}>
                 <img src={arrow}></img>
                 <span className="txt">Scroll down to explore more</span>
             </div>
@@ -376,7 +394,7 @@ const onBeforePageScroll = () => {
               <p>Sign up and stay informed</p>
               <div className="inputWrap">
                 <input placeholder="Your email address"></input>
-                <span className="signBtn">Sign up</span>
+                <span className="signBtn" onClick={onSignClick}>Sign up</span>
               </div>
           </div>
           <div className="footerInfo">
@@ -397,22 +415,34 @@ const onBeforePageScroll = () => {
               </ul>
               <ul>
                 <li>Supprot</li>
-                <li><a href="#" target="_blank">Demo</a></li>
-                <li><a href="#" target="_blank">Litepaper</a></li>
-                <li><a href="#" target="_blank">Docs</a></li>
+                <li><a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank">Demo</a></li>
+                <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Litepaper</a></li>
+                <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Docs</a></li>
                 <li><a href="#" target="_blank">API</a></li>
               </ul>
               <ul>
                 <li>Community</li>
-                <li><a href="#" target="_blank"><img src={footericon1}></img>Twitter</a></li>
-                <li><a href="#" target="_blank"><img src={footericon2}></img>Telegram</a></li>
-                <li><a href="#" target="_blank"><img src={footericon3}></img>Medium</a></li>
+                <li><a href="https://twitter.com/dmailofficial" target="_blank"><img src={footericon1}></img>Twitter</a></li>
+                <li><a href="https://t.me/dmailofficial" target="_blank"><img src={footericon2}></img>Telegram</a></li>
+                <li><a href="https://medium.com/@dmail_official" target="_blank"><img src={footericon3}></img>Medium</a></li>
                 <li><a href="#" target="_blank"><img src={footericon4}></img>Discord</a></li>
               </ul>
             </div>
           </div>
         </div> 
         : null }
+        {showToast ? 
+            <div className="toastWrap">
+              <span className="closeBtn" onClick={onhandleClose}>
+                <span></span>
+                <span></span>
+              </span>
+              <div className="content">
+                <img src={success}></img>
+                <span className="tip">Thanks! Email submitted.</span>
+              </div>
+            </div>
+          : null}
     </NewHome>
     
   );
