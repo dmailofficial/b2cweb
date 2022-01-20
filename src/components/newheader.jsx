@@ -40,6 +40,10 @@ const HeaderWrap = styled.div`
   }
   .nav_wrapper{
     top: 65px;
+    flex: auto;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 80px;
   }
   .logo{
     background-image: none;
@@ -50,14 +54,17 @@ const HeaderWrap = styled.div`
     }
   }
   .nav{
+    width: ${560*100/1440}vw;
+    margin-left: ${160*100/1440}vw;
     .nav_item{
       a{
         font-size: 14px;
         font-family: Roboto-Bold, Roboto;
-        font-weight: bold;
+        font-weight: normal;
         color: #ffffff;
       }
       a.on{
+        font-weight: bold;
         color: #FF6633;
       }
     }
@@ -164,6 +171,7 @@ const HeaderWrap = styled.div`
           order: 1;
       }
       .nav{
+          margin-left: 0px;
           order: 0;
       }
       .support{
@@ -259,12 +267,13 @@ const Header = (props) => {
             <div className="nav_item"><Link to="/" className={(pathname === '/' || pathname === '/newhome') ? 'on' : ''}>Home</Link></div>
             <div className="nav_item"><a onClick={onCommingSoon}>Mail</a></div>
             <div className="nav_item"><a onClick={onCommingSoon}>NFTs</a></div>
+            <div className="nav_item"><Link to="/presale" className={pathname === '/presale' ? 'on ' : ''} >Event</Link></div>
             <div className="nav_item"><Link to="/ambassador" className={pathname === '/ambassador' ? 'on ' : ''} >Ambassador</Link></div>
           </div>
         </div>
-        {pathname === '/' ? <div className="contact" onClick={onContactClick}></div> : (
+        {/* {pathname === '/' ? <div className="contact" onClick={onContactClick}></div> : (
           userEmail ? <Email onClick={onChangeEmail}>{userEmail}</Email> : null
-        )}
+        )} */}
         {/* <Login onClick={toLogin}></Login> */}
         <div className="support">
           <span>support</span>

@@ -425,7 +425,7 @@ const onhandleClose = () => {
                 <li><a href="https://twitter.com/dmailofficial" target="_blank"><img src={footericon1}></img>Twitter</a></li>
                 <li><a href="https://t.me/dmailofficial" target="_blank"><img src={footericon2}></img>Telegram</a></li>
                 <li><a href="https://medium.com/@dmail_official" target="_blank"><img src={footericon3}></img>Medium</a></li>
-                <li><a href="#" target="_blank"><img src={footericon4}></img>Discord</a></li>
+                <li><a href="https://discord.gg/QbvaeqwMFg" target="_blank"><img src={footericon4}></img>Discord</a></li>
               </ul>
             </div>
           </div>

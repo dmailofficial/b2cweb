@@ -11,7 +11,7 @@ import Presale from '@/pages/presale/index'
 const Routes = () => (
   <Suspense fallback={'loading...'}>
     <Switch>
-      < Route exact path='/' component={Index} />
+      < Route exact path='/' component={NewHome} />
       < Route exact path='/account' component={Account2} />
       {/* < Route exact path='/accountTest' component={Account2} /> */}
       < Route exact path='/ambassador' component={Ambassador} />
