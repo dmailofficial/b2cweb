@@ -6,6 +6,7 @@ import Account2 from '@/pages/account2/index'
 import Ambassador from '@/pages/ambassador/index'
 import NewHome from '@/pages/newhome/index'
 import Presale from '@/pages/presale/index'
+import PresaleList from '@/pages/presale/list/index'
 // import Loading from '@/components/Loading';
 
 const Routes = () => (
@@ -17,6 +18,7 @@ const Routes = () => (
       < Route exact path='/ambassador' component={Ambassador} />
       < Route exact path='/newhome' component={NewHome} />
       < Route exact path='/presale' component={Presale} />
+      < Route exact path='/presale_list' component={PresaleList} />
       
       <Redirect from="*" to='/' />
     </Switch>
