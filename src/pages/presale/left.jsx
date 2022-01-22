@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { Left } from './css'
 
+import defaultImg from '@/static/images/presale/default.png'
+
 const testlist = [
     {
         id: 1,
@@ -58,6 +60,7 @@ const LeftComp = (props) => {
                             key = {i}
                         >
                         <span className="label">{item.label}</span>
+                        <img className="cover" src={defaultImg}></img>
                         <div className="info">
                             <h3>{item.name}</h3>
                             <div className="statusInfo">

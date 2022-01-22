@@ -12,7 +12,7 @@ const Index = () => {
 
   const gotoTop = () => {
     console.log("gotoTop")
-    document.documentElement.scrollTo({left: 0, top: 0, behavior: "smooth"});
+    document.documentElement.scrollTo({left: 0, top: 0,});
   }
   const toStep1 = () => {
     setStep3(false)

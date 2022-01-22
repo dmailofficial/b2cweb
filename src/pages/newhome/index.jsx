@@ -33,112 +33,93 @@ import partnerIcon10 from '@/static/images/home/partner/logos/kretosVentures.png
 import partnerIcon11 from '@/static/images/home/partner/logos/HG-ventures.png'
 import partnerIcon12 from '@/static/images/home/partner/logos/DfinityCommunity.png'
 
+import footerlogo from '@/static/images/home/footer/logo.png'
+import footericon1 from '@/static/images/home/footer/twitter.png'
+import footericon2 from '@/static/images/home/footer/telegram.png'
+import footericon3 from '@/static/images/home/footer/medium.png'
+import footericon4 from '@/static/images/home/footer/discord.png'
+
+import success from '@/static/images/home/toast/success.png'
 
 const Index = () => {
   const [curPage, setCurPage] = useState(0);
   const [scrolling, setScrolling] = useState(false)
-  console.log("asdfasdas:")
-  const gotoTop = () => {
-    document.documentElement.scrollTo({left: 0, top: 0, behavior: "smooth"});
+  const [showFooter, setShowFooter] = useState(false)
+  const [showToast, setShowToast] = useState(false)
+
+
+  const gotoPostion = (top) => {
+    document.documentElement.scrollTo({left: 0, top: top, behavior: "smooth"});
+    document.body.scrollTo({left: 0, top: top, behavior: "smooth"});
   }
 
-  const scrollToAnchor = (anchorName) => {
-    console.log("name:", anchorName)
-    if (anchorName) {
-        let anchorElement = document.getElementById(anchorName);
-        console.log("element:", anchorElement)
-        if(anchorElement) {
-            anchorElement.scrollIntoView(
-                {behavior: 'smooth'}
-            );
-        }
-    }
-  }
-
-const scrollToPre =  () =>{
-    if(scrolling){return}
-    console.log("scrollToPre:",curPage)
-    setScrolling(true)
-    console.log("scrollToPre scrolling:",scrolling)
-    setScrolling(true)
-    if(curPage > 0){
-       setCurPage(curPage-1);
-    }
-    
-    let _anchor = "anchor"+curPage;
-    scrollToAnchor(_anchor)   
-    
-    
-    // setTimeout(()=>{
-    //   setScrolling(false)
-    // }, 3000)
-}
-
-const scrollToNext =  () =>{
-  if(scrolling){return}
-  console.log("scrollToNext11:",curPage)
-   setScrolling(true)
-    console.log("scrollToNext scrolling:",scrolling)
-    // setScrolling(true)
-    let _c = curPage
-  if(curPage < 4){
-    _c = _c+1;
-    console.log("ccc:",_c)
-     setCurPage(_c);
-  }
-  console.log("scrollToNext:",curPage)
-  // setScrolling(true)
+const handleScrollUnavailable = (i) => {
   
-  let _anchor = "anchor"+_c;
-  scrollToAnchor(_anchor)
-
-  // setTimeout(()=>{
-  //   setScrolling(false)
-  // }, 3000)   
+  if(curPage == 5 && !showFooter){
+    setShowFooter(true);
+    setTimeout(()=>{
+      gotoPostion(700)
+    },10)
+  }
 }
 
-const windowAddMouseWheel = () => {
-    const scrollFunc = function (e) {
-        e = e || window.event;
-        console.log("scrolling:",scrolling)
-        if(scrolling){return}
-
-        if (e.wheelDelta) {
-            
-            if (e.wheelDelta > 0) {
-              scrollToPre()
-            }
-            if (e.wheelDelta < 0) {
-              scrollToNext()
-            }
-        } else if (e.detail) {  //Firefox
-            if (e.detail> 0) {
-              scrollToPre()
-            }
-            if (e.detail< 0) {
-              scrollToNext()
-            }
-        }
-    };
-
-    if (document.addEventListener) {
-        document.addEventListener('DOMMouseScroll', scrollFunc, false);
-    }
-
-    window.onmousewheel = document.onmousewheel = scrollFunc;
+const gotoPage = (number) => {
+  console.log("gottopage::", number)
+  setCurPage(number)
 }
 
-// useEffect(()=>{
-//   scrollToAnchor("anchor0");
-//   windowAddMouseWheel();
-// }, [])
+const handlePageChange = number => {
+  console.log("handlePageChange:",number)
+  let _num = number;
+  if(_num < 0){
+    _num = 0;
+    gotoPage(0);
+  }
+  if(_num > 5){
+    _num = 5;
+    gotoPage(5);
+  }
+  
+  setCurPage(_num)
+  if(showFooter && _num !== 5){
+    setShowFooter(false);
+  }
+  return false;
+};
 
+const onBeforePageScroll = () => {
+  setShowFooter(false);
+}
+
+
+
+
+const onSignClick = () => {
+  console.log("click sign click")
+  setTimeout(() => {
+    setShowToast(true)
+    setTimeout(()=>{
+      setShowToast(false)
+    }, 3000)
+  }, 200)
+}
+
+const onhandleClose = () => {
+  setShowToast(false)
+}
   
 
   return (
     <NewHome>
       <Header />
-      <ReactPageScroller>
+      <ReactPageScroller
+        handleScrollUnavailable = {handleScrollUnavailable}
+        pageOnChange={handlePageChange}
+        onBeforePageScroll = {onBeforePageScroll}
+        customPageNumber={curPage}
+        animationTimerBuffer = {300}
+        animationTimer ={1500}
+      >
       {/* <a href="#" id='anchor0'></a> */}
       <div className="pageWrap bannerBlock">
         <div className="contentWrap bannerContent">
@@ -147,9 +128,9 @@ const windowAddMouseWheel = () => {
               <h2>Construct DID in Web 3.0</h2>
               <h3>Not Just an Email </h3>
               <p className="desc">Dmail guarantees a safe&private environment for your<br></br> communication, storage, and tokens&NFTs transfer on the web 3.0</p>
-              <span className="launchBtn" >Launch Demo <img src={rightArrow}></img></span>
+              <a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank" className="launchBtn" >Launch Demo <img src={rightArrow}></img></a>
             </div>
-            <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor1")}}>
+            <div className="nextBtn" onClick={()=>{gotoPage(1)}}>
                 <img src={arrow}></img>
                 <span className="txt">Scroll down to explore more</span>
             </div>
@@ -192,7 +173,7 @@ const windowAddMouseWheel = () => {
                   </div>
               </div>
             </div>
-            <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor2")}}>
+            <div className="nextBtn" onClick={()=>{gotoPage(2)}}>
                 <img src={arrow}></img>
                 <span className="txt">Scroll down to explore more</span>
             </div>
@@ -209,7 +190,7 @@ const windowAddMouseWheel = () => {
                 Dmail is an on-chain E-mail tool with the function of web 3.0 asset transfer. Deployed on Dfinity,  each Dmail mailbox corresponds to a private “canister”. Dmail guarantees the safety of user information, and forms the fundamental decentralized identity (DID). With Dmail, users can access information, assets and DApps securely and seamlessly.
               </p>
             </div>
-            <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor3")}}>
+            <div className="nextBtn" onClick={()=>{gotoPage(3)}}>
                 <img src={arrow}></img>
                 <span className="txt">Scroll down to explore more</span>
             </div>
@@ -303,7 +284,7 @@ const windowAddMouseWheel = () => {
                   </div>
               </div>
             </div>
-            <div className="nextBtn" onClick={()=>{scrollToAnchor("anchor4")}}>
+            <div className="nextBtn" onClick={()=>{gotoPage(4)}}>
                 <img src={arrow}></img>
                 <span className="txt">Scroll down to explore more</span>
             </div>
@@ -406,8 +387,62 @@ const windowAddMouseWheel = () => {
            
         </div>
       </div>
-
       </ReactPageScroller>
+      {showFooter ? 
+        <div className="footWrap" >
+          <div className="signWrap">
+              <p>Sign up and stay informed</p>
+              <div className="inputWrap">
+                <input placeholder="Your email address"></input>
+                <span className="signBtn" onClick={onSignClick}>Sign up</span>
+              </div>
+          </div>
+          <div className="footerInfo">
+            <div className="footerLogo">
+              <img src={footerlogo} alt="Dmail"></img>
+              <p>@Dmail Network Foundation LTD.</p>
+            </div>
+            <div className="bref">
+              <p>Dmail guarantees a safe & private environment for your communication, storage, tokens & NFTs transfer on Web 3.0</p>
+              <p>contact@dmail.ai</p>
+            </div>
+            <div className="links">
+              <ul>
+                <li>Product</li>
+                <li><a href="#" target="_blank">Mailbox</a></li>
+                <li><a href="#" target="_blank">NFTs</a></li>
+                <li><a href="#" target="_blank">Dapps</a></li>
+              </ul>
+              <ul>
+                <li>Supprot</li>
+                <li><a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank">Demo</a></li>
+                <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Litepaper</a></li>
+                <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Docs</a></li>
+                <li><a href="#" target="_blank">API</a></li>
+              </ul>
+              <ul>
+                <li>Community</li>
+                <li><a href="https://twitter.com/dmailofficial" target="_blank"><img src={footericon1}></img>Twitter</a></li>
+                <li><a href="https://t.me/dmailofficial" target="_blank"><img src={footericon2}></img>Telegram</a></li>
+                <li><a href="https://medium.com/@dmail_official" target="_blank"><img src={footericon3}></img>Medium</a></li>
+                <li><a href="https://discord.gg/QbvaeqwMFg" target="_blank"><img src={footericon4}></img>Discord</a></li>
+              </ul>
+            </div>
+          </div>
+        </div> 
+        : null }
+        {showToast ? 
+            <div className="toastWrap">
+              <span className="closeBtn" onClick={onhandleClose}>
+                <span></span>
+                <span></span>
+              </span>
+              <div className="content">
+                <img src={success}></img>
+                <span className="tip">Thanks! Email submitted.</span>
+              </div>
+            </div>
+          : null}
     </NewHome>
     
   );

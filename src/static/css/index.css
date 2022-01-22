@@ -1,12 +1,12 @@
 html,
 body {
-  margin: 0;
+  margin: 0 !important;
   font-family: PingFang SC, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #1D1D1F;
+  background-color: #1d1d1f;
   overflow-x: hidden;
 }
 
