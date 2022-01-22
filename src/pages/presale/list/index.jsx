@@ -6,6 +6,10 @@ import Header from '@/components/newheader'
 import { Wrapper, ToolBar, Content } from './css'
 import Table from './table'
 import Dialog from './dialog'
+import Wallet from '@/wallet/index'
+import axios from '@/utils/axios';
+import { baseUrl } from '../utils'
+import { login, verifySign } from '../request'
 
 const columns = [
   {
@@ -131,18 +135,36 @@ function App() {
   }
 
   const fetchData = useCallback(async ({ pageIndex, pageSize }) => {
+    if (!address) {
+      return
+    }
     setLoading(true)
     await new Promise((resolve) => setTimeout(resolve, 1000))
+    try {
+      const res = await axios({
+        url: `${baseUrl}/trades`,
+        method: 'post',
+        data: {
+          jwt: '',
+          address,
+        },
+        // errorTitle: '',
+      })
+      const { code, data, message, success } = res.data
+      console.log(res.data)
+    } catch (error) {
+      // console.log(error)      
+    }
     const random = Math.random()
     // console.log(pageIndex, pageSize, random)
     setPageCount(random > 0.8 ? 0 : 13)
     setData(random > 0.5 ? [] : testData)
     setLoading(false)
-  }, [])
+  }, [address])
 
-  useEffect(() => {
-    setAddress('0x3dfanlkfjdklafdajfda2fdafda')
-  })
+  // useEffect(() => {
+  //   setAddress('0x3dfanlkfjdklafdajfda2fdafda')
+  // })
 
   const [open, setOpen] = useState(false);
   const [inputErrorIndex, setInputErrorIndex] = useState(0);
@@ -155,6 +177,20 @@ function App() {
       setInputErrorIndex(inputErrorIndex+1)
     }
   }
+
+  useEffect(async () => {
+    // const _wallet = new Wallet('metamask');
+    // const account = await _wallet.requestAccounts();
+    // console.log('account', account)
+    // if (Array.isArray(account) && account.length) {
+    //   const { success, msg, data } = await login(account[0]);
+    //   console.log("login info: ", data)
+    //   if(!success){
+    //     alert("login error!")
+    //     return false;
+    //   }
+    // }
+  }, [])
 
   return (
     <>

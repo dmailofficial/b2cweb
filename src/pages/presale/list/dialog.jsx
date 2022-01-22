@@ -108,8 +108,10 @@ export default function AlertDialog({ open, setOpen, receive, errorIndex }) {
   }, [open])
 
   useEffect(() => {
-    setError(true)
-    inputRef.current && inputRef.current.focus && inputRef.current.focus()
+    if (errorIndex) {
+      setError(true)
+      inputRef.current && inputRef.current.focus && inputRef.current.focus()
+    }
   }, [errorIndex])
 
   return (
