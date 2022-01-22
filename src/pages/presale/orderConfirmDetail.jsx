@@ -68,19 +68,34 @@ class orderConfirmDetail extends React.Component {
             return
         }
         
-        this.setState({...data})
+        this.setState({
+            detail: {...data}
+        })
 
         // {address,jwt}
+        const { success: isuccess , message, data: idata } = await getIcpPrice({
+            address: this.props.loginInfo.address,
+            jwt: this.props.loginInfo.jwt
+        })
+        if (!success) {
+            this.poptoast(message)
+            return
+        }
+        this.setState({
+            detail: {
+                ...this.state.detail,
+                icpPrice: idata.price
+            }
+        })
 
-        // const { success, msg, data } = await getIcpPrice({
-        //     address: this.props.loginInfo.address
-        // })
+
         
         // const { id, name, price, exp_date, symbal } = data
         // setcurrentDetail({
         //   id, name, price, exp_date, symbal
         // })
     }
+    
 
     toPay = async () => {
         const _wallet = this.props.wallet
@@ -147,7 +162,7 @@ class orderConfirmDetail extends React.Component {
                                 <span className="label">Registiation price to pay:</span>
                                 <div className="valueWrap">
                                     <p className="value"><span>{this.state.detail.price}</span> USDT</p>
-                                    <p className="value"><b>≈ </b><span className="small">9.9</span> ICP</p>
+                                    <p className="value"><b>≈ </b><span className="small">{this.state.detail.icpPrice}</span> ICP</p>
                                 </div>
                             </div>
                             <div className="btnWrap">
