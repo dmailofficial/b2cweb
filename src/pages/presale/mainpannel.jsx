@@ -3,7 +3,7 @@ import {Mainpannel } from './css'
 import {searchEmail, blockEmail} from './request'
 import Dialog from './Dialog'
 import StepDialog from './stepDialog'
-
+import { CompatibleClassCountDown } from '@/components/countDown'
 
 import logo from '@/static/images/logo@2x.png'
 import inprogressIcon from '@/static/images/presale/inprogress@2x.png'
@@ -12,13 +12,11 @@ import closedIcon from '@/static/images/presale/lock@x2.png'
 import successIcon from '@/static/images/presale/success@3x.png'
 
 
-
-
 class MainpannelComp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            status: 1,
+            status: 2,
             openStep: false,
             email: "",
             setsearching: false,
@@ -150,6 +148,17 @@ class MainpannelComp extends React.Component {
         this.props.toNextStep(this.state.email);
     }
 
+    handleEndCallback = () => {
+        console.log('countDown end')
+    }
+
+    correctRequest = () => {
+        return new Promise(async(resolve) => {
+            await new Promise((resolve) => setTimeout(resolve, 600))
+            resolve(3 * 24 * 3600)
+        })
+    }
+
 
     render() {
         return (
@@ -158,6 +167,14 @@ class MainpannelComp extends React.Component {
                     <div className="triangle"></div>
                     <img src={this.state.status == 1 ? inprogressIcon : this.state.status == 2 ? comingIcon : closedIcon}></img>
                 </div>
+                {this.state.status !== 2 ? null : (
+                    <div className="count-down">
+                        <i></i>
+                        <span>
+                            <CompatibleClassCountDown endCallback={this.handleEndCallback} correctGap={10} correctRequest={this.correctRequest} hour={3 * 24} />
+                        </span>
+                    </div>
+                )}
                 <div className="bref">
                     <img src={logo}></img>
                     <h2>Dmail neT Domain Account {this.props.curId}</h2>
@@ -169,6 +186,10 @@ class MainpannelComp extends React.Component {
                             <span></span>
                             <input  value={this.state.email} onInput={this.onInput} onKeyDown={this.onKeyDownchange} placeholder="Check the NFT domain account of your choice"></input>
                             <span className="searchBtn" onClick={this.onSearch}>Search</span>
+                            <div className={`email-suffix ${this.state.email.length ? 'show' : ''}`}>
+                                <p>{this.state.email}</p>
+                                <div className="email-suffix-text">@dmail.ai</div>
+                            </div>
                         </div>
                         {this.state.errorShow ?
                             <div className="errorTip">

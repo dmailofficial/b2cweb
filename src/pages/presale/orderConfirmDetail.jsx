@@ -5,6 +5,7 @@ import Toast from './toast'
 import BigNumber from "bignumber.js";
 import backArrow from '@/static/images/presale/arrow-left@2x.png'
 import warnIcon from '@/static/images/presale/expired@2x.png'
+import { CompatibleClassCountDown } from '@/components/countDown'
 
 class orderConfirmDetail extends React.Component {
     constructor(props) {
@@ -17,6 +18,17 @@ class orderConfirmDetail extends React.Component {
                 id:1, name:"asdfs@asdf", price:23, exp_date:"asd.asf", symbal:"$"
             },
         };
+    }
+
+    handleEndCallback = () => {
+        console.log('countDown end')
+    }
+
+    correctRequest = () => {
+        return new Promise(async(resolve) => {
+            await new Promise((resolve) => setTimeout(resolve, 600))
+            resolve(8)
+        })
     }
 
     handleRadioCheck = (type) => {
@@ -131,7 +143,10 @@ class orderConfirmDetail extends React.Component {
                             </div>
                             <div className="btnWrap">
                                 <span className="confirmBtn" onClick={this.toPay}>Confirm</span>
-                                <span className="countDown">00:29:30</span>
+                                <div className="countDown">
+                                    <i></i>
+                                    <span><CompatibleClassCountDown endCallback={this.handleEndCallback} correctRequest={this.correctRequest} second={5} min={30} /></span>
+                                </div>
                             </div>
                             <p className="notice">Please claim your NFT domain account on the orders when the payment is done.</p>
                         </div>

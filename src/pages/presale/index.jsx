@@ -17,7 +17,7 @@ import plug from '@/static/images/presale/plug-logo@2x.png'
 
 const Index = () => {
   const [curId, setCurId] = useState(1)
-  const [step, setStep] = useState(2)
+  const [step, setStep] = useState(1)
   const [walletDialog, setWalletDialog] = useState(false)
   const [address, setAddress] = useState("")
   const [walletName, setWalletName] = useState('')
