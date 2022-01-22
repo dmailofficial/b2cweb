@@ -786,6 +786,26 @@ const StepDialogWrap = styled.div`
     }
 `
 
+const ToastWrap = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    align-items: top;
+    justify-content: start;
+    img{
+        width: 18px;
+        height: 18px;
+        vertical-align: middle;
+        margin-right: 15px;
+    }
+    p{
+        font-size: 16px;
+        font-family: Roboto-Medium, Roboto;
+        font-weight: bold;
+        color: #1D1D1F;
+        line-height: 18px;
+    }
+`
+
 export {
     OperateBtn,
     ContentBox,
@@ -793,5 +813,6 @@ export {
     Mainpannel,
     ConfirmPannel,
     WalletWrap,
-    StepDialogWrap
+    StepDialogWrap,
+    ToastWrap
 }

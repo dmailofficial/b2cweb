@@ -89,17 +89,14 @@ export const login = async (address) => {
   })
 }
 
-
-
-
-
-export const detectTransferIsSuccess = async (hash, address, price, product_name, jwt, network = '3', tron = false) => {
+export const verifySign = async (address, signature) => {
   return axios({
-    url: `${baseUrl}/transfer`,
+    url: `${baseUrl}/auth`,
     method: 'post',
     data: {
-      address, price, product_name, tx: hash, jwt, network, tron
-    }
+      address,
+      signature,
+    },
     // errorTitle: '',
   }).then((res) => {
     try {
@@ -111,14 +108,13 @@ export const detectTransferIsSuccess = async (hash, address, price, product_name
   })
 }
 
-export const verifySign = async (address, signature) => {
+export const detectTransferIsSuccess = async (hash, address, price, product_name, jwt, network = '3', tron = false) => {
   return axios({
-    url: `${baseUrl}/auth`,
+    url: `${baseUrl}/transfer`,
     method: 'post',
     data: {
-      address,
-      signature,
-    },
+      address, price, product_name, tx: hash, jwt, network, tron
+    }
     // errorTitle: '',
   }).then((res) => {
     try {

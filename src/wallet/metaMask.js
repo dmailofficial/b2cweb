@@ -1,5 +1,6 @@
 import Web3 from "web3"
 import { Contract, ethers } from 'ethers'
+import BigNumber from "bignumber.js";
 import { BSC_abi, ERC_abi } from './abis'
 import { setNumber } from './setByNumber'
 
@@ -37,13 +38,10 @@ class MetaMaskWallet {
         let chainInfo = null
           try {
             chainId = await this._getChainId()
-            console.log('get chainId', chainId)
           } catch (error) {
-              console.log("getChainId: ", error)
             return null
           }
           if (chainId && chainId in MetaMaskChainAbiMap) { // if the chain already has 
-            console.log("MetaMaskChainAbiMap[chainId]: ", MetaMaskChainAbiMap[chainId])
             return MetaMaskChainAbiMap[chainId]
           } else {
             // help to switch chain
@@ -75,7 +73,7 @@ class MetaMaskWallet {
             try {
             // https://docs.metamask.io/guide/accessing-accounts.html
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            return accounts
+            return accounts[0]
             } catch (error) {
                 return {
                     code: 1,
@@ -98,14 +96,11 @@ class MetaMaskWallet {
 
     initContract = async () => {
         const chainInfo = await this.getChainInfo();
-        console.log("chainInfo222222::", chainInfo)
         const {abi, contractAddress} = chainInfo
-        console.log("abi::", abi)
         try {  
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
 
-            console.log("window.ethereum111::", contractAddress, abi, signer)
             const contract = new Contract(contractAddress, abi, signer);
             return contract;
             
@@ -116,21 +111,19 @@ class MetaMaskWallet {
     }
 
     getBalanceOf = async (address) => {
-        const contract = this.initContract();
+        const contract = await this.initContract();
         const balance = await contract.balanceOf(address);
-        return balance;
+        const amount = (new BigNumber(balance._hex, 16)).toNumber() / Math.pow(10, 18)
+        
+        return {amount: amount};
     }
 
     transfer = async (price, sign) => {
-        console.log("transfer::",price)
         const contract = await this.initContract();
         const chainInfo = await this.getChainInfo();
-        console.log("contract222222---------::", contract)
-        console.log("chainInfo::", chainInfo)
         const { toAddress, decimals } = chainInfo
 
-        const signRes = await this.metaMaskSign(sign)
-        console.log('signRes', signRes)
+        const signRes = await this.sign(sign)
         // sign failed
         if (!Array.isArray(signRes)) {
             if (signRes && signRes.code === 2) {
@@ -146,7 +139,7 @@ class MetaMaskWallet {
             return error
         }
     }
-    metaMaskSign = async (sign) => {
+    sign = async (sign) => {
         if (!sign) {
           return {
             code: 1,

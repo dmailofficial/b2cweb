@@ -3,7 +3,7 @@ import { Left } from './css'
 
 import defaultImg from '@/static/images/presale/default.png'
 
-const testlist = [
+const list = [
     {
         id: 1,
         label: "WEDNESDAY",
@@ -41,6 +41,10 @@ const LeftComp = (props) => {
 
     const handleClickItem = (id,e) => {
         setCurId(id);
+        let cur = null
+        list.map((item)=>{
+
+        })
         props.presaleChange(id);
         console.log(props);
     }
@@ -53,7 +57,7 @@ const LeftComp = (props) => {
     return (
         <Left>
             {
-                testlist.map((item, i)=>{
+                list.map((item, i)=>{
                     return <div 
                             className={["activityItem",  curId == item.id ? "active" : "", item.state == 1 ? " coming" : item.state == 2 ? " progress" : " closed" ].join(' ')}
                             onClick = {()=>{handleClickItem(item.id)}}

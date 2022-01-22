@@ -3,123 +3,96 @@ import { Contract, ethers } from 'ethers'
 import { BSC_abi, ERC_abi } from './abis'
 import { setByNumber, setNumber } from './setByNumber'
 
-const MetaMaskChainAbiMap = {
-    '1': {
-      contractAddress: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-      abi: ERC_abi,
-      toAddress: '0xe4F13c05FdBF3Fa8149b8980742f0E7e9E4749eC',
-      decimals: 6,
-    },
-    '56': {
-      contractAddress: '0x55d398326f99059fF775485246999027B3197955',
-      abi: BSC_abi,
-      toAddress: '0xe4F13c05FdBF3Fa8149b8980742f0E7e9E4749eC',
-      decimals: 18,
-    },
+const PlugAbiMap = {
+  toAddress: '567to-2ufhs-rzv5c-2wnbb-6y34z-kzi7q-nvwcv-ulekn-2esk4-kyggc-iae',
 }
 
-class MetaMaskWallet {
+class PlugWallet {
     constructor(){
 
     }
 
-    _getChainId = () => {
-        return new Promise((resolve, reject) => {
-            // https://docs.metamask.io/guide/ethereum-provider.html#ethereum-networkversion-deprecated
-            window.ethereum.request({ method: 'eth_chainId' }).then((chainId) => {
-            resolve(Web3.utils.hexToNumber(chainId))
-            })
-        })
-    }
-
     getChainInfo = async () => {
-        let chainId = ''
-        let chainInfo = null
-          try {
-            chainId = await this._getChainId()
-            console.log('get chainId', chainId)
-          } catch (error) {
-            return null
-          }
-          if (chainId && chainId in MetaMaskChainAbiMap) { // if the chain already has 
-            chainInfo = MetaMaskChainAbiMap[chainId]
-          } else {
-            // help to switch chain
-            try {
-              if (window.ethereum) {
-                window.ethereum
-                  .request({
-                    method: 'wallet_switchEthereumChain',
-                    params: [
-                      {
-                        chainId: '0x1'
-                      },
-                    ],
-                  })
-                // need to click to pay again
-                return null
-              } else {
-                return null
-              }
-            } catch (error) {
-              console.log(error)
-              return null
-            }
-          }
+      return PlugAbiMap
     }
 
     requestAccounts = async () => {
-        if (window.ethereum) {
-            try {
-            // https://docs.metamask.io/guide/accessing-accounts.html
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            return accounts
-            } catch (error) {
-                return {
-                    code: 1,
-                    msg: 'User denied account access!'
-                }
-            }
-        } else {
-            this._install();
-            return {
-                code: 2,
-                msg: 'Please install MetaMask!'
-            }
+      if (window.ic && window.ic.plug) {
+        try {
+          // Canister Ids
+          const nnsCanisterId = 'pyr3m-ciaaa-aaaai-qasua-cai'
+          // Whitelist
+          const whitelist = [
+            nnsCanisterId,
+        ];
+          const res = await window.ic.plug.requestConnect({
+              whitelist,
+              // host: 'http://localhost:3000',
+          });
+
+          const principalId = await window.ic.plug.agent.getPrincipal();
+          const sIndentity = principalId.toString();
+          console.log("plug: ", sIndentity)
+          return sIndentity
+        } catch (error) {
+          // denied
+          console.log('plugAuth', error)
+          return {
+            code: 1,
+            msg:  error
+          }
         }
+      } else {
+        this._install();
+        return {
+          code: 2,
+          msg: 'Please install Plug!'
+        }
+      }
     }
 
     _install = () => {
-        const install = 'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn'
+        const install = 'https://chrome.google.com/webstore/detail/plug/cfbfdhimifdmdehjmkdobpcjfefblkjm'
         window.open(install)
     }
 
     initContract = () => {
-        const chainInfo = this.getChainInfo();
-        const {abi, contractAddress} = chainInfo
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        let contract = null
-        const signer = provider.getSigner();
-        contract = new Contract(contractAddress, abi, signer);
-        return contract;
+        return null;
     }
 
     getBalanceOf = async (address) => {
-        const contract = this.initContract();
-        const balance = await contract.balanceOf(address);
-        return balance;
-    }
-
-    transfer = async (toAddress, price, decimals) => {
-        const contract = this.initContract();
-        try {
-            return await contract.transfer(toAddress, setNumber(+price, decimals))
-        } catch (error) {
-            return error
+        const result = await window.ic.plug.requestBalance();
+        let _icp = null;
+        console.log("plug::", result)
+        if(result.length > 0){
+          console.log("plug::", result)
+          result.map((item)=>{
+            if(item.name == "ICP"){
+              _icp = {...item}
+            }
+          })
+        }else{
+          console.log("plug:: empty")
+          _icp = {}
         }
+        return _icp;
     }
 
-
+    transfer = async (price) => {
+      const chainInfo = await this.getChainInfo();
+      const { toAddress } = chainInfo
+      const result = await window.ic.plug.requestTransfer({
+        to: toAddress,
+        amount: 4000000 * price,
+        // opts: {
+        //   fee: '',
+        //   memo,
+        //   from_subaccount: ''
+        // }
+      });
+      console.log('requestTransfer', result);
+      return result;
+    }
 }
 
-export default new MetaMaskWallet();
+export default new PlugWallet();
