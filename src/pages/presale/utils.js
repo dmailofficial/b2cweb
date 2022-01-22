@@ -1,5 +1,7 @@
 import {login, verifySign} from './request'
 
+export const baseUrl = 'https://pay.dmail.ai'
+
 export const loginAndGetLoginInfo = async (account, wallInstance, walletName, successCallback, faildcallback) => {
 
     const { success, msg, data } = await login(account);
