@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import styled from 'styled-components'
+import { useHistory } from "react-router-dom";
 
 import Header from '@/components/newheader'
 import { Wrapper, ToolBar, Content } from './css'
@@ -119,10 +120,15 @@ const testData = [
 ]
 
 function App() {
+  const history = useHistory();
   const [data, setData] = useState([])
   const [pageCount, setPageCount] = useState(0)
   const [loading, setLoading] = useState(false)
   const [address, setAddress] = useState('')
+
+  const goPresale = () => {
+    history.push("/presale")
+  }
 
   const fetchData = useCallback(async ({ pageIndex, pageSize }) => {
     setLoading(true)
@@ -155,7 +161,7 @@ function App() {
       <Header />
       <Wrapper>
         <ToolBar>
-          <div className="left">
+          <div className="left" onClick={goPresale}>
             <i></i>
             <span>Orders</span>
           </div>
