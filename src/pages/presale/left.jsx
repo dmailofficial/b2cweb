@@ -9,28 +9,28 @@ const list = [
         label: "WEDNESDAY",
         name: "Firstround of dmail NFT Domain Account presale",
         time: "12/12/121-12/12/12/12",
-        state: "1"
+        status: "1"
     },
     {
         id: 2,
         label: "WEDNESDAY",
         name: "Firstround of dmail NFT Domain Account presale",
         time: "12/12/121-12/12/12/12",
-        state: "2"
+        status: "2"
     },
     {
         id:3,
         label: "WEDNESDAY",
         name: "Firstround of dmail NFT Domain Account presale",
         time: "12/12/121-12/12/12/12",
-        state: "3"
+        status: "3"
     },
     {
         id:4,
         label: "WEDNESDAY",
         name: "Firstround of dmail NFT Domain Account presale",
         time: "12/12/121-12/12/12/12",
-        state: "3"
+        status: "3"
     }
     
 ]
@@ -59,7 +59,7 @@ const LeftComp = (props) => {
             {
                 list.map((item, i)=>{
                     return <div 
-                            className={["activityItem",  curId == item.id ? "active" : "", item.state == 1 ? " coming" : item.state == 2 ? " progress" : " closed" ].join(' ')}
+                            className={["activityItem",  curId == item.id ? "active" : "", item.status == 1 ? " coming" : item.status == 2 ? " progress" : " closed" ].join(' ')}
                             onClick = {()=>{handleClickItem(item.id)}}
                             key = {i}
                         >
@@ -69,7 +69,7 @@ const LeftComp = (props) => {
                             <h3>{item.name}</h3>
                             <div className="statusInfo">
                                 <span className="time">{item.time}</span>
-                                <span className="status">{item.state == 1 ? "Coming" : item.state == 2 ? "In progress" : "Closed"}</span>
+                                <span className="status">{item.status == 1 ? "Coming" : item.status == 2 ? "In progress" : "Closed"}</span>
                             </div>
                         </div>
                     </div>
