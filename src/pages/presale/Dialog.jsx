@@ -47,7 +47,7 @@ class DDialog extends React.Component {
     }
 
     render() {
-        const {open, title, maxWidth, operateBtton} = this.props
+        const {open, title, maxWidth, noHeader, operateBtton} = this.props
 
         return (
                 <DmailDialog
@@ -56,16 +56,20 @@ class DDialog extends React.Component {
                     fullWidth={true}
                     maxWidth={maxWidth || "sm"}
                 >
-                    <DialogTitle>
-                        <span>{title}</span>
-                        <img src={closeIcon} onClick={this.handleClose}></img>
-                    </DialogTitle>
+                    {!noHeader ?
+                        <DialogTitle>
+                            <span>{title}</span>
+                            <img src={closeIcon} onClick={this.handleClose}></img>
+                        </DialogTitle>: null
+                    }
                     <DialogContent>
                         {this.props.children}
                     </DialogContent>
-                    <DialogActions>
+                    {!noHeader ?
+                        <DialogActions>
 
-                    </DialogActions>
+                        </DialogActions>: null
+                    }
                 </DmailDialog>
         );
     }

@@ -1,11 +1,16 @@
 import React from 'react';
 import {Mainpannel } from './css'
+import {searchEmail, blockEmail} from './request'
+import Dialog from './Dialog'
 import StepDialog from './stepDialog'
+
 
 import logo from '@/static/images/logo@2x.png'
 import inprogressIcon from '@/static/images/presale/inprogress@2x.png'
 import comingIcon from '@/static/images/presale/time@2x.png'
 import closedIcon from '@/static/images/presale/lock@x2.png'
+import successIcon from '@/static/images/presale/success@3x.png'
+
 
 
 
@@ -14,7 +19,15 @@ class MainpannelComp extends React.Component {
         super(props);
         this.state = {
             status: 1,
-            openStep: true,
+            openStep: false,
+            email: "",
+            setsearching: false,
+            errorShow: false,
+            formatError: false,
+            occupError:false,
+            apiErrorToast: false,
+            apiErrorMsg: "",
+            emailData: {}
         };
     }
 
@@ -30,6 +43,105 @@ class MainpannelComp extends React.Component {
         })
     }
 
+    onInput = (ev) => {
+        const value = ev.target.value
+        let reg = /^[a-zA-Z0-9]{4,7}$/
+        if(value.trim() && !reg.test(value)){
+            this.setState({
+                errorShow: true,
+                formatError: true,
+                occupError: false,
+            })
+        }else if(!value.trim() || reg.test(value)){
+            this.resetErrorStatus();
+        }
+        this.setState({email:value})
+    }
+
+    resetErrorStatus = () => {
+        this.setState({
+            errorShow: false,
+            formatError: false,
+            occupError: false,
+        })
+    }
+
+    poptoast = (txt) => {
+        return (
+            <Dialog
+                open = {true}
+                noHeader = {true}
+            >{txt}</Dialog>
+        )
+    }
+
+    onSearch = async () => {
+        if (!this.state.email.trim().length) {
+            return
+        }
+        this.props.handleWallet()
+        console.log(this.props.wallet)
+        
+        this.setState({setsearching:true})
+        const { code, success, msg, data } = await searchEmail(this.state.email)
+
+        this.setState({setsearching:false})
+        if (code === 90) {
+            this.setState({
+                errorShow: true,
+                formatError: false,
+                occupError: true
+            })
+            return
+        }
+        if (!success) {
+            this.setState({
+                apiErrorToast : true,
+                apiErrorMsg : msg
+            });
+            setTimeout(()=>{
+                this.setState({apiErrorToast : false});
+            }, 3000)
+            return
+        } else if (!data || !data.name) {
+            this.setState({
+                apiErrorToast : true,
+                apiErrorMsg : 'something is error'
+            });
+            setTimeout(()=>{
+                this.setState({apiErrorToast : false});
+            }, 3000)
+            return
+        }
+        // setEmailData(data)
+        this.setState({emailData: data})
+    }
+    
+    handleLock = async()=>{
+        // const { code, success, msg, data } = await blockEmail(this.state.email)
+        
+        // if (!success) {
+        //     this.setState({
+        //         apiErrorToast : true,
+        //         apiErrorMsg : msg
+        //     });
+        //     setTimeout(()=>{
+        //         this.setState({apiErrorToast : false});
+        //     }, 3000)
+        //     return
+        // } else if (!data || !data.name) {
+        //     this.setState({
+        //         apiErrorToast : true,
+        //         apiErrorMsg : 'something is error'
+        //     });
+        //     setTimeout(()=>{
+        //         this.setState({apiErrorToast : false});
+        //     }, 3000)
+        //     return
+        // }
+
+        this.props.toNextStep(this.state.email);
+    }
 
 
     render() {
@@ -48,8 +160,28 @@ class MainpannelComp extends React.Component {
                     <div className="formWrap">
                         <div className="inputWrap">
                             <span></span>
-                            <input value="asdasd" placeholder="Check the NFT domain account of your choice"></input>
-                            <span className="searchBtn">Lock&Buy</span>
+                            <input  value={this.state.email} onInput={this.onInput} placeholder="Check the NFT domain account of your choice"></input>
+                            <span className="searchBtn" onClick={this.onSearch}>Search</span>
+                        </div>
+                        {this.state.errorShow ?
+                            <div className="errorTip">
+                                {this.state.occupError ? 
+                                    <p><span></span>Try another one, this NFT Domain Acccount id occupied.</p>:null
+                                }
+                                {this.state.formatError ?
+                                    <p><span></span>Format error ! Only 4-7 bits domain account without special characters allowed.</p> : null
+                                }
+                            </div>: null
+                        }
+                        <div className="successResult">
+                            <span className="arrow"></span>
+                            <div className="pannel">
+                                <p>
+                                    <img src={successIcon}></img>
+                                    <span>{this.state.email}</span> is available!
+                                    <span className="lockBtn" onClick={this.handleLock}>Lock&Buy</span>
+                                </p>
+                            </div>
                         </div>
                     </div>:null
                 }
@@ -101,6 +233,8 @@ class MainpannelComp extends React.Component {
                     open = {this.state.openStep}
                     dialogClose = {this.handleStepClose}
                 ></StepDialog>
+               {this.state.apiErrorToast ? this.poptoast(this.state.apiErrorMsg) : null}
+
             </Mainpannel>
         );
     }

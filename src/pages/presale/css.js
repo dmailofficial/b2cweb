@@ -3,6 +3,7 @@ import successImg from '@/static/images/ambassador/success@2x.png'
 import backImg from '@/static/images/ambassador/arrow-left@2x.png'
 import searchIcon from '@/static/images/presale/search@2x.png'
 import lockIcon from '@/static/images/presale/lock@x2.png'
+import expiredIcon from '@/static/images/presale/expired@2x.png'
 
 
 const mainColor = "#FF6633";
@@ -262,17 +263,15 @@ const Mainpannel = styled.div`
     }
 
     .formWrap{
-        height: 48px;
+        height: 60px;
         margin-top: 49px;
-        display: flex;
-        align-item: top;
-        justify-content: space-between;
+        position: relative;
         .inputWrap{
             height: 60px;
             width: 100%;
             background: #343435;
             box-shadow: 0px 8px 29px 0px rgba(0, 5, 58, 0.05);
-            border-radius: 6px;
+            border-radius: 8px;
             border: 1px solid #979797;
             box-sizing: border-box;
             padding: 6px;
@@ -318,6 +317,89 @@ const Mainpannel = styled.div`
                 line-height: 48px;
                 border: none;
                 cursor: pointer;
+            }
+        }
+        .errorTip{
+            position: absolute;
+            top: 70px;
+            left: 0;
+            p{
+                font-size: 12px;
+                font-family: PingFangSC-Medium, PingFang SC;
+                font-weight: 500;
+                color: #E02020;
+                line-height: 17px;
+                padding-left: 25px;
+                span{
+                    height: 16px;
+                    width: 16px;
+                    display: inline-block;
+                    vertical-align: top;
+                    margin-right: 10px;
+                    background-image: url('${expiredIcon}');
+                    background-size: 16px 16px;
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                }
+            }
+        }
+        .successResult{
+            position: absolute;
+            top: 70px;
+            left: 0;
+            height: 72px;
+            width: 100%;
+            .arrow{
+                position: absolute;
+                top: -20px;
+                left: 90px;
+                width:0;
+                height: 0;
+                display: block;
+                line-height: 0;
+                border-width: 10px;
+                border-style: solid;
+                border-color: transparent transparent #FFF transparent;
+            }
+            .pannel{
+                width: 100%;
+                height: 60px;
+                line-height: 60px;
+                background: #FFFFFF;
+                border-radius: 8px;
+                box-shadow: 0px 16px 30px 0px rgba(0, 0, 0, 0.1);
+                p{
+                    padding-left: 60px;
+                    font-size: 16px;
+                    font-family: Roboto-Regular, Roboto;
+                    font-weight: bold;
+                    color: #000000;
+                    img{
+                        width: 14px;
+                        height: 14px;
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin-right: 8px;
+                    }
+                    span{
+                        color: #FF6633;
+                    }
+                    .lockBtn{
+                        float: right;
+                        height: 48px;
+                        width: 130px;
+                        text-align: center;
+                        line-height: 48px;
+                        display: inline-block;
+                        background: #7ED321;
+                        color: #fff;
+                        box-shadow: 0px 8px 29px 0px rgba(0, 5, 58, 0.05);
+                        border-radius: 3px;
+                        margin: 6px;
+                        cursor: pointer;
+                    }
+                }
+                
             }
         }
     }
@@ -600,6 +682,7 @@ const ConfirmPannel = styled.div`
                         line-height: 48px;
                         text-align: center;
                         margin-right: 22px;
+                        cursor: pointer;
                     }
                     .countDown{
                         font-size: 16px;

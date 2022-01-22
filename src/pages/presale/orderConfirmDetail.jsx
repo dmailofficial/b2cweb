@@ -1,12 +1,18 @@
 import React from 'react';
 import {ConfirmPannel } from './css'
+import {getDetail, getIcpPrice} from './request'
+import Dialog from './Dialog'
 import backArrow from '@/static/images/presale/arrow-left@2x.png'
 
 class orderConfirmDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            radioVal: "icp"
+            radioVal: "icp",
+            apiErrorToast: false, 
+            detail: {
+                id:1, name:"asdfs@asdf", price:23, exp_date:"asd.asf", symbal:"$"
+            },
         };
     }
 
@@ -17,6 +23,35 @@ class orderConfirmDetail extends React.Component {
 
     handleBack = () => {
         this.props.back();
+    }
+
+    poptoast = (txt) => {
+        return (
+            <Dialog
+                open = {true}
+                noHeader = {true}
+            >{txt}</Dialog>
+        )
+    }
+
+    getAddressDetail = async () => {
+        const { success, msg, data } = await getDetail(this.props.address)
+        if (!success) {
+            this.poptoast(msg)
+            return
+        }
+        this.setState({...data})
+        // const { id, name, price, exp_date, symbal } = data
+        // setcurrentDetail({
+        //   id, name, price, exp_date, symbal
+        // })
+    }
+
+    toPay = async () => {
+        const _wallet = this.props.wallet
+        const { id, nonce, signmessage, email } = this.props.loginInfo
+        console.log("_wallet:  ", _wallet)
+        _wallet.transfer(10, signmessage)
     }
 
     render() {
@@ -30,7 +65,7 @@ class orderConfirmDetail extends React.Component {
 
                     </div>
                     <div className="orderDetail">
-                        <h3>asdfsdfaasdf@dmail.ai</h3>
+                        <h3>{this.props.address}</h3>
                         <p className="tip">Dmail NFT Domain Account is locked, please complete payment </p>
                         <div className = "info">
                             <div className = "item">
@@ -74,13 +109,14 @@ class orderConfirmDetail extends React.Component {
                                 </div>
                             </div>
                             <div className="btnWrap">
-                                <span className="confirmBtn">Confirm</span>
+                                <span className="confirmBtn" onClick={this.toPay}>Confirm</span>
                                 <span className="countDown">00:29:30</span>
                             </div>
                             <p className="notice">Please claim your NFT domain account on the orders when the payment is done.</p>
                         </div>
                     </div>
                 </div>
+                {this.state.apiErrorToast ? this.poptoast(this.state.apiErrorMsg) : null}
             </ConfirmPannel>
         );
     }
