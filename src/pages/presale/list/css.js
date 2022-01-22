@@ -72,6 +72,7 @@ export const Circle = styled.i`
 export const Wrapper = styled.div`
   margin: 24px 0; 
   color: #fff;
+  font-family: Roboto-Regular, Roboto;
 `
 
 export const ToolBar = styled.div`
