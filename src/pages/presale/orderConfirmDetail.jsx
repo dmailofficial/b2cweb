@@ -13,14 +13,15 @@ class orderConfirmDetail extends React.Component {
             radioVal: "icp",
             errorToast: false,
             errorToastMsg: '',
-            detail: {
-                id:1, name:"asdfs@asdf", price:23, exp_date:"asd.asf", symbal:"$"
-            },
+            detail: {},
         };
     }
 
+    componentWillMount(){
+        this.getAddressDetail();
+    }
+
     handleRadioCheck = (type) => {
-        console.log(type);
         this.setState({radioVal: type})
         if(type == "icp"){
             this.props.handleWallet("plug")
@@ -49,12 +50,20 @@ class orderConfirmDetail extends React.Component {
     }
 
     getAddressDetail = async () => {
-        const { success, msg, data } = await getDetail(this.props.address)
+        const { success, msg, data } = await getDetail(this.props.email)
         if (!success) {
             this.poptoast(msg)
             return
         }
+        
         this.setState({...data})
+
+        // {address,jwt}
+
+        // const { success, msg, data } = await getIcpPrice({
+        //     address: this.props.loginInfo.address
+        // })
+        
         // const { id, name, price, exp_date, symbal } = data
         // setcurrentDetail({
         //   id, name, price, exp_date, symbal
@@ -72,7 +81,7 @@ class orderConfirmDetail extends React.Component {
             return
         }
         
-        _wallet.transfer(10, signmessage)
+        _wallet.transfer(0.1, signmessage)
     }
 
     render() {
@@ -125,7 +134,7 @@ class orderConfirmDetail extends React.Component {
                             <div className = "item multiline">
                                 <span className="label">Registiation price to pay:</span>
                                 <div className="valueWrap">
-                                    <p className="value"><span>9.9</span> USDT</p>
+                                    <p className="value"><span>{this.state.detail.price}</span> USDT</p>
                                     <p className="value"><b>≈ </b><span className="small">9.9</span> ICP</p>
                                 </div>
                             </div>

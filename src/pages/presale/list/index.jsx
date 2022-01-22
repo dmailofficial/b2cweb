@@ -190,6 +190,7 @@ function App() {
     //     return false;
     //   }
     // }
+    console.log(history.location.state)
   }, [])
 
   return (

@@ -1,18 +1,15 @@
 import React from 'react';
 import {Mainpannel } from './css'
-import {searchEmail, blockEmail} from './request'
+import {searchEmail, blockEmail, login} from './request'
 import Dialog from './Dialog'
 import StepDialog from './stepDialog'
-
-
-import logo from '@/static/images/logo@2x.png'
+import Toast from './toast'
+import logo from '@/static/images/presale/dmail-logo@3x.png'
 import inprogressIcon from '@/static/images/presale/inprogress@2x.png'
 import comingIcon from '@/static/images/presale/time@2x.png'
 import closedIcon from '@/static/images/presale/lock@x2.png'
 import successIcon from '@/static/images/presale/success@3x.png'
-
-
-
+import { loginAndGetLoginInfo } from './utils';
 
 class MainpannelComp extends React.Component {
     constructor(props) {
@@ -25,11 +22,17 @@ class MainpannelComp extends React.Component {
             errorShow: false,
             formatError: false,
             occupError:false,
-            apiErrorToast: false,
-            apiErrorMsg: "",
+            errorToast: false,
+            errorToastMsg: "",
             emailchecksuccess: false,
             emailData: {}
         };
+    }
+
+    componentWillReceiveProps(props){
+        this.setState({
+            status: props.activity.status
+        })
     }
 
     handleStepClose = () => {
@@ -73,13 +76,19 @@ class MainpannelComp extends React.Component {
         })
     }
 
-    poptoast = (txt) => {
-        return (
-            <Dialog
-                open = {true}
-                noHeader = {true}
-            >{txt}</Dialog>
-        )
+    poptoast = (msg) => {
+        alert(msg)
+        this.setState({
+            errorToast : true,
+            errorToastMsg : msg
+        });
+
+        setTimeout(()=>{
+            this.setState({
+                errorToast : true,
+                errorToastMsg : ""
+            });
+        }, 3000)
     }
 
     onSearch = async () => {
@@ -102,50 +111,30 @@ class MainpannelComp extends React.Component {
             return
         }
         if (!success) {
-            this.setState({
-                apiErrorToast : true,
-                apiErrorMsg : msg
-            });
-            setTimeout(()=>{
-                this.setState({apiErrorToast : false});
-            }, 3000)
+            this.poptoast(msg)
             return
         } else if (!data || !data.name) {
-            this.setState({
-                apiErrorToast : true,
-                apiErrorMsg : 'something is error'
-            });
-            setTimeout(()=>{
-                this.setState({apiErrorToast : false});
-            }, 3000)
+            this.poptoast('something is error')
             return
         }
-        // setEmailData(data)
-        this.setState({emailData: data})
+        this.setState({
+            mailData: data,
+            emailchecksuccess: true
+        });
     }
     
     handleLock = async()=>{
-        // const { code, success, msg, data } = await blockEmail(this.state.email)
+        let params = {
+            address: this.props.loginInfo.address,
+            product_name: this.state.email,
+            jwt: this.props.loginInfo.jwt
+        }
+        const { code, success, message, data } = await blockEmail(params)
         
-        // if (!success) {
-        //     this.setState({
-        //         apiErrorToast : true,
-        //         apiErrorMsg : msg
-        //     });
-        //     setTimeout(()=>{
-        //         this.setState({apiErrorToast : false});
-        //     }, 3000)
-        //     return
-        // } else if (!data || !data.name) {
-        //     this.setState({
-        //         apiErrorToast : true,
-        //         apiErrorMsg : 'something is error'
-        //     });
-        //     setTimeout(()=>{
-        //         this.setState({apiErrorToast : false});
-        //     }, 3000)
-        //     return
-        // }
+        if (!success) {
+            this.poptoast(message)
+            return
+        }
 
         this.props.toNextStep(this.state.email);
     }
@@ -153,17 +142,26 @@ class MainpannelComp extends React.Component {
 
     render() {
         return (
-            <Mainpannel className={this.state.status == 1 ? "inprogress" : this.state.status == 2 ? "coming" : "closed"}>
+            <Mainpannel className={this.state.status == 1 ? "coming" : this.state.status == 2 ? "inprogress" : "closed"}>
                 <div className="statusFlag">
                     <div className="triangle"></div>
                     <img src={this.state.status == 1 ? inprogressIcon : this.state.status == 2 ? comingIcon : closedIcon}></img>
                 </div>
                 <div className="bref">
                     <img src={logo}></img>
-                    <h2>Dmail neT Domain Account {this.props.curId}</h2>
-                    <p>Master your mailbox data sovereignty Each mail is NFT</p>
+                    <h2>{this.props.activity.name}</h2>
+                    <p>{this.props.activity.desc}</p>
                 </div>
                 {this.state.status == 1 ?
+                    <div className="formWrap notStarted">
+                        <div className="inputWrap">
+                            <span></span>
+                            <input value="Check 4-7 bits NFT domain account of your choice." disabled placeholder="Check the NFT domain account of your choice"></input>
+                            <span className="searchBtn">Not Started</span>
+                        </div>
+                    </div>:null
+                }
+                {this.state.status == 2 ?
                     <div className="formWrap">
                         <div className="inputWrap">
                             <span></span>
@@ -203,15 +201,6 @@ class MainpannelComp extends React.Component {
                         </div>
                     </div>:null
                 }
-                {this.state.status == 2 ?
-                    <div className="formWrap notStarted">
-                        <div className="inputWrap">
-                            <span></span>
-                            <input value="Check 4-7 bits NFT domain account of your choice." disabled placeholder="Check the NFT domain account of your choice"></input>
-                            <span className="searchBtn">Not Started</span>
-                        </div>
-                    </div>:null
-                }
                 <div className="info">
                     <div className="item">
                         <div className="item-header">
@@ -235,14 +224,19 @@ class MainpannelComp extends React.Component {
                     </div>
                 </div>
                 <div className="con_footer">
-                    <p>Follow <a href="" target="_blank">twitter</a> to be the first to get the latest notifications about the release.</p>
-                    <p>What is DMAIL? Click to learn more from Medium articles <a href="#" target="_blank">https://medium.com/@dmailofficial</a></p>
+                    <p>Follow <a href="https://twitter.com/dmailofficial" target="_blank">twitter</a> to be the first to get the latest notifications about the release.</p>
+                    <p>What is DMAIL? Click to learn more from Medium articles <a href="https://medium.com/@dmailofficial" target="_blank">https://medium.com/@dmailofficial</a></p>
                 </div>
                 <StepDialog
                     open = {this.state.openStep}
                     dialogClose = {this.handleStepClose}
                 ></StepDialog>
-               {this.state.apiErrorToast ? this.poptoast(this.state.apiErrorMsg) : null}
+               <Toast
+                    open = {this.state.errorToast}
+                    type = "warn"
+                    txt = {this.state.errorToastMsg}
+                    noHeader = {true}
+                ></Toast>
 
             </Mainpannel>
         );

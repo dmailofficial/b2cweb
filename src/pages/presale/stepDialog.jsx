@@ -12,8 +12,6 @@ import step6 from '@/static/images/presale/guide/step6@2x.png'
 
 function StepDialog(params) {
     const {open , dialogClose} = params;
-
-    console.log("params:",params)
     
     const handleClose = () => {
         dialogClose();

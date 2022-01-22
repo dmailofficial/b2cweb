@@ -21,13 +21,12 @@ export const searchEmail = async (key) => {
   }
 }
 
-export const blockEmail = async (key) => {
+// data {address, product_name, jwt}
+export const blockEmail = async (data) => {
   try {
     return axios({
-      url: `${baseUrl}/products`,
-      data: {
-        key
-      },
+      url: `${baseUrl}/lockdomain`,
+      data: data,
       method: 'post',
       // errorTitle: '',
     }).then((res) => {
@@ -39,10 +38,13 @@ export const blockEmail = async (key) => {
   }
 }
 
-export const getDetail = async (name) => {
+export const getDetail = async (email) => {
   return axios({
-    url: `${baseUrl}/products/${name}`,
-    method: 'get',
+    url: `${baseUrl}/products`,
+    method: 'post',
+    data:{
+      key : email
+    }
     // errorTitle: '',
   }).then((res) => {
     try {
@@ -54,12 +56,11 @@ export const getDetail = async (name) => {
   })
 }
 
-export const getIcpPrice = async (address) => {
+// data {address,jwt}
+export const getIcpPrice = async (data) => {
   return axios({
     url: `${baseUrl}/icpprice`,
-    data: {
-      address
-    },
+    data: data,
     method: 'post',
   }).then((res) => {
     try {

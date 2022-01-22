@@ -502,6 +502,9 @@ const Mainpannel = styled.div`
         color: #9F9FA0;
         line-height: 24px;
         text-align: center;
+        a{
+           color: #4C72FF;
+        }
     }
 `
 

@@ -7,28 +7,32 @@ const list = [
     {
         id: 1,
         label: "WEDNESDAY",
-        name: "Firstround of dmail NFT Domain Account presale",
+        name: "First round of dmail NFT Domain Account presale",
+        desc: "Master your mailbox data sovereignty Each mail is NFT",
         time: "12/12/121-12/12/12/12",
         status: "1"
     },
     {
         id: 2,
         label: "WEDNESDAY",
-        name: "Firstround of dmail NFT Domain Account presale",
+        name: "Second round of dmail NFT Domain Account presale",
+        desc: "Master your mailbox data sovereignty Each mail is NFT",
         time: "12/12/121-12/12/12/12",
         status: "2"
     },
     {
         id:3,
         label: "WEDNESDAY",
-        name: "Firstround of dmail NFT Domain Account presale",
+        name: "Third round of dmail NFT Domain Account presale",
+        desc: "Master your mailbox data sovereignty Each mail is NFT",
         time: "12/12/121-12/12/12/12",
         status: "3"
     },
     {
         id:4,
         label: "WEDNESDAY",
-        name: "Firstround of dmail NFT Domain Account presale",
+        name: "Fourth round of dmail NFT Domain Account presale",
+        desc: "Master your mailbox data sovereignty Each mail is NFT",
         time: "12/12/121-12/12/12/12",
         status: "3"
     }
@@ -43,10 +47,11 @@ const LeftComp = (props) => {
         setCurId(id);
         let cur = null
         list.map((item)=>{
-
+            if(id == item.id){
+                cur =  item;
+            }
         })
-        props.presaleChange(id);
-        console.log(props);
+        props.presaleChange(cur);
     }
 
     useEffect(()=>{
