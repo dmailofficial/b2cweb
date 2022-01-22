@@ -1,15 +1,18 @@
 import React from 'react';
 import {ConfirmPannel } from './css'
 import {getDetail, getIcpPrice} from './request'
-import Dialog from './Dialog'
+import Toast from './toast'
+import BigNumber from "bignumber.js";
 import backArrow from '@/static/images/presale/arrow-left@2x.png'
+import warnIcon from '@/static/images/presale/expired@2x.png'
 
 class orderConfirmDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             radioVal: "icp",
-            apiErrorToast: false, 
+            errorToast: false,
+            errorToastMsg: '',
             detail: {
                 id:1, name:"asdfs@asdf", price:23, exp_date:"asd.asf", symbal:"$"
             },
@@ -19,6 +22,12 @@ class orderConfirmDetail extends React.Component {
     handleRadioCheck = (type) => {
         console.log(type);
         this.setState({radioVal: type})
+        if(type == "icp"){
+            this.props.handleWallet("plug")
+        }else{
+            this.props.handleWallet("metamask")
+        }
+        
     }
 
     handleBack = () => {
@@ -26,12 +35,17 @@ class orderConfirmDetail extends React.Component {
     }
 
     poptoast = (txt) => {
-        return (
-            <Dialog
-                open = {true}
-                noHeader = {true}
-            >{txt}</Dialog>
-        )
+        this.setState({
+            errorToast: true,
+            errorToastMsg: txt
+        })
+
+        setTimeout(()=>{
+            this.setState({
+                errorToast: false,
+                errorToastMsg: ''
+            })
+        }, 3000)
     }
 
     getAddressDetail = async () => {
@@ -50,7 +64,14 @@ class orderConfirmDetail extends React.Component {
     toPay = async () => {
         const _wallet = this.props.wallet
         const { id, nonce, signmessage, email } = this.props.loginInfo
-        console.log("_wallet:  ", _wallet)
+        const balance = await _wallet.getBalanceOf(this.props.account[0])
+        const myAmount = balance.amount;
+
+        if (myAmount < +this.state.detail.price) {
+            this.poptoast("Confirm your assist is enough!")
+            return
+        }
+        
         _wallet.transfer(10, signmessage)
     }
 
@@ -116,7 +137,13 @@ class orderConfirmDetail extends React.Component {
                         </div>
                     </div>
                 </div>
-                {this.state.apiErrorToast ? this.poptoast(this.state.apiErrorMsg) : null}
+                <Toast
+                    open = {this.state.errorToast}
+                    type = "warn"
+                    txt = {this.state.errorToastMsg}
+                    noHeader = {true}
+                >
+                </Toast>
             </ConfirmPannel>
         );
     }

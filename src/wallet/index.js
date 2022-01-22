@@ -1,19 +1,18 @@
 import MetaMaskWallet from './metaMask'
+import PlugWallet from './plug'
 
 class Wallet {
     constructor(props){
-
-        return this.init();
+        return this.init(props);
     }
 
-    init = ()=>{
-        console.log("init")
-        // let account = MetaMaskWallet.requestAccounts();
-        return MetaMaskWallet
-    }
-    
-    testFn(){
-
+    init = (props)=>{
+        console.log("init::", props)
+        if(props == "plug"){
+            return PlugWallet
+        }else{
+            return MetaMaskWallet
+        }
     }
 }
 

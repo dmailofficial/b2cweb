@@ -27,6 +27,7 @@ class MainpannelComp extends React.Component {
             occupError:false,
             apiErrorToast: false,
             apiErrorMsg: "",
+            emailchecksuccess: false,
             emailData: {}
         };
     }
@@ -58,6 +59,12 @@ class MainpannelComp extends React.Component {
         this.setState({email:value})
     }
 
+    onKeyDownchange = (e)=>{
+        if(e.keyCode == 13){
+            this.onSearch()
+        }
+    }
+
     resetErrorStatus = () => {
         this.setState({
             errorShow: false,
@@ -76,7 +83,7 @@ class MainpannelComp extends React.Component {
     }
 
     onSearch = async () => {
-        if (!this.state.email.trim().length) {
+        if (!this.state.email.trim().length || this.state.errorShow) {
             return
         }
         this.props.handleWallet()
@@ -160,7 +167,7 @@ class MainpannelComp extends React.Component {
                     <div className="formWrap">
                         <div className="inputWrap">
                             <span></span>
-                            <input  value={this.state.email} onInput={this.onInput} placeholder="Check the NFT domain account of your choice"></input>
+                            <input  value={this.state.email} onInput={this.onInput} onKeyDown={this.onKeyDownchange} placeholder="Check the NFT domain account of your choice"></input>
                             <span className="searchBtn" onClick={this.onSearch}>Search</span>
                         </div>
                         {this.state.errorShow ?
@@ -173,16 +180,18 @@ class MainpannelComp extends React.Component {
                                 }
                             </div>: null
                         }
-                        <div className="successResult">
-                            <span className="arrow"></span>
-                            <div className="pannel">
-                                <p>
-                                    <img src={successIcon}></img>
-                                    <span>{this.state.email}</span> is available!
-                                    <span className="lockBtn" onClick={this.handleLock}>Lock&Buy</span>
-                                </p>
-                            </div>
-                        </div>
+                        {this.state.emailchecksuccess ?
+                            <div className="successResult">
+                                <span className="arrow"></span>
+                                <div className="pannel">
+                                    <p>
+                                        <img src={successIcon}></img>
+                                        <span>{this.state.email}</span> is available!
+                                        <span className="lockBtn" onClick={this.handleLock}>Lock&Buy</span>
+                                    </p>
+                                </div>
+                            </div>:null
+                        }
                     </div>:null
                 }
                 {this.state.status == 3 ?

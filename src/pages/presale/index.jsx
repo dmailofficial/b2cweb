@@ -6,22 +6,26 @@ import Left from './left'
 import Main from './mainpannel'
 import ConfirmDetail from './orderConfirmDetail'
 import Dialog from './Dialog'
+import Toast from './toast'
 import Wallet from '@/wallet/index'
-import {login } from './request'
+import {login, verifySign} from './request'
+import { loginAndGetLoginInfo } from './utils'
 
 import metamask from '@/static/images/presale/metamask@2x.png'
 import plug from '@/static/images/presale/plug-logo@2x.png'
-import Account from '../account2';
 
 
 const Index = () => {
   const [curId, setCurId] = useState(1)
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(2)
   const [walletDialog, setWalletDialog] = useState(false)
   const [address, setAddress] = useState("")
-  const [wallet, setWallet] = useState({})
+  const [walletName, setWalletName] = useState('')
+  const [walletInstance, setWalletInstance] = useState({})
   const [loginInfo, setLoginInfo] = useState({})
   const [account, setAccount] = useState('')
+  const [errorToast, setErrorToast] = useState(false)
+  const [errorToastMsg, setErrorToastMsg] = useState(false)
 
   const presaleChange = (id) => {
     setCurId(id)
@@ -47,20 +51,33 @@ const Index = () => {
     setWalletDialog(true);
   }
 
-  const handleWallet = async (wallet) => {
-    const _wallet = new Wallet(wallet);
-    setWallet(_wallet);
-    const account = await _wallet.requestAccounts();
-    console.log("account: ", account)
-    setAccount(account)
+  const poptoast = (txt) => {
+      setErrorToast(true)
+      setErrorToastMsg(txt)
 
-    const { success, msg, data } = await login(account);
-    console.log("login info: ", loginInfo)
-    if(!success){
-      alert("login error!")
-      return false;
+      setTimeout(()=>{
+        setErrorToast(false)
+        setErrorToastMsg("")
+      }, 3000)
+  }
+
+  const handleWallet = async (wallet) => {
+    console.log("handle wallet: ", wallet)
+    if(!wallet){
+        wallet = walletName ? walletName : "metamask";
     }
-    setLoginInfo(data);
+    setWalletName(wallet)
+    const _walletInstance = new Wallet(wallet);
+    setWalletInstance(_walletInstance);
+
+    const walletAccount = await _walletInstance.requestAccounts();
+    console.log("walletAccount:::", walletAccount)
+    setAccount(walletAccount)
+
+    const loginInfo = await loginAndGetLoginInfo(walletAccount, _walletInstance, wallet);
+    
+    console.log("loginInfo:::-----",loginInfo)
+
     walletDialogClose()
     
   }
@@ -81,7 +98,7 @@ const Index = () => {
               <Main 
                 curId = {curId}
                 toNextStep = {toNextStep}
-                wallet = {wallet}
+                wallet = {walletInstance}
                 handleWallet = {handleWallet}
                 loginInfo = {loginInfo}
                 account = {account}
@@ -92,7 +109,7 @@ const Index = () => {
                 curId = {curId}
                 address = {address}
                 back = {backStep1}
-                wallet = {wallet}
+                wallet = {walletInstance}
                 handleWallet = {handleWallet}
                 loginInfo = {loginInfo}
                 account = {account}
@@ -111,7 +128,7 @@ const Index = () => {
               <img src={metamask}></img>
             </span>
           </div>
-          <div className="walletItem">
+          <div className="walletItem" onClick={()=>handleWallet("plug")}>
             <span>Plug</span>
             <span className="walletLogo">
               <img src={plug}></img>
@@ -119,6 +136,12 @@ const Index = () => {
           </div>
         </WalletWrap>
       </Dialog>
+      <Toast
+        open = {errorToast}
+        type = "warn"
+        txt = {errorToastMsg}
+        noHeader = {true}
+      ></Toast>
     </>
   );
 }
