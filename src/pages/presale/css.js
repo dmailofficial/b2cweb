@@ -710,10 +710,14 @@ const ConfirmPannel = styled.div`
                             }
                         }
                         img{
-                            width: 12px;
-                            height: 12px;
+                            width: 20px;
+                            height: 20px;
                             display: inline-block;
                             margin-right: 10px;
+                        }
+                        img.icp{
+                            width: 22px;
+                            height: 11px;
                         }
                         .raLabel{
                             font-size: 16px;
@@ -879,6 +883,13 @@ const ToastWrap = styled.div`
         height: 18px;
         vertical-align: middle;
         margin-right: 15px;
+    }
+    img.animate{
+        animation: spin 1s steps(8) infinite;
+    }
+    @keyframes spin {
+        from {transform: rotate(0deg);}
+          to {transform: rotate(360deg);}
     }
     p{
         font-size: 16px;

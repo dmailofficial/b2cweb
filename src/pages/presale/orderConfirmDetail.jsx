@@ -4,6 +4,8 @@ import {ConfirmPannel } from './css'
 import {getDetail, getIcpPrice, detectTransferIsSuccess} from './request'
 import Toast from './toast'
 import backArrow from '@/static/images/presale/arrow-left@2x.png'
+import icpIcon from '@/static/images/presale/ICP@3x.png'
+import usdtIcon from '@/static/images/presale/USDT@3x.png'
 import { CompatibleClassCountDown } from '@/components/countDown'
 
 class orderConfirmDetail extends React.Component {
@@ -82,7 +84,7 @@ class orderConfirmDetail extends React.Component {
         this.props.back();
     }
 
-    poptoast = (txt,type) => {
+    poptoast = (txt,type, isInfinite) => {
         this.setState({
             errorToast: true,
             errorToastMsg: txt,
@@ -90,12 +92,16 @@ class orderConfirmDetail extends React.Component {
         })
 
         setTimeout(()=>{
-            this.setState({
-                errorToast: false,
-                errorToastMsg: '',
-                errorToastType: "warn"
-            })
+            if(isInfinite){return}
+            this.closePoptoast()
         }, 3000)
+    }
+    closePoptoast = () =>{
+        this.setState({
+            errorToast: false,
+            errorToastMsg: '',
+            errorToastType: "warn"
+        })
     }
 
     getAddressDetail = async () => {
@@ -131,16 +137,16 @@ class orderConfirmDetail extends React.Component {
     toPay = async () => {
         if(this.state.paying || this.state.walletSwitching){return}
         this.setState({paying: true})
+        this.poptoast("Payment processing","loading", true)
 
         const _wallet = this.props.wallet
-        const { id, nonce, signmessage, email } = this.props.loginInfo
-        
-        console.log("topay:", signmessage );
+        // const { id, nonce, signmessage, email } = this.props.loginInfo
         
         const balance = await _wallet.getBalanceOf(this.props.account)
         const myAmount = balance.amount;
 
         if (myAmount < +this.state.detail.price) {
+            this.closePoptoast();
             this.poptoast("Confirm your assist is enough!")
             return
         }
@@ -150,7 +156,8 @@ class orderConfirmDetail extends React.Component {
     }
 
     paysuccess = async (from, hash) => {
-        const successMsg = 'Congratulations, you have successfully participated in the DMAIL NFT Domain Account pre-sale!'
+        this.closePoptoast();
+        const successMsg = 'Payment successful'
         const _wallet = this.props.wallet
         const { chainId } = await _wallet.getChainInfo();
         const { success, msg, data } = await detectTransferIsSuccess(hash, from, this.state.detail.price, this.state.detail.name, this.props.loginInfo.jwt, chainId)
@@ -165,17 +172,17 @@ class orderConfirmDetail extends React.Component {
     }
 
     payfaild = (error) => {
+        this.closePoptoast();
         const userReject = 'MetaMask Message Signature: User rejected message signature!'
         if(error.code == 4001){
             this.poptoast(userReject)
             return
         }
-        this.poptoast(error.message || 'Confirm your wallet is properly connected! Confirm your assist is enough!')
+        this.poptoast(' Payment failure ', "faild")
         return
     }
 
     render() {
-        console.log(">>>>>>>>props:", this)
         return (
             <ConfirmPannel>
                 <div className="backBtn" onClick = {this.handleBack}>
@@ -206,7 +213,7 @@ class orderConfirmDetail extends React.Component {
                                             onClick={()=>{this.handleRadioCheck("icp")}}
                                         >
                                             <span className="raInput"><span></span></span>
-                                            <img src={backArrow}></img>
+                                            <img className="icp" src={icpIcon}></img>
                                             <span className="raLabel">ICP</span>
                                         </div>
 
@@ -215,7 +222,7 @@ class orderConfirmDetail extends React.Component {
                                             onClick={()=>{this.handleRadioCheck("usdt")}}
                                         >
                                             <span className="raInput"><span></span></span>
-                                            <img src={backArrow}></img>
+                                            <img src={usdtIcon}></img>
                                             <span className="raLabel">USDT</span>
                                         </div>
                                     </div>
