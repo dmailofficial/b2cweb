@@ -97,7 +97,7 @@ const Index = () => {
 
   const toOwn = () => {
     if(loginInfo && loginInfo.address){
-      history.push({ pathname : "presale_list" , state : loginInfo})
+      history.push({ pathname : "presale_list" , state : {walletName, loginInfo}})
     }else{
       walletDialogShow()
     }
