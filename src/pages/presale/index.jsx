@@ -80,6 +80,7 @@ const Index = ({ store }) => {
       poptoast(loginInfo.msg)
       return;
     }
+    walletStore.info = loginInfo;
     setLoginInfo(loginInfo)
     walletDialogClose();
   }
@@ -92,8 +93,8 @@ const Index = ({ store }) => {
     if (walletStore.info) {
       history.push({ pathname : "presale_list" })
     } else {
-      walletDialogShow()
       setToown(true)
+      walletDialogShow()
     }
     // if(loginInfo && loginInfo.address){
     //   history.push({ pathname : "presale_list" , state : {walletName, loginInfo}})
