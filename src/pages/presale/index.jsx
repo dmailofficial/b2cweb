@@ -10,10 +10,10 @@ import ConfirmDetail from './orderConfirmDetail'
 import Dialog from './Dialog'
 import Toast from './toast'
 import Wallet from '@/wallet/index'
+import WalletDialog from './walletDialog'
 import { loginAndGetLoginInfo } from './utils'
 
-import metamask from '@/static/images/presale/metamask@2x.png'
-import plug from '@/static/images/presale/plug-logo@2x.png'
+
 
 
 const Index = ({ store }) => {
@@ -32,6 +32,7 @@ const Index = ({ store }) => {
   const [account, setAccount] = useState('')
   const [errorToast, setErrorToast] = useState(false)
   const [errorToastMsg, setErrorToastMsg] = useState(false)
+  const [toown, setToown] = useState(false)
 
   const presaleChange = (item) => {
     let id = item.id;
@@ -53,6 +54,11 @@ const Index = ({ store }) => {
 
   const walletDialogClose = () => {
     setWalletDialog(false);
+
+    if(toown){
+      setToown(false)
+      toOwn()
+    }
   }
 
   const walletDialogShow = () => {
@@ -60,55 +66,34 @@ const Index = ({ store }) => {
   }
 
   const poptoast = (txt) => {
-      setErrorToast(true)
-      setErrorToastMsg(txt)
+    setErrorToast(true)
+    setErrorToastMsg(txt)
 
-      setTimeout(()=>{
-        setErrorToast(false)
-        setErrorToastMsg("")
-      }, 3000)
+    setTimeout(()=>{
+      setErrorToast(false)
+      setErrorToastMsg("")
+    }, 3000)
   }
 
-  const handleWallet = async (wallet) => {
-    console.log("handle wallet: ", wallet)
-    if(!wallet){
-        wallet = walletName ? walletName : "metamask";
+  const getLoginInfo = (loginInfo) => {
+    if(loginInfo.code){
+      poptoast(loginInfo.msg)
+      return;
     }
-    setWalletName(wallet)
+    setLoginInfo(loginInfo)
+    walletDialogClose();
+  }
 
-    if(loginInfo && loginInfo.address) {
-      walletDialogClose()
-
-      return {
-        ...loginInfo
-      }
-    }
-
-    const _walletInstance = new Wallet(wallet);
-    setWalletInstance(_walletInstance);
-
-    const walletAccount = await _walletInstance.requestAccounts();
-    console.log("walletAccount:::", walletAccount)
-    setAccount(walletAccount)
-
-    const _loginInfo = await loginAndGetLoginInfo(walletAccount, _walletInstance, wallet);
-    if (_loginInfo) {
-      _loginInfo.walletName = wallet
-    }
-    setLoginInfo(_loginInfo)
-    console.log("loginInfo:::-----",_loginInfo)
+  useEffect(()=>{
     walletDialogClose()
-
-    walletStore.setWalletInfo(_loginInfo)
-
-    return _loginInfo
-  }
+  }, [loginInfo])
 
   const toOwn = () => {
     if (walletStore.info) {
       history.push({ pathname : "presale_list" })
     } else {
       walletDialogShow()
+      setToown(true)
     }
     // if(loginInfo && loginInfo.address){
     //   history.push({ pathname : "presale_list" , state : {walletName, loginInfo}})
@@ -134,7 +119,8 @@ const Index = ({ store }) => {
                 curId = {curId}
                 toNextStep = {toNextStep}
                 wallet = {walletInstance}
-                handleWallet = {handleWallet}
+                walletName = {walletName}
+                // handleWallet = {handleWallet}
                 loginInfo = {loginInfo}
                 account = {account}
                 activity = {curItem}
@@ -146,32 +132,20 @@ const Index = ({ store }) => {
                 email = {email}
                 back = {backStep1}
                 wallet = {walletInstance}
-                handleWallet = {handleWallet}
+                walletName = {walletName}
+                // handleWallet = {handleWallet}
                 loginInfo = {loginInfo}
                 account = {account}
+                toOwn = {toOwn}
               ></ConfirmDetail> : null
             }
           </div>
       </ContentBox>
-      <Dialog
-        open = { walletDialog }
-        dialogClose = { walletDialogClose }
-      >
-        <WalletWrap>
-          <div className="walletItem" onClick={()=>handleWallet("metamask")}>
-            <span>Metamask</span>
-            <span className="walletLogo">
-              <img src={metamask}></img>
-            </span>
-          </div>
-          <div className="walletItem" onClick={()=>handleWallet("plug")}>
-            <span>Plug</span>
-            <span className="walletLogo">
-              <img src={plug}></img>
-            </span>
-          </div>
-        </WalletWrap>
-      </Dialog>
+      <WalletDialog
+        open = {walletDialog}
+        dialogClose = {walletDialogClose}
+        getLoginInfo = {getLoginInfo}
+      ></WalletDialog>
       <Toast
         open = {errorToast}
         type = "warn"

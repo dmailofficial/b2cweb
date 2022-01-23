@@ -28,7 +28,8 @@ class MainpannelComp extends React.Component {
             errorToast: false,
             errorToastMsg: "",
             emailchecksuccess: false,
-            emailData: {}
+            emailData: {},
+            
         };
     }
 
@@ -80,7 +81,6 @@ class MainpannelComp extends React.Component {
     }
 
     poptoast = (msg) => {
-        alert(msg)
         this.setState({
             errorToast : true,
             errorToastMsg : msg
@@ -88,17 +88,17 @@ class MainpannelComp extends React.Component {
 
         setTimeout(()=>{
             this.setState({
-                errorToast : true,
+                errorToast : false,
                 errorToastMsg : ""
             });
         }, 3000)
     }
 
     onSearch = async () => {
-        if (!this.state.email.trim().length || this.state.errorShow) {
+        if (!this.state.email.trim().length || this.state.errorShow || this.state.setsearching) {
             return
         }
-        this.props.handleWallet()
+        const _loginInfo = await this.props.handleWallet()
         console.log(this.props.wallet)
         
         this.setState({setsearching:true})
@@ -132,10 +132,10 @@ class MainpannelComp extends React.Component {
             product_name: this.state.email,
             jwt: this.props.loginInfo.jwt
         }
-        const { code, success, message, data } = await blockEmail(params)
+        const { code, success, msg, data } = await blockEmail(params)
         
         if (!success) {
-            this.poptoast(message)
+            this.poptoast(msg)
             return
         }
 
@@ -214,7 +214,7 @@ class MainpannelComp extends React.Component {
                                 <div className="pannel">
                                     <p>
                                         <img src={successIcon}></img>
-                                        <span>{this.state.email}</span> is available!
+                                        <span>{this.state.email}@dmail.ai</span> is available!
                                         <span className="lockBtn" onClick={this.handleLock}>Lock&Buy</span>
                                     </p>
                                 </div>

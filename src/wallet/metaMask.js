@@ -10,12 +10,14 @@ const MetaMaskChainAbiMap = {
       abi: ERC_abi,
       toAddress: '0xe4F13c05FdBF3Fa8149b8980742f0E7e9E4749eC',
       decimals: 6,
+      chainId: "1"
     },
     '56': {
       contractAddress: '0x55d398326f99059fF775485246999027B3197955',
       abi: BSC_abi,
       toAddress: '0xe4F13c05FdBF3Fa8149b8980742f0E7e9E4749eC',
       decimals: 18,
+      chainId: "56"
     },
 }
 
@@ -73,7 +75,9 @@ class MetaMaskWallet {
             try {
             // https://docs.metamask.io/guide/accessing-accounts.html
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            // this.listenerDisconnect();
             return accounts[0]
+            
             } catch (error) {
                 return {
                     code: 1,
@@ -87,6 +91,12 @@ class MetaMaskWallet {
                 msg: 'Please install MetaMask!'
             }
         }
+    }
+
+    listenerAccountsChanged = () => {
+        window.ethereum.on('accountsChanged', (accounts) => {
+            console.log("metamask accountsChanged !", accounts)
+          });
     }
 
     _install = () => {
@@ -117,29 +127,45 @@ class MetaMaskWallet {
         
         return {amount: amount};
     }
-
-    transfer = async (price, sign) => {
+    
+    transfer = async (price, successcallback, failedcallback) => {
         const contract = await this.initContract();
         const chainInfo = await this.getChainInfo();
         const { toAddress, decimals } = chainInfo
-
-        const signRes = await this.sign(sign)
-        // sign failed
-        if (!Array.isArray(signRes)) {
-            if (signRes && signRes.code === 2) {
-                // showPop(signRes.msg)
-                console.error(signRes.msg)
-            }
-            return false
-        }
+        // const signRes = await this.sign(sign)
+        // // sign failed
+        // if (!Array.isArray(signRes)) {
+        //     if (signRes && signRes.code === 2) {
+        //         // showPop(signRes.msg)
+        //         console.error(signRes.msg)
+        //     }
+        //     return false
+        // }
         try {
-            return contract.transfer(toAddress, setNumber(+price, decimals))
+            return contract.transfer(toAddress, setNumber(+price, decimals)).then((res)=>{
+                const {
+                    from,
+                    hash,
+                  } = res
+                  console.log("from::hash::::", from, hash)
+                  successcallback && successcallback(from, hash)
+            }).catch((error)=>{
+                if (error.code == 4001) {
+                    failedcallback && failedcallback(error)
+                    console.log('MetaMask Message Signature: User rejected message signature!')
+                    return
+                  }
+                  failedcallback && failedcallback(error)
+                  console.log(error.message || 'Confirm your wallet is properly connected! Confirm your assist is enough!')
+                  return
+            })
         } catch (error) {
+            failedcallback && failedcallback(error)
             console.error("transfer: ",error)
             return error
         }
     }
-    sign = async (sign) => {
+    sign = async (sign, failedcallback) => {
         if (!sign) {
           return {
             code: 1,
@@ -155,6 +181,7 @@ class MetaMaskWallet {
             const signature = await signer.signMessage(sign);
             return [signature, signer]
           } catch (error) {
+            failedcallback && failedcallback(error)
             return {
               code: 2,
               msg: error.message

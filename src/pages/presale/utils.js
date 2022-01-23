@@ -9,7 +9,7 @@ export const loginAndGetLoginInfo = async (account, wallInstance, walletName, su
 
     if(!success){
       console.error("login error!");
-      faildcallback && faildcallback();
+      faildcallback && faildcallback(msg);
       return false;
     }
     loginInfo = data;
@@ -20,17 +20,23 @@ export const loginAndGetLoginInfo = async (account, wallInstance, walletName, su
     }
     if(walletName == "metamask"){
       const { signmessage } = data
-      const signRes = await wallInstance.sign(signmessage)
+      const signRes = await wallInstance.sign(signmessage, faildcallback)
+      console.log("signRes::error:",signRes)
+      if(signRes.code){
+        faildcallback && faildcallback(signRes)
+        return signRes;
+      }
       const [signature, signer] = signRes
       const { success:vsuccess, msg:vmsg, data:vdata } = await verifySign(account, signature)
       if (!vsuccess) {
         console.error(vmsg)
+        faildcallback && faildcallback(vmsg)
         return false
       }
       const { jwt } = vdata
       loginInfo = {...loginInfo, jwt}
     }
-    successCallback && successCallback();
+    successCallback && successCallback(loginInfo);
 
     return loginInfo;
 }

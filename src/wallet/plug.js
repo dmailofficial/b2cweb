@@ -1,8 +1,3 @@
-import Web3 from "web3"
-import { Contract, ethers } from 'ethers'
-import { BSC_abi, ERC_abi } from './abis'
-import { setByNumber, setNumber } from './setByNumber'
-
 const PlugAbiMap = {
   toAddress: '567to-2ufhs-rzv5c-2wnbb-6y34z-kzi7q-nvwcv-ulekn-2esk4-kyggc-iae',
 }
@@ -60,6 +55,10 @@ class PlugWallet {
         return null;
     }
 
+    listenerAccountsChanged = () => {
+      return null;
+    }
+
     getBalanceOf = async (address) => {
         const result = await window.ic.plug.requestBalance();
         let _icp = null;
@@ -78,20 +77,27 @@ class PlugWallet {
         return _icp;
     }
 
-    transfer = async (price) => {
+    transfer = async (price, successcallback, failedcallback) => {
       const chainInfo = await this.getChainInfo();
       const { toAddress } = chainInfo
-      const result = await window.ic.plug.requestTransfer({
-        to: toAddress,
-        amount: 4000000 * price,
-        // opts: {
-        //   fee: '',
-        //   memo,
-        //   from_subaccount: ''
-        // }
-      });
-      console.log('requestTransfer', result);
-      return result;
+      try {
+        const result = await window.ic.plug.requestTransfer({
+          to: toAddress,
+          amount: 4000000 * price,
+          // opts: {
+          //   fee: '',
+          //   memo,
+          //   from_subaccount: ''
+          // }
+        });
+        console.log('requestTransfer', result);
+        successcallback && successcallback(toAddress, result.height)
+        return result;
+      } catch (error) {
+        console.log("plug:::", error)
+        failedcallback && failedcallback(error)
+      }
+      
     }
 }
 
