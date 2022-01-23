@@ -3,6 +3,9 @@ import styled from 'styled-components'
 // https://react-table.tanstack.com/docs/api/useTable#cell-properties
 import { useTable, usePagination } from 'react-table'
 import Dialog from '@mui/material/Dialog';
+import { useHistory } from "react-router-dom";
+import { observer, inject } from 'mobx-react';
+import { Alert } from './dialog'
 
 import { Wrapper, ToolBar, Content, TableChunk, Button, Circle, NoDataWraper } from './css'
 import Pagination from './pagination'
@@ -73,7 +76,15 @@ const NoData = () => {
 }
 
 const Table = (props) => {
-  const { columns, data, fetchData, pageCount, loading, setOpen } = props
+  const { store: { wallet }, columns, data, fetchData, pageCount, loading, setOpen } = props
+  const history = useHistory();
+  const [alertInfo, setAlertInfo] = useState(null)
+
+  const toPay = (product_name) => {
+    if (wallet && wallet.info && wallet.info.walletName) {
+      history.push("/presale", { step: 'pay', wallet: wallet.info.walletName, product_name })
+    }
+  }
 
   // Use the state and functions returned from useTable to build your UI
   const {
@@ -87,13 +98,19 @@ const Table = (props) => {
     data,
   })
 
-  const onBtnClick = (type) => () => {
+  const onBtnClick = (type, product_name) => () => {
     if (type === 'disabled') {
       return;
     }
     console.log(type)
     if (type === 'primary') {
       setOpen(true)
+    } else if (type === 'ghost') {
+      toPay(product_name)
+    } else if (type === 'normal') {
+      setAlertInfo({
+        title: 'Coming soon!'
+      })
     }
   }
 
@@ -130,7 +147,7 @@ const Table = (props) => {
       }
       const obj = statusMap[status]
       return (
-        <Button type={obj.operationType} onClick={onBtnClick(obj.operationType)}>{obj.operationText}</Button>
+        <Button type={obj.operationType} onClick={onBtnClick(obj.operationType, original['product_name'])}>{obj.operationText}</Button>
       )
     } else if (key === 'status') {
       const current = statusMap[value]
@@ -144,7 +161,6 @@ const Table = (props) => {
         </div>
       )
     }
-    console.log(value)
     return value || '- -'
   }
 
@@ -179,9 +195,10 @@ const Table = (props) => {
         </table>
         {pageCount <= 0 ? <NoData /> : null}
       </TableChunk>
+      <Alert info={alertInfo} setInfo={setAlertInfo} />
       <Pagination {...props} />
     </>
   )
 }
 
-export default Table
+export default inject('store')(observer(Table))

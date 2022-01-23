@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, } from 'react';
 import styled  from 'styled-components';
 import { useTable, usePagination } from 'react-table'
+import { observer, inject } from 'mobx-react';
 
 const flex = `display: flex;`
 const flexAlign = `${flex}; align-items: center;`
@@ -156,7 +157,7 @@ const usePageButtons = (pageIndex, pageCount, gotoPage, loadingRef) => {
   )
 }
 
-const Pagination = ({ children, columns, data, fetchData, loading, ...props }) => {
+const Pagination = ({ store: { presale }, children, columns, data, fetchData, loading, ...props }) => {
   const {
     page,
     canPreviousPage,
@@ -180,6 +181,10 @@ const Pagination = ({ children, columns, data, fetchData, loading, ...props }) =
     pageCount: props.pageCount,
   }, usePagination)
 
+  const pageInfo = useRef({
+    pageIndex, 
+    pageSize
+  })
   const loadingRef = useRef(loading)
   const pageButtons = usePageButtons(pageIndex, pageCount, gotoPage, loadingRef)
 
@@ -200,12 +205,21 @@ const Pagination = ({ children, columns, data, fetchData, loading, ...props }) =
   }
 
   useEffect(() => {
+    pageInfo.current = { pageIndex, pageSize }
     !loadingRef.current && fetchData({ pageIndex, pageSize })
   }, [fetchData, pageIndex, pageSize])
 
   useEffect(() => {
     loadingRef.current = loading
   }, [loading])
+
+  useEffect(() => {
+    console.log('presale.triggerReload', presale.triggerReload, pageInfo.current, loadingRef.current)
+    if (presale.triggerReload > 0) {
+      const { pageIndex, pageSize } = pageInfo.current
+      !loadingRef.current && fetchData({ pageIndex, pageSize })
+    }
+  }, [presale.triggerReload])
 
   return (
     <PaginationWrapper>
@@ -223,4 +237,4 @@ const Pagination = ({ children, columns, data, fetchData, loading, ...props }) =
   )
 }
 
-export default Pagination
+export default inject('store')(observer(Pagination))

@@ -55,10 +55,36 @@ export const Button = styled.a`
   color: ${props => getButtonStyle(props.type, 'color')};
   border: 1px solid ${props => getButtonStyle(props.type, 'bdColor') || 'none'};
   cursor: ${props => getButtonStyle(props.type, 'cursor') || 'pointer'};
+  transition: background 0.4s ease;
 
   &:not([type=disabled]):hover {
     background: ${props => getButtonStyle(props.type, 'hoverBgColor') || redNormal};
     color: ${props => getButtonStyle(props.type, 'hoverColor') || '#fff'};
+  }
+`
+
+export const SuccessToast = styled.div`
+  ${flexAlign};
+  justify-content: center;
+  padding: 0 32px;
+  min-width: 200px;
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  height: 46px;
+  transform: translateX(-50%) translateY(-50%);
+  background: #FFFFFF;
+  box-shadow: 0px 16px 30px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  font-size: 16px;
+  color: #1D1D1F;
+
+  i {
+    margin-right: 8px;
+    width: 14px;
+    height: 14px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAHKADAAQAAAABAAAAHAAAAABkvfSiAAADN0lEQVRIDb1WTUhUURT+7htLa5GRRGCLEKnUcVFRUJCpCwmihWAgRNCiRRt/0iRaiFi6yAjSmdoEEUEERYWboCgIc5EQVJtxRiJcZYtQrIXlz7zXd65zH68386aZUbowc+/9zs/3zr3n3nsUcmjtMey3gGbHQZ2jsJMm5SmzGeXgq1IYt4HRaBgf/+VOZVMg0SkqDJJobzY9IyPxlAP0kviJwfx9RsKeBCqWknhIosN+g1zmJJ7YGMLpG1WY9uunEbbHUQ8bT+GgzK+c11xhFhZaotUY89r9RajJknhFhQ1epTWMlxFCk5fUJZRlXEzi/Zoj838dIy0O4ZBZXibfapM9W3cycc2t0b5TPJpQsrHQBEn5ydqJb+EQJU3IdR3MapGHkL7mM6kbDiWHmmF/yKSUL8bjcG9TCboWfmGUtg1p9goHLIbYnCYoAFAWbo/U4NxQJX4UleIEyV/43QiXxfWt8wvynfOrhyI1aCMJLxqg9CdC9Fvi9yNcVupu9Msge0EHrey/pAk9AOV9jOyygS5MY+sc9FluMJjphUuSxlzEBgeJvlsKjZEwHpcU4Ridxl2hZ0Dj7kgtBgzU/hnb7QW8kaw0mK8vF8JM7f5wGJ9EcL0KM04x6vkRei4YxzZ/50dqcVPm0i4lUK4WMUayfatI+j8/3BHCGb+IRj2dk+g1eHQ3I96MRpJMcK2TNDzL6O8Y+cVJ7Pq9grfcwGqDZeop/2bJe5ZJaNsYIOk1IxuuwPw2oIlkx0fCeGDw7jj2LNkYp7NKgwX1+u3sjOGK7aAvSIkR3WIGdjA6nYFevY5J1PJleU3BDi8eNGZeXLXkpQ5S0LiDNkZ6t99ZvZWMblcCB/kJY7mSiZ1wcYWAjhgS3Lfsr7rCo7IanOlXWOGqHCXRc9psEftcGldoivtepbOUxm6CBBo7aJ2L4VlnHCe5BS/zIROfhkNHKACjfEcnQedHVApukt2M7og4cM+h1CBMkNmCvQYZ0qf2nZK7hPpFZg1CfDnItgB8mSG1mNde7F1CmejagzXIukQqq+WrZ9IIDanUIPpWEaCAJrbiw1s8GTdu0hjA2/+3QthLKmOpCrj261Lq/wErxgDpBZfMRQAAAABJRU5ErkJggg==);
+    background-size: 100%;
   }
 `
 
@@ -99,12 +125,36 @@ export const ToolBar = styled.div`
   }
 
   .right {
-    ${font14};
-    color: ${redNormal};
-    border: 2px solid ${redNormal};
-    border-radius: 2px;
-    line-height: 48px;
-    padding: 0 45px;
+    ${flexAlign};
+
+    span {
+      ${font14};
+      color: ${redNormal};
+      border: 2px solid ${redNormal};
+      border-radius: 2px;
+      line-height: 48px;
+      padding: 0 45px;
+    }
+    
+    a {
+      width: 180px;
+      height: 48px;
+      background: ${redNormal};
+      color: #FFFFFF;
+      margin-left: 24px;
+      line-height: 48px;
+      box-shadow: 0px 8px 29px 0px rgb(0 5 58 / 5%);
+      border-radius: 3px;
+      font-size: 14px;
+      font-family: Roboto-Regular,Roboto;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+
+      &:hover {
+        background: ${redBright};
+      }
+    }
   }
 `
 

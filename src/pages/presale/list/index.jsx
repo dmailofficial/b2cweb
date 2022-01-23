@@ -6,11 +6,12 @@ import { observer, inject } from 'mobx-react';
 import Header from '@/components/newheader'
 import { Wrapper, ToolBar, Content } from './css'
 import Table from './table'
-import Dialog from './dialog'
+import ReceiveDialog, { Alert, Success } from './dialog'
 import Wallet from '@/wallet/index'
 import axios from '@/utils/axios';
 import { baseUrl } from '../utils'
 import { login, verifySign } from '../request'
+import WalletDialog from '../walletDialog'
 
 const columns = [
   {
@@ -57,8 +58,9 @@ const testData = [
     domain: 'www.google.com',
     price: '9.9USDT',
     hash: '0x3dfanlkfjdklafdajfda2fdafda',
-    status: '1',
+    status: '0',
     statusText: ['NFT Issued'],
+    product_name: 'xxxx',
     number: '#032123',
     owner: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
     expirationDate: 'Permanent',
@@ -71,8 +73,9 @@ const testData = [
     domain: 'www.google.com',
     price: '9.9USDT',
     hash: '0x3dfanlkfjdklafdajfda2fdafda',
-    status: '2',
+    status: '1',
     statusText: ['NFT Issuing'],
+    product_name: 'xxxx',
     number: '#032123',
     owner: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
     expirationDate: 'Permanent',
@@ -87,6 +90,7 @@ const testData = [
     hash: '0x3dfanlkfjdklafdajfda2fdafda',
     status: '2',
     statusText: ['NFT Uncollected'],
+    product_name: 'xxxx',
     number: '#032123',
     owner: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
     expirationDate: 'Permanent',
@@ -99,8 +103,9 @@ const testData = [
     domain: 'www.google.com',
     price: '9.9USDT',
     hash: '0x3dfanlkfjdklafdajfda2fdafda',
-    status: '2',
+    status: '9',
     statusText: ['To be paid', '01:30:00'],
+    product_name: 'xxxx',
     number: '#032123',
     owner: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
     expirationDate: 'Permanent',
@@ -115,6 +120,7 @@ const testData = [
     hash: '0x3dfanlkfjdklafdajfda2fdafda',
     status: '3',
     statusText: ['Closed'],
+    product_name: 'xxxx',
     number: '#032123',
     owner: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
     expirationDate: 'Permanent',
@@ -124,13 +130,40 @@ const testData = [
   }
 ]
 
-function App({ store: { wallet } }) {
+function App({ store: { wallet, presale } }) {
   const history = useHistory();
   const [data, setData] = useState([])
   const [pageCount, setPageCount] = useState(0)
   const [loading, setLoading] = useState(false)
-  // const [address, setAddress] = useState('')
-  // const [jwt, setJwt] = useState('')
+  const [alertInfo, setAlertInfo] = useState(null)
+  const [successText, setSuccessText] = useState('')
+
+  const [walletDialog, setWalletDialog] = useState(false)
+  const walletDialogClose = () => {
+    setWalletDialog(false);
+  }
+
+  const [errorToast, setErrorToast] = useState(false)
+  const [errorToastMsg, setErrorToastMsg] = useState(false)
+  const poptoast = (txt) => {
+    setErrorToast(true)
+    setErrorToastMsg(txt)
+
+    setTimeout(()=>{
+      setErrorToast(false)
+      setErrorToastMsg("")
+    }, 3000)
+  }
+
+  const getLoginInfo = (loginInfo) => {
+    if(loginInfo.code){
+      poptoast(loginInfo.msg)
+      return;
+    }
+
+    wallet.setWalletInfo(loginInfo)
+    walletDialogClose();
+  }
 
   const goPresale = () => {
     history.push("/presale")
@@ -142,7 +175,7 @@ function App({ store: { wallet } }) {
     }
     const { jwt, address } = wallet.info
     setLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    // await new Promise((resolve) => setTimeout(resolve, 1000))
     try {
       const res = await axios({
         url: `${baseUrl}/trades`,
@@ -164,6 +197,7 @@ function App({ store: { wallet } }) {
         setData(list.map(({ created, id, price, product_name, status, tx, nft_id, p_id }) => ({
           id,
           date: created,
+          product_name,
           domain: `${product_name}@dmail.ai`,
           price,
           hash: tx,
@@ -176,29 +210,61 @@ function App({ store: { wallet } }) {
     } catch (error) {
       // console.log(error)      
     }
-    // const random = Math.random()
-    // // console.log(pageIndex, pageSize, random)
+    const random = Math.random()
+    // console.log(pageIndex, pageSize, random)
     // setPageCount(random > 0.8 ? 0 : 13)
-    // setData(random > 0.5 ? [] : testData)
+    setData(testData)
     setLoading(false)
   }, [wallet.info])
 
   const [open, setOpen] = useState(false);
   const [inputErrorIndex, setInputErrorIndex] = useState(0);
-  const receive = (id) => {
+  const receive = useCallback(async (id) => {
     console.log(id)
-    // do something
+    if (!wallet.info || !wallet.info.address) {
+      return
+    }
+    const { jwt, address } = wallet.info
     if (id) {
-      setOpen(false);
+      try {
+        const res = await axios({
+          url: `${baseUrl}/lockdomain`,
+          method: 'post',
+          data: {
+            jwt,
+            // address,
+            address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
+            product_name: id,
+          },
+          // errorTitle: '',
+        })
+        const { code, message, success } = res.data
+        if (!success) {
+          setOpen(false);
+          setSuccessText('Received successfully');
+          presale.triggerListReload()
+        } else {
+          setAlertInfo({
+            title: message,
+            isError: true,
+          })
+        }
+      } catch (error) {
+        setAlertInfo({
+          title: 'Sorry, Receive failed!',
+          isError: true,
+        })
+        // console.log(error)      
+      }
     } else {
       setInputErrorIndex(inputErrorIndex+1)
     }
-  }
+  }, [wallet.info])
 
   useEffect(async () => {
     const walleInfo = wallet.info
     if (!wallet.info) {
-      console.log('should conect wallet')
+      setWalletDialog(true)
     }
   }, [])
 
@@ -211,7 +277,9 @@ function App({ store: { wallet } }) {
             <i></i>
             <span>Orders</span>
           </div>
-          <div className="right">{wallet.info ? wallet.info.address : ''}</div>
+          <div className="right">
+            {wallet.info && wallet.info.address ? <span>{wallet.info.address}</span> : <a onClick={() => setWalletDialog(true)}>Connect wallet</a>}
+          </div>
         </ToolBar>
         <Content>
           <div className="tip">
@@ -221,7 +289,14 @@ function App({ store: { wallet } }) {
           <Table columns={columns} loading={loading} data={data} pageCount={pageCount} fetchData={fetchData} setOpen={setOpen} />
         </Content>
       </Wrapper>
-      <Dialog open={open} setOpen={setOpen} receive={receive} errorIndex={inputErrorIndex} />
+      <WalletDialog
+        open = {walletDialog}
+        dialogClose = {walletDialogClose}
+        getLoginInfo = {getLoginInfo}
+      ></WalletDialog>
+      <Alert info={alertInfo} setInfo={setAlertInfo} />
+      <Success text={successText} setText={setSuccessText} />
+      <ReceiveDialog open={open} setOpen={setOpen} receive={receive} errorIndex={inputErrorIndex} />
     </>
   )
 }

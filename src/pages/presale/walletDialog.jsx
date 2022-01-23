@@ -52,6 +52,7 @@ function WalletDialog(params) {
       setWalletName(wallet)
   
       if(loginInfo && loginInfo.address && wallet == walletName) {
+        loginInfo.walletName = wallet
         walletDialogClose()
         getLoginInfo(loginInfo)
         return {
@@ -80,6 +81,7 @@ function WalletDialog(params) {
           faildCallback(_loginInfo, wallet)
           return;
       }
+      _loginInfo.walletName = wallet
       setLoginInfo(_loginInfo)
       walletDialogClose()
       getLoginInfo(_loginInfo)
@@ -95,7 +97,7 @@ function WalletDialog(params) {
               {
                 walletList.map((wallet, i)=>{
                     return (
-                      <div className="walletItem" onClick={()=>handleWallet(wallet.code)}>
+                      <div className="walletItem" onClick={()=>handleWallet(wallet.code)} key={wallet.name}>
                           <span>{wallet.name}</span>
                           <span className="walletLogo">
                           <img src={wallet.icon}></img>

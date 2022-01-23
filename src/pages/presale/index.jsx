@@ -80,7 +80,7 @@ const Index = ({ store }) => {
       poptoast(loginInfo.msg)
       return;
     }
-    walletStore.info = loginInfo;
+    walletStore.setWalletInfo(loginInfo)
     setLoginInfo(loginInfo)
     walletDialogClose();
   }
