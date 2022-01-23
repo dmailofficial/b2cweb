@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import styled from 'styled-components'
 import { useHistory } from "react-router-dom";
+import { observer, inject } from 'mobx-react';
 
 import Header from '@/components/newheader'
 import { Wrapper, ToolBar, Content } from './css'
@@ -123,22 +124,23 @@ const testData = [
   }
 ]
 
-function App() {
+function App({ store: { wallet } }) {
   const history = useHistory();
   const [data, setData] = useState([])
   const [pageCount, setPageCount] = useState(0)
   const [loading, setLoading] = useState(false)
-  const [address, setAddress] = useState('')
-  const [jwt, setJwt] = useState('')
+  // const [address, setAddress] = useState('')
+  // const [jwt, setJwt] = useState('')
 
   const goPresale = () => {
     history.push("/presale")
   }
 
   const fetchData = useCallback(async ({ pageIndex, pageSize }) => {
-    if (!address) {
+    if (!wallet.info || !wallet.info.address) {
       return
     }
+    const { jwt, address } = wallet.info
     setLoading(true)
     await new Promise((resolve) => setTimeout(resolve, 1000))
     try {
@@ -161,7 +163,7 @@ function App() {
     setPageCount(random > 0.8 ? 0 : 13)
     setData(random > 0.5 ? [] : testData)
     setLoading(false)
-  }, [address, jwt])
+  }, [wallet.info])
 
   // useEffect(() => {
   //   setAddress('0x3dfanlkfjdklafdajfda2fdafda')
@@ -180,22 +182,9 @@ function App() {
   }
 
   useEffect(async () => {
-    // const _wallet = new Wallet('metamask');
-    // const account = await _wallet.requestAccounts();
-    // console.log('account', account)
-    // if (Array.isArray(account) && account.length) {
-    //   const { success, msg, data } = await login(account[0]);
-    //   console.log("login info: ", data)
-    //   if(!success){
-    //     alert("login error!")
-    //     return false;
-    //   }
-    // }
-    if (typeof history.location.state === 'object' && history.location.state) {
-      const { address, jwt, walletName } = history.location.state
-      console.log(walletName, history.location.state)
-      setAddress(address)
-      setJwt(jwt)
+    const walleInfo = wallet.info
+    if (!wallet.info) {
+      console.log('should conect wallet')
     }
   }, [])
 
@@ -208,7 +197,7 @@ function App() {
             <i></i>
             <span>Orders</span>
           </div>
-          <div className="right">{address}</div>
+          <div className="right">{wallet.info ? wallet.info.address : ''}</div>
         </ToolBar>
         <Content>
           <div className="tip">
@@ -223,4 +212,5 @@ function App() {
   )
 }
 
-export default App
+export default inject('store')(observer(App))
+

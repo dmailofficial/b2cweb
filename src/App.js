@@ -1,14 +1,19 @@
 import React from 'react';
-import './static/css/index.css';
-import './App.css';
+import { Provider } from 'mobx-react';
+import rootStore from '@/stores';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from '@/router';
 
+import './static/css/index.css';
+import './App.css';
+
 function App() {
   return (
-    <Router>
-      <Routes />
-    </Router>
+    <Provider store={rootStore}>
+      <Router>
+        <Routes />
+      </Router>
+    </Provider>
   );
 }
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import { observer, inject } from "mobx-react";
+
 import {Mainpannel } from './css'
 import {searchEmail, blockEmail, login} from './request'
 import Dialog from './Dialog'
@@ -149,6 +151,10 @@ class MainpannelComp extends React.Component {
             await new Promise((resolve) => setTimeout(resolve, 600))
             resolve(3 * 24 * 3600)
         })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log('main', prevProps, prevState)
     }
 
 

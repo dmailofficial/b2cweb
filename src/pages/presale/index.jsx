@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useHistory } from "react-router-dom";
+import { observer, inject } from 'mobx-react';
+
 import Header from '@/components/newheader'
 import { OperateBtn, ContentBox ,WalletWrap} from './css'
 import Left from './left'
@@ -14,7 +16,9 @@ import metamask from '@/static/images/presale/metamask@2x.png'
 import plug from '@/static/images/presale/plug-logo@2x.png'
 
 
-const Index = () => {
+const Index = ({ store }) => {
+  const walletStore = store.wallet
+  console.log('wallet.info', walletStore.info ? walletStore.info.address : walletStore.info)
 
   const history = useHistory();
   const [curId, setCurId] = useState(1)
@@ -88,19 +92,29 @@ const Index = () => {
     setAccount(walletAccount)
 
     const _loginInfo = await loginAndGetLoginInfo(walletAccount, _walletInstance, wallet);
+    if (_loginInfo) {
+      _loginInfo.walletName = wallet
+    }
     setLoginInfo(_loginInfo)
     console.log("loginInfo:::-----",_loginInfo)
     walletDialogClose()
+
+    walletStore.setWalletInfo(_loginInfo)
 
     return _loginInfo
   }
 
   const toOwn = () => {
-    if(loginInfo && loginInfo.address){
-      history.push({ pathname : "presale_list" , state : {walletName, loginInfo}})
-    }else{
+    if (walletStore.info) {
+      history.push({ pathname : "presale_list" })
+    } else {
       walletDialogShow()
     }
+    // if(loginInfo && loginInfo.address){
+    //   history.push({ pathname : "presale_list" , state : {walletName, loginInfo}})
+    // }else{
+    //   walletDialogShow()
+    // }
   }
 
   return (
@@ -168,4 +182,4 @@ const Index = () => {
   );
 }
 
-export default Index;
+export default inject('store')(observer(Index))
