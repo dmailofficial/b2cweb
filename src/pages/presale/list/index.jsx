@@ -129,6 +129,7 @@ function App() {
   const [pageCount, setPageCount] = useState(0)
   const [loading, setLoading] = useState(false)
   const [address, setAddress] = useState('')
+  const [jwt, setJwt] = useState('')
 
   const goPresale = () => {
     history.push("/presale")
@@ -145,8 +146,8 @@ function App() {
         url: `${baseUrl}/trades`,
         method: 'post',
         data: {
-          jwt: '',
-          address,
+          jwt,
+          address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
         },
         // errorTitle: '',
       })
@@ -160,7 +161,7 @@ function App() {
     setPageCount(random > 0.8 ? 0 : 13)
     setData(random > 0.5 ? [] : testData)
     setLoading(false)
-  }, [address])
+  }, [address, jwt])
 
   // useEffect(() => {
   //   setAddress('0x3dfanlkfjdklafdajfda2fdafda')
@@ -190,7 +191,12 @@ function App() {
     //     return false;
     //   }
     // }
-    console.log(history.location.state)
+    if (typeof history.location.state === 'object' && history.location.state) {
+      const { address, jwt, walletName } = history.location.state
+      console.log(walletName, history.location.state)
+      setAddress(address)
+      setJwt(jwt)
+    }
   }, [])
 
   return (
