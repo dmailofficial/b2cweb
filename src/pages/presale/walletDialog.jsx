@@ -1,5 +1,6 @@
 import React , {useState} from 'react'
 import Dialog from './Dialog'
+import Toast from './toast'
 import Wallet from '@/wallet/index'
 import {WalletWrap} from './css'
 import { loginAndGetLoginInfo } from './utils'
@@ -21,15 +22,34 @@ const walletList = [
 ]
 
 function WalletDialog(params) {
-    const {open , dialogClose, getLoginInfo} = params;
+    const {open , dialogClose, getLoginInfo, getWalletInstance} = params;
     const [walletName, setWalletName] = useState('')
     const [loginInfo, setLoginInfo] = useState({})
     const [account, setAccount] = useState('')
-    
-
+    const [toast, setToast] = useState(false)
+    const [toastType, setToastType] = useState("warn")
+    const [toastMsg, setToastMsg] = useState("")
+  
     const walletDialogClose = () => {
         dialogClose()
     }
+
+    const poptoast = (txt,type, isInfinite) => {
+        setToast(true)
+        setToastType(type || "warn")
+        setToastMsg(txt)
+
+        setTimeout(()=>{
+            if(isInfinite){return}
+            closePoptoast()
+        }, 3000)
+    }
+    const closePoptoast = () =>{
+        setToast(false)
+        setToastType("warn")
+        setToastMsg('')
+    }
+
 
     const successcallback = async (data) => {
       console.log("success:", data);
@@ -60,10 +80,13 @@ function WalletDialog(params) {
       }
   
       const _walletInstance = new Wallet(wallet);
+      getWalletInstance(_walletInstance)
+      poptoast("Connect processing", "loading", true)
       const walletAccount = await _walletInstance.requestAccounts();
-
+      
       if(walletAccount.code){
           faildCallback(walletAccount, wallet)
+          closePoptoast()
           return;
       }
   
@@ -78,9 +101,11 @@ function WalletDialog(params) {
       );
       if(_loginInfo.code){
           faildCallback(_loginInfo, wallet)
+          closePoptoast()
           return;
       }
       setLoginInfo(_loginInfo)
+      closePoptoast()
       walletDialogClose()
       getLoginInfo(_loginInfo)
       return null
@@ -105,6 +130,12 @@ function WalletDialog(params) {
                 })
               }
             </WalletWrap>
+            <Toast
+                open = {toast}
+                type = {toastType}
+                txt = {toastMsg}
+                noHeader = {true}
+            ></Toast>
         </Dialog>
     )
 }

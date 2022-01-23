@@ -4,9 +4,20 @@ import { ToastWrap} from './css'
 
 import warnIcon from '@/static/images/presale/expired@2x.png'
 import successIcon from '@/static/images/presale/success@3x.png'
+import payingIcon from '@/static/images/presale/paying@3x.png'
+import faildIcon from '@/static/images/presale/faild@3x.png'
+
+const icons = {
+    warn: warnIcon,
+    success: successIcon,
+    faild: faildIcon,
+    loading: payingIcon
+}
 
 function Toast(params) {
     const {open , type, txt} = params;
+
+    
 
     return (
         <Dialog
@@ -14,9 +25,11 @@ function Toast(params) {
             noHeader = {true}
         >
             <ToastWrap>
-                <img src = {
-                    type == "warn" ? warnIcon : successIcon
-                }></img>
+                
+                <img 
+                    src = { icons[type] || warnIcon} 
+                    className = {type == "loading" ? "animate" : ""}
+                ></img>
                 <p>{txt}</p>
             </ToastWrap>
         </Dialog>

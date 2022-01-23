@@ -33,6 +33,7 @@ const Index = ({ store }) => {
   const [errorToast, setErrorToast] = useState(false)
   const [errorToastMsg, setErrorToastMsg] = useState(false)
   const [toown, setToown] = useState(false)
+  const [showName, setShowName] = useState('')
 
   const presaleChange = (item) => {
     let id = item.id;
@@ -80,9 +81,16 @@ const Index = ({ store }) => {
       poptoast(loginInfo.msg)
       return;
     }
-    walletStore.info = loginInfo;
+    setAccount(loginInfo.address)
+    walletStore.setWalletInfo(loginInfo)
     setLoginInfo(loginInfo)
+    let _adr = loginInfo.address;
+    setShowName(_adr.substr(0,6)+"***"+_adr.substr(_adr.length-4, _adr.length))
     walletDialogClose();
+  }
+
+  const getWalletInstance = (instance) => {
+    setWalletInstance(instance)
   }
 
   useEffect(()=>{
@@ -107,7 +115,7 @@ const Index = ({ store }) => {
     <>
       <Header />
       <OperateBtn>
-        <span className="connectBtn" onClick = {walletDialogShow}>Connect wallet</span>
+        <span className="connectBtn" onClick = {walletDialogShow}>{loginInfo?.address ? showName : "Connect wallet"}</span>
         <span className="ownBtn" onClick={toOwn}>Own</span>
       </OperateBtn>
       <ContentBox>
@@ -121,7 +129,7 @@ const Index = ({ store }) => {
                 toNextStep = {toNextStep}
                 wallet = {walletInstance}
                 walletName = {walletName}
-                // handleWallet = {handleWallet}
+                handleWallet = {walletDialogShow}
                 loginInfo = {loginInfo}
                 account = {account}
                 activity = {curItem}
@@ -134,7 +142,7 @@ const Index = ({ store }) => {
                 back = {backStep1}
                 wallet = {walletInstance}
                 walletName = {walletName}
-                // handleWallet = {handleWallet}
+                handleWallet = {walletDialogShow}
                 loginInfo = {loginInfo}
                 account = {account}
                 toOwn = {toOwn}
@@ -146,6 +154,7 @@ const Index = ({ store }) => {
         open = {walletDialog}
         dialogClose = {walletDialogClose}
         getLoginInfo = {getLoginInfo}
+        getWalletInstance = {getWalletInstance}
       ></WalletDialog>
       <Toast
         open = {errorToast}
