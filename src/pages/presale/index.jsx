@@ -13,9 +13,6 @@ import Wallet from '@/wallet/index'
 import WalletDialog from './walletDialog'
 import { loginAndGetLoginInfo } from './utils'
 
-
-
-
 const Index = ({ store }) => {
   const walletStore = store.wallet
   console.log('wallet.info', walletStore.info ? walletStore.info.address : walletStore.info)
@@ -81,10 +78,7 @@ const Index = ({ store }) => {
       poptoast(loginInfo.msg)
       return;
     }
-<<<<<<< HEAD
-=======
     setAccount(loginInfo.address)
->>>>>>> 0dd6cac52b8aae8ef0f3e2cbac99ce4659a758bb
     walletStore.setWalletInfo(loginInfo)
     setLoginInfo(loginInfo)
     let _adr = loginInfo.address;
