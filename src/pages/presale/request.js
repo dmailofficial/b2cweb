@@ -2,6 +2,15 @@ import axios from '@/utils/axios';
 
 const baseUrl = 'https://pay.dmail.ai'
 
+const plugShim = (address, data) => {
+  if(data.address.indexOf('-')>0){
+    data = {
+      ...data,
+      is_verify: true
+    }
+  }
+  return data;
+}
 
 export const searchEmail = async (key) => {
   try {
@@ -23,6 +32,7 @@ export const searchEmail = async (key) => {
 
 // data {address, product_name, jwt}
 export const blockEmail = async (data) => {
+  data = plugShim(data.address, data)
   try {
     return axios({
       url: `${baseUrl}/lockdomain`,
@@ -56,8 +66,9 @@ export const getDetail = async (email) => {
   })
 }
 
-// data {address,jwt}
+// data {address,address,product_name }
 export const getIcpPrice = async (data) => {
+  data = plugShim(data.address, data)
   return axios({
     url: `${baseUrl}/icpprice`,
     data: data,
@@ -109,13 +120,16 @@ export const verifySign = async (address, signature) => {
   })
 }
 
-export const detectTransferIsSuccess = async (hash, address, price, product_name, jwt, network = '3', tron = false) => {
+export const detectTransferIsSuccess = async (hash, address, price, product_name, jwt, network = '56') => {
+  let data = {
+    address, price, product_name, tx: hash, jwt, network
+  }
+  data = plugShim(data.address, data)
+
   return axios({
     url: `${baseUrl}/transfer`,
     method: 'post',
-    data: {
-      address, price, product_name, tx: hash, jwt, network, tron
-    }
+    data: data
     // errorTitle: '',
   }).then((res) => {
     try {

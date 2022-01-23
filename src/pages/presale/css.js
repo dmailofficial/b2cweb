@@ -889,6 +889,10 @@ const ToastWrap = styled.div`
     }
 `
 
+const ConnectWalletBtn = styled.div`
+
+`
+
 export {
     OperateBtn,
     ContentBox,
@@ -897,5 +901,6 @@ export {
     ConfirmPannel,
     WalletWrap,
     StepDialogWrap,
-    ToastWrap
+    ToastWrap,
+    ConnectWalletBtn
 }

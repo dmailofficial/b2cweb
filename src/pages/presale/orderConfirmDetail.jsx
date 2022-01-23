@@ -1,25 +1,52 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 import {ConfirmPannel } from './css'
-import {getDetail, getIcpPrice} from './request'
+import {getDetail, getIcpPrice, detectTransferIsSuccess} from './request'
 import Toast from './toast'
-import BigNumber from "bignumber.js";
 import backArrow from '@/static/images/presale/arrow-left@2x.png'
-import warnIcon from '@/static/images/presale/expired@2x.png'
 import { CompatibleClassCountDown } from '@/components/countDown'
 
 class orderConfirmDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            radioVal: "icp",
+            radioVal: "usdt",
             errorToast: false,
             errorToastMsg: '',
             detail: {},
+            errorToastType: "warn",
+            paying: false,
+            walletSwitching: false
         };
     }
 
     componentWillMount(){
         this.getAddressDetail();
+        if(this.props.walletName == "plug"){
+            this.setState({
+                radioVal: "icp"
+            })
+        }else{
+            this.setState({
+                radioVal: "usdt"
+            })
+        }
+    }
+    
+    shouldComponentUpdate(nextProps, nextState){
+        if(nextProps.walletName == this.props.walletName){
+            return true
+        }
+        if(nextProps.walletName == "plug"){
+            this.setState({
+                radioVal: "icp"
+            })
+        }else{
+            this.setState({
+                radioVal: "usdt"
+            })
+        }
+        return true
     }
 
     handleEndCallback = () => {
@@ -33,13 +60,21 @@ class orderConfirmDetail extends React.Component {
         })
     }
 
-    handleRadioCheck = (type) => {
-        this.setState({radioVal: type})
+    handleRadioCheck = async (type) => {
+        if(this.state.walletSwitching){return;}
+        this.setState({
+            radioVal: type,
+            walletSwitching: true
+        })
         if(type == "icp"){
-            this.props.handleWallet("plug")
+           await this.props.handleWallet("plug")
         }else{
-            this.props.handleWallet("metamask")
+           await this.props.handleWallet("metamask")
         }
+
+        this.setState({
+            walletSwitching: false
+        })
         
     }
 
@@ -47,16 +82,18 @@ class orderConfirmDetail extends React.Component {
         this.props.back();
     }
 
-    poptoast = (txt) => {
+    poptoast = (txt,type) => {
         this.setState({
             errorToast: true,
-            errorToastMsg: txt
+            errorToastMsg: txt,
+            errorToastType: type || "warn"
         })
 
         setTimeout(()=>{
             this.setState({
                 errorToast: false,
-                errorToastMsg: ''
+                errorToastMsg: '',
+                errorToastType: "warn"
             })
         }, 3000)
     }
@@ -75,7 +112,8 @@ class orderConfirmDetail extends React.Component {
         // {address,jwt}
         const { success: isuccess , message, data: idata } = await getIcpPrice({
             address: this.props.loginInfo.address,
-            jwt: this.props.loginInfo.jwt
+            jwt: this.props.loginInfo.jwt,
+            product_name: this.props.email
         })
         if (!success) {
             this.poptoast(message)
@@ -84,34 +122,60 @@ class orderConfirmDetail extends React.Component {
         this.setState({
             detail: {
                 ...this.state.detail,
-                icpPrice: idata.price
+                icpPrice: idata?.price
             }
         })
-
-
-        
-        // const { id, name, price, exp_date, symbal } = data
-        // setcurrentDetail({
-        //   id, name, price, exp_date, symbal
-        // })
     }
     
 
     toPay = async () => {
+        if(this.state.paying || this.state.walletSwitching){return}
+        this.setState({paying: true})
+
         const _wallet = this.props.wallet
         const { id, nonce, signmessage, email } = this.props.loginInfo
-        const balance = await _wallet.getBalanceOf(this.props.account[0])
+        
+        console.log("topay:", signmessage );
+        
+        const balance = await _wallet.getBalanceOf(this.props.account)
         const myAmount = balance.amount;
 
         if (myAmount < +this.state.detail.price) {
             this.poptoast("Confirm your assist is enough!")
             return
         }
+        await _wallet.transfer(0.1, this.paysuccess, this.payfaild)
+        this.setState({paying: false})
         
-        _wallet.transfer(0.1, signmessage)
+    }
+
+    paysuccess = async (from, hash) => {
+        const successMsg = 'Congratulations, you have successfully participated in the DMAIL NFT Domain Account pre-sale!'
+        const _wallet = this.props.wallet
+        const { chainId } = await _wallet.getChainInfo();
+        const { success, msg, data } = await detectTransferIsSuccess(hash, from, this.state.detail.price, this.state.detail.name, this.props.loginInfo.jwt, chainId)
+        if(!success){
+            this.poptoast(msg, 'success')
+            return
+        }
+        this.poptoast(successMsg, 'success')
+        setTimeout(()=>{
+            this.props.toOwn()
+        }, 3000)
+    }
+
+    payfaild = (error) => {
+        const userReject = 'MetaMask Message Signature: User rejected message signature!'
+        if(error.code == 4001){
+            this.poptoast(userReject)
+            return
+        }
+        this.poptoast(error.message || 'Confirm your wallet is properly connected! Confirm your assist is enough!')
+        return
     }
 
     render() {
+        console.log(">>>>>>>>props:", this)
         return (
             <ConfirmPannel>
                 <div className="backBtn" onClick = {this.handleBack}>
@@ -122,7 +186,7 @@ class orderConfirmDetail extends React.Component {
 
                     </div>
                     <div className="orderDetail">
-                        <h3>{this.props.address}</h3>
+                        <h3>{this.props.email}</h3>
                         <p className="tip">Dmail NFT Domain Account is locked, please complete payment </p>
                         <div className = "info">
                             <div className = "item">
@@ -166,7 +230,7 @@ class orderConfirmDetail extends React.Component {
                                 </div>
                             </div>
                             <div className="btnWrap">
-                                <span className="confirmBtn" onClick={this.toPay}>Confirm</span>
+                                <span className="confirmBtn" onClick={this.toPay}>{this.state.walletSwitching ? "Wallet switching" : "Confirm"}</span>
                                 <div className="countDown">
                                     <i></i>
                                     <span><CompatibleClassCountDown endCallback={this.handleEndCallback} correctRequest={this.correctRequest} second={5} min={30} /></span>
@@ -178,7 +242,7 @@ class orderConfirmDetail extends React.Component {
                 </div>
                 <Toast
                     open = {this.state.errorToast}
-                    type = "warn"
+                    type = {this.state.errorToastType}
                     txt = {this.state.errorToastMsg}
                     noHeader = {true}
                 >
