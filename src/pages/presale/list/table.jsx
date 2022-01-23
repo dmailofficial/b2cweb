@@ -9,29 +9,54 @@ import Pagination from './pagination'
 import noDataImg from '../../../static/images/no-data.png'
 
 const statusMap = {
-  1: 'success',
-  2: 'ing',
-  3: 'close',
-}
-
-const operationMap = {
+  0: {
+    class: 'ing',
+    text: 'NFT Uncollected',
+    operationText: 'Receive NFT',
+    operationType: 'primary',
+  },
   1: {
-    text: 'Use Email',
-    type: 'normal',
+    class: 'success',
+    text: 'NFT Issued',
+    operationText: 'Use Email',
+    operationType: 'normal',
   },
   2: {
-    text: 'PENDING',
-    type: 'disabled',
+    class: 'ing',
+    text: 'NFT Issuing',
+    operationText: 'PENDING',
+    operationType: 'disabled',
   },
-  3: {
-    text: 'Receive NFT',
-    type: 'primary',
+  9: {
+    class: 'ing',
+    text: 'To be paid',
+    operationText: 'Payment',
+    operationType: 'ghost',
   },
-  4: {
-    text: 'Payment',
-    type: 'ghost',
-  },
+  // 999: {
+  //   class: 'close',
+  //   text: 'Closed'
+  // },
 }
+
+// const operationMap = {
+//   1: {
+//     text: 'Use Email',
+//     type: 'normal',
+//   },
+//   2: {
+//     text: 'PENDING',
+//     type: 'disabled',
+//   },
+//   3: {
+//     text: 'Receive NFT',
+//     type: 'primary',
+//   },
+//   4: {
+//     text: 'Payment',
+//     type: 'ghost',
+//   },
+// }
 
 const NoData = () => {
   return (
@@ -92,33 +117,35 @@ const Table = (props) => {
           ))}
         </>
       )
-    } else if (['hash', 'owner'].includes(key) && Array.isArray(value)) {
-      return (
-        <>
-          {value.map((item, key) => <p key={key}>{item}</p>)}
-        </>
-      )
+    // } else if (['owner'].includes(key) && Array.isArray(value)) {
+    //   return (
+    //     <>
+    //       {value.map((item, key) => <p key={key}>{item}</p>)}
+    //     </>
+    //   )
     } else if (key === 'operation') {
+      const status = original['status']
+      if (!(status in statusMap)) {
+        return null
+      }
+      const obj = statusMap[status]
       return (
-        <Button type={operationMap[value].type} onClick={onBtnClick(operationMap[value].type)}>{operationMap[value].text}</Button>
+        <Button type={obj.operationType} onClick={onBtnClick(obj.operationType)}>{obj.operationText}</Button>
       )
     } else if (key === 'status') {
-      const aStatusText = original['statusText']
+      const current = statusMap[value]
+      const aStatusText = current ? current.text : '- -'
       return (
         <div className="status">
-          <Circle type={statusMap[value]}></Circle>
+          <Circle type={current ? current.class : ''}></Circle>
           <span>
-            {aStatusText.map((text, key) => (
-              <span key={key}>
-                {text}
-                {key !== aStatusText.length - 1 ? <br /> : null}
-              </span>
-            ))}
+            {aStatusText}
           </span>
         </div>
       )
     }
-    return cell.render('Cell') || '- -'
+    console.log(value)
+    return value || '- -'
   }
 
   // Render the UI for your table

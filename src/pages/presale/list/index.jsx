@@ -56,7 +56,7 @@ const testData = [
     date: '2020/03/24 10:44',
     domain: 'www.google.com',
     price: '9.9USDT',
-    hash: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
+    hash: '0x3dfanlkfjdklafdajfda2fdafda',
     status: '1',
     statusText: ['NFT Issued'],
     number: '#032123',
@@ -70,7 +70,7 @@ const testData = [
     date: '2020/03/24 10:44',
     domain: 'www.google.com',
     price: '9.9USDT',
-    hash: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
+    hash: '0x3dfanlkfjdklafdajfda2fdafda',
     status: '2',
     statusText: ['NFT Issuing'],
     number: '#032123',
@@ -84,7 +84,7 @@ const testData = [
     date: '2020/03/24 10:44',
     domain: 'www.google.com',
     price: '9.9USDT',
-    hash: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
+    hash: '0x3dfanlkfjdklafdajfda2fdafda',
     status: '2',
     statusText: ['NFT Uncollected'],
     number: '#032123',
@@ -98,7 +98,7 @@ const testData = [
     date: '2020/03/24 10:44',
     domain: 'www.google.com',
     price: '9.9USDT',
-    hash: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
+    hash: '0x3dfanlkfjdklafdajfda2fdafda',
     status: '2',
     statusText: ['To be paid', '01:30:00'],
     number: '#032123',
@@ -112,7 +112,7 @@ const testData = [
     date: '2020/03/24 10:44',
     domain: 'www.google.com',
     price: '9.9USDT',
-    hash: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
+    hash: '0x3dfanlkfjdklafdajfda2fdafda',
     status: '3',
     statusText: ['Closed'],
     number: '#032123',
@@ -149,25 +149,39 @@ function App({ store: { wallet } }) {
         method: 'post',
         data: {
           jwt,
+          // address,
           address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
         },
         // errorTitle: '',
       })
       const { code, data, message, success } = res.data
       console.log(res.data)
+      if (res.data && res.data.data) {
+        // const { list, total } = res.data.data
+        const total = 13;
+        const list = res.data.data
+        setPageCount(total || 0)
+        setData(list.map(({ created, id, price, product_name, status, tx, nft_id, p_id }) => ({
+          id,
+          date: created,
+          domain: `${product_name}@dmail.ai`,
+          price,
+          hash: tx,
+          status,
+          number: nft_id,
+          owner: p_id,
+          expirationDate: 'Permanent',
+        })))
+      }
     } catch (error) {
       // console.log(error)      
     }
-    const random = Math.random()
-    // console.log(pageIndex, pageSize, random)
-    setPageCount(random > 0.8 ? 0 : 13)
-    setData(random > 0.5 ? [] : testData)
+    // const random = Math.random()
+    // // console.log(pageIndex, pageSize, random)
+    // setPageCount(random > 0.8 ? 0 : 13)
+    // setData(random > 0.5 ? [] : testData)
     setLoading(false)
   }, [wallet.info])
-
-  // useEffect(() => {
-  //   setAddress('0x3dfanlkfjdklafdajfda2fdafda')
-  // })
 
   const [open, setOpen] = useState(false);
   const [inputErrorIndex, setInputErrorIndex] = useState(0);
