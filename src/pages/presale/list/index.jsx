@@ -298,6 +298,7 @@ function App({ store: { wallet, presale } }) {
         dialogClose = {walletDialogClose}
         getLoginInfo = {getLoginInfo}
         getWalletInstance = {getWalletInstance}
+        walletStore = {wallet}
       ></WalletDialog>
       <Alert info={alertInfo} setInfo={setAlertInfo} />
       <Success text={successText} setText={setSuccessText} />
