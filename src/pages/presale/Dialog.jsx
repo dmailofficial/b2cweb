@@ -16,7 +16,12 @@ const DmailDialog = styled(Dialog)`
                 width: 24px;
                 height: 24px;
                 float: right;
-                vercital-align: middle;
+                cursor: pointer;
+                transition: transform 0.6s ease;
+
+                &:hover {
+                    transform: rotate(180deg);
+                }
             }
             span{
                 display: inline-block;

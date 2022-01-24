@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { useHistory } from "react-router-dom";
 import { observer, inject } from 'mobx-react';
+import { encode, decode } from 'js-base64';
+import Cookies from 'js-cookie'
 
 import Header from '@/components/newheader'
 import { OperateBtn, ContentBox ,WalletWrap} from './css'
@@ -103,6 +105,19 @@ const Index = ({ store }) => {
     console.log("useEffect:",walletStore.info?.address)
     setLoginInfo(walletStore.info)
     formartShowName(walletStore.info?.address)
+
+    // get info from cookie
+    // if (!walletStore.info) {
+    //   const sInfo = Cookies.get('account')
+    //   if (sInfo) {
+    //     try {
+    //       const info = JSON.parse(decode(sInfo))
+    //       info && walletStore.setWalletInfo(info)
+    //     } catch (error) {
+    //       //
+    //     }
+    //   }
+    // }
   }, [])
 
   const toOwn = () => {

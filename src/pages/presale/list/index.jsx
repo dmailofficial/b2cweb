@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import styled from 'styled-components'
 import { useHistory } from "react-router-dom";
 import { observer, inject } from 'mobx-react';
+import { encode, decode } from 'js-base64';
+import Cookies from 'js-cookie'
 
 import Header from '@/components/newheader'
 import { Wrapper, ToolBar, Content } from './css'
@@ -15,7 +17,7 @@ import WalletDialog from '../walletDialog'
 
 const columns = [
   {
-    Header: 'Date',
+    Header: 'Date (UTC)',
     accessor: 'date',
   },
   {
@@ -52,85 +54,10 @@ const columns = [
   },
 ]
 
-const testData = [
-  {
-    date: '2020/03/24 10:44',
-    domain: 'www.google.com',
-    price: '9.9USDT',
-    hash: '0x3dfanlkfjdklafdajfda2fdafda',
-    status: '0',
-    statusText: ['NFT Issued'],
-    product_name: 'xxxx',
-    number: '#032123',
-    owner: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
-    expirationDate: 'Permanent',
-    // operation: 'Use Email',
-    operation: '1',
-    // operationText: ''
-  },
-  {
-    date: '2020/03/24 10:44',
-    domain: 'www.google.com',
-    price: '9.9USDT',
-    hash: '0x3dfanlkfjdklafdajfda2fdafda',
-    status: '1',
-    statusText: ['NFT Issuing'],
-    product_name: 'xxxx',
-    number: '#032123',
-    owner: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
-    expirationDate: 'Permanent',
-    // operation: 'Use Email',
-    operation: '2',
-    // operationText: ''
-  },
-  {
-    date: '2020/03/24 10:44',
-    domain: 'www.google.com',
-    price: '9.9USDT',
-    hash: '0x3dfanlkfjdklafdajfda2fdafda',
-    status: '2',
-    statusText: ['NFT Uncollected'],
-    product_name: 'xxxx',
-    number: '#032123',
-    owner: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
-    expirationDate: 'Permanent',
-    // operation: 'Use Email',
-    operation: '3',
-    // operationText: ''
-  },
-  {
-    date: '2020/03/24 10:44',
-    domain: 'www.google.com',
-    price: '9.9USDT',
-    hash: '0x3dfanlkfjdklafdajfda2fdafda',
-    status: '9',
-    statusText: ['To be paid', '01:30:00'],
-    product_name: 'xxxx',
-    number: '#032123',
-    owner: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
-    expirationDate: 'Permanent',
-    // operation: 'Use Email',
-    operation: '3',
-    // operationText: ''
-  },
-  {
-    date: '2020/03/24 10:44',
-    domain: 'www.google.com',
-    price: '9.9USDT',
-    hash: '0x3dfanlkfjdklafdajfda2fdafda',
-    status: '3',
-    statusText: ['Closed'],
-    product_name: 'xxxx',
-    number: '#032123',
-    owner: ['0x3dfanlkfjdkla', 'fdajfda2fdafda'],
-    expirationDate: 'Permanent',
-    // operation: 'Use Email',
-    operation: '4',
-    // operationText: ''
-  }
-]
-
 function App({ store: { wallet, presale } }) {
+  const address = wallet.info && wallet.info.address || ''
+  const filterAddress = typeof address === 'string' && address.length ?  address.substr(0,6)+"***"+address.substr(address.length-4, address.length) : ''
+
   const history = useHistory();
   const [data, setData] = useState([])
   const [pageCount, setPageCount] = useState(0)
@@ -191,13 +118,10 @@ function App({ store: { wallet, presale } }) {
         },
         // errorTitle: '',
       })
-      const { code, data, message, success } = res.data
-      console.log(res.data)
+      const { code, data, totalPages, message, success } = res.data
       if (res.data && res.data.data) {
-        // const { list, total } = res.data.data
-        const total = 13;
         const list = res.data.data
-        setPageCount(total || 0)
+        setPageCount(totalPages || 0)
         setData(list.map(({ created, id, price, product_name, status, tx, nft_id, p_id }) => ({
           id,
           date: created,
@@ -215,9 +139,6 @@ function App({ store: { wallet, presale } }) {
       // console.log(error)      
     }
     const random = Math.random()
-    // console.log(pageIndex, pageSize, random)
-    // setPageCount(random > 0.8 ? 0 : 13)
-    // setData(testData)
     setLoading(false)
   }, [wallet.info])
 
@@ -232,6 +153,7 @@ function App({ store: { wallet, presale } }) {
     if (id) {
       try {
         const res = await axios({
+          // TODO: the url is wrong
           url: `${baseUrl}/lockdomain`,
           method: 'post',
           data: {
@@ -266,9 +188,18 @@ function App({ store: { wallet, presale } }) {
   }, [wallet.info])
 
   useEffect(async () => {
-    const walleInfo = wallet.info
     if (!wallet.info) {
-      setWalletDialog(true)
+      const sInfo = Cookies.get('account')
+      if (!sInfo) {
+        setWalletDialog(true)
+      } else {
+        try {
+          const info = JSON.parse(decode(sInfo))
+          info && wallet.setWalletInfo(info)
+        } catch (error) {
+          //
+        }
+      }
     }
   }, [])
 
@@ -282,7 +213,7 @@ function App({ store: { wallet, presale } }) {
             <span>Orders</span>
           </div>
           <div className="right">
-            {wallet.info && wallet.info.address ? <span>{wallet.info.address}</span> : <a onClick={() => setWalletDialog(true)}>Connect wallet</a>}
+            <a onClick={() => setWalletDialog(true)}>{filterAddress  || 'Connect wallet'}</a>
           </div>
         </ToolBar>
         <Content>
