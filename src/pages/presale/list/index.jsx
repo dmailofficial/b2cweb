@@ -138,12 +138,16 @@ function App({ store: { wallet, presale } }) {
   const [alertInfo, setAlertInfo] = useState(null)
   const [successText, setSuccessText] = useState('')
 
+  const [walletInstance, setWalletInstance] = useState({})
   const [walletDialog, setWalletDialog] = useState(false)
   const walletDialogClose = () => {
     setWalletDialog(false);
   }
 
   const [errorToast, setErrorToast] = useState(false)
+  const getWalletInstance = (instance) => {
+    setWalletInstance(instance)
+  }
   const [errorToastMsg, setErrorToastMsg] = useState(false)
   const poptoast = (txt) => {
     setErrorToast(true)
@@ -182,8 +186,8 @@ function App({ store: { wallet, presale } }) {
         method: 'post',
         data: {
           jwt,
-          // address,
-          address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
+          address,
+          // address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
         },
         // errorTitle: '',
       })
@@ -232,8 +236,8 @@ function App({ store: { wallet, presale } }) {
           method: 'post',
           data: {
             jwt,
-            // address,
-            address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
+            address,
+            // address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
             product_name: id,
           },
           // errorTitle: '',
@@ -293,6 +297,7 @@ function App({ store: { wallet, presale } }) {
         open = {walletDialog}
         dialogClose = {walletDialogClose}
         getLoginInfo = {getLoginInfo}
+        getWalletInstance = {getWalletInstance}
       ></WalletDialog>
       <Alert info={alertInfo} setInfo={setAlertInfo} />
       <Success text={successText} setText={setSuccessText} />
