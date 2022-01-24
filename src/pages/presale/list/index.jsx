@@ -217,7 +217,7 @@ function App({ store: { wallet, presale } }) {
     const random = Math.random()
     // console.log(pageIndex, pageSize, random)
     // setPageCount(random > 0.8 ? 0 : 13)
-    setData(testData)
+    // setData(testData)
     setLoading(false)
   }, [wallet.info])
 
