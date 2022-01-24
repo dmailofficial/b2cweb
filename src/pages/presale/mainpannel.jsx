@@ -7,6 +7,8 @@ import Dialog from './Dialog'
 import StepDialog from './stepDialog'
 import Toast from './toast'
 import logo from '@/static/images/presale/dmail-logo@3x.png'
+import axios from '@/utils/axios';
+import { baseUrl } from './utils'
 
 import { CompatibleClassCountDown } from '@/components/countDown'
 import inprogressIcon from '@/static/images/presale/inprogress@2x.png'
@@ -29,6 +31,7 @@ class MainpannelComp extends React.Component {
             errorToastMsg: "",
             emailchecksuccess: false,
             emailData: {},
+            countDownSeconds: 0,
             
         };
     }
@@ -157,15 +160,30 @@ class MainpannelComp extends React.Component {
 
     correctRequest = () => {
         return new Promise(async(resolve) => {
-            await new Promise((resolve) => setTimeout(resolve, 600))
-            resolve(3 * 24 * 3600)
+            try {
+                const res = await axios({
+                    url: `${baseUrl}/project/timer`,
+                    method: 'get',
+                })
+                const { code, ttl, message, success } = res.data
+                if (success) {
+                    resolve(['string', 'number'].includes(typeof ttl) ? +ttl : 0)
+                } else {
+                    resolve(0)
+                }
+            } catch (error) {
+                  
+            }
         })
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        console.log('main', prevProps, prevState)
+    componentDidMount() {
+        this.correctRequest().then((countDownSeconds) => {
+            countDownSeconds > 0 && this.setState({
+                countDownSeconds
+            });
+        })
     }
-
 
     render() {
         return (
@@ -174,11 +192,11 @@ class MainpannelComp extends React.Component {
                     <div className="triangle"></div>
                     <img src={this.state.status == 1 ? inprogressIcon : this.state.status == 2 ? comingIcon : closedIcon}></img>
                 </div>
-                {this.state.status == 1 ? (
+                {this.state.status == 1 && this.state.countDownSeconds > 0 ? (
                     <div className="count-down">
                         <i></i>
                         <span>
-                            <CompatibleClassCountDown endCallback={this.handleEndCallback} correctGap={10} correctRequest={this.correctRequest} hour={3 * 24} />
+                            <CompatibleClassCountDown endCallback={this.handleEndCallback} correctRequest={this.correctRequest} second={this.state.countDownSeconds} />
                         </span>
                     </div>
                 ): null}
