@@ -71,18 +71,19 @@ function WalletDialog(params) {
           wallet = walletName ? walletName : "metamask";
       }
       // setWalletName(wallet)
-      walletStore.setWalletName(wallet)
-      let _address = walletStore.info?.address;
-      console.log("walletStore.info", _address)
+      const _walletInstance = new Wallet(wallet);
 
+            getWalletInstance(_walletInstance)
+            walletStore.setWalletName(wallet)
+           
+      let _address = walletStore.info?.address;
+      
       if(_address && wallet == walletName) {
         walletDialogClose()
         getLoginInfo(walletStore.info)
         return 
       }
-  
-      const _walletInstance = new Wallet(wallet);
-      getWalletInstance(_walletInstance)
+      
       poptoast("Connect processing", "loading", true)
       const walletAccount = await _walletInstance.requestAccounts();
       
@@ -91,28 +92,40 @@ function WalletDialog(params) {
           closePoptoast()
           return;
       }
-  
       setAccount(walletAccount)
-  
-      const _loginInfo = await loginAndGetLoginInfo(
-          walletAccount, 
-          _walletInstance, 
-          wallet, 
-          successcallback, 
-          faildCallback
-      );
-      if(_loginInfo.code){
-          faildCallback(_loginInfo, wallet)
-          closePoptoast()
-          return;
+      accountChangeHandle(walletAccount)
+
+      _walletInstance.listenerAccountsChanged(accountChangeHandle)
+
+      async function accountChangeHandle(address){
+        console.log("accountChangeHandle::_loginInfo:111:", address)
+        let _loginInfo = await loginAndGetLoginInfo(
+            address, 
+            _walletInstance,
+            wallet,
+            successcallback,
+            faildCallback
+        );
+        console.log("accountChangeHandle::_loginInfo::222222", _loginInfo)
+        if(_loginInfo.code){
+            faildCallback(_loginInfo, wallet)
+            closePoptoast()
+            return;
+        }
+        console.log("accountChangeHandle::_loginInfo::3333333", _loginInfo, wallet)
+        _loginInfo = {
+          ..._loginInfo,
+          walletName : wallet
+        }
+        closePoptoast()
+        walletDialogClose()
+        walletStore.setWalletInfo(_loginInfo)
+        getLoginInfo(_loginInfo)
+        return
       }
-      _loginInfo.walletName = wallet
-      closePoptoast()
-      walletDialogClose()
-      walletStore.setWalletInfo(_loginInfo)
-      getLoginInfo(_loginInfo)
-      return
     }
+
+    
 
     useEffect(()=>{
       setWalletName(walletStore?.walletName)

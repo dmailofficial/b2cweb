@@ -75,10 +75,11 @@ class MetaMaskWallet {
             try {
             // https://docs.metamask.io/guide/accessing-accounts.html
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            // this.listenerDisconnect();
+            this.listenerAccountsChanged();
             return accounts[0]
             
             } catch (error) {
+              console.error("metamask requestAccounts error:::", error)
                 return {
                     code: 1,
                     msg: 'User denied account access!'
@@ -93,9 +94,10 @@ class MetaMaskWallet {
         }
     }
 
-    listenerAccountsChanged = () => {
-        window.ethereum.on('accountsChanged', (accounts) => {
+    listenerAccountsChanged = (handleCallback) => {
+        window.ethereum.on('accountsChanged', async (accounts) => {
             console.log("metamask accountsChanged !", accounts)
+            handleCallback && await handleCallback(accounts[0])
           });
     }
 

@@ -63,7 +63,16 @@ class MainpannelComp extends React.Component {
         }else if(!value.trim() || reg.test(value)){
             this.resetErrorStatus();
         }
-        this.setState({email:value})
+        this.setState({
+            email:value,
+            emailchecksuccess: false
+        })
+    }
+
+    onFocusHandle = () => {
+        this.setState({
+            emailchecksuccess: false
+        })
     }
 
     onKeyDownchange = (e)=>{
@@ -191,7 +200,13 @@ class MainpannelComp extends React.Component {
                     <div className="formWrap">
                         <div className="inputWrap">
                             <span></span>
-                            <input  value={this.state.email} onInput={this.onInput} onKeyDown={this.onKeyDownchange} placeholder="Check the NFT domain account of your choice"></input>
+                            <input  
+                                value={this.state.email} 
+                                onInput={this.onInput} 
+                                onFocus = {this.onFocusHandle}
+                                onKeyDown={this.onKeyDownchange} 
+                                placeholder="Check the NFT domain account of your choice"
+                            ></input>
                             <span className="searchBtn" onClick={this.onSearch}>Search</span>
                             <div className={`email-suffix ${this.state.email.length ? 'show' : ''}`}>
                                 <p>{this.state.email}</p>
@@ -249,7 +264,7 @@ class MainpannelComp extends React.Component {
                             <h3>Current opening progress</h3>
                         </div>
                         <p><span></span>1-3 bits will open in NFT domain accounts auction;</p>
-                        <p><span></span>4-7 bits partially open.</p>
+                        <p className='active'><span></span>4-7 bits partially open.<img src={successIcon} ></img></p>
                         <p><span></span>8 bits and above, will open after mainnet releases.</p>
                     </div>
                 </div>
