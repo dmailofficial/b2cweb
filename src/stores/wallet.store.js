@@ -3,6 +3,7 @@ import { makeAutoObservable, observable, computed, toJS } from 'mobx';
 
 export default class WalletStore {
   info = null
+  walletName = null
 
   constructor() {
     makeAutoObservable(this)
@@ -10,5 +11,8 @@ export default class WalletStore {
 
   setWalletInfo (info) {
     this.info = info
+  }
+  setWalletName (wallet){
+    this.walletName = wallet
   }
 }

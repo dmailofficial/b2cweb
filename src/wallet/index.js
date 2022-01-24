@@ -8,11 +8,12 @@ class Wallet {
 
     init = (props)=>{
         console.log("init::", props)
-        if(props == "plug"){
-            return PlugWallet
-        }else{
-            return MetaMaskWallet
+        const wallets = {
+            plug: PlugWallet,
+            metamask: MetaMaskWallet
         }
+        
+        return wallets[props] || MetaMaskWallet
     }
 }
 

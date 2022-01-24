@@ -59,7 +59,10 @@ const Index = ({ store }) => {
     }
   }
 
-  const walletDialogShow = () => {
+  const walletDialogShow = (operate) => {
+    if(operate == "search" && walletStore.info?.address){
+      return
+    }
     setWalletDialog(true);
   }
 
@@ -73,6 +76,12 @@ const Index = ({ store }) => {
     }, 3000)
   }
 
+  const formartShowName = (address = "") => {
+    let _name = address.substr(0,6)+"***"+address.substr(address.length-4, address.length)
+    console.log("formartShowName:", _name)
+    setShowName(_name)
+  }
+
   const getLoginInfo = (loginInfo) => {
     if(loginInfo.code){
       poptoast(loginInfo.msg)
@@ -81,8 +90,8 @@ const Index = ({ store }) => {
     setAccount(loginInfo.address)
     walletStore.setWalletInfo(loginInfo)
     setLoginInfo(loginInfo)
-    let _adr = loginInfo.address;
-    setShowName(_adr.substr(0,6)+"***"+_adr.substr(_adr.length-4, _adr.length))
+    
+    formartShowName(loginInfo.address);
     walletDialogClose();
   }
 
@@ -91,8 +100,10 @@ const Index = ({ store }) => {
   }
 
   useEffect(()=>{
-    walletDialogClose()
-  }, [loginInfo])
+    console.log("useEffect:",walletStore.info?.address)
+    setLoginInfo(walletStore.info)
+    formartShowName(walletStore.info?.address)
+  }, [])
 
   const toOwn = () => {
     if (walletStore.info) {
@@ -113,7 +124,7 @@ const Index = ({ store }) => {
       <Header />
       <OperateBtn>
         <span className="connectBtn" onClick = {walletDialogShow}>{loginInfo?.address ? showName : "Connect wallet"}</span>
-        <span className="ownBtn" onClick={toOwn}>Own</span>
+        <span className="ownBtn" onClick={toOwn}>ORDERS</span>
       </OperateBtn>
       <ContentBox>
           <div className="leftWrap">
@@ -152,6 +163,7 @@ const Index = ({ store }) => {
         dialogClose = {walletDialogClose}
         getLoginInfo = {getLoginInfo}
         getWalletInstance = {getWalletInstance}
+        walletStore = {walletStore}
       ></WalletDialog>
       <Toast
         open = {errorToast}

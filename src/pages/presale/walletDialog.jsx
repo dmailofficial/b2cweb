@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React , {useState, useEffect} from 'react'
 import Dialog from './Dialog'
 import Toast from './toast'
 import Wallet from '@/wallet/index'
@@ -22,7 +22,8 @@ const walletList = [
 ]
 
 function WalletDialog(params) {
-    const {open , dialogClose, getLoginInfo, getWalletInstance} = params;
+  console.log(params)
+    const {open , dialogClose, getLoginInfo, getWalletInstance, walletStore} = params;
     const [walletName, setWalletName] = useState('')
     const [loginInfo, setLoginInfo] = useState({})
     const [account, setAccount] = useState('')
@@ -69,15 +70,15 @@ function WalletDialog(params) {
       if(!wallet){
           wallet = walletName ? walletName : "metamask";
       }
-      setWalletName(wallet)
-  
-      if(loginInfo && loginInfo.address && wallet == walletName) {
-        loginInfo.walletName = wallet
+      // setWalletName(wallet)
+      walletStore.setWalletName(wallet)
+      let _address = walletStore.info?.address;
+      console.log("walletStore.info", _address)
+
+      if(_address && wallet == walletName) {
         walletDialogClose()
-        getLoginInfo(loginInfo)
-        return {
-          ...loginInfo
-        }
+        getLoginInfo(walletStore.info)
+        return 
       }
   
       const _walletInstance = new Wallet(wallet);
@@ -106,17 +107,23 @@ function WalletDialog(params) {
           return;
       }
       _loginInfo.walletName = wallet
-      setLoginInfo(_loginInfo)
       closePoptoast()
       walletDialogClose()
+      walletStore.setWalletInfo(_loginInfo)
       getLoginInfo(_loginInfo)
-      return null
+      return
     }
+
+    useEffect(()=>{
+      setWalletName(walletStore?.walletName)
+    },[open])
     
     return (
         <Dialog
             open = { open }
+            title ={"Connect to a wallet"}
             dialogClose = { walletDialogClose }
+            maxWidth={"xs"}
         >
             <WalletWrap>
               {

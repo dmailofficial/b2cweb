@@ -98,23 +98,19 @@ class MainpannelComp extends React.Component {
         if (!this.state.email.trim().length || this.state.errorShow || this.state.setsearching) {
             return
         }
-        const _loginInfo = await this.props.handleWallet()
+        const _loginInfo = await this.props.handleWallet("search")
         console.log(this.props.wallet)
         
         this.setState({setsearching:true})
         const { code, success, msg, data } = await searchEmail(this.state.email)
 
         this.setState({setsearching:false})
-        if (code === 90) {
+        if (!success) {
             this.setState({
                 errorShow: true,
                 formatError: false,
                 occupError: true
             })
-            return
-        }
-        if (!success) {
-            this.poptoast(msg)
             return
         } else if (!data || !data.name) {
             this.poptoast('something is error')
@@ -127,6 +123,10 @@ class MainpannelComp extends React.Component {
     }
     
     handleLock = async()=>{
+        if(!this.props.loginInfo?.address){
+            this.props.handleWallet("search")
+            return
+        }
         let params = {
             address: this.props.loginInfo.address,
             product_name: this.state.email,
@@ -165,14 +165,14 @@ class MainpannelComp extends React.Component {
                     <div className="triangle"></div>
                     <img src={this.state.status == 1 ? inprogressIcon : this.state.status == 2 ? comingIcon : closedIcon}></img>
                 </div>
-                {this.state.status !== 2 ? null : (
+                {this.state.status == 1 ? (
                     <div className="count-down">
                         <i></i>
                         <span>
                             <CompatibleClassCountDown endCallback={this.handleEndCallback} correctGap={10} correctRequest={this.correctRequest} hour={3 * 24} />
                         </span>
                     </div>
-                )}
+                ): null}
                 <div className="bref">
                     <img src={logo}></img>
                     <h2>{this.props.activity.name}</h2>

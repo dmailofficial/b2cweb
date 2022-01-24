@@ -46,20 +46,24 @@ const ContentBox = styled.div`
     .leftWrap{
         width: 374px;
         float: left;
-        height: calc(100vh - 67px - 95px - 38px);
+        height: calc(100vh - 67px - 95px - 19px);
         background: #252527;
         border-radius: 6px 0px 0px 6px;
         overflow-y: scroll;
+        overflow: -moz-scrollbars-none;
+        -ms-overflow-style: none;
     }
-    .leftWrap { overflow: -moz-scrollbars-none; }
-    .leftWrap { -ms-overflow-style: none; }
     .leftWrap::-webkit-scrollbar { width: 0 !important }
     .main{
         margin-left: 374px;
-        height: calc(100vh - 67px - 95px - 38px);
-        padding: 24px;
+        height: calc(100vh - 67px - 95px - 18px);
+        padding: 24px 24px 0 24px;
         box-sizing: border-box;
+        overflow-y: scroll;
+        overflow: -moz-scrollbars-none;
+        -ms-overflow-style: none;
     }
+    .main::-webkit-scrollbar { width: 0 !important }
 `
 
 const Left = styled.div`
@@ -161,7 +165,7 @@ const Left = styled.div`
 `
 
 const Mainpannel = styled.div`
-    height: calc(100vh - 67px - 95px - 38px - 48px);
+    min-height: calc(100vh - 67px - 95px - 38px - 28px);
     border-radius: 6px;
     background: #252527;
     border-radius: 6px;
