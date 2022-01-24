@@ -22,7 +22,7 @@ const Index = ({ store }) => {
   const history = useHistory();
   const [curId, setCurId] = useState(1)
   const [curItem, setCurItem] = useState({})
-  const [step, setStep] = useState(2)
+  const [step, setStep] = useState(1)
   const [walletDialog, setWalletDialog] = useState(false)
   const [email, setEmail] = useState("")
   const [walletInstance, setWalletInstance] = useState({})
