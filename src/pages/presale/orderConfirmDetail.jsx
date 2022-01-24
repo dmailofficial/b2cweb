@@ -7,7 +7,8 @@ import backArrow from '@/static/images/presale/arrow-left@2x.png'
 import icpIcon from '@/static/images/presale/ICP@3x.png'
 import usdtIcon from '@/static/images/presale/USDT@3x.png'
 import { CompatibleClassCountDown } from '@/components/countDown'
-
+import axios from '@/utils/axios';
+import { baseUrl } from './utils'
 class orderConfirmDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -18,7 +19,8 @@ class orderConfirmDetail extends React.Component {
             detail: {},
             errorToastType: "warn",
             paying: false,
-            walletSwitching: false
+            walletSwitching: false,
+            countDownSeconds: 0,
         };
     }
 
@@ -204,6 +206,34 @@ class orderConfirmDetail extends React.Component {
         return
     }
 
+    correctRequest = () => {
+        return new Promise(async(resolve) => {
+            try {
+                const res = await axios({
+                    // TODO: xxxxxxxxxxx need to replace
+                    url: `${baseUrl}/timer/${this.state.xxxxxxxxxxx}`,
+                    method: 'get',
+                })
+                const { code, ttl, message, success } = res.data
+                if (success) {
+                    resolve(['string', 'number'].includes(typeof ttl) ? +ttl : 0)
+                } else {
+                    resolve(0)
+                }
+            } catch (error) {
+                  
+            }
+        })
+    }
+
+    componentDidMount() {
+        this.correctRequest().then((countDownSeconds) => {
+            countDownSeconds > 0 && this.setState({
+                countDownSeconds
+            });
+        })
+    }
+
     render() {
         return (
             <ConfirmPannel>
@@ -260,10 +290,13 @@ class orderConfirmDetail extends React.Component {
                             </div>
                             <div className="btnWrap">
                                 <span className="confirmBtn" onClick={this.toPay}>{this.state.walletSwitching ? "Wallet switching" : "Confirm"}</span>
-                                <div className="countDown">
-                                    <i></i>
-                                    <span><CompatibleClassCountDown endCallback={this.handleEndCallback} correctRequest={this.correctRequest} second={5} min={30} /></span>
-                                </div>
+                                {this.state.countDownSeconds > 0 ? (
+                                    <div className="countDown">
+                                        <i></i>
+                                        <span><CompatibleClassCountDown endCallback={this.handleEndCallback} correctRequest={this.correctRequest} second={this.state.countDownSeconds} /></span>
+                                    </div>
+                                ) : null}
+                                
                             </div>
                             <p className="notice">Please claim your NFT domain account on the orders when the payment is done.</p>
                         </div>
