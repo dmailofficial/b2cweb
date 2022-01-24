@@ -55,9 +55,10 @@ class PlugWallet {
         return null;
     }
 
-    listenerAccountsChanged = () => {
-      return null;
-    }
+    listenerAccountsChanged = (handleCallback) => {
+      handleCallback && handleCallback() 
+      
+  }
 
     getBalanceOf = async (address) => {
         const result = await window.ic.plug.requestBalance();
@@ -78,12 +79,15 @@ class PlugWallet {
     }
 
     transfer = async (price, successcallback, failedcallback) => {
+      console.log("plug wallet transfer....")
       const chainInfo = await this.getChainInfo();
       const { toAddress } = chainInfo
       try {
+        console.log("plug wallet transfer....:", price)
         const result = await window.ic.plug.requestTransfer({
           to: toAddress,
-          amount: 4000000 * price,
+          // amount: 4000000 * price,
+          amount: 100000000 * price,
           // opts: {
           //   fee: '',
           //   memo,

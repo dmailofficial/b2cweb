@@ -8,7 +8,7 @@ export const loginAndGetLoginInfo = async (account, wallInstance, walletName, su
     let loginInfo = null;
 
     if(!success){
-      console.error("login error!");
+      // console.error("login error!");
       faildcallback && faildcallback(msg);
       return false;
     }

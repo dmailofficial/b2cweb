@@ -24,7 +24,7 @@ class orderConfirmDetail extends React.Component {
 
     componentWillMount(){
         this.getAddressDetail();
-        if(this.props.walletName == "plug"){
+        if(this.props.walletStore.walletName == "plug"){
             this.setState({
                 radioVal: "icp"
             })
@@ -36,10 +36,10 @@ class orderConfirmDetail extends React.Component {
     }
     
     shouldComponentUpdate(nextProps, nextState){
-        if(nextProps.walletName == this.props.walletName){
+        if(nextProps.walletStore.walletName == this.props.walletStore.walletName){
             return true
         }
-        if(nextProps.walletName == "plug"){
+        if(nextProps.walletStore.walletName == "plug"){
             this.setState({
                 radioVal: "icp"
             })
@@ -63,7 +63,8 @@ class orderConfirmDetail extends React.Component {
     }
 
     handleRadioCheck = async (type) => {
-        if(this.state.walletSwitching){return;}
+        return;
+        if(this.state.walletSwitching || this.state.radioVal != type){return;}
         this.setState({
             radioVal: type,
             walletSwitching: true
@@ -141,16 +142,29 @@ class orderConfirmDetail extends React.Component {
 
         const _wallet = this.props.wallet
         // const { id, nonce, signmessage, email } = this.props.loginInfo
-        
+        if(!_wallet.getBalanceOf){
+            this.props.handleWallet();
+        }
         const balance = await _wallet.getBalanceOf(this.props.account)
         const myAmount = balance.amount;
+        let curPrice = 0;
+        if(this.props.walletStore.walletName == "plug"){
+            console.log("to pay plug::", this.props.walletStore.walletName, this.state.detail.icpPrice)
+            curPrice = this.state.detail.icpPrice
+        }else{
+            curPrice = this.state.detail.price
+        }
+        
 
-        if (myAmount < +this.state.detail.price) {
+        if (myAmount < +curPrice) {
             this.closePoptoast();
             this.poptoast("Confirm your assist is enough!")
             return
         }
-        await _wallet.transfer(0.1, this.paysuccess, this.payfaild)
+        
+        console.log("to pay xxxxxx::", this.props.walletStore.walletName, curPrice)
+
+        await _wallet.transfer(curPrice, this.paysuccess, this.payfaild)
         this.setState({paying: false})
         
     }
@@ -160,7 +174,13 @@ class orderConfirmDetail extends React.Component {
         const successMsg = 'Payment successful'
         const _wallet = this.props.wallet
         const { chainId } = await _wallet.getChainInfo();
-        const { success, msg, data } = await detectTransferIsSuccess(hash, from, this.state.detail.price, this.state.detail.name, this.props.loginInfo.jwt, chainId)
+        let curPrice = 0;
+        if(this.props.walletStore.walletName == "plug"){
+            curPrice = this.state.detail.icpPrice
+        }else{
+            curPrice = this.state.detail.price
+        }
+        const { success, msg, data } = await detectTransferIsSuccess(hash, from, curPrice, this.state.detail.name, this.props.loginInfo.jwt, chainId)
         if(!success){
             this.poptoast(msg, 'success')
             return
@@ -193,7 +213,7 @@ class orderConfirmDetail extends React.Component {
 
                     </div>
                     <div className="orderDetail">
-                        <h3>{this.props.email}</h3>
+                        <h3>{this.props.email}@dmail.ai</h3>
                         <p className="tip">Dmail NFT Domain Account is locked, please complete payment </p>
                         <div className = "info">
                             <div className = "item">
@@ -209,7 +229,7 @@ class orderConfirmDetail extends React.Component {
                                 <div className="valueWrap">
                                     <div className="radios">
                                         <div 
-                                            className={this.state.radioVal == "icp" ? "radio checked" : "radio"}
+                                            className={this.state.radioVal == "icp" ? "radio checked" : "radio disabled"}
                                             onClick={()=>{this.handleRadioCheck("icp")}}
                                         >
                                             <span className="raInput"><span></span></span>
@@ -218,7 +238,7 @@ class orderConfirmDetail extends React.Component {
                                         </div>
 
                                         <div 
-                                            className={this.state.radioVal == "usdt" ? "radio checked" : "radio"}
+                                            className={this.state.radioVal == "usdt" ? "radio checked" : "radio disabled"}
                                             onClick={()=>{this.handleRadioCheck("usdt")}}
                                         >
                                             <span className="raInput"><span></span></span>

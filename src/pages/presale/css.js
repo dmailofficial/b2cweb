@@ -562,6 +562,16 @@ const Mainpannel = styled.div`
                     margin-right: 8px;
                 }
             }
+            p.active{
+                color: #fff;
+                img{
+                    width: 14px;
+                    height: 14px; 
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 10px;
+                }
+            }
         }
     }
     .con_footer{
@@ -741,6 +751,9 @@ const ConfirmPannel = styled.div`
                         .raLabel{
                             color: #fff;
                         }
+                    }
+                    .radio.disabled{
+                        cursor: not-allowed;
                     }
                 }
                 .btnWrap{

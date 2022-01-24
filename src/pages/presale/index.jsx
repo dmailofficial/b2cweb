@@ -23,7 +23,6 @@ const Index = ({ store }) => {
   const [step, setStep] = useState(1)
   const [walletDialog, setWalletDialog] = useState(false)
   const [email, setEmail] = useState("")
-  const [walletName, setWalletName] = useState('')
   const [walletInstance, setWalletInstance] = useState({})
   const [loginInfo, setLoginInfo] = useState({})
   const [account, setAccount] = useState('')
@@ -123,7 +122,7 @@ const Index = ({ store }) => {
     <>
       <Header />
       <OperateBtn>
-        <span className="connectBtn" onClick = {walletDialogShow}>{loginInfo?.address ? showName : "Connect wallet"}</span>
+        <span className="connectBtn" onClick = {step == 1 ? walletDialogShow : null}>{loginInfo?.address ? showName : "Connect wallet"}</span>
         <span className="ownBtn" onClick={toOwn}>ORDERS</span>
       </OperateBtn>
       <ContentBox>
@@ -136,11 +135,11 @@ const Index = ({ store }) => {
                 curId = {curId}
                 toNextStep = {toNextStep}
                 wallet = {walletInstance}
-                walletName = {walletName}
                 handleWallet = {walletDialogShow}
                 loginInfo = {loginInfo}
                 account = {account}
                 activity = {curItem}
+                walletStore = {walletStore}
               ></Main> : null
             }
             {step == 2 ?
@@ -149,11 +148,11 @@ const Index = ({ store }) => {
                 email = {email}
                 back = {backStep1}
                 wallet = {walletInstance}
-                walletName = {walletName}
                 handleWallet = {walletDialogShow}
                 loginInfo = {loginInfo}
                 account = {account}
                 toOwn = {toOwn}
+                walletStore = {walletStore}
               ></ConfirmDetail> : null
             }
           </div>
