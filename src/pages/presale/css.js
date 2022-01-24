@@ -828,6 +828,15 @@ const WalletWrap = styled.div`
             color: #1D1D1F;
             line-height: 72px;
         }
+        .loading{
+            height: 22px !important;
+            width: 22px !important;
+            animation: spin 1s steps(8) infinite;
+        }
+        @keyframes spin {
+            from {transform: rotate(0deg);}
+              to {transform: rotate(360deg);}
+        }
         .walletLogo{
             width: 35px;
             height: auto;

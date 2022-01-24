@@ -125,7 +125,10 @@ class MetaMaskWallet {
     getBalanceOf = async (address) => {
         const contract = await this.initContract();
         const balance = await contract.balanceOf(address);
-        const amount = (new BigNumber(balance._hex, 16)).toNumber() / Math.pow(10, 18)
+        console.log("getBalanceOf:::::",balance)
+        const chainId = await this._getChainId()
+        let powNum = chainId == 1 ? 6 : 18;
+        const amount = (new BigNumber(balance._hex, 16)).toNumber() / Math.pow(10, powNum)
         
         return {amount: amount};
     }

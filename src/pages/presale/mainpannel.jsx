@@ -163,7 +163,7 @@ class MainpannelComp extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('main', prevProps, prevState)
+        // console.log('main', prevProps, prevState)
     }
 
 

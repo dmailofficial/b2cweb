@@ -7,6 +7,7 @@ import { loginAndGetLoginInfo } from './utils'
 
 import metamaskIcon from '@/static/images/presale/metamask@2x.png'
 import plugIcon from '@/static/images/presale/plug-logo@2x.png'
+import loadingIcon from '@/static/images/presale/paying@3x.png'
 
 const walletList = [
   {
@@ -22,33 +23,35 @@ const walletList = [
 ]
 
 function WalletDialog(params) {
-  console.log(params)
     const {open , dialogClose, getLoginInfo, getWalletInstance, walletStore} = params;
     const [walletName, setWalletName] = useState('')
-    const [loginInfo, setLoginInfo] = useState({})
-    const [account, setAccount] = useState('')
-    const [toast, setToast] = useState(false)
-    const [toastType, setToastType] = useState("warn")
-    const [toastMsg, setToastMsg] = useState("")
+    // const [loginInfo, setLoginInfo] = useState({})
+    // const [account, setAccount] = useState('')
+    // const [toast, setToast] = useState(false)
+    // const [toastType, setToastType] = useState("warn")
+    // const [toastMsg, setToastMsg] = useState("")
+    const [showloading, setShowloading] = useState(false)
   
     const walletDialogClose = () => {
         dialogClose()
     }
 
     const poptoast = (txt,type, isInfinite) => {
-        setToast(true)
-        setToastType(type || "warn")
-        setToastMsg(txt)
+        setShowloading(true)
+        // setToast(true)
+        // setToastType(type || "warn")
+        // setToastMsg(txt)
 
-        setTimeout(()=>{
-            if(isInfinite){return}
-            closePoptoast()
-        }, 3000)
+        // setTimeout(()=>{
+        //     if(isInfinite){return}
+        //     closePoptoast()
+        // }, 3000)
     }
     const closePoptoast = () =>{
-        setToast(false)
-        setToastType("warn")
-        setToastMsg('')
+        setShowloading(false)
+        // setToast(false)
+        // setToastType("warn")
+        // setToastMsg('')
     }
 
 
@@ -57,6 +60,7 @@ function WalletDialog(params) {
     }
     
     const faildCallback = async (data, wallet) => {
+      console.log("faildCallback::::", data)
       let _msg = null;
        _msg = data.msg ? data.msg.toString() : data.message;
       
@@ -75,6 +79,7 @@ function WalletDialog(params) {
 
             getWalletInstance(_walletInstance)
             walletStore.setWalletName(wallet)
+            setWalletName(wallet)
            
       let _address = walletStore.info?.address;
       
@@ -92,12 +97,13 @@ function WalletDialog(params) {
           closePoptoast()
           return;
       }
-      setAccount(walletAccount)
+      // setAccount(walletAccount)
       accountChangeHandle(walletAccount)
 
       _walletInstance.listenerAccountsChanged(accountChangeHandle)
 
       async function accountChangeHandle(address){
+        if(!address){return}
         console.log("accountChangeHandle::_loginInfo:111:", address)
         let _loginInfo = await loginAndGetLoginInfo(
             address, 
@@ -112,7 +118,7 @@ function WalletDialog(params) {
             closePoptoast()
             return;
         }
-        console.log("accountChangeHandle::_loginInfo::3333333", _loginInfo, wallet)
+        // console.log("accountChangeHandle::_loginInfo::3333333", _loginInfo, wallet)
         _loginInfo = {
           ..._loginInfo,
           walletName : wallet
@@ -144,20 +150,24 @@ function WalletDialog(params) {
                     return (
                       <div className="walletItem" onClick={()=>handleWallet(wallet.code)} key={wallet.name}>
                           <span>{wallet.name}</span>
+                          {
+                            showloading && walletName == wallet.code ?
+                              <img src={loadingIcon} className="loading"></img>:null
+                          }
                           <span className="walletLogo">
-                          <img src={wallet.icon}></img>
+                            <img src={wallet.icon}></img>
                           </span>
                       </div>
                     )
                 })
               }
             </WalletWrap>
-            <Toast
+            {/* <Toast
                 open = {toast}
                 type = {toastType}
                 txt = {toastMsg}
                 noHeader = {true}
-            ></Toast>
+            ></Toast> */}
         </Dialog>
     )
 }

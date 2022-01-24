@@ -21,7 +21,7 @@ export const loginAndGetLoginInfo = async (account, wallInstance, walletName, su
     if(walletName == "metamask"){
       const { signmessage } = data
       const signRes = await wallInstance.sign(signmessage, faildcallback)
-      console.log("signRes::error:",signRes)
+      console.log("signRes:::",signRes)
       if(signRes.code){
         faildcallback && faildcallback(signRes)
         return signRes;

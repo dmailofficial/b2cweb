@@ -5,19 +5,19 @@ import { encode, decode } from 'js-base64';
 import Cookies from 'js-cookie'
 
 import Header from '@/components/newheader'
-import { OperateBtn, ContentBox ,WalletWrap} from './css'
+import { OperateBtn, ContentBox} from './css'
 import Left from './left'
 import Main from './mainpannel'
 import ConfirmDetail from './orderConfirmDetail'
-import Dialog from './Dialog'
+// import Dialog from './Dialog'
 import Toast from './toast'
-import Wallet from '@/wallet/index'
+// import Wallet from '@/wallet/index'
 import WalletDialog from './walletDialog'
-import { loginAndGetLoginInfo } from './utils'
+// import { loginAndGetLoginInfo } from './utils'
 
 const Index = ({ store }) => {
   const walletStore = store.wallet
-  console.log('wallet.info', walletStore.info ? walletStore.info.address : walletStore.info)
+  // console.log('wallet.info', walletStore.info ? walletStore.info.address : walletStore.info)
 
   const history = useHistory();
   const [curId, setCurId] = useState(1)
@@ -78,8 +78,8 @@ const Index = ({ store }) => {
   }
 
   const formartShowName = (address = "") => {
-    let _name = address.substr(0,6)+"***"+address.substr(address.length-4, address.length)
-    console.log("formartShowName:", _name)
+    let _name = address.substr(0,6)+"***"+address.substr(address.length-6, address.length)
+    // console.log("formartShowName:", _name)
     setShowName(_name)
   }
 
@@ -100,24 +100,26 @@ const Index = ({ store }) => {
     setWalletInstance(instance)
   }
 
-  useEffect(()=>{
-    console.log("useEffect:",walletStore.info?.address)
-    setLoginInfo(walletStore.info)
-    formartShowName(walletStore.info?.address)
+  // useEffect(()=>{
+  //   console.log("useEffect:",walletStore.info?.address)
+  //   setLoginInfo(walletStore.info)
+  //   formartShowName(walletStore.info?.address)
 
-    // get info from cookie
-    // if (!walletStore.info) {
-    //   const sInfo = Cookies.get('account')
-    //   if (sInfo) {
-    //     try {
-    //       const info = JSON.parse(decode(sInfo))
-    //       info && walletStore.setWalletInfo(info)
-    //     } catch (error) {
-    //       //
-    //     }
-    //   }
-    // }
-  }, [])
+  //   // get info from cookie
+  //   // if (!walletStore.info) {
+  //   //   const sInfo = Cookies.get('account')
+  //   //   if (sInfo) {
+  //   //     try {
+  //   //       const info = JSON.parse(decode(sInfo))
+  //   //       info && walletStore.setWalletInfo(info)
+  //   //     } catch (error) {
+  //   //       //
+  //   //     }
+  //   //   }
+  //   // }
+  // }, [])
+
+  
 
   const toOwn = () => {
     if (walletStore.info) {
@@ -132,6 +134,24 @@ const Index = ({ store }) => {
     //   walletDialogShow()
     // }
   }
+
+  useEffect(async () => {
+    walletStore.info && setLoginInfo(walletStore.info)
+    formartShowName(walletStore.info?.address)
+  }, [walletStore.info])
+
+  useEffect(async () => {
+    if (!walletStore.info) {
+      const sInfo = Cookies.get('account')
+      try {
+        const info = JSON.parse(decode(sInfo))
+        info && walletStore.setWalletInfo(info)
+        getLoginInfo(info)
+      } catch (error) {
+        //
+      }
+    }
+  }, [])
 
   return (
     <>

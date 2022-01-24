@@ -137,15 +137,17 @@ class orderConfirmDetail extends React.Component {
 
     toPay = async () => {
         if(this.state.paying || this.state.walletSwitching){return}
-        this.setState({paying: true})
-        this.poptoast("Payment processing","loading", true)
-
         const _wallet = this.props.wallet
         // const { id, nonce, signmessage, email } = this.props.loginInfo
         if(!_wallet.getBalanceOf){
             this.props.handleWallet();
+            return;
         }
+
+        this.setState({paying: true})
+        this.poptoast("Payment processing","loading", true)
         const balance = await _wallet.getBalanceOf(this.props.account)
+        console.log("assist:::",  balance)
         const myAmount = balance.amount;
         let curPrice = 0;
         if(this.props.walletStore.walletName == "plug"){
@@ -155,7 +157,7 @@ class orderConfirmDetail extends React.Component {
             curPrice = this.state.detail.price
         }
         
-
+        console.log("assist:::", curPrice, Number(myAmount));
         if (myAmount < +curPrice) {
             this.closePoptoast();
             this.poptoast("Confirm your assist is enough!")
