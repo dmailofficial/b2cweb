@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 import {ConfirmPannel } from './css'
-import {getDetail, getIcpPrice, detectTransferIsSuccess} from './request'
+import {getDetail, getIcpPrice, detectTransferIsSuccess, checkProductLockInfo} from './request'
 import Toast from './toast'
 import backArrow from '@/static/images/presale/arrow-left@2x.png'
 import icpIcon from '@/static/images/presale/ICP@3x.png'
@@ -9,6 +9,8 @@ import usdtIcon from '@/static/images/presale/USDT@3x.png'
 import { CompatibleClassCountDown } from '@/components/countDown'
 import axios from '@/utils/axios';
 import { baseUrl } from './utils'
+import Wallet from '@/wallet/index'
+import Dialog from './Dialog'
 class orderConfirmDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -21,6 +23,7 @@ class orderConfirmDetail extends React.Component {
             paying: false,
             walletSwitching: false,
             countDownSeconds: 0,
+            accountChangeDialog: false,
         };
     }
 
@@ -136,38 +139,82 @@ class orderConfirmDetail extends React.Component {
         })
     }
     
+    checkProductLock = async (product_name) => {
+        const _checkResult = await checkProductLockInfo(product_name)
+        console.log("_checkResult_checkResult_checkResult::", _checkResult)
+        const { address, code, message, success, ttl } = await checkProductLockInfo(product_name)
+        if(!success){
+            this.poptoast(message, 'faild')
+            return false;
+        }
+        return {
+            address,
+            ttl
+        }
+    }
 
     toPay = async () => {
         if(this.state.paying || this.state.walletSwitching){return}
-        const _wallet = this.props.wallet
-        // const { id, nonce, signmessage, email } = this.props.loginInfo
-        if(!_wallet.getBalanceOf){
-            this.props.handleWallet();
+        
+        // change account in wallet app but has no sign
+        let _prewallet = new Wallet(this.props.walletStore.walletName);
+        let _walletAccount
+        try {
+            _walletAccount = await _prewallet.requestAccounts();
+        } catch (error) {
+            return {
+                code: 2,
+                error: error
+            }
+        }
+
+        if(_walletAccount != this.props.walletStore.info?.address){
+            if(this.props.walletStore.walletName == "plug"){
+                this.props.walletStore.setWalletInfo({
+                  ...this.props.walletStore.info,
+                  address: _walletAccount
+                })
+              }
+            this.setState({accountChangeDialog : true})
             return;
         }
 
+        // chexck product lock status
+        const _checkResult = await this.checkProductLock(this.state.detail.name)
+        
+        if(_checkResult.ttl > 0 && _checkResult.address != this.props.walletStore.info?.address){
+            this.setState({accountChangeDialog : true})
+            return
+        }
+
+        let _wallet = this.props.wallet
+        if(!_wallet.getBalanceOf){
+            if(!this.props.walletStore.walletName){
+                this.props.handleWallet();
+                return;
+            }else{
+                _wallet = new Wallet(this.props.walletStore.walletName);
+            }
+        }
         this.setState({paying: true})
         this.poptoast("Payment processing","loading", true)
+
         const balance = await _wallet.getBalanceOf(this.props.account)
-        console.log("assist:::",  balance)
         const myAmount = balance.amount;
         let curPrice = 0;
+
         if(this.props.walletStore.walletName == "plug"){
-            console.log("to pay plug::", this.props.walletStore.walletName, this.state.detail.icpPrice)
             curPrice = this.state.detail.icpPrice
         }else{
             curPrice = this.state.detail.price
         }
         
-        console.log("assist:::", curPrice, Number(myAmount));
         if (myAmount < +curPrice) {
             this.closePoptoast();
             this.poptoast("Confirm your assist is enough!")
             return
         }
         
-        console.log("to pay xxxxxx::", this.props.walletStore.walletName, curPrice)
-
         await _wallet.transfer(curPrice, this.paysuccess, this.payfaild)
         this.setState({paying: false})
         
@@ -186,7 +233,7 @@ class orderConfirmDetail extends React.Component {
         }
         const { success, msg, data } = await detectTransferIsSuccess(hash, from, curPrice, this.state.detail.name, this.props.loginInfo.jwt, chainId)
         if(!success){
-            this.poptoast(msg, 'success')
+            this.poptoast(msg, 'faild')
             return
         }
         this.poptoast(successMsg, 'success')
@@ -226,7 +273,13 @@ class orderConfirmDetail extends React.Component {
         })
     }
 
+    accountConfirmHandle = () =>{
+        this.setState({accountChangeDialog : false})
+        this.handleBack()
+    }
+
     componentDidMount() {
+        console.log("order>.......:", this.props.walletStore.info?.address)
         this.correctRequest().then((countDownSeconds) => {
             countDownSeconds > 0 && this.setState({
                 countDownSeconds
@@ -309,6 +362,18 @@ class orderConfirmDetail extends React.Component {
                     noHeader = {true}
                 >
                 </Toast>
+                <Dialog
+                    type = {"warn"}
+                    title = "Account changes"
+                    open = {this.state.accountChangeDialog}
+                    operateBtton = "confirm"
+                    maxWidth = "xs"
+                    confirmHandle = {this.accountConfirmHandle}
+                    dialogClose = {this.accountConfirmHandle}
+                >
+
+                    <p>Account changes,Please return to the home page to repurchase</p>
+                </Dialog>
             </ConfirmPannel>
         );
     }

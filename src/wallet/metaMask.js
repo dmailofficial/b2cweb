@@ -22,8 +22,10 @@ const MetaMaskChainAbiMap = {
 }
 
 class MetaMaskWallet {
-    constructor(){
-
+    constructor(props){
+      console.log("MetaMaskWallet constructor props:::", props)
+      this.walletName = props?.walletName || ""
+      this.accountChangeHandle = props?.accountChangeHandle || function(){}
     }
 
     _getChainId = () => {
@@ -75,7 +77,7 @@ class MetaMaskWallet {
             try {
             // https://docs.metamask.io/guide/accessing-accounts.html
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            this.listenerAccountsChanged();
+            this.listenerAccountsChanged(this.accountChangeHandle);
             return accounts[0]
             
             } catch (error) {
@@ -170,7 +172,7 @@ class MetaMaskWallet {
             return error
         }
     }
-    sign = async (sign, failedcallback) => {
+    sign = async (sign) => {
         if (!sign) {
           return {
             code: 1,
@@ -186,7 +188,6 @@ class MetaMaskWallet {
             const signature = await signer.signMessage(sign);
             return [signature, signer]
           } catch (error) {
-            failedcallback && failedcallback(error)
             return {
               code: 2,
               msg: error.message
@@ -200,8 +201,6 @@ class MetaMaskWallet {
           }
         }
       }
-
-
 }
 
-export default new MetaMaskWallet();
+export default MetaMaskWallet;

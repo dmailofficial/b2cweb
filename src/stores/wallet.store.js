@@ -20,5 +20,11 @@ export default class WalletStore {
   }
   setWalletName (wallet){
     this.walletName = wallet
+    try {
+      // 3 days expires
+      Cookies.set('walletname', encode(JSON.stringify(wallet)), { expires: 3 })
+    } catch (error) {
+      //
+    }
   }
 }

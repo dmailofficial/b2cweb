@@ -7,13 +7,27 @@ class Wallet {
     }
 
     init = (props)=>{
-        console.log("init::", props)
+        console.log("Wallet init props:::", props, typeof props === "object")
         const wallets = {
             plug: PlugWallet,
             metamask: MetaMaskWallet
         }
+
+        if(!props || typeof props === "string"){
+            return new wallets[props]() || new MetaMaskWallet()
+        }
+
+        if(typeof props === "object"){
+            const { walletName, accountChangeHandle } = props
+            console.log("walletName::", walletName)
+            let _p = {
+                walletName : walletName || "metamask",
+                accountChangeHandle : accountChangeHandle || function(){}
+            }
+            return new wallets[walletName](_p) || new MetaMaskWallet(_p)
+        }
+
         
-        return wallets[props] || MetaMaskWallet
     }
 }
 

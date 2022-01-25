@@ -9,11 +9,9 @@ import { OperateBtn, ContentBox} from './css'
 import Left from './left'
 import Main from './mainpannel'
 import ConfirmDetail from './orderConfirmDetail'
-// import Dialog from './Dialog'
 import Toast from './toast'
-// import Wallet from '@/wallet/index'
 import WalletDialog from './walletDialog'
-// import { loginAndGetLoginInfo } from './utils'
+import {connectWallet} from './utils'
 
 const Index = ({ store }) => {
   const walletStore = store.wallet
@@ -84,12 +82,13 @@ const Index = ({ store }) => {
   }
 
   const getLoginInfo = (loginInfo) => {
+    console.log("getLoginInfo:::", loginInfo)
     if(loginInfo.code){
       poptoast(loginInfo.msg)
       return;
     }
     setAccount(loginInfo.address)
-    walletStore.setWalletInfo(loginInfo)
+    // walletStore.setWalletInfo(loginInfo)
     setLoginInfo(loginInfo)
     
     formartShowName(loginInfo.address);
@@ -136,17 +135,36 @@ const Index = ({ store }) => {
   }
 
   useEffect(async () => {
+    
     walletStore.info && setLoginInfo(walletStore.info)
+    console.log("presalse effect:::",walletStore.info?.address)
     formartShowName(walletStore.info?.address)
   }, [walletStore.info])
 
   useEffect(async () => {
     if (!walletStore.info) {
       const sInfo = Cookies.get('account')
+      const swalletName = Cookies.get('walletname')
       try {
         const info = JSON.parse(decode(sInfo))
         info && walletStore.setWalletInfo(info)
         getLoginInfo(info)
+        console.log("useEffect------  wallet  info::::: ",info)
+        const walletName = JSON.parse(decode(swalletName))
+        walletName && walletStore.setWalletName(walletName)
+        
+        const walletObj = await connectWallet(walletName, walletStore)
+        console.log("presale use effect connect wallet::::: ",walletObj)
+        if(walletObj.code){
+          console.log("connect wallet error: ", walletObj.msg);
+        }
+        if(walletName == "plug"){
+          walletStore.setWalletInfo({
+            ...info,
+            address: walletObj.account
+          })
+        }
+        setWalletInstance(walletObj.instance)
       } catch (error) {
         //
       }

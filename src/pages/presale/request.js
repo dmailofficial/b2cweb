@@ -140,3 +140,17 @@ export const detectTransferIsSuccess = async (hash, address, price, product_name
     }
   })
 }
+
+export const checkProductLockInfo = async (product_name) => {
+  return axios({
+    url: `${baseUrl}/timer/${product_name}`,
+    method: 'get',
+  }).then((res) => {
+    try {
+      const { address, code, message, success, ttl } = res.data
+      return { address, code, msg: message, success, ttl }
+    } catch (error) {
+      return { success: false, msg: error, data: null }
+    }
+  })
+}

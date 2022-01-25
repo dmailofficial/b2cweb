@@ -3,7 +3,7 @@ import Dialog from './Dialog'
 import Toast from './toast'
 import Wallet from '@/wallet/index'
 import {WalletWrap} from './css'
-import { loginAndGetLoginInfo } from './utils'
+import { loginAndGetLoginInfo, connectWalletAndLogin } from './utils'
 
 import metamaskIcon from '@/static/images/presale/metamask@2x.png'
 import plugIcon from '@/static/images/presale/plug-logo@2x.png'
@@ -65,7 +65,7 @@ function WalletDialog(params) {
        _msg = data.msg ? data.msg.toString() : data.message;
       
       getLoginInfo({
-        code: 1,
+        code: data.code,
         msg: _msg
       })
     }
@@ -74,13 +74,8 @@ function WalletDialog(params) {
       if(!wallet){
           wallet = walletName ? walletName : "metamask";
       }
-      // setWalletName(wallet)
-      const _walletInstance = new Wallet(wallet);
+      setWalletName(wallet)
 
-            getWalletInstance(_walletInstance)
-            walletStore.setWalletName(wallet)
-            setWalletName(wallet)
-           
       let _address = walletStore.info?.address;
       
       if(_address && wallet == walletName) {
@@ -88,47 +83,81 @@ function WalletDialog(params) {
         getLoginInfo(walletStore.info)
         return 
       }
-      
-      poptoast("Connect processing", "loading", true)
-      const walletAccount = await _walletInstance.requestAccounts();
-      
-      if(walletAccount.code){
-          faildCallback(walletAccount, wallet)
-          closePoptoast()
+
+      setShowloading(true)
+      const connectObj = await connectWalletAndLogin(wallet, walletStore);
+      console.log("connectObj:::", connectObj);
+      if(!connectObj.account){
+          faildCallback(connectObj)
+          setShowloading(false)
           return;
       }
-      // setAccount(walletAccount)
-      accountChangeHandle(walletAccount)
+      // account : walletAccount,
+      // loginInfo: _loginInfo, 
+      // walletName: wallet,
+      // instance: _walletInstance
+      setShowloading(false)
+      setWalletName(connectObj.walletName)
+      getWalletInstance(connectObj.instance)
+      getLoginInfo(connectObj.loginInfo)
+      walletDialogClose()
 
-      _walletInstance.listenerAccountsChanged(accountChangeHandle)
 
-      async function accountChangeHandle(address){
-        if(!address){return}
-        console.log("accountChangeHandle::_loginInfo:111:", address)
-        let _loginInfo = await loginAndGetLoginInfo(
-            address, 
-            _walletInstance,
-            wallet,
-            successcallback,
-            faildCallback
-        );
-        console.log("accountChangeHandle::_loginInfo::222222", _loginInfo)
-        if(_loginInfo.code){
-            faildCallback(_loginInfo, wallet)
-            closePoptoast()
-            return;
-        }
-        // console.log("accountChangeHandle::_loginInfo::3333333", _loginInfo, wallet)
-        _loginInfo = {
-          ..._loginInfo,
-          walletName : wallet
-        }
-        closePoptoast()
-        walletDialogClose()
-        walletStore.setWalletInfo(_loginInfo)
-        getLoginInfo(_loginInfo)
-        return
-      }
+      // setWalletName(wallet)
+      // const _walletInstance = new Wallet({walletName: wallet, accountChangeHandle});
+
+      //       getWalletInstance(_walletInstance)
+      //       walletStore.setWalletName(wallet)
+      //       setWalletName(wallet)
+           
+      // let _address = walletStore.info?.address;
+      
+      // if(_address && wallet == walletName) {
+      //   walletDialogClose()
+      //   getLoginInfo(walletStore.info)
+      //   return 
+      // }
+      
+      // poptoast("Connect processing", "loading", true)
+      // const walletAccount = await _walletInstance.requestAccounts();
+      
+      // if(walletAccount.code){
+      //     faildCallback(walletAccount, wallet)
+      //     closePoptoast()
+      //     return;
+      // }
+      // // setAccount(walletAccount)
+      // accountChangeHandle(walletAccount)
+
+      // // _walletInstance.listenerAccountsChanged(accountChangeHandle)
+
+      // async function accountChangeHandle(address){
+      //   if(!address){return}
+      //   console.log("accountChangeHandle::_loginInfo:111:", address)
+      //   let _loginInfo = await loginAndGetLoginInfo(
+      //       address, 
+      //       _walletInstance,
+      //       wallet,
+      //       successcallback,
+      //       faildCallback
+      //   );
+      //   console.log("accountChangeHandle::_loginInfo::222222", _loginInfo)
+      //   if(_loginInfo.code){
+      //       faildCallback(_loginInfo, wallet)
+      //       closePoptoast()
+      //       return;
+      //   }
+      //   // console.log("accountChangeHandle::_loginInfo::3333333", _loginInfo, wallet)
+      //   _loginInfo = {
+      //     ..._loginInfo,
+      //     walletName : wallet
+      //   }
+      //   closePoptoast()
+      //   walletDialogClose()
+      //   walletStore.setWalletInfo(_loginInfo)
+      //   getLoginInfo(_loginInfo)
+      //   return
+      // }
     }
 
     

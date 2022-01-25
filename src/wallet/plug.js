@@ -105,4 +105,4 @@ class PlugWallet {
     }
 }
 
-export default new PlugWallet();
+export default PlugWallet;
