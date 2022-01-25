@@ -1,40 +1,46 @@
 import React, {useState, useEffect} from 'react'
 import { Left } from './css'
 
-import defaultImg from '@/static/images/presale/default.png'
+import coverImg1 from '@/static/images/presale/activecover1.png'
+import coverImg2 from '@/static/images/presale/activecover2.png'
+
 
 const list = [
     {
         id: 1,
         label: "WEDNESDAY",
-        name: "First round of dmail NFT Domain Account presale",
+        name: "NFT Domain Account",
         desc: "Master your mailbox data sovereignty Each mail is NFT",
-        time: "12/12/121-12/12/12/12",
-        status: "1"
+        time: "12/26/2021-1/26/2022",
+        status: "1",
+        cover: coverImg1
     },
     {
         id: 2,
         label: "WEDNESDAY",
-        name: "Second round of dmail NFT Domain Account presale",
+        name: "NFT Domain Account",
         desc: "Master your mailbox data sovereignty Each mail is NFT",
-        time: "12/12/121-12/12/12/12",
-        status: "2"
+        time: "12/26/2021-1/26/2022",
+        status: "2",
+        cover: coverImg2
     },
     {
         id:3,
         label: "WEDNESDAY",
-        name: "Third round of dmail NFT Domain Account presale",
+        name: "NFT Domain Account",
         desc: "Master your mailbox data sovereignty Each mail is NFT",
-        time: "12/12/121-12/12/12/12",
-        status: "3"
+        time: "12/26/2021-1/26/2022",
+        status: "3",
+        cover: coverImg1
     },
     {
         id:4,
         label: "WEDNESDAY",
-        name: "Fourth round of dmail NFT Domain Account presale",
+        name: "NFT Domain Account",
         desc: "Master your mailbox data sovereignty Each mail is NFT",
-        time: "12/12/121-12/12/12/12",
-        status: "3"
+        time: "12/26/2021-1/26/2022",
+        status: "3",
+        cover: coverImg2
     }
     
 ]
@@ -68,8 +74,8 @@ const LeftComp = (props) => {
                             onClick = {()=>{handleClickItem(item.id)}}
                             key = {i}
                         >
-                        <span className="label">{item.label}</span>
-                        <img className="cover" src={defaultImg}></img>
+                        {/* <span className="label">{item.label}</span> */}
+                        <img className="cover" src={item.cover}></img>
                         <div className="info">
                             <h3>{item.name}</h3>
                             <div className="statusInfo">

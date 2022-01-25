@@ -219,7 +219,7 @@ function App({ store: { wallet, presale } }) {
         <Content>
           <div className="tip">
             <i></i>
-            <p>When the payment is done, please claim your NFT domain account.The Dmail NFT Domain Account will be sent to your Principal ID account in 24 hours. If you have any problem, please connect to our official email:contact@dmail.ai .</p>
+            <p>When the payment is done, please claim your NFT domain account.The Dmail NFT Domain Account will be sent to your Principal ID account in 24 hours. If you have any problem, please connect to our official email: contact@dmail.ai .</p>
           </div>
           <Table columns={columns} loading={loading} data={data} pageCount={pageCount} fetchData={fetchData} setOpen={setOpen} />
         </Content>

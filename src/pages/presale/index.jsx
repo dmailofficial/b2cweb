@@ -76,7 +76,7 @@ const Index = ({ store }) => {
   }
 
   const formartShowName = (address = "") => {
-    let _name = address.substr(0,6)+"***"+address.substr(address.length-6, address.length)
+    let _name = address.substr(0,5)+"***"+address.substr(address.length-3, address.length)
     // console.log("formartShowName:", _name)
     setShowName(_name)
   }

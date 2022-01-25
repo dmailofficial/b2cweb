@@ -625,6 +625,9 @@ const ConfirmPannel = styled.div`
             background: #1D1D1F;
             margin-right: 32px;
             float: left;
+            img{
+                width: 100%;
+            }
         }
         .orderDetail{
             margin-left: 282px;

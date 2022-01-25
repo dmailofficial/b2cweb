@@ -11,6 +11,9 @@ import axios from '@/utils/axios';
 import { baseUrl } from './utils'
 import Wallet from '@/wallet/index'
 import Dialog from './Dialog'
+
+import nftcover from '@/static/images/presale/nftcover.png'
+
 class orderConfirmDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -212,6 +215,7 @@ class orderConfirmDetail extends React.Component {
         if (myAmount < +curPrice) {
             this.closePoptoast();
             this.poptoast("Confirm your assist is enough!")
+            this.setState({paying: false})
             return
         }
         
@@ -258,7 +262,7 @@ class orderConfirmDetail extends React.Component {
             try {
                 const res = await axios({
                     // TODO: xxxxxxxxxxx need to replace
-                    url: `${baseUrl}/timer/${this.state.xxxxxxxxxxx}`,
+                    url: `${baseUrl}/timer/${this.props.email}`,
                     method: 'get',
                 })
                 const { code, ttl, message, success } = res.data
@@ -295,7 +299,7 @@ class orderConfirmDetail extends React.Component {
                 </div>
                 <div className="content">
                     <div className="domainImg">
-
+                        <img src={nftcover}></img>
                     </div>
                     <div className="orderDetail">
                         <h3>{this.props.email}@dmail.ai</h3>

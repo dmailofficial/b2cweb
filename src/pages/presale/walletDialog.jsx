@@ -164,6 +164,7 @@ function WalletDialog(params) {
 
     useEffect(()=>{
       setWalletName(walletStore?.walletName)
+      setShowloading(false)
     },[open])
     
     return (
