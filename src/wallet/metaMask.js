@@ -26,6 +26,8 @@ class MetaMaskWallet {
       console.log("MetaMaskWallet constructor props:::", props)
       this.walletName = props?.walletName || ""
       this.accountChangeHandle = props?.accountChangeHandle || function(){}
+
+      console.log("MetaMaskWallet constructor props:::", this.walletName)
     }
 
     _getChainId = () => {

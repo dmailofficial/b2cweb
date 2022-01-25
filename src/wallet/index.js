@@ -13,7 +13,11 @@ class Wallet {
             metamask: MetaMaskWallet
         }
 
-        if(!props || typeof props === "string"){
+        if(!props){
+            return new MetaMaskWallet()
+        }
+
+        if(typeof props === "string"){
             return new wallets[props]() || new MetaMaskWallet()
         }
 

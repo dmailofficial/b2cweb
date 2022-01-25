@@ -30,9 +30,8 @@ export const searchEmail = async (key) => {
   }
 }
 
-// data {address, product_name, jwt}
+// data {address}
 export const blockEmail = async (data) => {
-  data = plugShim(data.address, data)
   try {
     return axios({
       url: `${baseUrl}/lockdomain`,
@@ -47,6 +46,24 @@ export const blockEmail = async (data) => {
     return { success: false, msg: error, data: null }
   }
 }
+
+// data {address, product_name, jwt}
+// export const blockEmail = async (data) => {
+//   data = plugShim(data.address, data)
+//   try {
+//     return axios({
+//       url: `${baseUrl}/lockdomain`,
+//       data: data,
+//       method: 'post',
+//       // errorTitle: '',
+//     }).then((res) => {
+//       const { code, data, message, success } = res.data
+//       return { code, success, msg: message, data }
+//     })
+//   } catch (error) {
+//     return { success: false, msg: error, data: null }
+//   }
+// }
 
 export const getDetail = async (email) => {
   return axios({
@@ -68,7 +85,7 @@ export const getDetail = async (email) => {
 
 // data {address,address,product_name }
 export const getIcpPrice = async (data) => {
-  data = plugShim(data.address, data)
+  // data = plugShim(data.address, data)
   return axios({
     url: `${baseUrl}/icpprice`,
     data: data,

@@ -110,7 +110,7 @@ class MainpannelComp extends React.Component {
         if (!this.state.email.trim().length || this.state.errorShow || this.state.setsearching) {
             return
         }
-        const _loginInfo = await this.props.handleWallet("search")
+        // const _loginInfo = await this.props.handleWallet("search")
         console.log(this.props.wallet)
         
         this.setState({setsearching:true})
@@ -135,14 +135,14 @@ class MainpannelComp extends React.Component {
     }
     
     handleLock = async()=>{
-        if(!this.props.loginInfo?.address){
-            this.props.handleWallet("search")
-            return
-        }
+        // if(!this.props.loginInfo?.address){
+        //     this.props.handleWallet("search")
+        //     return
+        // }
         let params = {
-            address: this.props.loginInfo.address,
+            // address: this.props.loginInfo.address,
             product_name: this.state.email,
-            jwt: this.props.loginInfo.jwt
+            // jwt: this.props.loginInfo.jwt
         }
         const { code, success, msg, data } = await blockEmail(params)
         

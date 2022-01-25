@@ -124,10 +124,10 @@ class orderConfirmDetail extends React.Component {
             detail: {...data}
         })
 
-        // {address,jwt}
+        // {address,jwt} --backup
         const { success: isuccess , message, data: idata } = await getIcpPrice({
-            address: this.props.loginInfo.address,
-            jwt: this.props.loginInfo.jwt,
+            // address: this.props.loginInfo.address,
+            // jwt: this.props.loginInfo.jwt,
             product_name: this.props.email
         })
         if (!success) {
@@ -140,6 +140,10 @@ class orderConfirmDetail extends React.Component {
                 icpPrice: idata?.price
             }
         })
+    }
+
+    getIcpPriceInterval = () => {
+
     }
     
     checkProductLock = async (product_name) => {
@@ -155,45 +159,51 @@ class orderConfirmDetail extends React.Component {
             ttl
         }
     }
+    
 
     toPay = async () => {
         if(this.state.paying || this.state.walletSwitching){return}
         
-        // change account in wallet app but has no sign
-        let _prewallet = new Wallet(this.props.walletStore.walletName);
-        let _walletAccount
-        try {
-            _walletAccount = await _prewallet.requestAccounts();
-        } catch (error) {
-            return {
-                code: 2,
-                error: error
+        // change account in wallet app but has no sign --- backup
+        console.log("toPay:",this.props.walletStore.walletName)
+        if(this.props.walletStore.walletName){
+            let _prewallet = new Wallet(this.props.walletStore.walletName);
+            let _walletAccount
+            try {
+                _walletAccount = await _prewallet.requestAccounts();
+            } catch (error) {
+                return {
+                    code: 2,
+                    error: error
+                }
+            }
+
+            if(_walletAccount != this.props.walletStore.info?.address){
+                if(this.props.walletStore.walletName == "plug"){
+                    console.log("_walletAccount: plug::::", _walletAccount)
+                    this.props.walletStore.setWalletInfo({
+                    ...this.props.walletStore.info,
+                    address: _walletAccount
+                    })
+                }
+                // this.setState({accountChangeDialog : true})
+                // return;
             }
         }
-
-        if(_walletAccount != this.props.walletStore.info?.address){
-            if(this.props.walletStore.walletName == "plug"){
-                this.props.walletStore.setWalletInfo({
-                  ...this.props.walletStore.info,
-                  address: _walletAccount
-                })
-              }
-            this.setState({accountChangeDialog : true})
-            return;
-        }
-
-        // chexck product lock status
-        const _checkResult = await this.checkProductLock(this.state.detail.name)
         
-        if(_checkResult.ttl > 0 && _checkResult.address != this.props.walletStore.info?.address){
-            this.setState({accountChangeDialog : true})
-            return
-        }
 
+        // chexck product lock status -----backup
+        // const _checkResult = await this.checkProductLock(this.state.detail.name)
+        
+        // if(_checkResult.ttl > 0 && _checkResult.address != this.props.walletStore.info?.address){
+        //     this.setState({accountChangeDialog : true})
+        //     return
+        // }
+        console.log("this.props.walletStore.walletName:::", this.props.walletStore.walletName);
         let _wallet = this.props.wallet
         if(!_wallet.getBalanceOf){
             if(!this.props.walletStore.walletName){
-                this.props.handleWallet();
+                this.props.handleWallet("orderpay");
                 return;
             }else{
                 _wallet = new Wallet(this.props.walletStore.walletName);
@@ -201,8 +211,9 @@ class orderConfirmDetail extends React.Component {
         }
         this.setState({paying: true})
         this.poptoast("Payment processing","loading", true)
+        console.log("this.props.walletStore.walletName:::", this.props.walletStore.info.address);
 
-        const balance = await _wallet.getBalanceOf(this.props.account)
+        const balance = await _wallet.getBalanceOf(this.props.walletStore.info.address)
         const myAmount = balance.amount;
         let curPrice = 0;
 
@@ -211,7 +222,7 @@ class orderConfirmDetail extends React.Component {
         }else{
             curPrice = this.state.detail.price
         }
-        
+        console.log("curPrice:::", curPrice, myAmount)
         if (myAmount < +curPrice) {
             this.closePoptoast();
             this.poptoast("Confirm your assist is enough!")
@@ -283,7 +294,7 @@ class orderConfirmDetail extends React.Component {
     }
 
     componentDidMount() {
-        console.log("order>.......:", this.props.walletStore.info?.address)
+        this.props.onRef(this)
         this.correctRequest().then((countDownSeconds) => {
             countDownSeconds > 0 && this.setState({
                 countDownSeconds

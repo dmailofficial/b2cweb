@@ -23,7 +23,7 @@ const walletList = [
 ]
 
 function WalletDialog(params) {
-    const {open , dialogClose, getLoginInfo, getWalletInstance, walletStore} = params;
+    const {open , dialogClose, getLoginInfo, getWalletInstance, walletStore,topay, payaction} = params;
     const [walletName, setWalletName] = useState('')
     // const [loginInfo, setLoginInfo] = useState({})
     // const [account, setAccount] = useState('')
@@ -70,7 +70,7 @@ function WalletDialog(params) {
       })
     }
 
-    const handleWallet = async (wallet) => {
+    const handleWallet = async (wallet, callback) => {
       if(!wallet){
           wallet = walletName ? walletName : "metamask";
       }
@@ -101,63 +101,10 @@ function WalletDialog(params) {
       getWalletInstance(connectObj.instance)
       getLoginInfo(connectObj.loginInfo)
       walletDialogClose()
-
-
-      // setWalletName(wallet)
-      // const _walletInstance = new Wallet({walletName: wallet, accountChangeHandle});
-
-      //       getWalletInstance(_walletInstance)
-      //       walletStore.setWalletName(wallet)
-      //       setWalletName(wallet)
-           
-      // let _address = walletStore.info?.address;
-      
-      // if(_address && wallet == walletName) {
-      //   walletDialogClose()
-      //   getLoginInfo(walletStore.info)
-      //   return 
+      // if(payaction){
+      //   topay()
       // }
-      
-      // poptoast("Connect processing", "loading", true)
-      // const walletAccount = await _walletInstance.requestAccounts();
-      
-      // if(walletAccount.code){
-      //     faildCallback(walletAccount, wallet)
-      //     closePoptoast()
-      //     return;
-      // }
-      // // setAccount(walletAccount)
-      // accountChangeHandle(walletAccount)
 
-      // // _walletInstance.listenerAccountsChanged(accountChangeHandle)
-
-      // async function accountChangeHandle(address){
-      //   if(!address){return}
-      //   console.log("accountChangeHandle::_loginInfo:111:", address)
-      //   let _loginInfo = await loginAndGetLoginInfo(
-      //       address, 
-      //       _walletInstance,
-      //       wallet,
-      //       successcallback,
-      //       faildCallback
-      //   );
-      //   console.log("accountChangeHandle::_loginInfo::222222", _loginInfo)
-      //   if(_loginInfo.code){
-      //       faildCallback(_loginInfo, wallet)
-      //       closePoptoast()
-      //       return;
-      //   }
-      //   // console.log("accountChangeHandle::_loginInfo::3333333", _loginInfo, wallet)
-      //   _loginInfo = {
-      //     ..._loginInfo,
-      //     walletName : wallet
-      //   }
-      //   closePoptoast()
-      //   walletDialogClose()
-      //   walletStore.setWalletInfo(_loginInfo)
-      //   getLoginInfo(_loginInfo)
-      //   return
-      // }
     }
 
     

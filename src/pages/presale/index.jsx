@@ -30,6 +30,8 @@ const Index = ({ store }) => {
   const [errorToastMsg, setErrorToastMsg] = useState(false)
   const [toown, setToown] = useState(false)
   const [showName, setShowName] = useState('')
+  const [payaction, setPayaction] =  useState(false)
+  const [payOrderChild, setPayOrderChild] = useState(null)
 
   const presaleChange = (item) => {
     let id = item.id;
@@ -59,10 +61,25 @@ const Index = ({ store }) => {
   }
 
   const walletDialogShow = (operate) => {
-    if(operate == "search" && walletStore.info?.address){
-      return
+    // if(operate == "search" && walletStore.info?.address){
+    //   return
+    // }
+
+    if(operate == "orderpay"){
+       setPayaction(true)
     }
     setWalletDialog(true);
+  }
+
+  const onRef = (ref) => {
+    console.log("onRef-----:", ref)
+    // payOrderChild = ref
+    setPayOrderChild(ref)
+  }
+
+  const topay = () => {
+    console.log("topay:::=======", payOrderChild)
+      payOrderChild.toPay()
   }
 
   const poptoast = (txt) => {
@@ -88,11 +105,14 @@ const Index = ({ store }) => {
       return;
     }
     setAccount(loginInfo.address)
-    // walletStore.setWalletInfo(loginInfo)
+    walletStore.setWalletInfo(loginInfo)
     setLoginInfo(loginInfo)
     
     formartShowName(loginInfo.address);
     walletDialogClose();
+      if(payaction){
+        payOrderChild.toPay()
+      }
   }
 
   const getWalletInstance = (instance) => {
@@ -121,12 +141,14 @@ const Index = ({ store }) => {
   
 
   const toOwn = () => {
-    if (walletStore.info) {
-      history.push({ pathname : "presale_list" })
-    } else {
-      setToown(true)
-      walletDialogShow()
-    }
+    history.push({ pathname : "presale_list" })
+    // if (walletStore.info) {
+    //   history.push({ pathname : "presale_list" })
+    // } else {
+    //   setToown(true)
+    //   walletDialogShow()
+    // }
+
     // if(loginInfo && loginInfo.address){
     //   history.push({ pathname : "presale_list" , state : {walletName, loginInfo}})
     // }else{
@@ -206,6 +228,7 @@ const Index = ({ store }) => {
                 account = {account}
                 toOwn = {toOwn}
                 walletStore = {walletStore}
+                onRef = {onRef}
               ></ConfirmDetail> : null
             }
           </div>
@@ -216,6 +239,8 @@ const Index = ({ store }) => {
         getLoginInfo = {getLoginInfo}
         getWalletInstance = {getWalletInstance}
         walletStore = {walletStore}
+        topay = {topay}
+        payaction = {payaction}
       ></WalletDialog>
       <Toast
         open = {errorToast}
