@@ -23,13 +23,13 @@ const walletList = [
 ]
 
 function WalletDialog(params) {
-    const {open , dialogClose, getLoginInfo, getWalletInstance, walletStore,topay, payaction} = params;
+    const {open , dialogClose, getLoginInfo, getWalletInstance, walletStore, topay, payaction} = params;
     const [walletName, setWalletName] = useState('')
     // const [loginInfo, setLoginInfo] = useState({})
     // const [account, setAccount] = useState('')
-    // const [toast, setToast] = useState(false)
-    // const [toastType, setToastType] = useState("warn")
-    // const [toastMsg, setToastMsg] = useState("")
+    const [toast, setToast] = useState(false)
+    const [toastType, setToastType] = useState("warn")
+    const [toastMsg, setToastMsg] = useState("")
     const [showloading, setShowloading] = useState(false)
   
     const walletDialogClose = () => {
@@ -37,21 +37,19 @@ function WalletDialog(params) {
     }
 
     const poptoast = (txt,type, isInfinite) => {
-        setShowloading(true)
-        // setToast(true)
-        // setToastType(type || "warn")
-        // setToastMsg(txt)
+        setToast(true)
+        setToastType(type || "warn")
+        setToastMsg(txt)
 
-        // setTimeout(()=>{
-        //     if(isInfinite){return}
-        //     closePoptoast()
-        // }, 3000)
+        setTimeout(()=>{
+            if(isInfinite){return}
+            closePoptoast()
+        }, 3000)
     }
     const closePoptoast = () =>{
-        setShowloading(false)
-        // setToast(false)
-        // setToastType("warn")
-        // setToastMsg('')
+        setToast(false)
+        setToastType("warn")
+        setToastMsg('')
     }
 
 
@@ -88,7 +86,8 @@ function WalletDialog(params) {
       const connectObj = await connectWalletAndLogin(wallet, walletStore);
       console.log("connectObj:::", connectObj);
       if(!connectObj.account){
-          faildCallback(connectObj)
+          poptoast(connectObj.msg.toString());
+          // faildCallback(connectObj)
           setShowloading(false)
           return;
       }
@@ -139,12 +138,12 @@ function WalletDialog(params) {
                 })
               }
             </WalletWrap>
-            {/* <Toast
+            <Toast
                 open = {toast}
                 type = {toastType}
                 txt = {toastMsg}
                 noHeader = {true}
-            ></Toast> */}
+            ></Toast>
         </Dialog>
     )
 }

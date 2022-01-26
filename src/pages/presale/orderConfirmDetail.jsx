@@ -203,6 +203,9 @@ class orderConfirmDetail extends React.Component {
         }
         this.setState({paying: true})
         this.poptoast("Payment processing","loading", true)
+        setTimeout(()=>{
+            this.closePoptoast();
+        }, 18*1000)
         console.log("this.props.walletStore.walletName:::", this.props.walletStore.info.address);
 
         const balance = await _wallet.getBalanceOf(this.props.walletStore.info.address)
@@ -226,6 +229,7 @@ class orderConfirmDetail extends React.Component {
             await _wallet.transfer(curPrice, this.paysuccess, this.payfaild)
             this.setState({paying: false})
         } catch (error) {
+            this.closePoptoast();
             console.log("transfer faild:::::---:", error)
         }
         
