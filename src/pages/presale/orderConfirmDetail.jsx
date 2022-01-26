@@ -27,6 +27,7 @@ class orderConfirmDetail extends React.Component {
             walletSwitching: false,
             countDownSeconds: 0,
             accountChangeDialog: false,
+            expiredDialog: false,
         };
     }
 
@@ -57,17 +58,6 @@ class orderConfirmDetail extends React.Component {
             })
         }
         return true
-    }
-
-    handleEndCallback = () => {
-        console.log('countDown end')
-    }
-
-    correctRequest = () => {
-        return new Promise(async(resolve) => {
-            await new Promise((resolve) => setTimeout(resolve, 600))
-            resolve(8)
-        })
     }
 
     handleRadioCheck = async (type) => {
@@ -172,14 +162,15 @@ class orderConfirmDetail extends React.Component {
             try {
                 _walletAccount = await _prewallet.requestAccounts();
             } catch (error) {
+                _walletAccount = null
                 return {
                     code: 2,
                     error: error
                 }
             }
 
-            if(_walletAccount != this.props.walletStore.info?.address){
-                if(this.props.walletStore.walletName == "plug"){
+            if(!!_walletAccount && _walletAccount != this.props.walletStore.info?.address){
+                if(this.props.walletStore.walletName == "plug" && !_walletAccount.code){
                     console.log("_walletAccount: plug::::", _walletAccount)
                     this.props.walletStore.setWalletInfo({
                     ...this.props.walletStore.info,
@@ -222,8 +213,9 @@ class orderConfirmDetail extends React.Component {
         }else{
             curPrice = this.state.detail.price
         }
+
         console.log("curPrice:::", curPrice, myAmount)
-        if (myAmount < +curPrice) {
+        if (this.props.walletStore.walletName == "metamask" && myAmount < +curPrice) {
             this.closePoptoast();
             this.poptoast("Confirm your assist is enough!")
             this.setState({paying: false})
@@ -259,7 +251,7 @@ class orderConfirmDetail extends React.Component {
 
     payfaild = (error) => {
         this.closePoptoast();
-        const userReject = 'MetaMask Message Signature: User rejected message signature!'
+        const userReject = 'User rejected message signature!'
         if(error.code == 4001){
             this.poptoast(userReject)
             return
@@ -279,6 +271,7 @@ class orderConfirmDetail extends React.Component {
                 const { code, ttl, message, success } = res.data
                 if (success) {
                     resolve(['string', 'number'].includes(typeof ttl) ? +ttl : 0)
+                    // resolve(['string', 'number'].includes(typeof ttl) ? +100 : 0)
                 } else {
                     resolve(0)
                 }
@@ -290,6 +283,25 @@ class orderConfirmDetail extends React.Component {
 
     accountConfirmHandle = () =>{
         this.setState({accountChangeDialog : false})
+        this.handleBack()
+    }
+
+    handleEndCallback = () => {
+        console.log('countDown end')
+        // this.state.expiredDialog = true;
+        this.setState({expiredDialog : true})
+    }
+
+    // correctRequest = () => {
+    //     console.log("correctRequest....")
+    //     return new Promise(async(resolve) => {
+    //         await new Promise((resolve) => setTimeout(resolve, 600))
+    //         resolve(8)
+    //     })
+    // }
+
+    expiredDialogHandle = () => {
+        this.setState({expiredDialog : false})
         this.handleBack()
     }
 
@@ -329,7 +341,7 @@ class orderConfirmDetail extends React.Component {
                                 <div className="valueWrap">
                                     <div className="radios">
                                         <div 
-                                            className={this.state.radioVal == "icp" ? "radio checked" : "radio disabled"}
+                                            className={this.props.walletStore.walletName == "plug" ? "radio checked" : "radio disabled"}
                                             onClick={()=>{this.handleRadioCheck("icp")}}
                                         >
                                             <span className="raInput"><span></span></span>
@@ -338,7 +350,7 @@ class orderConfirmDetail extends React.Component {
                                         </div>
 
                                         <div 
-                                            className={this.state.radioVal == "usdt" ? "radio checked" : "radio disabled"}
+                                            className={this.props.walletStore.walletName == "metamask" ? "radio checked" : "radio disabled"}
                                             onClick={()=>{this.handleRadioCheck("usdt")}}
                                         >
                                             <span className="raInput"><span></span></span>
@@ -386,8 +398,19 @@ class orderConfirmDetail extends React.Component {
                     confirmHandle = {this.accountConfirmHandle}
                     dialogClose = {this.accountConfirmHandle}
                 >
-
                     <p>Account changes,Please return to the home page to repurchase</p>
+                </Dialog>
+
+                <Dialog
+                    type = {"warn"}
+                    title = "Expired"
+                    open = {this.state.expiredDialog}
+                    operateBtton = "confirm"
+                    maxWidth = "xs"
+                    confirmHandle = {this.expiredDialogHandle}
+                    dialogClose = {this.expiredDialogHandle}
+                >
+                    <p>Timeout has expired and the order has not been paid for.<br></br>Dmail NFT Domain Account has been released.<br></br> Please return to the home page to repurchase.</p>
                 </Dialog>
             </ConfirmPannel>
         );

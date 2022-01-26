@@ -97,6 +97,7 @@ const Left = styled.div`
             height: 112px;
             box-sizing: border-box;
             padding: 16px;
+            width: 100%;
             h3{
                 font-size: 16px;
                 font-family: Roboto-Medium, Roboto;
@@ -387,6 +388,12 @@ const Mainpannel = styled.div`
                 line-height: 48px;
                 border: none;
                 cursor: pointer;
+            }
+            .searchBtn:hover{
+                background: #e34c1a;
+            }
+            .searchBtn:active{
+                background: #913719;
             }
         }
         .errorTip{
@@ -780,6 +787,12 @@ const ConfirmPannel = styled.div`
                         margin-right: 22px;
                         cursor: pointer;
                     }
+                    .confirmBtn:hover{
+                        background: #e34c1a;
+                    }
+                    .confirmBtn:active{
+                        background: #913719;
+                    }
 
                     .countDown {
                         font-size: 16px;
@@ -903,30 +916,38 @@ const StepDialogWrap = styled.div`
 `
 
 const ToastWrap = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    align-items: top;
-    justify-content: start;
-    img{
-        width: 18px;
-        height: 18px;
-        vertical-align: middle;
-        margin-right: 15px;
-    }
-    img.animate{
-        animation: spin 1s steps(8) infinite;
-    }
-    @keyframes spin {
-        from {transform: rotate(0deg);}
-          to {transform: rotate(360deg);}
-    }
-    p{
-        font-size: 16px;
-        font-family: Roboto-Medium, Roboto;
-        font-weight: bold;
-        color: #1D1D1F;
-        line-height: 18px;
-    }
+    
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: top;
+        justify-content: start;
+        img{
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+        img.animate{
+            animation: spin 1s steps(8) infinite;
+        }
+        @keyframes spin {
+            from {transform: rotate(0deg);}
+            to {transform: rotate(360deg);}
+        }
+        p{
+            font-size: 16px;
+            font-family: Roboto-Medium, Roboto;
+            font-weight: bold;
+            color: #1D1D1F;
+            line-height: 18px;
+            word-break: break-all;
+            .tipimg{
+                width: 24px;
+                height: 24px;
+                margin-right: 0;
+                margin-left: 10px;
+            }
+        }
 `
 
 const ConnectWalletBtn = styled.div`

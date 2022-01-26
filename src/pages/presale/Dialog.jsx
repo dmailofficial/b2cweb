@@ -85,13 +85,13 @@ class DDialog extends React.Component {
     }
 
     render() {
-        const {open, title, type, maxWidth, noHeader, operateBtton} = this.props
+        const {open, title, type, maxWidth, noHeader, operateBtton ,fullWidth} = this.props
 
         return (
                 <DmailDialog
                     open = {open}
                     className="DmailDialog"
-                    fullWidth={true}
+                    fullWidth={fullWidth || true}
                     maxWidth={maxWidth || "sm"}
                 >
                     {!noHeader ?

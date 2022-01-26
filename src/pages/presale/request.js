@@ -67,11 +67,8 @@ export const blockEmail = async (data) => {
 
 export const getDetail = async (email) => {
   return axios({
-    url: `${baseUrl}/products`,
-    method: 'post',
-    data:{
-      key : email
-    }
+    url: `${baseUrl}/products/${email}`,
+    method: 'get',
     // errorTitle: '',
   }).then((res) => {
     try {
@@ -171,3 +168,18 @@ export const checkProductLockInfo = async (product_name) => {
     }
   })
 }
+
+export const getEvents = async () => {
+  return axios({
+    url: `${baseUrl}/events`,
+    method: 'get',
+  }).then((res) => {
+    try {
+      const { data, code, message, success } = res.data
+      return { data, code, message, success }
+    } catch (error) {
+      return { success: false, msg: error, data: null }
+    }
+  })
+}
+

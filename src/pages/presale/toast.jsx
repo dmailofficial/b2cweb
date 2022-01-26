@@ -1,5 +1,7 @@
 import React , {useState} from 'react'
-import Dialog from './Dialog'
+import styled  from 'styled-components';
+// import Dialog from './Dialog'
+import Dialog from '@mui/material/Dialog';
 import { ToastWrap} from './css'
 
 import warnIcon from '@/static/images/presale/expired@2x.png'
@@ -14,25 +16,39 @@ const icons = {
     loading: payingIcon
 }
 
+const DmailDialog = styled(Dialog)`
+    .MuiDialog-paper{
+        width: auto;
+        line-height: 24px;
+        padding: 20px;
+    }
+
+`
+
+
 function Toast(params) {
-    const {open , type, txt} = params;
+    const {open , type, txt, tipimg} = params;
 
     
 
     return (
-        <Dialog
-            open = {open}
-            noHeader = {true}
-        >
-            <ToastWrap>
-                
-                <img 
-                    src = { icons[type] || warnIcon} 
-                    className = {type == "loading" ? "animate" : ""}
-                ></img>
-                <p>{txt}</p>
-            </ToastWrap>
-        </Dialog>
+        
+            <DmailDialog
+                open = {open}
+                noHeader = {true}
+            >
+                <ToastWrap>
+                    <img 
+                        src = { icons[type] || warnIcon} 
+                        className = {type == "loading" ? "animate" : ""}
+                    ></img>
+                    <p>
+                        {txt}
+                        {tipimg ? <img className="tipimg" src = {tipimg}></img>:null}
+                    </p>
+                </ToastWrap>
+            </DmailDialog>
+        
     )
 }
 

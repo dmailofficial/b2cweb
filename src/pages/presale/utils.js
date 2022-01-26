@@ -3,7 +3,7 @@ import Wallet from '@/wallet/index'
 
 export const baseUrl = 'https://pay.dmail.ai'
 
-export const loginAndGetLoginInfo = async (account, wallInstance, walletName) => {
+export const loginAndGetLoginInfo = async (account, wallInstance, walletName, walletStore, isfirst) => {
 
     const { success, msg, data } = await login(account);
     let loginInfo = null;
@@ -24,9 +24,13 @@ export const loginAndGetLoginInfo = async (account, wallInstance, walletName) =>
       }
     }
     if(walletName == "metamask"){
+      if(!isfirst){
+        walletStore && walletStore.setWalletAccountChange(true)
+      }
       const { signmessage } = data
       const signRes = await wallInstance.sign(signmessage)
       console.log("signRes:::",signRes)
+      walletStore && walletStore.setWalletAccountChange(false)
       if(signRes.code){
         // faildcallback && faildcallback(signRes)
         return signRes;
@@ -68,17 +72,19 @@ console.log("connectWalletAndLogin:", walletAccount)
   if(walletAccount.code){
       return walletAccount;
   }
-  const userInfo = await accountChangeHandle(walletAccount)
+  const userInfo = await accountChangeHandle(walletAccount, "first")
   console.log("connectWalletAndLogin2222:", userInfo)
   return userInfo;
 
-  async function accountChangeHandle(address){
+  async function accountChangeHandle(address, isfirst){
     console.log("connectWalletAndLogin33333322222:", address)
     if(!address){return false}
     let _loginInfo = await loginAndGetLoginInfo(
         address, 
         _walletInstance,
-        wallet
+        wallet,
+        walletStore,
+        isfirst
     );
     console.log("connectWalletAndLogin333333:", _loginInfo)
     if(!_loginInfo.address){
@@ -128,7 +134,8 @@ export const  connectWallet = async (wallet, walletStore) => {
       let _loginInfo = await loginAndGetLoginInfo(
           address, 
           _walletInstance,
-          wallet
+          wallet,
+          walletStore
       );
 
       console.log("connectWalletAndLogin33333 no login:", walletAccount)

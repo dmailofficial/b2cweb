@@ -4,6 +4,7 @@ import Cookies from 'js-cookie'
 export default class WalletStore {
   info = null
   walletName = null
+  walletAccountChange = false
 
   constructor() {
     makeAutoObservable(this)
@@ -26,5 +27,8 @@ export default class WalletStore {
     } catch (error) {
       //
     }
+  }
+  setWalletAccountChange(bl){
+    this.walletAccountChange = bl
   }
 }

@@ -202,8 +202,8 @@ class MainpannelComp extends React.Component {
                 ): null}
                 <div className="bref">
                     <img src={logo}></img>
-                    <h2>{this.props.activity.name}</h2>
-                    <p>{this.props.activity.desc}</p>
+                    <h2>{this.props.activity.title}</h2>
+                    <p>{this.props.activity.subtitle}</p>
                 </div>
                 {this.state.status == 1 ?
                     <div className="formWrap notStarted">
