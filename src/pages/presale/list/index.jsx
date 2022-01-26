@@ -114,14 +114,14 @@ function App({ store: { wallet, presale } }) {
         method: 'post',
         data: {
           jwt,
-          // address,
-          address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
+          address,
+          // address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
         },
         // errorTitle: '',
       })
       const { code, data, totalPages, message, success } = res.data
-      if (res.data && res.data.data) {
-        const list = res.data.data
+      if (res.data) {
+        const list = res.data.data || []
         setPageCount(totalPages || 0)
         setData(list.map(({ created, id, price, product_name, status, tx, nft_id, p_id }) => ({
           id,
