@@ -23,11 +23,8 @@ const MetaMaskChainAbiMap = {
 
 class MetaMaskWallet {
     constructor(props){
-      console.log("MetaMaskWallet constructor props:::", props)
       this.walletName = props?.walletName || ""
       this.accountChangeHandle = props?.accountChangeHandle || function(){}
-
-      console.log("MetaMaskWallet constructor props:::", this.walletName)
     }
 
     _getChainId = () => {
@@ -83,7 +80,6 @@ class MetaMaskWallet {
             return accounts[0]
             
             } catch (error) {
-              console.error("metamask requestAccounts error:::", error)
                 return {
                     code: 1,
                     msg: 'User denied account access!'
@@ -100,7 +96,6 @@ class MetaMaskWallet {
 
     listenerAccountsChanged = (handleCallback) => {
         window.ethereum.on('accountsChanged', async (accounts) => {
-            console.log("metamask accountsChanged !", accounts)
             handleCallback && await handleCallback(accounts[0])
           });
     }

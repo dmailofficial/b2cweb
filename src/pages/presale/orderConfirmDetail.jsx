@@ -12,7 +12,7 @@ import { baseUrl } from './utils'
 import Wallet from '@/wallet/index'
 import Dialog from './Dialog'
 
-import nftcover from '@/static/images/presale/nftcover.png'
+import nftcover from '@/static/images/presale/nftcover2.png'
 
 class orderConfirmDetail extends React.Component {
     constructor(props) {
@@ -29,6 +29,7 @@ class orderConfirmDetail extends React.Component {
             accountChangeDialog: false,
             expiredDialog: false,
         };
+        this.timer = null;
     }
 
     componentWillMount(){
@@ -221,9 +222,13 @@ class orderConfirmDetail extends React.Component {
             this.setState({paying: false})
             return
         }
+        try {
+            await _wallet.transfer(curPrice, this.paysuccess, this.payfaild)
+            this.setState({paying: false})
+        } catch (error) {
+            console.log("transfer faild:::::---:", error)
+        }
         
-        await _wallet.transfer(curPrice, this.paysuccess, this.payfaild)
-        this.setState({paying: false})
         
     }
 
@@ -235,6 +240,7 @@ class orderConfirmDetail extends React.Component {
         let curPrice = 0;
         if(this.props.walletStore.walletName == "plug"){
             curPrice = this.state.detail.icpPrice
+            chainId = 998
         }else{
             curPrice = this.state.detail.price
         }
@@ -259,7 +265,6 @@ class orderConfirmDetail extends React.Component {
         this.poptoast(' Payment failure ', "faild")
         return
     }
-
     correctRequest = () => {
         return new Promise(async(resolve) => {
             try {
@@ -271,12 +276,22 @@ class orderConfirmDetail extends React.Component {
                 const { code, ttl, message, success } = res.data
                 if (success) {
                     resolve(['string', 'number'].includes(typeof ttl) ? +ttl : 0)
-                    // resolve(['string', 'number'].includes(typeof ttl) ? +100 : 0)
                 } else {
                     resolve(0)
                 }
             } catch (error) {
                   
+            }
+        })
+    }
+
+    correctLockTime = () => {
+        this.correctRequest().then((countDownSeconds) => {
+            countDownSeconds > 0 && this.setState({
+                countDownSeconds
+            });
+            if(countDownSeconds < 0 ){
+                clearInterval(this.timer)
             }
         })
     }
@@ -292,33 +307,49 @@ class orderConfirmDetail extends React.Component {
         this.setState({expiredDialog : true})
     }
 
-    // correctRequest = () => {
-    //     console.log("correctRequest....")
-    //     return new Promise(async(resolve) => {
-    //         await new Promise((resolve) => setTimeout(resolve, 600))
-    //         resolve(8)
-    //     })
-    // }
-
     expiredDialogHandle = () => {
         this.setState({expiredDialog : false})
         this.handleBack()
     }
 
+    
+    
     componentDidMount() {
         this.props.onRef(this)
-        this.correctRequest().then((countDownSeconds) => {
-            countDownSeconds > 0 && this.setState({
-                countDownSeconds
-            });
-        })
+        this.hiddenProperty = 'hidden' in document ? 'hidden' :    
+                'webkitHidden' in document ? 'webkitHidden' :    
+                'mozHidden' in document ? 'mozHidden' :  null;
+        this.visibilityChangeEvent = this.hiddenProperty.replace(/hidden/i, 'visibilitychange');
+        this.onVisibilityChange = () => {
+            if (!document[this.hiddenProperty]) {    
+            }else{
+                this.correctLockTime();
+            }
+        }
+        document.addEventListener(this.visibilityChangeEvent, this.onVisibilityChange);
+        
+        this.correctLockTime();
+        this.timer = setInterval(()=>{
+            this.correctLockTime();
+        }, 1000*30)
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.timer)
+
+        const hiddenProperty = 'hidden' in document ? 'hidden' :    
+                'webkitHidden' in document ? 'webkitHidden' :    
+                'mozHidden' in document ? 'mozHidden' :  null;
+        const visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+        
+        document.removeEventListener(this.visibilityChangeEvent, this.onVisibilityChange);
     }
 
     render() {
         return (
             <ConfirmPannel>
-                <div className="backBtn" onClick = {this.handleBack}>
-                    <img src={backArrow}></img><span>Back</span>
+                <div className="backBtn">
+                    <img onClick = {this.handleBack} src={backArrow}></img><span  onClick = {this.handleBack}>Back</span>
                 </div>
                 <div className="content">
                     <div className="domainImg">

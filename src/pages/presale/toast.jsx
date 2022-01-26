@@ -35,7 +35,6 @@ function Toast(params) {
         
             <DmailDialog
                 open = {open}
-                noHeader = {true}
             >
                 <ToastWrap>
                     <img 

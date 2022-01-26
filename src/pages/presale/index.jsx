@@ -16,6 +16,7 @@ import metamasktipIcon from '@/static/images/presale/metamasktip.png'
 
 const Index = ({ store }) => {
   const walletStore = store.wallet
+  const presaleStore = store.presale
   // console.log('wallet.info', walletStore.info ? walletStore.info.address : walletStore.info)
 
   const history = useHistory();
@@ -33,6 +34,7 @@ const Index = ({ store }) => {
   const [showName, setShowName] = useState('')
   const [payaction, setPayaction] =  useState(false)
   const [payOrderChild, setPayOrderChild] = useState(null)
+  const [vertip, setVertip] = useState(null)
 
   const presaleChange = (item) => {
     console.log("item:::", item)
@@ -168,7 +170,11 @@ const Index = ({ store }) => {
 
   useEffect(async () => {
     if(walletStore.walletName == "metamask" && step == 2 && walletStore.walletAccountChange){
+      setVertip(metamasktipIcon)
       poptoast("Please verify the signature in metamask")
+      setTimeout(()=>{
+        setVertip(null)
+      }, 3000)
     }
   }, [walletStore.walletAccountChange])
 
@@ -192,21 +198,26 @@ const Index = ({ store }) => {
   useEffect(async () => {
     if(step == 1){return }
     const swalletName = Cookies.get('walletname')
-    const walletName = JSON.parse(decode(swalletName))
     const sInfo = Cookies.get('account')
-    const info = JSON.parse(decode(sInfo))
-    const walletObj = await connectWallet(walletName, walletStore)
-    console.log("presale use effect connect wallet::::: ",walletObj)
-    if(walletObj.code){
-      console.log("connect wallet error: ", walletObj.msg);
+    try {
+      const walletName = JSON.parse(decode(swalletName))
+      const info = JSON.parse(decode(sInfo))
+      const walletObj = await connectWallet(walletName, walletStore)
+      console.log("presale use effect connect wallet::::: ",walletObj)
+      if(walletObj.code){
+        console.log("connect wallet error: ", walletObj.msg);
+        poptoast(walletObj.msg.toString())
+      }
+      if(walletName == "plug"){
+        walletStore.setWalletInfo({
+          ...info,
+          address: walletObj.account
+        })
+      }
+      setWalletInstance(walletObj.instance)
+    } catch (error) {
+        //
     }
-    if(walletName == "plug"){
-      walletStore.setWalletInfo({
-        ...info,
-        address: walletObj.account
-      })
-    }
-    setWalletInstance(walletObj.instance)
   }, [step])
 
   return (
@@ -224,7 +235,7 @@ const Index = ({ store }) => {
       </OperateBtn>
       <ContentBox>
           <div className="leftWrap">
-              <Left presaleChange = {presaleChange}></Left>
+              <Left presaleChange = {presaleChange}  presaleStore = {presaleStore} ></Left>
           </div>
           <div className="main">
             {step == 1 ?
@@ -237,6 +248,7 @@ const Index = ({ store }) => {
                 account = {account}
                 activity = {curItem}
                 walletStore = {walletStore}
+                presaleStore = {presaleStore}
               ></Main> : null
             }
             {step == 2 ?
@@ -250,6 +262,7 @@ const Index = ({ store }) => {
                 account = {account}
                 toOwn = {toOwn}
                 walletStore = {walletStore}
+                presaleStore = {presaleStore}
                 onRef = {onRef}
               ></ConfirmDetail> : null
             }
@@ -266,11 +279,9 @@ const Index = ({ store }) => {
       ></WalletDialog>
       <Toast
         open = {errorToast}
-        // open = {true}
         type = "warn"
         txt = {errorToastMsg}
-        noHeader = {true}
-        tipimg = {metamasktipIcon}
+        tipimg = {vertip}
       ></Toast>
     </>
   );

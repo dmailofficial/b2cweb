@@ -390,7 +390,7 @@ const Mainpannel = styled.div`
                 cursor: pointer;
             }
             .searchBtn:hover{
-                background: #e34c1a;
+                background: #fa7a4f;
             }
             .searchBtn:active{
                 background: #913719;
@@ -604,7 +604,6 @@ const ConfirmPannel = styled.div`
     padding: 25px 32px;
     box-sizing: border-box;
     .backBtn{
-        cursor: pointer;
        img{
            width: 24px;
            height: 24px;
@@ -788,7 +787,7 @@ const ConfirmPannel = styled.div`
                         cursor: pointer;
                     }
                     .confirmBtn:hover{
-                        background: #e34c1a;
+                        background: #fa7a4f;
                     }
                     .confirmBtn:active{
                         background: #913719;

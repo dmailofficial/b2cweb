@@ -2,49 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Left } from './css'
 import { getEvents } from './request'
 
-import coverImg1 from '@/static/images/presale/activecover1.png'
-import coverImg2 from '@/static/images/presale/activecover2.png'
-
-
-const testlist = [
-    {
-        id: 1,
-        label: "WEDNESDAY",
-        name: "Firstround of dmail NFT Domain Account presale",
-        desc: "Master your mailbox data sovereignty Each mail is NFT",
-        time: "12/26/2021-1/26/2022",
-        status: "1",
-        cover: coverImg1
-    },
-    {
-        id: 2,
-        label: "WEDNESDAY",
-        name: "Firstround of dmail NFT Domain Account presale",
-        desc: "Master your mailbox data sovereignty Each mail is NFT",
-        time: "12/26/2021-1/26/2022",
-        status: "2",
-        cover: coverImg2
-    },
-    {
-        id:3,
-        label: "WEDNESDAY",
-        name: "NFT Domain Account",
-        desc: "Master your mailbox data sovereignty Each mail is NFT",
-        time: "12/26/2021-1/26/2022",
-        status: "3",
-        cover: coverImg1
-    },
-    {
-        id:4,
-        label: "WEDNESDAY",
-        name: "NFT Domain Account",
-        desc: "Master your mailbox data sovereignty Each mail is NFT",
-        time: "12/26/2021-1/26/2022",
-        status: "3",
-        cover: coverImg2
-    }
-    
-]
+import coverImg from '@/static/images/presale/activecover.png'
 
 const LeftComp = (props) => {
     const [curId, setCurId] = useState(1)
@@ -60,7 +18,9 @@ const LeftComp = (props) => {
                 cur =  item;
             }
         })
-        props.presaleChange(cur);
+        console.log("props.walletStore......",props.presaleStore)
+        props.presaleStore.setCurPresale(cur)
+        props.presaleChange(cur)
     }
 
     const getEventsList = async () =>{
@@ -70,8 +30,7 @@ const LeftComp = (props) => {
        }
 
        const list = data.map((item, i)=>{
-            let status = i == 0 ? "2" : "3";
-            return {...item, cover: coverImg1, _index:i+1, id: i+1, status}
+            return {...item, cover: coverImg, _index:i+1, id: i+1}
        })
 
        await (()=>{setList(list)})()
@@ -92,7 +51,7 @@ const LeftComp = (props) => {
             {
                 list.map((item, i)=>{
                     return <div 
-                            className={["activityItem",  curId == item._index ? "active" : "", item.status == 1 ? " coming" : item.status == 2 ? " progress" : " closed" ].join(' ')}
+                            className={["activityItem",  curId == item._index ? "active" : "", item.status === 0 ? " coming" : item.status === 1 ? " progress" : " closed" ].join(' ')}
                             onClick = {()=>{handleClickItem(item._index)}}
                             key = {i}
                         >
@@ -102,7 +61,7 @@ const LeftComp = (props) => {
                             <h3>{item.name}</h3>
                             <div className="statusInfo">
                                 <span className="time">{item.startDate}-{item.endDate}</span>
-                                <span className="status">{item.status == 1 ? "Coming" : item.status == 2 ? "In progress" : "Closed"}</span>
+                                <span className="status">{item.status === 0 ? "Coming" : item.status == 1 ? "In progress" : "Closed"}</span>
                             </div>
                         </div>
                     </div>

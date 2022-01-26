@@ -120,7 +120,7 @@ const Table = (props) => {
     const value = original[key]
     // console.log(key, original, cell)
     if (key === 'date') {
-      if (!value.includes(' ')) {
+      if (!value?.includes(' ')) {
         return value
       }
       const aDate = value.split(' ')

@@ -3,6 +3,7 @@ import { makeAutoObservable, observable, computed, toJS } from 'mobx';
 
 export default class PresaleStore {
   triggerReload = 0
+  curPresale = {}
 
   constructor() {
     makeAutoObservable(this)
@@ -10,5 +11,8 @@ export default class PresaleStore {
 
   triggerListReload () {
     this.triggerReload += 1
+  }
+  setCurPresale(presale){
+    this.curPresale = presale
   }
 }

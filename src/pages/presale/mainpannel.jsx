@@ -187,12 +187,12 @@ class MainpannelComp extends React.Component {
 
     render() {
         return (
-            <Mainpannel className={this.state.status == 1 ? "coming" : this.state.status == 2 ? "inprogress" : "closed"}>
+            <Mainpannel className={this.props.presaleStore.curPresale?.status === 0 ? "coming" : this.props.presaleStore.curPresale?.status === 1 ? "inprogress" : "closed"}>
                 <div className="statusFlag">
                     <div className="triangle"></div>
-                    <img src={this.state.status == 1 ? inprogressIcon : this.state.status == 2 ? comingIcon : closedIcon}></img>
+                    <img src={this.props.presaleStore.curPresale?.status === 1 ? inprogressIcon : this.props.presaleStore.curPresale?.status === 0 ? comingIcon : closedIcon}></img>
                 </div>
-                {this.state.status == 1 && this.state.countDownSeconds > 0 ? (
+                {this.props.presaleStore.curPresale?.status === 0 && this.state.countDownSeconds > 0 ? (
                     <div className="count-down">
                         <i></i>
                         <span>
@@ -205,7 +205,7 @@ class MainpannelComp extends React.Component {
                     <h2>{this.props.activity.title}</h2>
                     <p>{this.props.activity.subtitle}</p>
                 </div>
-                {this.state.status == 1 ?
+                {this.props.presaleStore.curPresale?.status === 0 ?
                     <div className="formWrap notStarted">
                         <div className="inputWrap">
                             <span></span>
@@ -214,7 +214,7 @@ class MainpannelComp extends React.Component {
                         </div>
                     </div>:null
                 }
-                {this.state.status == 2 ?
+                {this.props.presaleStore.curPresale?.status === 1 ?
                     <div className="formWrap">
                         <div className="inputWrap">
                             <span></span>
@@ -255,7 +255,7 @@ class MainpannelComp extends React.Component {
                         }
                     </div>:null
                 }
-                {this.state.status == 3 ?
+                {this.props.presaleStore.curPresale?.status === 9 ?
                     <div className="formWrap disabled">
                         <div className="inputWrap">
                             <span></span>

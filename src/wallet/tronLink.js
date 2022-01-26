@@ -1,51 +1,34 @@
-const PlugAbiMap = {
-  toAddress: '567to-2ufhs-rzv5c-2wnbb-6y34z-kzi7q-nvwcv-ulekn-2esk4-kyggc-iae',
+const TronAbiMap = {
+  contractAddress: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
+  abi: TRC_abi,
+  toAddress: 'TGQeDqyZk4hW6FLjq8h6adZ9xaCMWPXozt',
+  decimals: 6,
 }
 
-class PlugWallet {
+class TronWallet {
     constructor(){
 
     }
 
     getChainInfo = async () => {
-      return PlugAbiMap
+      return TronAbiMap
     }
 
     requestAccounts = async () => {
-      if (window.ic && window.ic.plug) {
-        try {
-          // Canister Ids
-          const nnsCanisterId = 'pyr3m-ciaaa-aaaai-qasua-cai'
-          // Whitelist
-          const whitelist = [
-            nnsCanisterId,
-        ];
-          const res = await window.ic.plug.requestConnect({
-              whitelist,
-              // host: 'http://localhost:3000',
-          });
-
-          const principalId = await window.ic.plug.agent.getPrincipal();
-          const sIndentity = principalId.toString();
-          return sIndentity
-        } catch (error) {
-          // denied
-          return {
-            code: 1,
-            msg:  error
-          }
-        }
+      if (window.tronWeb && window.tronLink) {
+        const res = await window.tronLink.request({ method: 'tron_requestAccounts' });
+        const account = window.tronWeb.defaultAddress.base58;
+        return [account]
       } else {
-        this._install();
         return {
           code: 2,
-          msg: 'Please install Plug!'
+          msg: 'Please install TronLink!'
         }
       }
     }
 
     _install = () => {
-        const install = 'https://chrome.google.com/webstore/detail/plug/cfbfdhimifdmdehjmkdobpcjfefblkjm'
+        const install = 'https://chrome.google.com/webstore/detail/tronlink%EF%BC%88%E6%B3%A2%E5%AE%9D%E9%92%B1%E5%8C%85%EF%BC%89/ibnejdfjmmkpcnlpebklmnkoeoihofec';
         window.open(install)
     }
 
