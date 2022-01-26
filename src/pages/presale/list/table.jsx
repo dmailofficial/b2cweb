@@ -102,7 +102,6 @@ const Table = (props) => {
     if (type === 'disabled') {
       return;
     }
-    console.log(type)
     if (type === 'primary') {
       setOpen(true)
     } else if (type === 'ghost') {
@@ -134,12 +133,12 @@ const Table = (props) => {
           ))}
         </>
       )
-    // } else if (['owner'].includes(key) && Array.isArray(value)) {
-    //   return (
-    //     <>
-    //       {value.map((item, key) => <p key={key}>{item}</p>)}
-    //     </>
-    //   )
+    } else if (['hash', 'owner'].includes(key)) {
+      return (
+        <span className="break-word">
+          {value}
+        </span>
+      )
     } else if (key === 'operation') {
       const status = original['status']
       if (!(status in statusMap)) {

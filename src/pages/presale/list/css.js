@@ -263,6 +263,12 @@ export const TableChunk = styled.div`
       margin-right: 8px;
     }
   }
+
+  .break-word {
+    word-break: break-word;
+    max-width: 260px;
+    display: inline-block;
+  }
 `
 export const NoDataWraper = styled.div`
   ${flexAlign};

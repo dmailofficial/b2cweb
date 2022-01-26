@@ -101,10 +101,11 @@ function App({ store: { wallet, presale } }) {
   }
 
   const fetchData = useCallback(async ({ pageIndex, pageSize }) => {
-    if (!wallet.info || !wallet.info.address) {
+    console.log(wallet.info)
+    if (!wallet.info || !wallet.info.address || !wallet.info.walletName) {
       return
     }
-    const { jwt, address } = wallet.info
+    const { jwt, address, walletName } = wallet.info
     setLoading(true)
     // await new Promise((resolve) => setTimeout(resolve, 1000))
     try {
@@ -113,8 +114,8 @@ function App({ store: { wallet, presale } }) {
         method: 'post',
         data: {
           jwt,
-          address,
-          // address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
+          // address,
+          address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
         },
         // errorTitle: '',
       })
@@ -127,7 +128,7 @@ function App({ store: { wallet, presale } }) {
           date: created,
           product_name,
           domain: `${product_name}@dmail.ai`,
-          price,
+          price: `${price} ${walletName === 'plug' ? 'ICP' : 'USDT'}`,
           hash: tx,
           status,
           number: nft_id,
@@ -201,6 +202,7 @@ function App({ store: { wallet, presale } }) {
         }
       }
     }
+    
   }, [])
 
   return (
