@@ -199,8 +199,22 @@ const Index = ({ store }) => {
         console.log("useEffect------  wallet  info::::: ",info)
         const walletName = JSON.parse(decode(swalletName))
         walletName && walletStore.setWalletName(walletName)
+
+        if(walletName == "tronlink"){
+          walletStore.setWalletInfo({})
+          walletStore.setWalletName('')
+          Cookies.remove('walletname')
+          Cookies.remove('account')
+        }
       } catch (error) {
         //
+      }
+    }else{
+      if(walletStore.walletName == "tronlink"){
+        walletStore.setWalletInfo({})
+        walletStore.setWalletName('')
+        Cookies.remove('walletname')
+        Cookies.remove('account')
       }
     }
   }, [])
