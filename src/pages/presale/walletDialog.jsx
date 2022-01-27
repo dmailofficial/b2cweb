@@ -7,23 +7,37 @@ import { loginAndGetLoginInfo, connectWalletAndLogin } from './utils'
 
 import metamaskIcon from '@/static/images/presale/metamask@2x.png'
 import plugIcon from '@/static/images/presale/plug-logo@2x.png'
+import TronIcon from '@/static/images/presale/tronlink.png'
 import loadingIcon from '@/static/images/presale/paying@3x.png'
 
 const walletList = [
   {
     code: "metamask",
     name: "MetaMask",
-    icon: metamaskIcon
+    icon: metamaskIcon,
+    specify:false,
   },
   {
     code: "plug",
     name: "Plug",
-    icon: plugIcon
+    icon: plugIcon,
+    specify: true,
+    include: [],
+    exclude: [1],
+  },
+  {
+    code: "tronlink",
+    name: "TronLink",
+    icon: TronIcon,
+    specify: true,
+    include: [1],
+    exclude: [],
   }
+  
 ]
 
 function WalletDialog(params) {
-    const {open , dialogClose, getLoginInfo, getWalletInstance, walletStore, topay, payaction} = params;
+    const {open , dialogClose, getLoginInfo, getWalletInstance, walletStore, round = 0} = params;
     const [walletName, setWalletName] = useState('')
     // const [loginInfo, setLoginInfo] = useState({})
     // const [account, setAccount] = useState('')
@@ -100,9 +114,6 @@ function WalletDialog(params) {
       getWalletInstance(connectObj.instance)
       getLoginInfo(connectObj.loginInfo)
       walletDialogClose()
-      // if(payaction){
-      //   topay()
-      // }
 
     }
 
@@ -123,6 +134,7 @@ function WalletDialog(params) {
             <WalletWrap>
               {
                 walletList.map((wallet, i)=>{
+                  if(!wallet.specify || (wallet.specify && ((wallet.include.length>0 && wallet.include.indexOf(round) > -1) || (wallet.exclude.length > 0 && wallet.exclude.indexOf(round) < 0))) )
                     return (
                       <div className="walletItem" onClick={()=>handleWallet(wallet.code)} key={wallet.name}>
                           <span>{wallet.name}</span>
@@ -131,7 +143,7 @@ function WalletDialog(params) {
                               <img src={loadingIcon} className="loading"></img>:null
                           }
                           <span className="walletLogo">
-                            <img src={wallet.icon}></img>
+                            <img className={wallet.code} src={wallet.icon}></img>
                           </span>
                       </div>
                     )

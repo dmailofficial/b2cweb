@@ -3,8 +3,9 @@ const PlugAbiMap = {
 }
 
 class PlugWallet {
-    constructor(){
-
+    constructor(props){
+      this.walletName = props?.walletName || ""
+      this.accountChangeHandle = props?.accountChangeHandle || function(){}
     }
 
     getChainInfo = async () => {

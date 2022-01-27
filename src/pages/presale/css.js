@@ -496,7 +496,7 @@ const Mainpannel = styled.div`
                 background-image: url('${lockIcon}');
                 background-size: 16px 16px;
                 background-repeat: no-repeat;
-                background-position: 36px center;
+                background-position: 26px center;
                 background-color: #969696;
                 color: #FFFFFF;
                 font-weight: bold;
@@ -834,6 +834,7 @@ const WalletWrap = styled.div`
         justify-content: space-between;
         padding: 0 20px;
         box-sizing: border-box;
+        margin-bottom: 16px;
         cursor: pointer;
         span{
             display: inline-block;
@@ -862,15 +863,21 @@ const WalletWrap = styled.div`
                 height: 33px;
                 display: inline-block;
             }
+            img.plug{
+                width: 28px;
+                height: 40px;
+                display: inline-block;
+            }
+            img.tronlink{
+                width: 35px;
+                height: 35px;
+                display: inline-block;
+            }
         }
     }
-    .walletItem:nth-child(2){
-        margin-top: 16px;
-        img{
-            width: 28px;
-            height: 40px;
-            display: inline-block;
-        }
+    .walletItem:last-child{
+        margin-bottom: 0px;
+        
     }
 `
 

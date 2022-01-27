@@ -15,6 +15,7 @@ import { baseUrl } from '../utils'
 import { login, verifySign } from '../request'
 import WalletDialog from '../walletDialog'
 import Toast from '../toast'
+import {connectWallet} from '../utils'
 import metamasktipIcon from '@/static/images/presale/metamasktip.png'
 
 const columns = [
@@ -71,6 +72,7 @@ function App({ store: { wallet, presale } }) {
   const [walletDialog, setWalletDialog] = useState(false)
 
   const [vertip, setVertip] = useState(null)
+  const [round, setRound] = useState(0)
   
   const walletDialogClose = () => {
     setWalletDialog(false);
@@ -196,17 +198,37 @@ function App({ store: { wallet, presale } }) {
   useEffect(async () => {
     if (!wallet.info) {
       const sInfo = Cookies.get('account')
+      const swalletName = Cookies.get('walletname')
       if (!sInfo) {
         setWalletDialog(true)
       } else {
         try {
           const info = JSON.parse(decode(sInfo))
           info && wallet.setWalletInfo(info)
+
+          const walletName = JSON.parse(decode(swalletName))
+          setTimeout( async ()=>{
+            const walletObj = await connectWallet(walletName, wallet)
+            console.log("presale use effect connect wallet::::: ",walletObj)
+            if(walletObj.code){
+              console.log("connect wallet error: ", walletObj.msg);
+              poptoast(walletObj.msg.toString())
+            }
+            if(walletName !== "metamask"){
+              wallet.setWalletInfo({
+                ...info,
+                address: walletObj.account
+              })
+            }
+          })
         } catch (error) {
           //
         }
       }
     }
+
+    console.log(history.location.state.round)
+    setRound(history.location.state.round)
     
   }, [])
 
@@ -247,6 +269,7 @@ function App({ store: { wallet, presale } }) {
         getLoginInfo = {getLoginInfo}
         getWalletInstance = {getWalletInstance}
         walletStore = {wallet}
+        round = {round}
       ></WalletDialog>
       <Alert info={alertInfo} setInfo={setAlertInfo} />
       <Success text={successText} setText={setSuccessText} />

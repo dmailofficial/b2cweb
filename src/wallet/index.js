@@ -1,6 +1,12 @@
 import MetaMaskWallet from './metaMask'
 import PlugWallet from './plug'
+import TronLinkWallet from './tronLink'
 
+const wallets = {
+    plug: PlugWallet,
+    metamask: MetaMaskWallet,
+    tronlink: TronLinkWallet
+}
 class Wallet {
     constructor(props){
         return this.init(props);
@@ -8,11 +14,6 @@ class Wallet {
 
     init = (props)=>{
         console.log("Wallet init props:::", props, typeof props === "object")
-        const wallets = {
-            plug: PlugWallet,
-            metamask: MetaMaskWallet
-        }
-
         if(!props){
             return new MetaMaskWallet()
         }
@@ -23,7 +24,7 @@ class Wallet {
 
         if(typeof props === "object"){
             const { walletName, accountChangeHandle } = props
-            console.log("walletName::", walletName)
+            console.log("walletName::", walletName, wallets[walletName])
             let _p = {
                 walletName : walletName || "metamask",
                 accountChangeHandle : accountChangeHandle || function(){}

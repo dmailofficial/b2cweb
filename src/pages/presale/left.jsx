@@ -26,11 +26,13 @@ const LeftComp = (props) => {
     const getEventsList = async () =>{
        const {data, code, message, success} = await getEvents();
        if(!success){
-
+            console.log("get events error")
+            return
        }
 
        const list = data.map((item, i)=>{
-            return {...item, cover: coverImg, _index:i+1, id: i+1}
+            let round = item.name == "First Round of dmail NFT Domain Account presale" ? 1 : 0;
+            return {...item, cover: coverImg, _index:i+1, id: i+1, round}
        })
 
        await (()=>{setList(list)})()

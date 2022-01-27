@@ -1,3 +1,8 @@
+import BigNumber from "bignumber.js";
+import { setNumber } from './setByNumber'
+import { TRC_abi } from './abis'
+import { touchRippleClasses } from "@mui/material";
+
 const TronAbiMap = {
   contractAddress: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
   abi: TRC_abi,
@@ -5,9 +10,10 @@ const TronAbiMap = {
   decimals: 6,
 }
 
-class TronWallet {
-    constructor(){
-
+class TronLinkWallet {
+    constructor(props){
+      this.walletName = props?.walletName || ""
+      this.accountChangeHandle = props?.accountChangeHandle || function(){}
     }
 
     getChainInfo = async () => {
@@ -15,15 +21,25 @@ class TronWallet {
     }
 
     requestAccounts = async () => {
-      if (window.tronWeb && window.tronLink) {
-        const res = await window.tronLink.request({ method: 'tron_requestAccounts' });
-        const account = window.tronWeb.defaultAddress.base58;
-        return [account]
-      } else {
-        return {
-          code: 2,
-          msg: 'Please install TronLink!'
-        }
+        if (window.tronWeb && window.tronLink) {
+            const res = await window.tronLink.request({ method: 'tron_requestAccounts' });
+            if(res.code == 200){
+              const _account = window.tronWeb.defaultAddress.base58;
+              console.log("tron link account::::", _account)
+              this.listenerAccountsChanged(this.accountChangeHandle)
+              return _account
+            }
+            if(res.code == 4001){
+             return {
+                code: 1,
+                msg: 'User rejected!'
+              }
+            } 
+        }else {
+          return {
+            code: 2,
+            msg: 'Please install TronLink!'
+          }
       }
     }
 
@@ -32,46 +48,50 @@ class TronWallet {
         window.open(install)
     }
 
-    initContract = () => {
-        return null;
+    initContract = async () => {
+      const {abi, contractAddress} = await this.getChainInfo()
+      try {
+        const contract = await window.tronWeb.contract(abi, contractAddress);
+        return contract;
+      } catch (error) {
+        console.log("tronlink init error")
+      }
     }
 
     listenerAccountsChanged = (handleCallback) => {
-      handleCallback && handleCallback() 
-      
+      window.addEventListener('message', function (e) {
+        // Tronlink chrome v3.22.0 & Tronlink APP v4.3.4 started to support 
+        if (e.data.message && e.data.message.action == "accountsChanged") {
+            // console.log("accountsChanged event", e.data.message)
+            // console.log("current address:", e.data.message.data.address)
+            handleCallback && handleCallback(e.data.message.data.address)
+        }
+      })
   }
 
     getBalanceOf = async (address) => {
-        const result = await window.ic.plug.requestBalance();
-        let _icp = null;
-        if(result.length > 0){
-          result.map((item)=>{
-            if(item.name == "ICP"){
-              _icp = {...item}
-            }
-          })
-        }else{
-          _icp = {}
-        }
-        return _icp;
+      const {decimals } = this.getChainInfo()
+      const contract = this.initContract()
+      const balance = await contract.balanceOf(address).call();
+      const _myBalance = (new BigNumber(balance._hex)).toNumber() / Math.pow(10, decimals)
+      return {amount: _myBalance};
     }
 
     transfer = async (price, successcallback, failedcallback) => {
       const chainInfo = await this.getChainInfo();
-      const { toAddress } = chainInfo
+      const contract = this.initContract()
+      const { toAddress,decimals } = chainInfo
+      const tokenAmount = setNumber(price, decimals)
       try {
-        const result = await window.ic.plug.requestTransfer({
-          to: toAddress,
-          // amount: 4000000 * price,
-          amount: 100000000 * price,
-          // opts: {
-          //   fee: '',
-          //   memo,
-          //   from_subaccount: ''
-          // }
+
+        let result = await contract.transfer(
+          toAddress, //address _to
+          tokenAmount   //amount
+        ).send().then(async output => {
+          console.log('- Output:', output, '\n');
+          successcallback && successcallback(toAddress, output)
+          return result;
         });
-        successcallback && successcallback(toAddress, result.height)
-        return result;
       } catch (error) {
         failedcallback && failedcallback(error)
       }
@@ -79,4 +99,4 @@ class TronWallet {
     }
 }
 
-export default PlugWallet;
+export default TronLinkWallet;
