@@ -134,9 +134,9 @@ export const verifySign = async (address, signature) => {
   })
 }
 
-export const detectTransferIsSuccess = async (hash, address, price, product_name, jwt, network = '56') => {
+export const detectTransferIsSuccess = async (hash, address, price, product_name, jwt, network = '56', channel_id) => {
   let data = {
-    address, price, product_name, tx: hash, jwt, network
+    address, price, product_name, tx: hash, jwt, network, channel_id
   }
   data = plugShim(data.address, data)
 

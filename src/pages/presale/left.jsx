@@ -31,8 +31,8 @@ const LeftComp = (props) => {
        }
 
        const list = data.map((item, i)=>{
-            let round = item.name == "First Round of dmail NFT Domain Account presale" ? 1 : 0;
-            return {...item, cover: coverImg, _index:i+1, id: i+1, round}
+            let round = item.id;
+            return {...item, cover: coverImg, _index:i+1, round}
        })
 
        await (()=>{setList(list)})()

@@ -1,9 +1,10 @@
 import { makeAutoObservable, observable, computed, toJS } from 'mobx';
-// import * as api from '@/requests/common';
+import Cookies from 'js-cookie'
 
 export default class PresaleStore {
   triggerReload = 0
   curPresale = {}
+  channelId = 999
 
   constructor() {
     makeAutoObservable(this)
@@ -14,5 +15,15 @@ export default class PresaleStore {
   }
   setCurPresale(presale){
     this.curPresale = presale
+  }
+  setChannelId(channelId){
+    this.channelId = channelId
+    try {
+      // 3 days expires
+      Cookies.set('channelId', channelId, { expires: 3 })
+    } catch (error) {
+      //
+    }
+
   }
 }

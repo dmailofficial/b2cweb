@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { observer, inject } from 'mobx-react';
 import { encode, decode } from 'js-base64';
 import Cookies from 'js-cookie'
@@ -35,6 +35,8 @@ const Index = ({ store }) => {
   const [payaction, setPayaction] =  useState(false)
   const [payOrderChild, setPayOrderChild] = useState(null)
   const [vertip, setVertip] = useState(null)
+
+  const {channel_id} = useParams()
 
   const presaleChange = (item) => {
     console.log("item:::", item)
@@ -179,6 +181,14 @@ const Index = ({ store }) => {
   }, [walletStore.walletAccountChange])
 
   useEffect(async () => {
+
+    if(channel_id){
+      presaleStore.setChannelId(channel_id)
+    }else{
+      const channelId = Cookies.get('channelId')
+      channelId && presaleStore.setChannelId(channelId)
+    }
+
     if (!walletStore.info) {
       const sInfo = Cookies.get('account')
       const swalletName = Cookies.get('walletname')
@@ -189,8 +199,22 @@ const Index = ({ store }) => {
         console.log("useEffect------  wallet  info::::: ",info)
         const walletName = JSON.parse(decode(swalletName))
         walletName && walletStore.setWalletName(walletName)
+
+        if(walletName == "tronlink"){
+          walletStore.setWalletInfo({})
+          walletStore.setWalletName('')
+          Cookies.remove('walletname')
+          Cookies.remove('account')
+        }
       } catch (error) {
         //
+      }
+    }else{
+      if(walletStore.walletName == "tronlink"){
+        walletStore.setWalletInfo({})
+        walletStore.setWalletName('')
+        Cookies.remove('walletname')
+        Cookies.remove('account')
       }
     }
   }, [])

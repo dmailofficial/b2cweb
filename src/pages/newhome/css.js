@@ -825,22 +825,26 @@ const NewHome = styled.div`
 
         .toTop{
             position: fixed;
-            width: 60px;
-            background: #FFFFFF;
+            width: 35px;
+            height: 35px;
             border-radius: 60px;
-            bottom: 50px;
-            right: 50px;
+            bottom: 40px;
+            right: 40px;
             cursor: pointer;
+            img{
+                width: 35px;
+                height: 35px;
+            }
         }
         .toastWrap{
             position: fixed;
-            width: 360px;
+            min-width: 260px;
             background: #FFFFFF;
             border-radius: 6px;
             top: 90px;
             left: 50%;
             margin-left: -180px;
-            padding: 16px 16px 32px;
+            padding: 16px 16px 16px;
             box-sizing: border-box;
             .closeBtn{
                 width: 16px;
@@ -864,17 +868,18 @@ const NewHome = styled.div`
                 }
             }
             .content{
-                padding: 32px 20px 0;
+                padding: 16px 20px 0;
+                text-align: center;
             }
             img{
-                width: 24px;
-                height: 24px;
-                display: inline-block;
+                width: 30px;
+                height: 30px;
+                // display: inline-block;
                 vertical-align: middle;
-                margin: 0 20px 0 0;
+                margin: 0 20px 10px 0;
             }
             span.tip{
-                display: inline-block;
+                display: block;
                 font-size: 20px;
                 font-family: Roboto-Regular, Roboto;
                 font-weight: 400;

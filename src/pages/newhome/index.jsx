@@ -40,6 +40,9 @@ import footericon3 from '@/static/images/home/footer/medium.png'
 import footericon4 from '@/static/images/home/footer/discord.png'
 
 import success from '@/static/images/home/toast/success.png'
+import rocketIcon from '@/static/images/home/toast/rocket@2x.png'
+import toTopIcon from '@/static/images/home/totop.png'
+
 
 const Index = () => {
   const [curPage, setCurPage] = useState(0);
@@ -442,7 +445,7 @@ const onComingSoon = () => {
         
       </ReactPageScroller>
         <div className="toTop" onClick={()=>gotoPage(0)}>
-          totop
+          <img src={toTopIcon}></img>
         </div>
         {showToast ? 
             <div className="toastWrap">
@@ -462,7 +465,7 @@ const onComingSoon = () => {
                 <span></span>
               </span>
               <div className="content">
-                <img src={success}></img>
+                <img src={rocketIcon}></img>
                 <span className="tip">Coming soon.</span>
               </div>
             </div>
