@@ -253,7 +253,7 @@ class orderConfirmDetail extends React.Component {
         }else{
             curPrice = this.state.detail.price
         }
-        const { success, msg, data } = await detectTransferIsSuccess(hash, from, curPrice, this.state.detail.name, this.props.loginInfo.jwt, chainId)
+        const { success, msg, data } = await detectTransferIsSuccess(hash, from, curPrice, this.state.detail.name, this.props.loginInfo.jwt, chainId, this.props.presaleStore.channelId)
         if(!success){
             this.poptoast(msg, 'faild')
             return
