@@ -76,7 +76,7 @@ const NoData = () => {
 }
 
 const Table = (props) => {
-  const { store: { wallet }, columns, data, fetchData, pageCount, loading, setOpen } = props
+  const { store: { wallet }, columns, data, fetchData, pageCount, loading, setReceiveId } = props
   const history = useHistory();
   const [alertInfo, setAlertInfo] = useState(null)
 
@@ -98,12 +98,13 @@ const Table = (props) => {
     data,
   })
 
-  const onBtnClick = (type, product_name) => () => {
+  const onBtnClick = (type, o) => () => {
+    const { product_name, id } = o
     if (type === 'disabled') {
       return;
     }
     if (type === 'primary') {
-      setOpen(true)
+      setReceiveId(id)
     } else if (type === 'ghost') {
       toPay(product_name)
     } else if (type === 'normal') {
@@ -146,7 +147,7 @@ const Table = (props) => {
       }
       const obj = statusMap[status]
       return (
-        <Button type={obj.operationType} onClick={onBtnClick(obj.operationType, original['product_name'])}>{obj.operationText}</Button>
+        <Button type={obj.operationType} onClick={onBtnClick(obj.operationType, original)}>{obj.operationText}</Button>
       )
     } else if (key === 'status') {
       const current = statusMap[value]

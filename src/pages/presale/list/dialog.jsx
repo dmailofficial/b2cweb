@@ -190,33 +190,33 @@ export const Alert = ({ info, setInfo }) => {
   )
 }
 
-const ReceiveDialog = ({ open, setOpen, receive, errorIndex }) => {
-  const [id, setId] = useState('');
+const ReceiveDialog = ({ receiveId, setReceiveId, receive, errorIndex }) => {
+  const [address, setAddress] = useState('');
   const [error, setError] = useState(false);
   const [focus, setFocus] = useState(false);
   const inputRef = useRef(null)
 
   const handleClose = () => {
-    setOpen(false);
+    setReceiveId(0);
   };
 
   const onConfirm = () => {
-    receive && receive(id)
+    receive && receive(address, receiveId)
   };
 
   const onchange = (ev) => {
-    const id = ev.target.value
-    setId(id)
-    if (id) {
+    const address = ev.target.value
+    setAddress(address)
+    if (address) {
       setError(false)
     }
   }
 
   useEffect(() => {
-    !open && setTimeout(() => {
-      setId('')
+    !receiveId && setTimeout(() => {
+      setAddress('')
     }, 400);
-  }, [open])
+  }, [receiveId])
 
   useEffect(() => {
     if (errorIndex) {
@@ -227,7 +227,7 @@ const ReceiveDialog = ({ open, setOpen, receive, errorIndex }) => {
 
   return (
     <Dialog
-      open={open}
+      open={!!receiveId}
       onClose={handleClose}
     >
       <DialogWrapper>
@@ -237,13 +237,13 @@ const ReceiveDialog = ({ open, setOpen, receive, errorIndex }) => {
           <div className="form">
             <input 
               type="text" 
-              value={id} 
+              value={address} 
               ref={inputRef} 
               onChange={onchange} 
               onFocus={() => setFocus(true)}
               onBlur={() => setFocus(false)}
               className={error ? 'error' : (focus ? 'focus' : '')} 
-              placeholder="Please enter the 53-bit Principal ID of your PLUG wallet" 
+              placeholder="Please enter the 53-bit Principal ID of your Plug wallet" 
             />
             <a href="">How to get?</a>
             <div className={`errorTip ${error ? 'show' : ''}`}><i></i><span>ID format is not correct, please re-enter</span></div>

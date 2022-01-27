@@ -121,8 +121,8 @@ function App({ store: { wallet, presale } }) {
         method: 'post',
         data: {
           jwt,
-          address,
-          // address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
+          // address,
+          address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
         },
         // errorTitle: '',
       })
@@ -150,31 +150,31 @@ function App({ store: { wallet, presale } }) {
     setLoading(false)
   }, [wallet.info])
 
-  const [open, setOpen] = useState(false);
+  const [receiveId, setReceiveId] = useState(0);
   const [inputErrorIndex, setInputErrorIndex] = useState(0);
-  const receive = useCallback(async (id) => {
+  const receive = useCallback(async (plugAddress, id) => {
     console.log(id)
     if (!wallet.info || !wallet.info.address) {
       return
     }
-    const { jwt, address } = wallet.info
+    const { jwt } = wallet.info
     if (id) {
       try {
         const res = await axios({
-          // TODO: the url is wrong
-          url: `${baseUrl}/lockdomain`,
+          url: `${baseUrl}/receivenft`,
           method: 'post',
           data: {
             jwt,
+            p_id: plugAddress,
             address,
-            // address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
-            product_name: id,
+            address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
+            id,
           },
           // errorTitle: '',
         })
         const { code, message, success } = res.data
-        if (!success) {
-          setOpen(false);
+        if (success) {
+          setReceiveId(0)
           setSuccessText('Received successfully');
           presale.triggerListReload()
         } else {
@@ -196,9 +196,15 @@ function App({ store: { wallet, presale } }) {
   }, [wallet.info])
 
   useEffect(async () => {
+    let walletName = ''
     if (!wallet.info) {
       const sInfo = Cookies.get('account')
       const swalletName = Cookies.get('walletname')
+      try {
+        walletName = swalletName ? JSON.parse(decode(swalletName)) : ''
+      } catch (error) {
+        // 
+      }
       if (!sInfo) {
         setWalletDialog(true)
       } else {
@@ -206,12 +212,9 @@ function App({ store: { wallet, presale } }) {
           const info = JSON.parse(decode(sInfo))
           info && wallet.setWalletInfo(info)
 
-          const walletName = JSON.parse(decode(swalletName))
           setTimeout( async ()=>{
             const walletObj = await connectWallet(walletName, wallet)
-            console.log("presale use effect connect wallet::::: ",walletObj)
             if(walletObj.code){
-              console.log("connect wallet error: ", walletObj.msg);
               poptoast(walletObj.msg.toString())
             }
             if(walletName !== "metamask"){
@@ -227,9 +230,11 @@ function App({ store: { wallet, presale } }) {
       }
     }
 
-    console.log(history.location.state.round)
-    setRound(history.location.state.round)
-    
+    if (history.location.state && history.location.state.round === 1 && walletName === 'plug') {
+      Cookies.remove('account');
+      Cookies.remove('walletname');
+      setRound(history.location.state.round)
+    }
   }, [])
 
   useEffect(async () => {
@@ -260,7 +265,7 @@ function App({ store: { wallet, presale } }) {
             <i></i>
             <p>When the payment is done, please claim your NFT domain account.The Dmail NFT Domain Account will be sent to your Principal ID account in 24 hours. If you have any problem, please contact to our official email: contact@dmail.ai .</p>
           </div>
-          <Table columns={columns} loading={loading} data={data} pageCount={pageCount} fetchData={fetchData} setOpen={setOpen} />
+          <Table columns={columns} loading={loading} data={data} pageCount={pageCount} fetchData={fetchData} setReceiveId={setReceiveId} />
         </Content>
       </Wrapper>
       <WalletDialog
@@ -273,7 +278,7 @@ function App({ store: { wallet, presale } }) {
       ></WalletDialog>
       <Alert info={alertInfo} setInfo={setAlertInfo} />
       <Success text={successText} setText={setSuccessText} />
-      <ReceiveDialog open={open} setOpen={setOpen} receive={receive} errorIndex={inputErrorIndex} />
+      <ReceiveDialog receiveId={receiveId} setReceiveId={setReceiveId} receive={receive} errorIndex={inputErrorIndex} />
       <Toast
         open = {errorToast}
         type = "warn"
