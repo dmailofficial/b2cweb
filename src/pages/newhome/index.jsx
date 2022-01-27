@@ -46,6 +46,7 @@ const Index = () => {
   const [scrolling, setScrolling] = useState(false)
   const [showFooter, setShowFooter] = useState(false)
   const [showToast, setShowToast] = useState(false)
+  const [comingToast, setComingToast] = useState(false)
 
 
   const gotoPostion = (top) => {
@@ -55,12 +56,12 @@ const Index = () => {
 
 const handleScrollUnavailable = (i) => {
   
-  if(curPage == 5 && !showFooter){
-    setShowFooter(true);
-    setTimeout(()=>{
-      gotoPostion(700)
-    },10)
-  }
+  // if(curPage == 5 && !showFooter){
+  //   setShowFooter(true);
+  //   setTimeout(()=>{
+  //     gotoPostion(700)
+  //   },10)
+  // }
 }
 
 const gotoPage = (number) => {
@@ -75,20 +76,20 @@ const handlePageChange = number => {
     _num = 0;
     gotoPage(0);
   }
-  if(_num > 5){
-    _num = 5;
-    gotoPage(5);
+  if(_num > 7){
+    _num = 7;
+    gotoPage(7);
   }
   
   setCurPage(_num)
-  if(showFooter && _num !== 5){
-    setShowFooter(false);
-  }
+  // if(showFooter && _num !== 7){
+  //   setShowFooter(false);
+  // }
   return false;
 };
 
 const onBeforePageScroll = () => {
-  setShowFooter(false);
+  // setShowFooter(false);
 }
 
 
@@ -106,6 +107,15 @@ const onSignClick = () => {
 
 const onhandleClose = () => {
   setShowToast(false)
+  setComingToast(false)
+}
+
+const onComingSoon = () => {
+  setComingToast(true)
+  setTimeout(()=>{
+    setComingToast(false)
+  }, 5000)
+  return;
 }
   
 
@@ -144,7 +154,7 @@ const onhandleClose = () => {
               <p>Introducing Dmail</p>
               <h2>What is Dmail</h2>
               {/* <p className="desc">In web 3.0, every user and application coexist in a frame of open standards and protocols, which can connected each other freely and form the internet of everything.</p> */}
-              <p className="desc">Utilizing Dfinity as the engine to realize decentralized storage and privacy protection, Dmail identifies user identity and User rights with NFT domain account, making connections between information, assets, storage and Dapps. Dmail is striving to eliminate data barriers and become the most important interaction tool for the Web 3.0 era. </p>
+              <p className="desc">Utilizing Dfinity as the engine to realize decentralized storage and privacy protection, Dmail identifies user identity and User rights with NFT domain account, making connections between information, assets, storage and DApps. Dmail is striving to eliminate data barriers and become the most important interaction tool for the Web 3.0 era. </p>
               
               <div className="dmailItem">
                   <div className="item item1">
@@ -264,7 +274,7 @@ const onhandleClose = () => {
                       <img src={highlightIcon7}></img>
                     </div>
                     <h3>Message Notification API</h3>
-                    <p>OOpen API to provide the messages interaction smoothly in web3 world</p>
+                    <p>Open API to provide the messages interaction smoothly in Web3 world</p>
                   </div>
                   <div className="item item8">
                     {/* <img src={highlightIcon8}></img> */}
@@ -320,7 +330,7 @@ const onhandleClose = () => {
                  </div>
                  <div className="item item4 bottom">
                     <h3>2022 Q2</h3>
-                    <p>Intialization core assets<br></br>DAO<br></br>Mainnet<br></br>API<br></br>More Dapps</p>
+                    <p>Intialization core assets<br></br>DAO<br></br>Mainnet<br></br>API<br></br>More DApps</p>
                     <span className="line"></span>
                     <span className="circle"></span>
                  </div>
@@ -387,11 +397,10 @@ const onhandleClose = () => {
            
         </div>
       </div>
-      </ReactPageScroller>
-      {showFooter ? 
-        <div className="footWrap" >
+
+      <div className="pageWrap footBlock footWrap" >
           <div className="signWrap">
-              <p>Sign up and stay informed</p>
+              <p>Subscribe to our newsletter</p>
               <div className="inputWrap">
                 <input placeholder="Your email address"></input>
                 <span className="signBtn" onClick={onSignClick}>Sign up</span>
@@ -409,16 +418,16 @@ const onhandleClose = () => {
             <div className="links">
               <ul>
                 <li>Product</li>
-                <li><a href="#" target="_blank">Mailbox</a></li>
-                <li><a href="#" target="_blank">NFTs</a></li>
-                <li><a href="#" target="_blank">Dapps</a></li>
+                <li><a href="javascript:;" target="" onClick={onComingSoon}>Mailbox</a></li>
+                <li><a href="javascript:;" target="" onClick={onComingSoon}>NFTs</a></li>
+                <li><a href="javascript:;" target="" onClick={onComingSoon}>DApps</a></li>
               </ul>
               <ul>
                 <li>Supprot</li>
                 <li><a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank">Demo</a></li>
                 <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Litepaper</a></li>
                 <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Docs</a></li>
-                <li><a href="#" target="_blank">API</a></li>
+                <li><a href="javascript:;" target="" onClick={onComingSoon}>API</a></li>
               </ul>
               <ul>
                 <li>Community</li>
@@ -430,7 +439,11 @@ const onhandleClose = () => {
             </div>
           </div>
         </div> 
-        : null }
+        
+      </ReactPageScroller>
+        <div className="toTop" onClick={()=>gotoPage(0)}>
+          totop
+        </div>
         {showToast ? 
             <div className="toastWrap">
               <span className="closeBtn" onClick={onhandleClose}>
@@ -443,6 +456,17 @@ const onhandleClose = () => {
               </div>
             </div>
           : null}
+          <div className={comingToast ? "toastWrap show": "toastWrap hidden"}>
+              <span className="closeBtn" onClick={onhandleClose}>
+                <span></span>
+                <span></span>
+              </span>
+              <div className="content">
+                <img src={success}></img>
+                <span className="tip">Coming soon.</span>
+              </div>
+            </div>
+          
     </NewHome>
     
   );

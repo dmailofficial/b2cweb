@@ -14,6 +14,8 @@ import axios from '@/utils/axios';
 import { baseUrl } from '../utils'
 import { login, verifySign } from '../request'
 import WalletDialog from '../walletDialog'
+import Toast from '../toast'
+import metamasktipIcon from '@/static/images/presale/metamasktip.png'
 
 const columns = [
   {
@@ -67,6 +69,9 @@ function App({ store: { wallet, presale } }) {
 
   const [walletInstance, setWalletInstance] = useState({})
   const [walletDialog, setWalletDialog] = useState(false)
+
+  const [vertip, setVertip] = useState(null)
+  
   const walletDialogClose = () => {
     setWalletDialog(false);
   }
@@ -205,6 +210,16 @@ function App({ store: { wallet, presale } }) {
     
   }, [])
 
+  useEffect(async () => {
+    if(wallet.walletName == "metamask" &&  wallet.walletAccountChange){
+      setVertip(metamasktipIcon)
+      poptoast("Please verify the signature in metamask")
+      setTimeout(()=>{
+        setVertip(null)
+      }, 3000)
+    }
+  }, [wallet.walletAccountChange])
+
   return (
     <>
       <Header />
@@ -236,6 +251,12 @@ function App({ store: { wallet, presale } }) {
       <Alert info={alertInfo} setInfo={setAlertInfo} />
       <Success text={successText} setText={setSuccessText} />
       <ReceiveDialog open={open} setOpen={setOpen} receive={receive} errorIndex={inputErrorIndex} />
+      <Toast
+        open = {errorToast}
+        type = "warn"
+        txt = {errorToastMsg}
+        tipimg = {vertip}
+      ></Toast>
     </>
   )
 }

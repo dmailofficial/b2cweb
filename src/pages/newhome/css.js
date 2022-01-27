@@ -6,6 +6,7 @@ import workBackground from '@/static/images/home/work/bg.png'
 import highBackground from '@/static/images/home/highlights/bg.png'
 import roadmapBackground from '@/static/images/home/roadmap/bg.png'
 import partnerBackground from '@/static/images/home/partner/bg.jpg'
+import footerBackground from '@/static/images/home/footer/bg.png'
 
 const baseWidth =  1440/100;
 const baseWidth750 =  750/100;
@@ -27,7 +28,6 @@ const NewHome = styled.div`
             width: 100%;
             margin: 0 auto;
             background-color: #1D1D1F;
-            
         }
         .contentWrap{
             height: 100vh;
@@ -114,6 +114,12 @@ const NewHome = styled.div`
                         width: ${17/baseWidth}vw;
                         height: ${14/baseWidth}vw;
                     }
+                }
+                .launchBtn:hover{
+                    background: #fa7a4f;
+                }
+                .launchBtn:active{
+                    background: #913719;
                 }
             }
         }
@@ -647,11 +653,16 @@ const NewHome = styled.div`
             }
         }
         .footWrap{
-            height: ${448/baseWidth}vw;
             .signWrap{
-                padding: ${67/baseWidth}vw 0;
+                height: calc(100vh - ${224/baseWidth}vw);
+                padding: ${250/baseWidth}vw 0;
+                box-sizing: border-box;
                 text-align: center;
                 background: #232323;
+                background-image: url(${footerBackground});
+                background-size: 100%;
+                background-position: 50% 100%;
+                background-repeat: no-repeat;
                 p{
                     font-size: ${22/baseWidth}vw;
                     font-family: Roboto-Medium, Roboto;
@@ -695,6 +706,12 @@ const NewHome = styled.div`
                         color: #FFFFFF;
                         line-height: ${48/baseWidth}vw;
                         cursor: pointer;
+                    }
+                    .signBtn:hover{
+                        background: #fa7a4f;
+                    }
+                    .signBtn:active{
+                        background: #913719;
                     }
                 }
             }
@@ -806,6 +823,15 @@ const NewHome = styled.div`
             }
         }
 
+        .toTop{
+            position: fixed;
+            width: 60px;
+            background: #FFFFFF;
+            border-radius: 60px;
+            bottom: 50px;
+            right: 50px;
+            cursor: pointer;
+        }
         .toastWrap{
             position: fixed;
             width: 360px;
@@ -857,7 +883,8 @@ const NewHome = styled.div`
                 line-height: 24px;
             }
         }
-        
+        .toastWrap.hidden{display:none;}
+        .toastWrap.show{display:block}
         @media screen and (min-width: 1536px) {
             .partnerContent{
                 .content{
@@ -1793,7 +1820,7 @@ const NewHome = styled.div`
                     height: 46px;
                     line-height: 46px;
                 }
-              }
+            }
         }
 
 
@@ -2302,20 +2329,27 @@ const NewHome = styled.div`
                 }
             }
             .footWrap{
-                height: ${448/baseWidth750}vw;
                 .signWrap{
-                    padding: ${67/baseWidth750}vw 0;
+                    height: calc(100vh - ${600/baseWidth750}vw);
+                    padding: ${450/baseWidth750}vw 0;
+                    box-sizing: border-box;
+                    text-align: center;
+                    background: #232323;
+                    background-image: url(${footerBackground});
+                    background-size: 140%;
+                    background-position: 50% 100%;
+                    background-repeat: no-repeat;
                     p{
-                        font-size: ${22/baseWidth750}vw;
+                        font-size: ${30/baseWidth750}vw;
                         line-height: ${25/baseWidth750}vw;
                     }
                     .inputWrap{
-                        margin-top: ${16/baseWidth750}vw;
+                        margin-top: ${16*2/baseWidth750}vw;
                         input{
-                            height: ${46/baseWidth750}vw;
-                            line-height: ${46/baseWidth750}vw;
+                            height: ${46*2/baseWidth750}vw;
+                            line-height: ${46*2/baseWidth750}vw;
                             padding-left: ${12/baseWidth750}vw;
-                            font-size: ${18/baseWidth750}vw;
+                            font-size: ${18*2/baseWidth750}vw;
                             width: ${439/baseWidth750}vw;
                         }
                         input::placeholder{
@@ -2323,10 +2357,10 @@ const NewHome = styled.div`
                             line-height: ${21/baseWidth750}vw;
                         }
                         .signBtn{
-                            height: ${48/baseWidth750}vw;
+                            height: ${48*2/baseWidth750}vw;
                             width: ${154/baseWidth750}vw;
-                            font-size: ${16/baseWidth750}vw;
-                            line-height: ${48/baseWidth750}vw;
+                            font-size: ${16*2/baseWidth750}vw;
+                            line-height: ${48*2/baseWidth750}vw;
                         }
                     }
                 }

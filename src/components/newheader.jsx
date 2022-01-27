@@ -188,8 +188,22 @@ const HeaderWrap = styled.div`
       height: 32px;
     }
     .nav_wrapper{
-      background-color: #1D1D1F;
-      box-shadow: 0 3px 5px 3px #1D1D1F;
+      display: none;
+    }
+    &.show{
+      .nav_wrapper{
+        display: block;
+        background-color: #1D1D1F;
+        box-shadow: 0 3px 5px 3px #1D1D1F;
+        padding: 0 25px;
+        .nav_item{
+          width: 100%;
+          a{
+            display: block;
+            width: 100%;
+          }
+        }
+      }
     }
     .toastWrap{
       width: 280px;

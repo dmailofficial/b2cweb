@@ -184,11 +184,16 @@ class orderConfirmDetail extends React.Component {
         }
         
 
-        // chexck product lock status -----backup
+        // chexck product lock status
         // const _checkResult = await this.checkProductLock(this.state.detail.name)
         
-        // if(_checkResult.ttl > 0 && _checkResult.address != this.props.walletStore.info?.address){
+        // if(_checkResult.ttl  ){
         //     this.setState({accountChangeDialog : true})
+        //     return
+        // }
+        await this.getAddressDetail();
+        // if(!_checkResult.success){  
+        //     this.poptoast(_checkResult.message)
         //     return
         // }
         console.log("this.props.walletStore.walletName:::", this.props.walletStore.walletName);
@@ -203,9 +208,9 @@ class orderConfirmDetail extends React.Component {
         }
         this.setState({paying: true})
         this.poptoast("Payment processing","loading", true)
-        setTimeout(()=>{
-            this.closePoptoast();
-        }, 18*1000)
+        // setTimeout(()=>{
+        //     this.closePoptoast();
+        // }, 18*1000)
         console.log("this.props.walletStore.walletName:::", this.props.walletStore.info.address);
 
         const balance = await _wallet.getBalanceOf(this.props.walletStore.info.address)
@@ -240,7 +245,7 @@ class orderConfirmDetail extends React.Component {
         this.closePoptoast();
         const successMsg = 'Payment successful'
         const _wallet = this.props.wallet
-        const { chainId } = await _wallet.getChainInfo();
+        let { chainId } = await _wallet.getChainInfo();
         let curPrice = 0;
         if(this.props.walletStore.walletName == "plug"){
             curPrice = this.state.detail.icpPrice
