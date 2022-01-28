@@ -30,16 +30,16 @@ const statusMap = {
     operationText: 'PENDING',
     operationType: 'disabled',
   },
-  9: {
+  99: {
     class: 'ing',
     text: 'To be paid',
     operationText: 'Payment',
     operationType: 'ghost',
   },
-  // 999: {
-  //   class: 'close',
-  //   text: 'Closed'
-  // },
+  9: {
+    class: 'close',
+    text: 'Closed'
+  },
 }
 
 // const operationMap = {

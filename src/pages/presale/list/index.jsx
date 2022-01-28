@@ -146,7 +146,6 @@ function App({ store: { wallet, presale } }) {
     } catch (error) {
       // console.log(error)      
     }
-    const random = Math.random()
     setLoading(false)
   }, [wallet.info])
 
