@@ -59,7 +59,7 @@ const ContentBox = styled.div`
     .main{
         margin-left: 374px;
         height: calc(100vh - 67px - 75px - 18px);
-        padding: 24px 24px 0 24px;
+        padding: 16px 16px 0 16px;
         box-sizing: border-box;
         overflow-y: scroll;
         overflow: -moz-scrollbars-none;
@@ -169,7 +169,7 @@ const Left = styled.div`
 `
 
 const Mainpannel = styled.div`
-    min-height: calc(100vh - 67px - 75px - 38px - 20px);
+    min-height: calc(100vh - 67px - 75px - 38px - 5px);
     border-radius: 6px;
     background: #252527;
     border-radius: 6px;
@@ -284,10 +284,10 @@ const Mainpannel = styled.div`
     }
 
     .bref{
-        padding-top: 40px;
+        padding-top: 35px;
         text-align: center;
         img {
-            height: 64px;
+            height: 60px;
             width: auto;
         }
         h2{
@@ -296,7 +296,7 @@ const Mainpannel = styled.div`
             font-weight: 500;
             color: #FFFFFF;
             line-height: 32px;
-            margin: 15px 0 0px;
+            margin: 10px 0 0px;
         }
         p{
             font-size: 14px;
@@ -309,7 +309,7 @@ const Mainpannel = styled.div`
 
     .formWrap{
         height: 60px;
-        margin-top: 40px;
+        margin-top: 30px;
         position: relative;
         .inputWrap{
             height: 60px;
@@ -526,7 +526,7 @@ const Mainpannel = styled.div`
 
     .info{
         min-height: 209px;
-        margin-top: 30px;
+        margin-top: 25px;
         display: flex;
         align-item: top;
         justify-content: space-between;
@@ -895,14 +895,16 @@ const StepDialogWrap = styled.div`
     display: flex;
     flex-wrap: wrap;
     align-items: top;
+    // width: 920px;
     justify-content: space-around;
     .stepItem{
         width: 45%;
         box-sizing: border-box;
         // border: 1px solid #333;
         font-size: 0;
+        margin-bottom: 20px;
         p{
-            font-size: 14px;
+            font-size: 12px;
             font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: bold;
             color: #1D1D1F;
@@ -924,8 +926,8 @@ const StepDialogWrap = styled.div`
             }
         }
         img{
-            width: 100%;
-            height: auto;
+            width: calc(436px * 0.94);
+            height: calc(256px * 0.94);
         }
     }
 `

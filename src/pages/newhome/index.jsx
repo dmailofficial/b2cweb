@@ -503,10 +503,6 @@ const onComingSoon = () => {
             </div>
           : null}
           <div className={comingToast ? "toastWrap show": "toastWrap hidden"}>
-              {/* <span className="closeBtn" onClick={onhandleClose}>
-                <span></span>
-                <span></span>
-              </span> */}
               <div className="content">
                 <img src={rocketIcon}></img>
                 <span className="tip">Coming soon!</span>

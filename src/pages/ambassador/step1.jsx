@@ -28,7 +28,7 @@ const Step1Component = (param) => {
             <div className="desc">
               <span>Dmail</span>
               <h3>Our Culture</h3>
-              <p>The enforcer of Web3</p>
+              <p>The enforcer of Web 3.0</p>
             </div>
             <div className="img pc"><img src={p1}></img></div>
             
@@ -40,7 +40,7 @@ const Step1Component = (param) => {
               <h3>Our Mission</h3>
               <p>Help user control his/her own data,</p>
               <p>from a true decentralized identity(DID), </p>
-              <p>and build a gateway to the Web3</p>
+              <p>and build a gateway to the Web 3.0</p>
             </div>
         </div>
       </div>

@@ -254,13 +254,6 @@ const Header = (props) => {
   const { location: { pathname }, userEmail, toLogin, onChangeEmail, comingSoonHandle } = props
   const [showToast, setShowToast] = useState(false)
 
-  const onCommingSoon = () => {
-    setShowToast(true)
-    setTimeout(()=>{
-      setShowToast(false)
-    }, 3000)
-  }
-
   const onhandleClose = () => {
     setShowToast(false)
   }
@@ -287,8 +280,8 @@ const Header = (props) => {
           <span onClick={onShowNavs}><i></i></span>
           <div className="nav_wrapper">
             <div className="nav_item"><Link to="/" className={(pathname === '/' || pathname === '/newhome') ? 'on' : ''}>Home</Link></div>
-            <div className="nav_item"><a onClick={onCommingSoon}>Mail</a></div>
-            <div className="nav_item"><a onClick={onCommingSoon}>NFTs</a></div>
+            <div className="nav_item"><a onClick={onComingSoon}>Mail</a></div>
+            <div className="nav_item"><a onClick={onComingSoon}>NFTs</a></div>
             <div className="nav_item"><Link to="/presale" className={pathname === '/presale' ? 'on ' : ''} >Events</Link></div>
             <div className="nav_item"><Link to="/ambassador" className={pathname === '/ambassador' ? 'on ' : ''} >Ambassador</Link></div>
           </div>
@@ -306,7 +299,7 @@ const Header = (props) => {
             <li onClick={onComingSoon}>API</li>
           </ul>
         </div>
-          {showToast ? 
+          {/* {showToast ? 
             <div className="toastWrap">
               <span className="closeBtn" onClick={onhandleClose}>
                 <span></span>
@@ -317,7 +310,7 @@ const Header = (props) => {
                 <span className="tip">Coming Soon！</span>
               </div>
             </div>
-          : null}
+          : null} */}
         
       </HeaderWrap>
     </>

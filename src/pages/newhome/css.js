@@ -876,18 +876,17 @@ const NewHome = styled.div`
         }
         .toastWrap{
             position: fixed;
-            min-width: 160px;
+            // width: 60px;
+            // height: 50px;
             // background: #FFFFFF;
-            background-color: #1D1D1F;
-            opacity: .8;
-            border : 1px solid rgba(255,255,255, .4);
-            border-radius: 6px;
+            text-align: center;
             top: 90px;
-            left: 50%;
-            margin-left: -180px;
-            padding: 20px;
+            left:0;
+            right:0;
+            margin: 0 auto;
+            
             box-sizing: border-box;
-            box-shadow:0 0 10px rgba(255, 255, 255, 0.2);
+            
             .closeBtn{
                 width: 16px;
                 height: 16px;
@@ -911,7 +910,14 @@ const NewHome = styled.div`
             }
             .content{
                 padding: 0;
+                display: inline-block;
                 text-align: center;
+                background-color: #1D1D1F;
+                opacity: .8;
+                padding: 20px;
+                border : 1px solid rgba(255,255,255, .4);
+                border-radius: 6px;
+                box-shadow:0 0 10px rgba(255, 255, 255, 0.2);
             }
             img{
                 width: 30px;
