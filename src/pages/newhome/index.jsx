@@ -46,6 +46,7 @@ import faildIcon from '@/static/images/home/toast/faild@3x.png'
 
 import rocketIcon from '@/static/images/home/toast/rocket@2x.png'
 import toTopIcon from '@/static/images/home/totop.png'
+import { ToastWrap } from '../presale/css';
 
 
 const Index = () => {
@@ -53,7 +54,7 @@ const Index = () => {
   const [scrolling, setScrolling] = useState(false)
   const [showFooter, setShowFooter] = useState(false)
   const [showToast, setShowToast] = useState(false)
-  const [subMsg, setSubMsg] = useState('')
+  const [subMsg, setSubMsg] = useState('Subscription successfully!')
   const [toastIcon, setToastIcon] = useState(successIcon)
   const [comingToast, setComingToast] = useState(false)
   const [value, setValue] = useState('')
@@ -118,11 +119,17 @@ const onSignClick = async () => {
     setSubMsg('Network Error!')
     setToastIcon(faildIcon)
     setShowToast(true)
+    setTimeout(()=>{
+      setShowToast(false)
+    }, 3000)
     return
   }
-  setSubMsg('Subscription successfully !')
+  setSubMsg('Subscription successfully!')
   setToastIcon(successIcon)
   setShowToast(true)
+  setTimeout(()=>{
+    setShowToast(false)
+  }, 3000)
   setValue('')
 }
 
@@ -142,7 +149,7 @@ const onComingSoon = () => {
   setComingToast(true)
   setTimeout(()=>{
     setComingToast(false)
-  }, 5000)
+  }, 3000)
   return;
 }
   
@@ -167,7 +174,7 @@ const onComingSoon = () => {
               <p>Introducing Dmail</p>
               <h2>Construct DID in Web 3.0</h2>
               <h3>Not Just an Email </h3>
-              <p className="desc">Dmail guarantees a safe&private environment for your<br></br> communication, storage, and tokens&NFTs transfer on the web 3.0</p>
+              <p className="desc">Dmail guarantees a safe & private environment for your<br></br> communication, storage, and tokens & NFTs transfer on the Web 3.0.</p>
               <a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank" className="launchBtn" >Launch Demo <img src={rightArrow}></img></a>
             </div>
             <div className="nextBtn" onClick={()=>{gotoPage(1)}}>
@@ -182,8 +189,8 @@ const onComingSoon = () => {
         <div className="contentWrap dmailContent">
             <div className="content">
               <p>Introducing Dmail</p>
-              <h2>What is Dmail</h2>
-              {/* <p className="desc">In web 3.0, every user and application coexist in a frame of open standards and protocols, which can connected each other freely and form the internet of everything.</p> */}
+              <h2>What is Dmail ?</h2>
+              {/* <p className="desc">In Web 3.0, every user and application coexist in a frame of open standards and protocols, which can connected each other freely and form the internet of everything.</p> */}
               <p className="desc">Utilizing Dfinity as the engine to realize decentralized storage and privacy protection, Dmail identifies user identity and User rights with NFT domain account, making connections between information, assets, storage and DApps. Dmail is striving to eliminate data barriers and become the most important interaction tool for the Web 3.0 era. </p>
               
               <div className="dmailItem">
@@ -227,7 +234,7 @@ const onComingSoon = () => {
             <p>Introducing Dmail</p>
               <h2>How does Dmail Work？</h2>
               <p className="desc">
-                Dmail is an on-chain E-mail tool with the function of web 3.0 asset transfer. Deployed on Dfinity,  each Dmail mailbox corresponds to a private “canister”. Dmail guarantees the safety of user information, and forms the fundamental decentralized identity (DID). With Dmail, users can access information, assets and DApps securely and seamlessly.
+                Dmail is an on-chain E-mail tool with the function of Web 3.0 asset transfer. Deployed on Dfinity,  each Dmail mailbox corresponds to a private "canister". Dmail guarantees the safety of user information, and forms the fundamental decentralized identity (DID). With Dmail, users can access information, assets and DApps securely and seamlessly.
               </p>
             </div>
             <div className="nextBtn" onClick={()=>{gotoPage(3)}}>
@@ -260,7 +267,7 @@ const onComingSoon = () => {
                       <img src={highlightIcon2}></img>
                     </div>
                     <h3>Decentralized Identity</h3>
-                    <p>The important component to form DID in Web3.</p>
+                    <p>The important component to form DID in Web 3.0</p>
                   </div>
                   <div className="item item3">
                     {/* <img src={highlightIcon3}></img> */}
@@ -304,7 +311,7 @@ const onComingSoon = () => {
                       <img src={highlightIcon7}></img>
                     </div>
                     <h3>Message Notification API</h3>
-                    <p>Open API to provide the messages interaction smoothly in Web3 world</p>
+                    <p>Open API to provide the messages interaction smoothly in Web 3.0 world</p>
                   </div>
                   <div className="item item8">
                     {/* <img src={highlightIcon8}></img> */}
@@ -312,7 +319,7 @@ const onComingSoon = () => {
                       <img src={highlightIcon8}></img>
                     </div>
                     <h3>Compatible with Web2 Emails</h3>
-                    <p>Dmail's DID function will support logins through web 2.0 emails</p>
+                    <p>Dmail's DID function will support logins through Web 2.0 emails</p>
                   </div>
                   <div className="item item9">
                     {/* <img src={highlightIcon9}></img> */}
@@ -485,10 +492,10 @@ const onComingSoon = () => {
         
         {showToast ? 
             <div className="toastWrap">
-              <span className="closeBtn" onClick={onhandleClose}>
+              {/* <span className="closeBtn" onClick={onhandleClose}>
                 <span></span>
                 <span></span>
-              </span>
+              </span> */}
               <div className="content">
                 <img src={toastIcon}></img>
                 <span className="tip">{subMsg}</span>
@@ -496,13 +503,13 @@ const onComingSoon = () => {
             </div>
           : null}
           <div className={comingToast ? "toastWrap show": "toastWrap hidden"}>
-              <span className="closeBtn" onClick={onhandleClose}>
+              {/* <span className="closeBtn" onClick={onhandleClose}>
                 <span></span>
                 <span></span>
-              </span>
+              </span> */}
               <div className="content">
                 <img src={rocketIcon}></img>
-                <span className="tip">Coming soon.</span>
+                <span className="tip">Coming soon!</span>
               </div>
             </div>
           

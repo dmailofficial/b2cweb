@@ -568,7 +568,7 @@ const NewHome = styled.div`
                     justify-content: flex-end;
                     .pitem{
                         width: ${197/baseWidth}vw;
-                        height: ${147/baseWidth}vw;
+                        height: ${135/baseWidth}vw;
                         text-align: center;
                         box-sizing: border-box;
                         padding: ${28/baseWidth}vw;
@@ -803,7 +803,7 @@ const NewHome = styled.div`
                     width: ${529/baseWidth}vw;
                     height: ${138/baseWidth}vw;
                     border-sizing: border-box;
-                    padding: 0 ${55/baseWidth}vw;
+                    padding: 0 ${100/baseWidth}vw 0 ${55/baseWidth}vw;
                     display: flex;
                     align-items: flex-start;
                     justify-content: space-between;
@@ -876,14 +876,18 @@ const NewHome = styled.div`
         }
         .toastWrap{
             position: fixed;
-            min-width: 260px;
-            background: #FFFFFF;
+            min-width: 160px;
+            // background: #FFFFFF;
+            background-color: #1D1D1F;
+            opacity: .8;
+            border : 1px solid rgba(255,255,255, .4);
             border-radius: 6px;
             top: 90px;
             left: 50%;
             margin-left: -180px;
-            padding: 16px 16px 16px;
+            padding: 20px;
             box-sizing: border-box;
+            box-shadow:0 0 10px rgba(255, 255, 255, 0.2);
             .closeBtn{
                 width: 16px;
                 height: 16px;
@@ -906,22 +910,23 @@ const NewHome = styled.div`
                 }
             }
             .content{
-                padding: 16px 20px 0;
+                padding: 0;
                 text-align: center;
             }
             img{
                 width: 30px;
                 height: 30px;
-                // display: inline-block;
+                display: inline-block;
                 vertical-align: middle;
-                margin: 0 20px 10px 0;
+                margin: 0 20px 0px 0;
             }
             span.tip{
-                display: block;
+                display: inline-block;
                 font-size: 20px;
                 font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                 font-weight: 400;
-                color: #111111;
+                // color: #111111;
+                color: #ffffff;
                 height: 24px;
                 line-height: 24px;
             }

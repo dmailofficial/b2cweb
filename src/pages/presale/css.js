@@ -34,19 +34,21 @@ const OperateBtn = styled.div`
     .ownBtn{
         width: 90px;
         border: 2px solid #FF6633;
+        height: 44px;
+        line-height: 44px;
         color: #FF6633;
     }
 `
 const ContentBox = styled.div`
     margin: 0 32px 18px;
-    height: calc(100vh - 67px - 95px - 18px);
+    height: calc(100vh - 67px - 75px - 15px);
     background: #1D1D1F;
     border-radius: 6px;
     border: 1px solid #979797;
     .leftWrap{
         width: 374px;
         float: left;
-        height: calc(100vh - 67px - 95px - 19px);
+        height: calc(100vh - 67px - 75px - 15px);
         background: #252527;
         border-radius: 6px 0px 0px 6px;
         overflow-y: scroll;
@@ -56,7 +58,7 @@ const ContentBox = styled.div`
     .leftWrap::-webkit-scrollbar { width: 0 !important }
     .main{
         margin-left: 374px;
-        height: calc(100vh - 67px - 95px - 18px);
+        height: calc(100vh - 67px - 75px - 18px);
         padding: 24px 24px 0 24px;
         box-sizing: border-box;
         overflow-y: scroll;
@@ -158,7 +160,8 @@ const Left = styled.div`
     .activityItem.active{
         width: 320px;
         box-shadow: 0px 8px 29px 0px rgba(0, 5, 58, 0.05);
-        border: 3px solid #FF6633;
+        border: 1px solid #FF6633;
+        overflow: hidden;
         .cover{
             width: 320px;
         }
@@ -166,7 +169,7 @@ const Left = styled.div`
 `
 
 const Mainpannel = styled.div`
-    min-height: calc(100vh - 67px - 95px - 38px - 28px);
+    min-height: calc(100vh - 67px - 75px - 38px - 20px);
     border-radius: 6px;
     background: #252527;
     border-radius: 6px;
@@ -281,10 +284,10 @@ const Mainpannel = styled.div`
     }
 
     .bref{
-        padding-top: 45px;
+        padding-top: 40px;
         text-align: center;
         img {
-            height: 72px;
+            height: 64px;
             width: auto;
         }
         h2{
@@ -293,20 +296,20 @@ const Mainpannel = styled.div`
             font-weight: 500;
             color: #FFFFFF;
             line-height: 32px;
-            margin: 24px 0 4px;
+            margin: 15px 0 0px;
         }
         p{
             font-size: 14px;
             font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: 500;
             color: rgb(255,255,255, .5);
-            line-height: 24px;
+            line-height: 20px;
         }
     }
 
     .formWrap{
         height: 60px;
-        margin-top: 49px;
+        margin-top: 40px;
         position: relative;
         .inputWrap{
             height: 60px;
@@ -523,7 +526,7 @@ const Mainpannel = styled.div`
 
     .info{
         min-height: 209px;
-        margin-top: 44px;
+        margin-top: 30px;
         display: flex;
         align-item: top;
         justify-content: space-between;
@@ -597,7 +600,7 @@ const Mainpannel = styled.div`
 
 
 const ConfirmPannel = styled.div`
-    min-height: calc(100vh - 67px - 95px - 38px - 20px);
+    min-height: calc(100vh - 67px - 95px - 38px);
     border-radius: 6px;
     background: #252527;
     border-radius: 6px;
@@ -613,6 +616,7 @@ const ConfirmPannel = styled.div`
            height: 24px;
            vertical-align: middle;
            margin-right: 8px;
+           cursor: pointer;
        } 
        span{
             font-size: 20px;
@@ -623,12 +627,13 @@ const ConfirmPannel = styled.div`
             height: 24px;
             display: inline-block;
             vertical-align: middle;
+            cursor: pointer;
         }
     }
 
     .content{
         box-sizing: border-box;
-        padding: 80px 0 0 104px;
+        padding: 60px 0 0 104px;
         .domainImg{
             width: 250px;
             height: 398px;
