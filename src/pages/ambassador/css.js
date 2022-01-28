@@ -16,7 +16,7 @@ const Step1 = styled.div`
             width: 100%;
             height: 19px;
             font-size: 16px;
-            font-family: Montserrat-Bold, Montserrat;
+            font-family: Montserrat-Bold, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: bold;
             color: ${mainColor};
             line-height: 19px;
@@ -27,7 +27,7 @@ const Step1 = styled.div`
             width: 100%;
             height: 43px;
             font-size: 36px;
-            font-family: Montserrat-Bold, Montserrat;
+            font-family: Montserrat-Bold, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: bold;
             color: #FFFFFF;
             line-height: 43px; 
@@ -40,7 +40,7 @@ const Step1 = styled.div`
         height: 478px;
         h1 {
             font-size: 48px;
-            font-family: Montserrat-Bold, Montserrat;
+            font-family: Montserrat-Bold, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: bold;
             color: #FFFFFF;
             line-height: 57px;
@@ -50,7 +50,7 @@ const Step1 = styled.div`
         }
         p {
             font-size: 20px;
-            font-family: Montserrat-Regular, Montserrat;
+            font-family: Montserrat-Regular, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: 400;
             color: #FFFFFF;
             line-height: 40px;
@@ -64,7 +64,7 @@ const Step1 = styled.div`
             background: ${mainColor};
             border-radius: 4px;
             font-size: 14px;
-            font-family: Montserrat-SemiBold, Montserrat;
+            font-family: Montserrat-SemiBold, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: 600;
             color: #FFFFFF;
             line-height: 60px;
@@ -113,7 +113,7 @@ const Step1 = styled.div`
                 padding: 67px 0 0 70px;
                 span {
                     font-size: 16px;
-                    font-family: Montserrat-Regular, Montserrat;
+                    font-family: Montserrat-Regular, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: bold;
                     color: ${mainColor};
                     line-height: 32px;
@@ -121,14 +121,14 @@ const Step1 = styled.div`
                 }
                 h3 {
                     font-size: 48px;
-                    font-family: Montserrat-Regular, Montserrat;
+                    font-family: Montserrat-Regular, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: bold;
                     color: #000000;
                     line-height: 64px;
                 }
                 p {
                     font-size: 20px;
-                    font-family: Montserrat-Regular, Montserrat;
+                    font-family: Montserrat-Regular, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     color: #4A4A4A;
                     line-height: 32px;
                 }
@@ -178,7 +178,7 @@ const Step1 = styled.div`
                     background: ${mainColor};
                     border-radius: 8px 8px 0px 0px;
                     font-size: 24px;
-                    font-family: Montserrat-Regular, Montserrat;
+                    font-family: Montserrat-Regular, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: bold;
                     color: #FFFFFF;
                     line-height: 64px;
@@ -188,7 +188,7 @@ const Step1 = styled.div`
                     font-size: 16px;
                     padding: 0 33px;
                     margin-top: 16px;
-                    font-family: Montserrat-Regular, Montserrat;
+                    font-family: Montserrat-Regular, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: bold;
                     color: #22294F;
                 }
@@ -383,7 +383,7 @@ const Step2 = styled.div`
         h1{
             display: inline-block;
             font-size: 48px;
-            font-family: Montserrat-Bold, Montserrat;
+            font-family: Montserrat-Bold, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: bold;
             color: ${mainColor};
             line-height: 57px;
@@ -413,7 +413,7 @@ const Step2 = styled.div`
                 border: 1px solid #E4E4E4;
                 h2{
                     font-size: 18px;
-                    font-family: Roboto-Medium, Roboto;
+                    font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 500;
                     color: rgba(0, 0, 0, 0.87);
                     line-height: 56px;
@@ -440,7 +440,7 @@ const Step2 = styled.div`
                 }
                 .label{
                     font-size: 17px;
-                    font-family: Roboto-Regular, Roboto;
+                    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 400;
                     color: ${mainGray};
                     line-height: 20px;
@@ -506,7 +506,7 @@ const Step2 = styled.div`
                 }
                 .tip {
                     font-size: 12px;
-                    font-family: Roboto-Regular, Roboto;
+                    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 400;
                     color: ${mainColor};
                     line-height: 14px;
@@ -569,7 +569,7 @@ const Step2 = styled.div`
             margin-right:16px;
             background-color: ${mainColor};
             font-size: 16px;
-            font-family: Montserrat-SemiBold, Montserrat;
+            font-family: Montserrat-SemiBold, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: bold;
             color: #FFFFFF;
             line-height: 19px;
@@ -688,7 +688,7 @@ const Step3 = styled.div`
             width: 489px;
             margin: 0 auto;
             font-size: 20px;
-            font-family: Montserrat-Bold, Montserrat;
+            font-family: Montserrat-Bold, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: bold;
             color: #333333;
             line-height: 24px;
@@ -697,7 +697,7 @@ const Step3 = styled.div`
             width: 489px;
             margin: 12px auto 0;
             font-size: 16px;
-            font-family: Montserrat-Regular, Montserrat;
+            font-family: Montserrat-Regular, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: 400;
             color: #555555;
             line-height: 20px; 

@@ -11,7 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Button, SuccessToast } from './css'
 
 const DialogWrapper = styled.div`
-  min-width: 350px;
+  min-width: 310px;
   padding: 16px 32px 24px;
   color: #1D1D1F;
   position: relative;
@@ -50,6 +50,8 @@ const DialogWrapper = styled.div`
   .content {
     margin-top: 25px;
     font-size: 14px;
+    line-height: 22px;
+    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
   }
 
   .form {
@@ -201,6 +203,11 @@ const ReceiveDialog = ({ receiveId, setReceiveId, receive, errorIndex }) => {
   };
 
   const onConfirm = () => {
+    const reg = /([a-z0-9]{5}\-){10}[a-z0-9]{3}/g
+    if(!reg.test(address)){
+      setError(true)
+      return;
+    }
     receive && receive(address, receiveId)
   };
 
@@ -231,9 +238,9 @@ const ReceiveDialog = ({ receiveId, setReceiveId, receive, errorIndex }) => {
       onClose={handleClose}
     >
       <DialogWrapper>
-        <div className="title">Receive Mailbox alias NFT</div>
+        <div className="title">Receive NFT</div>
         <div className="content">
-          <div className="text">Please enter your Principal ID of your Plug wallet to receive NFT. We recommend using Plug wallet. Please make sure the ID is correct and usable, otherwise you will lose your NFT domain account</div>
+          <div className="text">*Please enter your Principal ID of your Plug wallet to receive NFT. We recommend using Plug wallet. Please make sure the ID is correct and usable, otherwise you will lose your NFT domain account</div>
           <div className="form">
             <input 
               type="text" 
@@ -245,7 +252,7 @@ const ReceiveDialog = ({ receiveId, setReceiveId, receive, errorIndex }) => {
               className={error ? 'error' : (focus ? 'focus' : '')} 
               placeholder="Please enter the 53-bit Principal ID of your Plug wallet" 
             />
-            <a href="">How to get?</a>
+            <a href="https://dmailofficial.gitbook.io/how-to-use-dmail-1/v/english-1/" target="_blank">How to get?</a>
             <div className={`errorTip ${error ? 'show' : ''}`}><i></i><span>ID format is not correct, please re-enter</span></div>
           </div>
         </div>

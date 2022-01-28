@@ -255,7 +255,7 @@ const Index = ({ store }) => {
             {loginInfo?.address ? showName : "Connect wallet"}
           </span>: null
         }
-        <span className="ownBtn" onClick={toOwn}>ORDERS</span>
+        <span className="ownBtn" onClick={toOwn}>My orders</span>
       </OperateBtn>
       <ContentBox>
           <div className="leftWrap">

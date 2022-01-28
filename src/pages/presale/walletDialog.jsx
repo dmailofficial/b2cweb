@@ -37,6 +37,7 @@ const walletList = [
 ]
 
 function WalletDialog(params) {
+  console.log("WalletDialog::", params)
     const {open , dialogClose, getLoginInfo, getWalletInstance, walletStore, round = 0} = params;
     const [walletName, setWalletName] = useState('')
     // const [loginInfo, setLoginInfo] = useState({})

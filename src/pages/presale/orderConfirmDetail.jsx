@@ -416,9 +416,8 @@ class orderConfirmDetail extends React.Component {
                                         <span><CompatibleClassCountDown endCallback={this.handleEndCallback} correctRequest={this.correctRequest} second={this.state.countDownSeconds} /></span>
                                     </div>
                                 ) : null}
-                                
                             </div>
-                            <p className="notice">Please claim your NFT domain account on the orders when the payment is done.</p>
+                            <p className="notice">Please claim your NFT Domain Account on My Orders when the payment is done.</p>
                         </div>
                     </div>
                 </div>

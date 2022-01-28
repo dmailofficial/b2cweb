@@ -121,8 +121,8 @@ function App({ store: { wallet, presale } }) {
         method: 'post',
         data: {
           jwt,
-          // address,
-          address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
+          address,
+          // address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
         },
         // errorTitle: '',
       })
@@ -167,7 +167,7 @@ function App({ store: { wallet, presale } }) {
             jwt,
             p_id: plugAddress,
             address,
-            address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
+            // address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
             id,
           },
           // errorTitle: '',
@@ -223,17 +223,28 @@ function App({ store: { wallet, presale } }) {
                 address: walletObj.account
               })
             }
-          })
+          }, 50)
         } catch (error) {
           //
         }
       }
+    }else{
+      const walletObj = await connectWallet(wallet.walletName, wallet)
+      if(walletObj.code){
+        poptoast(walletObj.msg.toString())
+      }
+      if(walletName !== "metamask"){
+        wallet.setWalletInfo({
+          ...wallet.info,
+          address: walletObj.account
+        })
+      }
     }
 
+    setRound(history.location.state.round)
     if (history.location.state && history.location.state.round === 1 && walletName === 'plug') {
       Cookies.remove('account');
       Cookies.remove('walletname');
-      setRound(history.location.state.round)
     }
   }, [])
 

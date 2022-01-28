@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
+import TextField from '@mui/material/TextField';
 import { NewHome } from './css'
 import ReactPageScroller from "./scroller/index";
-import Header from '@/components/newheader'
+import Header from '@/components/newheader';
+import { subscribeNews } from './request';
 
 import arrow from '@/static/images/home/banner/arrow@2x.png'
 import rightArrow from '@/static/images/home/banner/arrow-right@2x.png'
@@ -39,7 +41,9 @@ import footericon2 from '@/static/images/home/footer/telegram.png'
 import footericon3 from '@/static/images/home/footer/medium.png'
 import footericon4 from '@/static/images/home/footer/discord.png'
 
-import success from '@/static/images/home/toast/success.png'
+import successIcon from '@/static/images/home/toast/success.png'
+import faildIcon from '@/static/images/home/toast/faild@3x.png'
+
 import rocketIcon from '@/static/images/home/toast/rocket@2x.png'
 import toTopIcon from '@/static/images/home/totop.png'
 
@@ -49,7 +53,11 @@ const Index = () => {
   const [scrolling, setScrolling] = useState(false)
   const [showFooter, setShowFooter] = useState(false)
   const [showToast, setShowToast] = useState(false)
+  const [subMsg, setSubMsg] = useState('')
+  const [toastIcon, setToastIcon] = useState(successIcon)
   const [comingToast, setComingToast] = useState(false)
+  const [value, setValue] = useState('')
+  const [error, setError] = useState(false)
 
 
   const gotoPostion = (top) => {
@@ -98,14 +106,31 @@ const onBeforePageScroll = () => {
 
 
 
-const onSignClick = () => {
-  console.log("click sign click")
-  setTimeout(() => {
+const onSignClick = async () => {
+  const reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,6})$/;
+  if(!reg.test(value)){
+    setError(true)
+    return;
+  }
+
+  const {success, msg} = await subscribeNews(value)
+  if(!success){
+    setSubMsg('Network Error!')
+    setToastIcon(faildIcon)
     setShowToast(true)
-    setTimeout(()=>{
-      setShowToast(false)
-    }, 3000)
-  }, 200)
+    return
+  }
+  setSubMsg('Subscription successfully !')
+  setToastIcon(successIcon)
+  setShowToast(true)
+  setValue('')
+}
+
+const handleChange = (e) => {
+  let _v = e.target.value
+
+  setError(false)
+  setValue(_v)
 }
 
 const onhandleClose = () => {
@@ -124,7 +149,9 @@ const onComingSoon = () => {
 
   return (
     <NewHome>
-      <Header />
+      <Header
+        comingSoonHandle = {onComingSoon}
+      />
       <ReactPageScroller
         handleScrollUnavailable = {handleScrollUnavailable}
         pageOnChange={handlePageChange}
@@ -405,8 +432,16 @@ const onComingSoon = () => {
           <div className="signWrap">
               <p>Subscribe to our newsletter</p>
               <div className="inputWrap">
-                <input placeholder="Your email address"></input>
-                <span className="signBtn" onClick={onSignClick}>Sign up</span>
+                {/* <input placeholder="Your email address" oninput={handleChange} onporpertychange={handleChange}></input> */}
+                <TextField
+                  className="input" 
+                  placeholder="Please enter email address" 
+                  variant="outlined" 
+                  value = {value}
+                  error = {error}
+                  onChange={handleChange}
+                />
+                <span className="signBtn" onClick={onSignClick}>Send</span>
               </div>
           </div>
           <div className="footerInfo">
@@ -429,7 +464,7 @@ const onComingSoon = () => {
                 <li>Supprot</li>
                 <li><a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank">Demo</a></li>
                 <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Litepaper</a></li>
-                <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Docs</a></li>
+                <li><a href="javascript:;" target="" onClick={onComingSoon}>Docs</a></li>
                 <li><a href="javascript:;" target="" onClick={onComingSoon}>API</a></li>
               </ul>
               <ul>
@@ -447,6 +482,7 @@ const onComingSoon = () => {
         <div className="toTop" onClick={()=>gotoPage(0)}>
           <img src={toTopIcon}></img>
         </div>
+        
         {showToast ? 
             <div className="toastWrap">
               <span className="closeBtn" onClick={onhandleClose}>
@@ -454,8 +490,8 @@ const onComingSoon = () => {
                 <span></span>
               </span>
               <div className="content">
-                <img src={success}></img>
-                <span className="tip">Thanks! Email submitted.</span>
+                <img src={toastIcon}></img>
+                <span className="tip">{subMsg}</span>
               </div>
             </div>
           : null}

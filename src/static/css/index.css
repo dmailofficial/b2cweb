@@ -1,6 +1,7 @@
 html,
 body {
   margin: 0 !important;
+  padding: 0 !important;
   font-family: PingFang SC, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -858,61 +859,76 @@ h2 {
 @font-face {
   font-family: "Montserrat";
   src: url(../font/Roboto-Black.ttf);
-  src: url(../font/Roboto-Black.ttf)  format('truetype');
+  src: url(../font/Roboto-Black.ttf)  format('truetype'),
+  url('../font/roboto-black.woff')format('woff');
 }
 @font-face {
-      font-family: "Montserrat-Bold";
-      src: url(../font/Roboto-Bold.ttf);
-      src: url(../font/Roboto-Bold.ttf)  format('truetype');
+  font-family: "Roboto-Bold";
+  src: url('../font/Roboto-Bold.ttf');
+  src: url('../font/Roboto-Bold.ttf')  format('truetype'),
+        url('../font/roboto-bold.woff')format('woff');
 }
 @font-face {
       font-family: "Montserrat-Light";
       src: url(../font/Roboto-Light.ttf);
-      src: url(../font/Roboto-Light.ttf)  format('truetype');
+      src: url(../font/Roboto-Light.ttf)  format('truetype'),
+            url('../font/roboto-light.woff')format('woff');
 }
 @font-face {
       font-family: "Montserrat-Medium";
       src: url(../font/Roboto-Medium.ttf);
-      src: url(../font/Roboto-Medium.ttf)  format('truetype');
+      src: url(../font/Roboto-Medium.ttf)  format('truetype'),
+            url(../font/roboto-medium.woff)  format('woff');
 }
 @font-face {
       font-family: "Montserrat-Regular";
       src: url(../font/Roboto-Regular.ttf);
-      src: url(../font/Roboto-Regular.ttf)  format('truetype');
+      src: url(../font/Roboto-Regular.ttf)  format('truetype'),
+          url(../font/roboto-regular.woff)  format('woff');
 }
 @font-face {
       font-family: "Montserrat-Thin";
       src: url(../font/Roboto-Thin.ttf);
-      src: url(../font/Roboto-Thin.ttf)  format('truetype');
+      src: url(../font/Roboto-Thin.ttf)  format('truetype'),
+        url(../font/roboto-thin.woff)  format('woff');
 }
 
 @font-face {
   font-family: "Roboto";
   src: url(../font/Roboto-Black.ttf);
-  src: url(../font/Roboto-Black.ttf)  format('truetype');
+  src: url(../font/Roboto-Black.ttf)  format('truetype'),
+  url('../font/roboto-black.woff')format('woff');
+  
 }
 @font-face {
       font-family: "Roboto-Bold";
-      src: url(../font/Roboto-Bold.ttf);
-      src: url(../font/Roboto-Bold.ttf)  format('truetype');
+      src: url('../font/Roboto-Bold.ttf');
+      src: url('../font/Roboto-Bold.ttf')  format('truetype'),
+            url('../font/roboto-bold.woff')format('woff');
 }
 @font-face {
       font-family: "Roboto-Light";
       src: url(../font/Roboto-Light.ttf);
-      src: url(../font/Roboto-Light.ttf)  format('truetype');
+      src: url(../font/Roboto-Light.ttf)  format('truetype'),
+            url('../font/roboto-light.woff')format('woff');
 }
 @font-face {
       font-family: "Roboto-Medium";
       src: url(../font/Roboto-Medium.ttf);
-      src: url(../font/Roboto-Medium.ttf)  format('truetype');
+      src: url(../font/Roboto-Medium.ttf)  format('truetype'),
+            url(../font/roboto-medium.woff)  format('woff');
 }
 @font-face {
       font-family: "Roboto-Regular";
       src: url(../font/Roboto-Regular.ttf);
-      src: url(../font/Roboto-Regular.ttf)  format('truetype');
+      src: url(../font/Roboto-Regular.ttf)  format('truetype'),
+          url(../font/roboto-regular.woff)  format('woff');
+      
 }
 @font-face {
       font-family: "Roboto-Thin";
       src: url(../font/Roboto-Thin.ttf);
-      src: url(../font/Roboto-Thin.ttf)  format('truetype');
+      src: url(../font/Roboto-Thin.ttf)  format('truetype'),
+        url(../font/roboto-thin.woff)  format('woff');
+      
 }

@@ -209,7 +209,7 @@ class MainpannelComp extends React.Component {
                     <div className="formWrap notStarted">
                         <div className="inputWrap">
                             <span></span>
-                            <input value="Check 4-7 bits NFT domain account of your choice." disabled placeholder="Check the NFT domain account of your choice"></input>
+                            <input value="Check for 4-7digits NFT Domain Account availability" disabled placeholder="Check for 4-7digits NFT Domain Account availability"></input>
                             <span className="searchBtn">Not Started</span>
                         </div>
                     </div>:null
@@ -223,7 +223,7 @@ class MainpannelComp extends React.Component {
                                 onInput={this.onInput} 
                                 onFocus = {this.onFocusHandle}
                                 onKeyDown={this.onKeyDownchange} 
-                                placeholder="Check the NFT domain account of your choice"
+                                placeholder="Check for 4-7digits NFT Domain Account availability"
                             ></input>
                             <span className="searchBtn" onClick={this.onSearch}>Search</span>
                             <div className={`email-suffix ${this.state.email.length ? 'show' : ''}`}>
@@ -259,7 +259,7 @@ class MainpannelComp extends React.Component {
                     <div className="formWrap disabled">
                         <div className="inputWrap">
                             <span></span>
-                            <input value="The event has ended." disabled placeholder="Check the NFT domain account of your choice"></input>
+                            <input value="The event has ended." disabled placeholder="Check for 4-7digits NFT Domain Account availability"></input>
                             <span className="searchBtn">Closed</span>
                         </div>
                     </div>:null
@@ -268,27 +268,27 @@ class MainpannelComp extends React.Component {
                     <div className="item">
                         <div className="item-header">
                             <h3>Presale process</h3>
-                            <span onClick={this.handleStepShow}>view picture -></span>
+                            <span onClick={this.handleStepShow}>View tutorial -></span>
                         </div>
-                        <p><span></span>Find the Dmail NFT Domain Account of your choice.</p>
-                        <p><span></span>Purchase and pay.</p>
-                        <p><span></span>Receive NFT in own.</p>
-                        <p><span></span>Enter Principal ID.</p>
-                        <p><span></span>wait for NFT release.</p>
-                        <p><span></span>login to bind the account with Dmail after NFT released.</p>
+                        <p><span></span>Find the Dmail NFT Domain Account of your choice</p>
+                        <p><span></span>Check out</p>
+                        <p><span></span>Receive NFT in My orders</p>
+                        <p><span></span>Click on "Receive NFT" in "My Orders". Type in Principal ID</p>
+                        <p><span></span>Wait for NFT release</p>
+                        <p><span></span>Login to bind the account with Dmail after  receiving NFT</p>
                     </div>
                     <div className="item">
                         <div className="item-header">
-                            <h3>Current opening progress</h3>
+                            <h3>Account opening status</h3>
                         </div>
-                        <p><span></span>1-3 bits will open in NFT domain accounts auction;</p>
-                        <p className='active'><span></span>4-7 bits partially open.<img src={successIcon} ></img></p>
-                        <p><span></span>8 bits and above, will open after mainnet releases.</p>
+                        <p><span></span>1-3 digits: Open in sale during NFT Domain Accounts auction</p>
+                        <p className='active'><span></span>4-7 digits: Partially open<img src={successIcon} ></img></p>
+                        <p><span></span>8 digits and above: Will open after mainnet release</p>
                     </div>
                 </div>
                 <div className="con_footer">
-                    <p>Follow <a href="https://twitter.com/dmailofficial" target="_blank">twitter</a> to be the first to get the latest notifications about the release.</p>
-                    <p>What is DMAIL? Click to learn more from Medium articles <a href="https://medium.com/@dmailofficial" target="_blank">https://medium.com/@dmailofficial</a></p>
+                    <p>Follow <a href="https://twitter.com/dmailofficial" target="_blank">twitter</a> to get the latest updates about the release.</p>
+                    <p>What is DMAIL? Click to learn more <a href="https://medium.com/@dmailofficial" target="_blank">https://medium.com/@dmailofficial</a></p>
                 </div>
                 <StepDialog
                     open = {this.state.openStep}

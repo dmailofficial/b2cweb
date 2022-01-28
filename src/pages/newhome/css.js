@@ -72,7 +72,7 @@ const NewHome = styled.div`
                 margin-top: 19vh;
                 p{
                     font-size: ${18/1440*100}vw;
-                    font-family: Roboto-Regular, Roboto;
+                    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 400;
                     color: #6E6E6E;
                     line-height: ${20/baseWidth}vw;
@@ -83,13 +83,13 @@ const NewHome = styled.div`
                 }
                 h2,h3{
                     font-size: ${48/baseWidth}vw;
-                    font-family: Roboto-Black, Roboto;
+                    font-family: Roboto-Black, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     color: #FFFFFF;
                     font-weight: normal;
                     line-height: ${65/baseWidth}vw;
                 }
                 h2{
-                    font-family: Roboto-Bold, Roboto;
+                    font-family: Roboto-Bold, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: bold;
                     margin-top: 5px;
                 }
@@ -140,7 +140,7 @@ const NewHome = styled.div`
                 padding-top: ${135/baseWidth}vw;
                 p{
                     font-size: ${14/baseWidth}vw;
-                    font-family: Roboto-Regular, Roboto;
+                    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 400;
                     color: #6E6E6E;
                     line-height: ${20/baseWidth}vw;
@@ -153,7 +153,7 @@ const NewHome = styled.div`
                 }
                 h2{
                     font-size: ${32/baseWidth}vw;
-                    font-family: Roboto-Black, Roboto;
+                    font-family: Roboto-Black, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 900;
                     color: #FF6633;
                     line-height: ${38/baseWidth}vw;
@@ -179,7 +179,7 @@ const NewHome = styled.div`
                         }
                         .txt{
                             font-size: ${16/baseWidth}vw;
-                            font-family: Roboto-Medium, Roboto;
+                            font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                             font-weight: 500;
                             color: #FFFFFF;
                             line-height: ${20/baseWidth}vw;
@@ -224,7 +224,7 @@ const NewHome = styled.div`
                 padding-top: ${145/baseWidth}vw;
                 p{
                     font-size: ${14/baseWidth}vw;
-                    font-family: Roboto-Regular, Roboto;
+                    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 400;
                     color: #6E6E6E;
                     line-height: ${16/baseWidth}vw;
@@ -237,7 +237,7 @@ const NewHome = styled.div`
                 }
                 h2{
                     font-size: ${32/baseWidth}vw;
-                    font-family: Roboto-Black, Roboto;
+                    font-family: Roboto-Black, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 900;
                     color: #FF6633;
                     line-height: ${38/baseWidth}vw;
@@ -264,14 +264,14 @@ const NewHome = styled.div`
                 margin-left: ${320/baseWidth}vw;
                 p{
                     font-size: ${14/baseWidth}vw;
-                    font-family: Roboto-Regular, Roboto;
+                    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 400;
                     color: #6E6E6E;
                     line-height: ${16/baseWidth}vw;
                 }
                 h2{
                     font-size: ${32/baseWidth}vw;
-                    font-family: Roboto-Black, Roboto;
+                    font-family: Roboto-Black, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 900;
                     color: #FF6633;
                     line-height: ${38/baseWidth}vw;
@@ -308,7 +308,7 @@ const NewHome = styled.div`
                         }
                         h3{
                             font-size: ${16/baseWidth}vw;
-                            font-family: Roboto-Black, Roboto;
+                            font-family: Roboto-Black, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                             font-weight: 900;
                             color: #FFFFFF;
                             line-height: ${20/baseWidth}vw;
@@ -402,14 +402,14 @@ const NewHome = styled.div`
                 padding-top: ${124/baseWidth}vw;
                 p{
                     font-size: ${14/baseWidth}vw;
-                    font-family: Roboto-Regular, Roboto;
+                    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 400;
                     color: #6E6E6E;
                     line-height: ${16/baseWidth}vw;
                 }
                 h2{
                     font-size: ${32/baseWidth}vw;
-                    font-family: Roboto-Black, Roboto;
+                    font-family: Roboto-Black, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 900;
                     color: #FF6633;
                     line-height: ${38/baseWidth}vw;
@@ -434,7 +434,7 @@ const NewHome = styled.div`
                     left: ${110/baseWidth}vw;
                    h3{
                     font-size: ${20/baseWidth}vw;
-                    font-family: Roboto-Bold, Roboto;
+                    font-family: Roboto-Bold, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: bold;
                     color: #FFFFFF;
                     line-height: ${24/baseWidth}vw;
@@ -442,7 +442,7 @@ const NewHome = styled.div`
                    }
                    p{
                     font-size: ${14/baseWidth}vw;
-                    font-family: Roboto-Medium, Roboto;
+                    font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 500;
                     color: rgba(225,225,225,.52);
                     line-height: ${16/baseWidth}vw;
@@ -554,7 +554,7 @@ const NewHome = styled.div`
                 padding-top: ${100/baseWidth}vw;
                 h2{
                     font-size: ${32/baseWidth}vw;
-                    font-family: Roboto-Black, Roboto;
+                    font-family: Roboto-Black, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 900;
                     color: #FF6633;
                     line-height: ${38/baseWidth}vw;
@@ -663,37 +663,75 @@ const NewHome = styled.div`
                 background-size: 100%;
                 background-position: 50% 100%;
                 background-repeat: no-repeat;
+                position: relative;
+                
                 p{
                     font-size: ${22/baseWidth}vw;
-                    font-family: Roboto-Medium, Roboto;
+                    font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 500;
                     color: #FFFFFF;
                     line-height: ${25/baseWidth}vw;
+                    width: 100%;
+                    text-align: center;
+                    position: absolute;
+                    bottom: 0;
+                    margin-bottom: ${360/baseWidth}vw;
                 }
                 .inputWrap{
-                    margin-top: ${16/baseWidth}vw;
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    margin-left: ${-(439+154)/2/baseWidth}vw;
+                    margin-bottom: ${300/baseWidth}vw;
                     input{
-                        height: ${46/baseWidth}vw;
-                        line-height: ${46/baseWidth}vw;
+                        height: ${48/baseWidth}vw;
+                        width: ${439/baseWidth}vw;
+                        line-height: ${48/baseWidth}vw;
                         border: none;
                         outline: none;
                         background: rgba(216,216,216, .19);
                         padding-left: ${12/baseWidth}vw;
                         font-size: ${18/baseWidth}vw;
-                        font-family: Roboto-Light, Roboto;
+                        font-family: Roboto-Light, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                         font-weight: 300;
                         color: rgba(255,255,255, .6);
-                        width: ${439/baseWidth}vw;
+                        box-sizing: border-box;
+                        border-radius: 0;
                         display: inline-block;
                         vertical-align: top;
                     }
                     input::placeholder{
                         font-size: ${18/baseWidth}vw;
-                        font-family: Roboto-Light, Roboto;
+                        font-family: Roboto-Light, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                         font-weight: 300;
                         color: rgba(255,255,255, .22);
                         line-height: ${21/baseWidth}vw;
                     }
+                    .MuiOutlinedInput-root{
+                        .MuiOutlinedInput-notchedOutline{
+                            border:none;
+                        }
+                    }
+                    .MuiOutlinedInput-root.Mui-focused {
+                        background-color: none;
+                        padding: 0;
+                        border:none;
+                        margin-top: 0px;
+                        .MuiOutlinedInput-notchedOutline{
+                            border:none
+                        }
+                    }
+                    .MuiOutlinedInput-root:hover{
+                        .MuiOutlinedInput-notchedOutline{
+                            border:none;
+                        }
+                    }
+                    .MuiOutlinedInput-root.Mui-error{
+                        .MuiOutlinedInput-notchedOutline{
+                            border:1px solid #d32f2f;
+                        }
+                    }
+                    
                     .signBtn{
                         height: ${48/baseWidth}vw;
                         width: ${154/baseWidth}vw;
@@ -701,7 +739,7 @@ const NewHome = styled.div`
                         vertical-align: top;
                         background: #FF6633;
                         font-size: ${16/baseWidth}vw;
-                        font-family: Roboto-Regular, Roboto;
+                        font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                         font-weight: 400;
                         color: #FFFFFF;
                         line-height: ${48/baseWidth}vw;
@@ -772,7 +810,7 @@ const NewHome = styled.div`
                     ul{
                         li{
                             font-size: ${16/baseWidth}vw;
-                            font-family: Roboto-Medium, Roboto;
+                            font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                             font-weight: 500;
                             color: rgba(255, 255, 255, .8);
                             line-height: ${20/baseWidth}vw;
@@ -881,7 +919,7 @@ const NewHome = styled.div`
             span.tip{
                 display: block;
                 font-size: 20px;
-                font-family: Roboto-Regular, Roboto;
+                font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                 font-weight: 400;
                 color: #111111;
                 height: 24px;
@@ -2335,7 +2373,7 @@ const NewHome = styled.div`
             }
             .footWrap{
                 .signWrap{
-                    height: calc(100vh - ${600/baseWidth750}vw);
+                    height: calc(100vh - ${700/baseWidth750}vw);
                     padding: ${450/baseWidth750}vw 0;
                     box-sizing: border-box;
                     text-align: center;
@@ -2347,8 +2385,12 @@ const NewHome = styled.div`
                     p{
                         font-size: ${30/baseWidth750}vw;
                         line-height: ${25/baseWidth750}vw;
+                        position: static;
+                        margin-bottom: 10px;
                     }
                     .inputWrap{
+                        position: static;
+                        margin-left: 0;
                         margin-top: ${16*2/baseWidth750}vw;
                         input{
                             height: ${46*2/baseWidth750}vw;
@@ -2375,7 +2417,7 @@ const NewHome = styled.div`
                     display: flex;
                     flex-wrap:  wrap;
                     box-sizing: border-box;
-                    padding: ${43/baseWidth750}vw 0;
+                    padding: ${43/baseWidth750}vw 0 ${90/baseWidth750}vw;
                     .footerLogo{
                         order: 1;
                         width: ${200/baseWidth750}vw;

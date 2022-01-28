@@ -59,7 +59,7 @@ const HeaderWrap = styled.div`
     .nav_item{
       a{
         font-size: 14px;
-        font-family: Roboto-Bold, Roboto;
+        font-family: Roboto-Bold, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";;
         font-weight: normal;
         color: #ffffff;
       }
@@ -75,7 +75,7 @@ const HeaderWrap = styled.div`
     position: relative;
     border: 1px solid #888888;
     font-size: 14px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";;
     font-weight: 400;
     color: #FFFFFF;
     line-height: 32px;
@@ -83,28 +83,32 @@ const HeaderWrap = styled.div`
     cursor: pointer;
     ul{
       display: none;
-      background-color: #1D1D1F;
-      padding: 10px;
+      background-color: #232323;
+      padding: 10px 0;
       border-radius: 4px;
       position: absolute;
       width: 152px;
       box-sizing: border-box;
-      top: 32px;
-      border: 1px solid #333;
+      top: 33px;
       li{
         width: 100%;
         font-size: 14px;
-        font-family: Roboto-Regular, Roboto;
-        font-weight: 400;
+        font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";;
+        font-weight: bold;
         color: #FFFFFF;
         line-height: 32px;
-        border-bottom: 1px solid #666;
+        height: 32px;
+        text-align: left;
+        padding-left: 16px;
         a{
           color: #FFFFFF;
         }
       }
       li:last-child{
         border-bottom: none;
+      }
+      li:hover{
+        background-color: #FF6633;
       }
     }
   }
@@ -158,7 +162,7 @@ const HeaderWrap = styled.div`
     span.tip{
         display: inline-block;
         font-size: 20px;
-        font-family: Roboto-Regular, Roboto;
+        font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";;
         font-weight: 400;
         color: #111111;
         height: 56px;
@@ -247,7 +251,7 @@ const HeaderWrap = styled.div`
 `
 
 const Header = (props) => {
-  const { location: { pathname }, userEmail, toLogin, onChangeEmail } = props
+  const { location: { pathname }, userEmail, toLogin, onChangeEmail, comingSoonHandle } = props
   const [showToast, setShowToast] = useState(false)
 
   const onCommingSoon = () => {
@@ -269,6 +273,10 @@ const Header = (props) => {
     document.querySelector('.footer').scrollIntoView()
   }
 
+  const onComingSoon = () => {
+    comingSoonHandle()
+  }
+
   return (
     <>
       <HeaderWrap className="header">
@@ -281,7 +289,7 @@ const Header = (props) => {
             <div className="nav_item"><Link to="/" className={(pathname === '/' || pathname === '/newhome') ? 'on' : ''}>Home</Link></div>
             <div className="nav_item"><a onClick={onCommingSoon}>Mail</a></div>
             <div className="nav_item"><a onClick={onCommingSoon}>NFTs</a></div>
-            <div className="nav_item"><Link to="/presale" className={pathname === '/presale' ? 'on ' : ''} >Event</Link></div>
+            <div className="nav_item"><Link to="/presale" className={pathname === '/presale' ? 'on ' : ''} >Events</Link></div>
             <div className="nav_item"><Link to="/ambassador" className={pathname === '/ambassador' ? 'on ' : ''} >Ambassador</Link></div>
           </div>
         </div>
@@ -290,12 +298,12 @@ const Header = (props) => {
         )} */}
         {/* <Login onClick={toLogin}></Login> */}
         <div className="support">
-          <span>support</span>
+          <span>Support</span>
           <ul>
             <li><a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank">Demo</a></li>
             <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Litepaper</a></li>
-            <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank" className="docs">Docs</a></li>
-            <li>API</li>
+            <li onClick={onComingSoon} >Docs</li>
+            <li onClick={onComingSoon}>API</li>
           </ul>
         </div>
           {showToast ? 

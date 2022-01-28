@@ -12,7 +12,7 @@ const mainGray = "#9A9A9A";
 const OperateBtn = styled.div`
     text-align: right;
     margin: 0 32px;
-    padding: 24px 0;
+    padding: 14px 0;
     .connectBtn, .ownBtn{
         width: 180px;
         height: 48px;
@@ -22,7 +22,7 @@ const OperateBtn = styled.div`
         box-shadow: 0px 8px 29px 0px rgba(0, 5, 58, 0.05);
         border-radius: 3px;
         font-size: 14px;
-        font-family: Roboto-Regular, Roboto;
+        font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
         font-weight: bold;
         text-align: center;
         cursor: pointer;
@@ -81,7 +81,7 @@ const Left = styled.div`
             left: 16px;
             top: 16px;
             font-size: 16px;
-            font-family: Roboto-Medium, Roboto;
+            font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: bold;
             color: #FFFFFF;
             line-height: 24px;
@@ -100,7 +100,7 @@ const Left = styled.div`
             width: 100%;
             h3{
                 font-size: 16px;
-                font-family: Roboto-Medium, Roboto;
+                font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                 font-weight: bold;
                 color: #FFFFFF;
                 line-height: 24px;
@@ -112,7 +112,7 @@ const Left = styled.div`
                 margin-top: 9px;
                 .time{
                     font-size: 14px;
-                    font-family: Roboto-Regular, Roboto;
+                    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 400;
                     color: #9A9A9A;
                     line-height: 24px;
@@ -123,7 +123,7 @@ const Left = styled.div`
                     display: inline-block;
                     padding: 0 10px;
                     font-size: 12px;
-                    font-family: Roboto-Regular, Roboto;
+                    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 400;
                     color: #FFFFFF;
                     line-height: 24px;
@@ -289,7 +289,7 @@ const Mainpannel = styled.div`
         }
         h2{
             font-size: 24px;
-            font-family: Roboto-Medium, Roboto;
+            font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: 500;
             color: #FFFFFF;
             line-height: 32px;
@@ -297,7 +297,7 @@ const Mainpannel = styled.div`
         }
         p{
             font-size: 14px;
-            font-family: Roboto-Medium, Roboto;
+            font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: 500;
             color: rgb(255,255,255, .5);
             line-height: 24px;
@@ -358,7 +358,7 @@ const Mainpannel = styled.div`
                 background: none;
                 display: inline-block;
                 font-size: 16px;
-                font-family: Roboto-Regular, Roboto;
+                font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                 font-weight: 400;
                 color: #fff;
                 line-height: 48px;
@@ -382,7 +382,7 @@ const Mainpannel = styled.div`
                 background: #FF6633;
                 border-radius: 3px;
                 font-size: 16px;
-                font-family: Roboto-Regular, Roboto;
+                font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                 font-weight: 400;
                 color: #FFFFFF;
                 line-height: 48px;
@@ -448,7 +448,7 @@ const Mainpannel = styled.div`
                 p{
                     padding-left: 60px;
                     font-size: 16px;
-                    font-family: Roboto-Regular, Roboto;
+                    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: bold;
                     color: #000000;
                     img{
@@ -536,7 +536,7 @@ const Mainpannel = styled.div`
             box-sizing: border-box;
             .item-header{
                 font-size: 16px;
-                font-family: Roboto-Medium, Roboto;
+                font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                 font-weight: 500;
                 color: #FFFFFF;
                 line-height: 24px;
@@ -546,7 +546,7 @@ const Mainpannel = styled.div`
                 justify-content: space-between;
                 span{
                     font-size: 14px;
-                    font-family: Roboto-Regular, Roboto;
+                    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 400;
                     color: #4C72FF;
                     line-height: 24px;
@@ -555,7 +555,7 @@ const Mainpannel = styled.div`
             }
             p{
                 font-size: 14px;
-                font-family: Roboto-Regular, Roboto;
+                font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                 font-weight: 400;
                 color: rgba(255,255,255, .5);
                 line-height: 24px;
@@ -584,7 +584,7 @@ const Mainpannel = styled.div`
     .con_footer{
         margin-top: 16px;
         font-size: 14px;
-        font-family: Roboto-Medium, Roboto;
+        font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
         font-weight: 500;
         color: #9F9FA0;
         line-height: 24px;
@@ -597,12 +597,16 @@ const Mainpannel = styled.div`
 
 
 const ConfirmPannel = styled.div`
-    height: calc(100vh - 67px - 95px - 38px - 48px);
+    min-height: calc(100vh - 67px - 95px - 38px - 20px);
     border-radius: 6px;
     background: #252527;
     border-radius: 6px;
     padding: 25px 32px;
     box-sizing: border-box;
+    overflow-y: scroll;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar { width: 0 !important }
     .backBtn{
        img{
            width: 24px;
@@ -612,7 +616,7 @@ const ConfirmPannel = styled.div`
        } 
        span{
             font-size: 20px;
-            font-family: Roboto-Medium, Roboto;
+            font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: 500;
             color: #FFFFFF;
             line-height: 24px;
@@ -639,14 +643,14 @@ const ConfirmPannel = styled.div`
             margin-left: 282px;
             h3{
                 font-size: 48px;
-                font-family: Roboto-Medium, Roboto;
+                font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                 font-weight: 500;
                 color: #FFFFFF;
                 line-height: 60px;
             }
             .tip{
                 font-size: 14px;
-                font-family: Roboto-Regular, Roboto;
+                font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                 font-weight: 400;
                 color: #FF6633;
                 line-height: 24px;
@@ -661,14 +665,14 @@ const ConfirmPannel = styled.div`
                         display: inline-block;
                         vertical-align: top;
                         font-size: 16px;
-                        font-family: Roboto-Regular, Roboto;
+                        font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                         font-weight: 400;
                         color: rgba(255,255,255, .5);
                         line-height: 24px;
                     }
                     .value{
                         font-size: 16px;
-                        font-family: Roboto-Regular, Roboto;
+                        font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                         font-weight: 400;
                         color: #FFFFFF;
                         line-height: 24px;
@@ -692,7 +696,7 @@ const ConfirmPannel = styled.div`
 
                             }
                             font-size: 14px;
-                            font-family: Roboto-Regular, Roboto;
+                            font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                             font-weight: bold;
                             color: #FFFFFF;
                             line-height: 32px;
@@ -744,7 +748,7 @@ const ConfirmPannel = styled.div`
                         }
                         .raLabel{
                             font-size: 16px;
-                            font-family: Roboto-Regular, Roboto;
+                            font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                             font-weight: bold;
                             color: #9B9B9B;
                             line-height: 24px;
@@ -778,7 +782,7 @@ const ConfirmPannel = styled.div`
                         box-shadow: 0px 8px 29px 0px rgba(0, 5, 58, 0.05);
                         border-radius: 3px;
                         font-size: 16px;
-                        font-family: Roboto-Regular, Roboto;
+                        font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                         font-weight: bold;
                         color: #FFFFFF;
                         line-height: 48px;
@@ -795,7 +799,7 @@ const ConfirmPannel = styled.div`
 
                     .countDown {
                         font-size: 16px;
-                        font-family: Roboto-Regular, Roboto;
+                        font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                         font-weight: bold;
                         color: #FF6633;
                         line-height: 48px;
@@ -813,7 +817,7 @@ const ConfirmPannel = styled.div`
                 }
                 .notice{
                     font-size: 14px;
-                    font-family: Roboto-Regular, Roboto;
+                    font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 400;
                     color: #9B9B9B;
                     line-height: 16px;
@@ -839,7 +843,7 @@ const WalletWrap = styled.div`
         span{
             display: inline-block;
             font-size: 16px;
-            font-family: Roboto-Medium, Roboto;
+            font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: bold;
             color: #1D1D1F;
             line-height: 72px;
@@ -894,7 +898,7 @@ const StepDialogWrap = styled.div`
         font-size: 0;
         p{
             font-size: 14px;
-            font-family: Roboto-Medium, Roboto;
+            font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: bold;
             color: #1D1D1F;
             line-height: 22px;
@@ -906,7 +910,7 @@ const StepDialogWrap = styled.div`
                 display: inline-block;
                 border: 2px solid #FF6633;
                 font-size: 14px;
-                font-family: Roboto-Regular, Roboto;
+                font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                 font-weight: bold;
                 color: #FF6633;
                 line-height: 22px;
@@ -942,7 +946,7 @@ const ToastWrap = styled.div`
         }
         p{
             font-size: 16px;
-            font-family: Roboto-Medium, Roboto;
+            font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: bold;
             color: #1D1D1F;
             line-height: 18px;
