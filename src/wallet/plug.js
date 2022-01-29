@@ -1,5 +1,5 @@
 const PlugAbiMap = {
-  toAddress: '567to-2ufhs-rzv5c-2wnbb-6y34z-kzi7q-nvwcv-ulekn-2esk4-kyggc-iae',
+  toAddress: 'i5bf3-hm467-bc7sn-d4yc7-g3rib-2khxw-u6wve-mdvsw-qxzby-2hzyd-xae',
 }
 
 class PlugWallet {
