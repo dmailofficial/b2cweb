@@ -114,16 +114,19 @@ function App({ store: { wallet, presale } }) {
       return
     }
     const { jwt, address, walletName } = wallet.info
+    console.log(jwt, address, walletName )
     setLoading(true)
+    const params = walletName === 'metamask' ? { jwt } : { is_verify: true }
     // await new Promise((resolve) => setTimeout(resolve, 1000))
     try {
+      console.log(11212)
       const res = await axios({
         url: `${baseUrl}/trades`,
         method: 'post',
         data: {
-          jwt,
           address,
           // address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
+          ...params,
         },
         // errorTitle: '',
       })
@@ -145,7 +148,7 @@ function App({ store: { wallet, presale } }) {
         })))
       }
     } catch (error) {
-      // console.log(error)      
+      console.log(error)      
     }
     setLoading(false)
   }, [wallet.info])
@@ -153,7 +156,6 @@ function App({ store: { wallet, presale } }) {
   const [receiveId, setReceiveId] = useState(0);
   const [inputErrorIndex, setInputErrorIndex] = useState(0);
   const receive = useCallback(async (plugAddress, id) => {
-    console.log(id)
     if (!wallet.info || !wallet.info.address) {
       return
     }
@@ -196,49 +198,48 @@ function App({ store: { wallet, presale } }) {
   }, [wallet.info])
 
   useEffect(async () => {
-    let walletName = ''
     if (!wallet.info) {
-      const sInfo = Cookies.get('account')
-      const swalletName = Cookies.get('walletname')
-      try {
-        walletName = swalletName ? JSON.parse(decode(swalletName)) : ''
-      } catch (error) {
-        // 
-      }
-      if (!sInfo) {
+      // const sInfo = Cookies.get('account')
+      // const swalletName = Cookies.get('walletname')
+      // try {
+      //   walletName = swalletName ? JSON.parse(decode(swalletName)) : ''
+      // } catch (error) {
+      //   // 
+      // }
+      // if (!sInfo) {
         setWalletDialog(true)
-      } else {
-        try {
-          const info = JSON.parse(decode(sInfo))
-          info && wallet.setWalletInfo(info)
+      // } else {
+      //   try {
+      //     const info = JSON.parse(decode(sInfo))
+      //     info && wallet.setWalletInfo(info)
 
-          setTimeout( async ()=>{
-            const walletObj = await connectWallet(walletName, wallet)
-            if(walletObj.code){
-              if(walletObj.code == 3 && walletName == "tronlink"){
-                setVertip(TronIcon)
-              }else{
-                setVertip(null)
-              }
-              poptoast(walletObj.msg.toString())
-            }
-            if(walletName !== "metamask"){
-              wallet.setWalletInfo({
-                ...info,
-                address: walletObj.account
-              })
-            }
-          }, 500)
-        } catch (error) {
-          //
-        }
-      }
-    }else{
+      //     setTimeout( async ()=>{
+      //       const walletObj = await connectWallet(walletName, wallet)
+      //       if(walletObj.code){
+      //         if(walletObj.code == 3 && walletName == "tronlink"){
+      //           setVertip(TronIcon)
+      //         }else{
+      //           setVertip(null)
+      //         }
+      //         poptoast(walletObj.msg.toString())
+      //       }
+      //       if(walletName !== "metamask"){
+      //         wallet.setWalletInfo({
+      //           ...info,
+      //           address: walletObj.account
+      //         })
+      //       }
+      //     }, 500)
+      //   } catch (error) {
+      //     //
+      //   }
+      // }
+    } else{
       const walletObj = await connectWallet(wallet.walletName, wallet)
       if(walletObj.code){
         poptoast(walletObj.msg.toString())
       }
-      if(walletName !== "metamask"){
+      if(wallet.walletName !== "metamask"){
         wallet.setWalletInfo({
           ...wallet.info,
           address: walletObj.account
@@ -246,14 +247,14 @@ function App({ store: { wallet, presale } }) {
       }
     }
 
-    if(history.location.state?.round){
-      setRound(history.location.state?.round)
-    }
+    // if(history.location.state?.round){
+    //   setRound(history.location.state?.round)
+    // }
     
-    if (history.location.state && history.location.state.round === 1 && walletName === 'plug') {
-      Cookies.remove('account');
-      Cookies.remove('walletname');
-    }
+    // if (history.location.state && history.location.state.round === 1 && wallet.walletName === 'plug') {
+    //   Cookies.remove('account');
+    //   Cookies.remove('walletname');
+    // }
   }, [])
 
   useEffect(async () => {
