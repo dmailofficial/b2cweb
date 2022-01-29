@@ -189,60 +189,66 @@ const Index = ({ store }) => {
       channelId && presaleStore.setChannelId(channelId)
     }
 
-    if (!walletStore.info) {
-      const sInfo = Cookies.get('account')
-      const swalletName = Cookies.get('walletname')
-      try {
-        const info = JSON.parse(decode(sInfo))
-        info && walletStore.setWalletInfo(info)
-        getLoginInfo(info)
-        console.log("useEffect------  wallet  info::::: ",info)
-        const walletName = JSON.parse(decode(swalletName))
-        walletName && walletStore.setWalletName(walletName)
-
-        if(walletName == "tronlink"){
-          walletStore.setWalletInfo({})
-          walletStore.setWalletName('')
-          Cookies.remove('walletname')
-          Cookies.remove('account')
-        }
-      } catch (error) {
-        //
-      }
-    }else{
-      if(walletStore.walletName == "tronlink"){
-        walletStore.setWalletInfo({})
-        walletStore.setWalletName('')
-        Cookies.remove('walletname')
-        Cookies.remove('account')
-      }
+    if(walletStore.walletName == "tronlink"){
+      walletStore.setWalletInfo({})
+      walletStore.setWalletName('')
+      Cookies.remove('walletname')
+      Cookies.remove('account')
     }
+    // if (!walletStore.info) {
+    //   const sInfo = Cookies.get('account')
+    //   const swalletName = Cookies.get('walletname')
+    //   try {
+    //     const info = JSON.parse(decode(sInfo))
+    //     info && walletStore.setWalletInfo(info)
+    //     getLoginInfo(info)
+    //     console.log("useEffect------  wallet  info::::: ",info)
+    //     const walletName = JSON.parse(decode(swalletName))
+    //     walletName && walletStore.setWalletName(walletName)
+
+    //     if(walletName == "tronlink"){
+    //       walletStore.setWalletInfo({})
+    //       walletStore.setWalletName('')
+    //       Cookies.remove('walletname')
+    //       Cookies.remove('account')
+    //     }
+    //   } catch (error) {
+    //     //
+    //   }
+    // }else{
+    //   if(walletStore.walletName == "tronlink"){
+    //     walletStore.setWalletInfo({})
+    //     walletStore.setWalletName('')
+    //     Cookies.remove('walletname')
+    //     Cookies.remove('account')
+    //   }
+    // }
   }, [])
 
-  useEffect(async () => {
-    if(step == 1){return }
-    const swalletName = Cookies.get('walletname')
-    const sInfo = Cookies.get('account')
-    try {
-      const walletName = JSON.parse(decode(swalletName))
-      const info = JSON.parse(decode(sInfo))
-      const walletObj = await connectWallet(walletName, walletStore)
-      console.log("presale use effect connect wallet::::: ",walletObj)
-      if(walletObj.code){
-        console.log("connect wallet error: ", walletObj.msg);
-        poptoast(walletObj.msg.toString())
-      }
-      if(walletName == "plug"){
-        walletStore.setWalletInfo({
-          ...info,
-          address: walletObj.account
-        })
-      }
-      setWalletInstance(walletObj.instance)
-    } catch (error) {
-        //
-    }
-  }, [step])
+  // useEffect(async () => {
+    // if(step == 1){return }
+    // const swalletName = Cookies.get('walletname')
+    // const sInfo = Cookies.get('account')
+    // try {
+    //   const walletName = JSON.parse(decode(swalletName))
+    //   const info = JSON.parse(decode(sInfo))
+    //   const walletObj = await connectWallet(walletName, walletStore)
+    //   console.log("presale use effect connect wallet::::: ",walletObj)
+    //   if(walletObj.code){
+    //     console.log("connect wallet error: ", walletObj.msg);
+    //     poptoast(walletObj.msg.toString())
+    //   }
+    //   if(walletName == "plug"){
+    //     walletStore.setWalletInfo({
+    //       ...info,
+    //       address: walletObj.account
+    //     })
+    //   }
+    //   setWalletInstance(walletObj.instance)
+    // } catch (error) {
+    //     //
+    // }
+  // }, [step])
 
   return (
     <>
@@ -300,6 +306,7 @@ const Index = ({ store }) => {
         walletStore = {walletStore}
         topay = {topay}
         payaction = {payaction}
+        channel = {"buy"}
       ></WalletDialog>
       <Toast
         open = {errorToast}

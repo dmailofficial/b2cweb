@@ -38,7 +38,7 @@ const walletList = [
 
 function WalletDialog(params) {
   console.log("WalletDialog::", params)
-    const {open , dialogClose, getLoginInfo, getWalletInstance, walletStore, round = 0} = params;
+    const {open , dialogClose, getLoginInfo, getWalletInstance, walletStore, channel} = params;
     const [walletName, setWalletName] = useState('')
     const [toast, setToast] = useState(false)
     const [toastType, setToastType] = useState("warn")
@@ -140,7 +140,8 @@ function WalletDialog(params) {
             <WalletWrap>
               {
                 walletList.map((wallet, i)=>{
-                  if(!wallet.specify || (wallet.specify && ((wallet.include.length>0 && wallet.include.indexOf(round) > -1) || (wallet.exclude.length > 0 && wallet.exclude.indexOf(round) < 0))) )
+                  // if(!wallet.specify || (wallet.specify && ((wallet.include.length>0 && wallet.include.indexOf(round) > -1) || (wallet.exclude.length > 0 && wallet.exclude.indexOf(round) < 0))) )
+                  if((channel == "buy" && wallet.code !== "tronlink") || channel != "buy")
                     return (
                       <div className="walletItem" onClick={()=>handleWallet(wallet.code)} key={wallet.name}>
                           <span>{wallet.name}</span>
