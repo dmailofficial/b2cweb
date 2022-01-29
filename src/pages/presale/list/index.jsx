@@ -114,7 +114,6 @@ function App({ store: { wallet, presale } }) {
       return
     }
     const { jwt, address, walletName } = wallet.info
-    console.log(jwt, address, walletName )
     setLoading(true)
     const params = walletName === 'metamask' ? { jwt } : { is_verify: true }
     // await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -156,10 +155,11 @@ function App({ store: { wallet, presale } }) {
   const [receiveId, setReceiveId] = useState(0);
   const [inputErrorIndex, setInputErrorIndex] = useState(0);
   const receive = useCallback(async (plugAddress, id) => {
-    if (!wallet.info || !wallet.info.address) {
+    if (!wallet.info || !wallet.info.address || !wallet.info.walletName) {
       return
     }
-    const { jwt } = wallet.info
+    const { jwt, walletName } = wallet.info
+    const params = walletName === 'metamask' ? { jwt } : { is_verify: true }
     if (id) {
       try {
         const res = await axios({
@@ -171,6 +171,7 @@ function App({ store: { wallet, presale } }) {
             address,
             // address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
             id,
+            ...params,
           },
           // errorTitle: '',
         })
