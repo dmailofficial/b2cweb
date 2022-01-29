@@ -935,17 +935,25 @@ const StepDialogWrap = styled.div`
 const ToastWrap = styled.div`
     
         display: flex;
-        flex-wrap: nowrap;
-        align-items: top;
+        // flex-wrap: nowrap;
+        align-items: center;
         justify-content: start;
+        min-height: 24px;
         img{
             width: 18px;
             height: 18px;
+            display: inline-block;
             vertical-align: middle;
             margin-right: 15px;
         }
         img.animate{
             animation: spin 1s steps(8) infinite;
+        }
+        .tipimg{
+            width: 24px;
+            height: 24px;
+            margin-right: 0;
+            margin-left: 10px;
         }
         @keyframes spin {
             from {transform: rotate(0deg);}
@@ -956,14 +964,9 @@ const ToastWrap = styled.div`
             font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: bold;
             color: #1D1D1F;
-            line-height: 18px;
+            line-height: 24px;
             word-break: break-all;
-            .tipimg{
-                width: 24px;
-                height: 24px;
-                margin-right: 0;
-                margin-left: 10px;
-            }
+            margin-top: 2px;
         }
 `
 

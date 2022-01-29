@@ -23,18 +23,32 @@ class TronLinkWallet {
     requestAccounts = async () => {
         if (window.tronWeb && window.tronLink) {
             const res = await window.tronLink.request({ method: 'tron_requestAccounts' });
-            if(res.code == 200){
+            console.log("tron link account::::res", res, window.tronWeb.defaultAddress.base58)
+            if(!res && !window.tronWeb.defaultAddress.base58){
+              console.log("tron link account22222::::res", res, window.tronWeb.defaultAddress.base58)
+              return {
+                code: 3,
+                msg: 'Please unlock TronLink'
+              }
+            }
+            if(res?.code == 200){
               const _account = window.tronWeb.defaultAddress.base58;
               console.log("tron link account::::", _account)
               this.listenerAccountsChanged(this.accountChangeHandle)
               return _account
             }
-            if(res.code == 4001){
-             return {
-                code: 1,
-                msg: 'User rejected!'
-              }
-            } 
+            if(res?.code == 4001){
+              return {
+                 code: 1,
+                 msg: 'User rejected!'
+               }
+             }
+
+            return {
+              code: 3,
+              msg: 'Please unlock TronLink'
+            }
+            
         }else {
           return {
             code: 2,

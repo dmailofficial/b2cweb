@@ -29,8 +29,6 @@ const DmailDialog = styled(Dialog)`
 function Toast(params) {
     const {open , type, txt, tipimg} = params;
 
-    
-
     return (
         
             <DmailDialog
@@ -43,8 +41,8 @@ function Toast(params) {
                     ></img>
                     <p>
                         {txt}
-                        {tipimg ? <img className="tipimg" src = {tipimg}></img>:null}
                     </p>
+                    {tipimg ? <img className="tipimg" src = {tipimg}></img>:null}
                 </ToastWrap>
             </DmailDialog>
         

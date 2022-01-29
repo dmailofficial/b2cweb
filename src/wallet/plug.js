@@ -74,7 +74,7 @@ class PlugWallet {
         return _icp;
     }
 
-    transfer = async (price, successcallback, failedcallback) => {
+    transfer = async (address, price, successcallback, failedcallback) => {
       const chainInfo = await this.getChainInfo();
       const { toAddress } = chainInfo
       try {
@@ -88,7 +88,7 @@ class PlugWallet {
           //   from_subaccount: ''
           // }
         });
-        successcallback && successcallback(toAddress, result.height)
+        successcallback && successcallback(address, result.height)
         return result;
       } catch (error) {
         failedcallback && failedcallback(error)

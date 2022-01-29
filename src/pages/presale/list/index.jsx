@@ -17,6 +17,7 @@ import WalletDialog from '../walletDialog'
 import Toast from '../toast'
 import {connectWallet} from '../utils'
 import metamasktipIcon from '@/static/images/presale/metamasktip.png'
+import TronIcon from '@/static/images/presale/tronlink.jpeg'
 
 const columns = [
   {
@@ -214,6 +215,11 @@ function App({ store: { wallet, presale } }) {
           setTimeout( async ()=>{
             const walletObj = await connectWallet(walletName, wallet)
             if(walletObj.code){
+              if(walletObj.code == 3 && walletName == "tronlink"){
+                setVertip(TronIcon)
+              }else{
+                setVertip(null)
+              }
               poptoast(walletObj.msg.toString())
             }
             if(walletName !== "metamask"){
@@ -222,7 +228,7 @@ function App({ store: { wallet, presale } }) {
                 address: walletObj.account
               })
             }
-          }, 50)
+          }, 500)
         } catch (error) {
           //
         }
@@ -264,7 +270,7 @@ function App({ store: { wallet, presale } }) {
         <ToolBar>
           <div className="left" onClick={goPresale}>
             <i></i>
-            <span>Orders</span>
+            <span>My orders</span>
           </div>
           <div className="right">
             <a onClick={() => setWalletDialog(true)}>{filterAddress  || 'Connect wallet'}</a>
@@ -273,7 +279,7 @@ function App({ store: { wallet, presale } }) {
         <Content>
           <div className="tip">
             <i></i>
-            <p>When the payment is done, please claim your NFT domain account.The Dmail NFT Domain Account will be sent to your Principal ID account in 24 hours. If you have any problem, please contact to our official email: contact@dmail.ai .</p>
+            <p>When the payment is done, please claim your NFT domain account. The Dmail NFT Domain Account will be sent to your Principal ID account in 24 hours. If you have any problem, please contact to our official email: contact@dmail.ai .</p>
           </div>
           <Table columns={columns} loading={loading} data={data} pageCount={pageCount} fetchData={fetchData} setReceiveId={setReceiveId} />
         </Content>

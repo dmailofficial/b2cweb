@@ -5,7 +5,7 @@ import hot from '@/static/images/hot.png'
 import ava from '@/static/images/ava.png'
 import logo from '@/static/images/logo@2x.png'
 
-import rocket from '@/static/images/home/toast/rocket@2x.png'
+import rocketIcon from '@/static/images/home/toast/rocket@2x.png'
 
 const Email = styled.div`
   color: #fff;
@@ -119,15 +119,17 @@ const HeaderWrap = styled.div`
   }
   .toastWrap{
     position: fixed;
-    width: 360px;
-    height: 148px;
-    background: #FFFFFF;
-    border-radius: 6px;
+    // width: 60px;
+    // height: 50px;
+    // background: #FFFFFF;
+    text-align: center;
     top: 90px;
-    left: 50%;
-    margin-left: -180px;
-    padding: 16px;
+    left:0;
+    right:0;
+    margin: 0 auto;
+    
     box-sizing: border-box;
+    
     .closeBtn{
         width: 16px;
         height: 16px;
@@ -150,25 +152,36 @@ const HeaderWrap = styled.div`
         }
     }
     .content{
-        padding: 32px 20px 0;
+        padding: 0;
+        display: inline-block;
+        text-align: center;
+        background-color: #1D1D1F;
+        opacity: .8;
+        padding: 20px;
+        border : 1px solid rgba(255,255,255, .4);
+        border-radius: 6px;
+        box-shadow:0 0 10px rgba(255, 255, 255, 0.2);
     }
     img{
-        width: 55px;
-        height: 56px;
+        width: 30px;
+        height: 30px;
         display: inline-block;
         vertical-align: middle;
-        margin: 0 20px 0 0;
+        margin: 0 20px 0px 0;
     }
     span.tip{
         display: inline-block;
         font-size: 20px;
-        font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";;
+        font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
         font-weight: 400;
-        color: #111111;
-        height: 56px;
-        line-height: 56px;
+        // color: #111111;
+        color: #ffffff;
+        height: 24px;
+        line-height: 24px;
     }
-}
+  }
+  .toastWrap.hidden{display:none;}
+  .toastWrap.show{display:block}
   @media screen and (max-width: 1024px){
       padding: 0 5px;
       .logo{
@@ -252,11 +265,15 @@ const HeaderWrap = styled.div`
 
 const Header = (props) => {
   const { location: { pathname }, userEmail, toLogin, onChangeEmail, comingSoonHandle } = props
-  const [showToast, setShowToast] = useState(false)
+  // const [showToast, setShowToast] = useState(false)
+  const [comingToast, setComingToast] = useState(false)
 
-  const onhandleClose = () => {
-    setShowToast(false)
-  }
+ 
+
+
+  // const onhandleClose = () => {
+  //   setShowToast(false)
+  // }
 
   const onShowNavs = () => {
     document.querySelector('.header').classList.toggle('show');
@@ -267,7 +284,11 @@ const Header = (props) => {
   }
 
   const onComingSoon = () => {
-    comingSoonHandle()
+    setComingToast(true)
+    setTimeout(()=>{
+      setComingToast(false)
+    }, 3000)
+    return;
   }
 
   return (
@@ -299,18 +320,12 @@ const Header = (props) => {
             <li onClick={onComingSoon}>API</li>
           </ul>
         </div>
-          {/* {showToast ? 
-            <div className="toastWrap">
-              <span className="closeBtn" onClick={onhandleClose}>
-                <span></span>
-                <span></span>
-              </span>
-              <div className="content">
-                <img src={rocket}></img>
-                <span className="tip">Coming Soon！</span>
-              </div>
-            </div>
-          : null} */}
+        <div className={comingToast ? "toastWrap show": "toastWrap hidden"}>
+          <div className="content">
+            <img src={rocketIcon}></img>
+            <span className="tip">Coming soon!</span>
+          </div>
+        </div>
         
       </HeaderWrap>
     </>

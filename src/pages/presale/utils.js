@@ -57,12 +57,15 @@ export const loginAndGetLoginInfo = async (account, wallInstance, walletName, wa
 
 export const  connectWalletAndLogin = async (wallet, walletStore) => {
         wallet = wallet ? wallet : "metamask";
-
+console.log("connectWalletAndLogin::21111::", wallet)
   const _walletInstance = new Wallet({walletName: wallet, accountChangeHandle});
+  console.log("connectWalletAndLogin:::222:", _walletInstance)
   let walletAccount = null
   try {
     walletAccount = await _walletInstance.requestAccounts();
+    console.log("connectWalletAndLogin account:", walletAccount)
   } catch (error) {
+    console.log("connectWalletAndLogin error:", error)
     return {
       code: 2,
       error: error

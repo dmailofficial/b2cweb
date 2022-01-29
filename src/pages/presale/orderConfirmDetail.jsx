@@ -231,7 +231,7 @@ class orderConfirmDetail extends React.Component {
             return
         }
         try {
-            await _wallet.transfer(curPrice, this.paysuccess, this.payfaild)
+            await _wallet.transfer(this.props.walletStore.info.address, curPrice, this.paysuccess, this.payfaild)
             this.setState({paying: false})
         } catch (error) {
             this.closePoptoast();
