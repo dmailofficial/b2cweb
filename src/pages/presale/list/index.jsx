@@ -247,14 +247,14 @@ function App({ store: { wallet, presale } }) {
       }
     }
 
-    if(history.location.state?.round){
-      setRound(history.location.state?.round)
-    }
+    // if(history.location.state?.round){
+    //   setRound(history.location.state?.round)
+    // }
     
-    if (history.location.state && history.location.state.round === 1 && wallet.walletName === 'plug') {
-      Cookies.remove('account');
-      Cookies.remove('walletname');
-    }
+    // if (history.location.state && history.location.state.round === 1 && wallet.walletName === 'plug') {
+    //   Cookies.remove('account');
+    //   Cookies.remove('walletname');
+    // }
   }, [])
 
   useEffect(async () => {
