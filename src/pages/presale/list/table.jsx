@@ -32,15 +32,16 @@ const statusMap = {
   },
   99: {
     class: 'ing',
-    text: 'To be paid',
-    operationText: 'PENDING',
+    // text: 'To be paid',
+    text: 'Confirming transaction',
+    operationText: 'Receive NFT',
     operationType: 'disabled',
     // operationText: 'Payment',
     // operationType: 'ghost',
   },
   9: {
     class: 'close',
-    text: 'Closed'
+    text: 'Transaction failed'
   },
 }
 
