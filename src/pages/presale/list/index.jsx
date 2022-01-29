@@ -246,7 +246,10 @@ function App({ store: { wallet, presale } }) {
       }
     }
 
-    setRound(history.location.state.round)
+    if(history.location.state?.round){
+      setRound(history.location.state?.round)
+    }
+    
     if (history.location.state && history.location.state.round === 1 && walletName === 'plug') {
       Cookies.remove('account');
       Cookies.remove('walletname');

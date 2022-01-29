@@ -157,7 +157,7 @@ function WalletDialog(params) {
               }
             </WalletWrap>
             <Toast
-                open = {true}
+                open = {toast}
                 type = {toastType}
                 txt = {toastMsg}
                 tipimg = {vertip}
