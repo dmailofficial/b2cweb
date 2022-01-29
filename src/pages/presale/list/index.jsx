@@ -198,7 +198,6 @@ function App({ store: { wallet, presale } }) {
   }, [wallet.info])
 
   useEffect(async () => {
-    let walletName = ''
     if (!wallet.info) {
       // const sInfo = Cookies.get('account')
       // const swalletName = Cookies.get('walletname')
@@ -240,7 +239,7 @@ function App({ store: { wallet, presale } }) {
       if(walletObj.code){
         poptoast(walletObj.msg.toString())
       }
-      if(walletName !== "metamask"){
+      if(wallet.walletName !== "metamask"){
         wallet.setWalletInfo({
           ...wallet.info,
           address: walletObj.account
@@ -252,7 +251,7 @@ function App({ store: { wallet, presale } }) {
       setRound(history.location.state?.round)
     }
     
-    if (history.location.state && history.location.state.round === 1 && walletName === 'plug') {
+    if (history.location.state && history.location.state.round === 1 && wallet.walletName === 'plug') {
       Cookies.remove('account');
       Cookies.remove('walletname');
     }
