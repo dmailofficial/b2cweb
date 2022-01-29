@@ -7,7 +7,7 @@ import { loginAndGetLoginInfo, connectWalletAndLogin } from './utils'
 
 import metamaskIcon from '@/static/images/presale/metamask@2x.png'
 import plugIcon from '@/static/images/presale/plug-logo@2x.png'
-import TronIcon from '@/static/images/presale/tronlink.png'
+import TronIcon from '@/static/images/presale/tronlink.jpeg'
 import loadingIcon from '@/static/images/presale/paying@3x.png'
 
 const walletList = [
@@ -40,12 +40,11 @@ function WalletDialog(params) {
   console.log("WalletDialog::", params)
     const {open , dialogClose, getLoginInfo, getWalletInstance, walletStore, round = 0} = params;
     const [walletName, setWalletName] = useState('')
-    // const [loginInfo, setLoginInfo] = useState({})
-    // const [account, setAccount] = useState('')
     const [toast, setToast] = useState(false)
     const [toastType, setToastType] = useState("warn")
     const [toastMsg, setToastMsg] = useState("")
     const [showloading, setShowloading] = useState(false)
+    const [vertip, setVertip] = useState(null)
   
     const walletDialogClose = () => {
         dialogClose()
@@ -101,6 +100,11 @@ function WalletDialog(params) {
       const connectObj = await connectWalletAndLogin(wallet, walletStore);
       console.log("connectObj:::", connectObj);
       if(!connectObj.account){
+          if(connectObj.code == 3 && wallet == "tronlink"){
+            setVertip(TronIcon)
+          }else{
+            setVertip(null)
+          }
           poptoast(connectObj.msg.toString());
           // faildCallback(connectObj)
           setShowloading(false)
@@ -110,7 +114,8 @@ function WalletDialog(params) {
       // loginInfo: _loginInfo, 
       // walletName: wallet,
       // instance: _walletInstance
-      setShowloading(false)
+      //-------up backup
+      // setShowloading(false)
       setWalletName(connectObj.walletName)
       getWalletInstance(connectObj.instance)
       getLoginInfo(connectObj.loginInfo)
@@ -152,10 +157,10 @@ function WalletDialog(params) {
               }
             </WalletWrap>
             <Toast
-                open = {toast}
+                open = {true}
                 type = {toastType}
                 txt = {toastMsg}
-                noHeader = {true}
+                tipimg = {vertip}
             ></Toast>
         </Dialog>
     )

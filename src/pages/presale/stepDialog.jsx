@@ -22,7 +22,7 @@ function StepDialog(params) {
         <Dialog
             open = { open }
             dialogClose = {handleClose}
-            maxWidth = "lg"
+            maxWidth = "md"
         >
             <StepDialogWrap>
                 <div className="stepItem">
@@ -46,7 +46,7 @@ function StepDialog(params) {
                     <img src={step5}></img>
                 </div>
                 <div className="stepItem">
-                    <p><span>6</span>Login to bind the account with Dmail after NFT released.</p>
+                    <p><span>6</span>Login to bind the account with Dmail</p>
                     <img src={step6}></img>
                 </div>
 

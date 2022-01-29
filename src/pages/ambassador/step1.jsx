@@ -28,7 +28,7 @@ const Step1Component = (param) => {
             <div className="desc">
               <span>Dmail</span>
               <h3>Our Culture</h3>
-              <p>The enforcer of Web3</p>
+              <p>The enforcer of Web 3.0</p>
             </div>
             <div className="img pc"><img src={p1}></img></div>
             
@@ -40,7 +40,7 @@ const Step1Component = (param) => {
               <h3>Our Mission</h3>
               <p>Help user control his/her own data,</p>
               <p>from a true decentralized identity(DID), </p>
-              <p>and build a gateway to the Web3</p>
+              <p>and build a gateway to the Web 3.0</p>
             </div>
         </div>
       </div>
@@ -52,7 +52,7 @@ const Step1Component = (param) => {
         <div className="content">
           <div className="citem">
             <h3>Criteria</h3>
-            <p>Having a passion of web3,our vision and mission.</p>
+            <p>Having a passion of Web 3.0, our vision and mission.</p>
             <p>Very active and enraging on Discord, Telegram, and Twitter.</p>
             <p>Experience of community engagement on social media & meetups.</p>
             <p>Experience of working with Dfinity ecosystem.</p>
@@ -63,7 +63,7 @@ const Step1Component = (param) => {
             <h3>Benefits</h3>
             <p>Competitive salary and rewards incentives.</p>
             <p>Commission from the Dmail presale in your area.</p>
-            <p>Invitations to our events as a privileged guest organizer .</p>
+            <p>Invitations to our events as a privileged guest organizer.</p>
             <p>Access to Dmail Network alums.</p>
             <p>You may visit any of our offices at any time.</p>
             <p>Your feedback has a chance to be written to the Dmail Roadmap.</p>

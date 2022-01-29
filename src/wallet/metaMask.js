@@ -132,7 +132,7 @@ class MetaMaskWallet {
         return {amount: amount};
     }
     
-    transfer = async (price, successcallback, failedcallback) => {
+    transfer = async (address, price, successcallback, failedcallback) => {
         const contract = await this.initContract();
         const chainInfo = await this.getChainInfo();
         const { toAddress, decimals } = chainInfo
