@@ -416,6 +416,10 @@ const NewHome = styled.div`
                     margin: ${8/baseWidth}vw 0 0;
                 }
             }
+            .nextBtn{
+                left: ${100/baseWidth}vw;
+                bottom: ${40/baseWidth}vw;
+            }
             .roadMap{
                 width: 100%;
                 background-image: url(${roadmapBackground});
@@ -565,10 +569,10 @@ const NewHome = styled.div`
                     display: flex;
                     flex-wrap: wrap;
                     align-items: center;
-                    justify-content: flex-end;
+                    justify-content: flex-start;
                     .pitem{
-                        width: ${197/baseWidth}vw;
-                        height: ${135/baseWidth}vw;
+                        width: ${190/baseWidth}vw;
+                        height: ${120/baseWidth}vw;
                         text-align: center;
                         box-sizing: border-box;
                         padding: ${28/baseWidth}vw;
@@ -651,6 +655,10 @@ const NewHome = styled.div`
                     }
                 }
             }
+            .nextBtn{
+                bottom: ${48/baseWidth}vw;
+                left: ${70/baseWidth}vw;
+            }
         }
         .footWrap{
             .signWrap{
@@ -658,7 +666,6 @@ const NewHome = styled.div`
                 padding: ${250/baseWidth}vw 0;
                 box-sizing: border-box;
                 text-align: center;
-                background: #232323;
                 background-image: url(${footerBackground});
                 background-size: 100%;
                 background-position: 50% 100%;
@@ -949,7 +956,7 @@ const NewHome = styled.div`
                         width: ${675/baseWidth1920}vw;
                         .pitem{
                             width: ${204/baseWidth1920}vw;
-                            height: ${152/baseWidth1920}vw;
+                            height: ${140/baseWidth1920}vw;
                             padding: ${28/baseWidth1920}vw;
                             margin: ${18/baseWidth1920}vw ${18/baseWidth1920}vw 0 0;
                             img{
@@ -1450,6 +1457,12 @@ const NewHome = styled.div`
                     min-height: 300px;
                     margin-left: ${30/baseWidth750}vw;
                     padding-top: ${60/baseWidth750}vw;
+                    .partners{
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        justify-content: flex-end;
+                    }
                 }
             }
 

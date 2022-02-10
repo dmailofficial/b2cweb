@@ -88,9 +88,9 @@ const handlePageChange = number => {
     _num = 0;
     gotoPage(0);
   }
-  if(_num > 7){
+  if(_num > 6){
     _num = 7;
-    gotoPage(7);
+    gotoPage(6);
   }
   
   setCurPage(_num)
@@ -165,9 +165,8 @@ const onComingSoon = () => {
         onBeforePageScroll = {onBeforePageScroll}
         customPageNumber={curPage}
         animationTimerBuffer = {300}
-        animationTimer ={1500}
+        animationTimer ={800}
       >
-      {/* <a href="#" id='anchor0'></a> */}
       <div className="pageWrap bannerBlock">
         <div className="contentWrap bannerContent">
             <div className="content">
@@ -184,7 +183,6 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      {/* <a href="#" id='anchor1'></a> */}
       <div className="pageWrap dmailBlock">
         <div className="contentWrap dmailContent">
             <div className="content">
@@ -227,7 +225,6 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      {/* <a href="#" id='anchor2'></a> */}
       <div className="pageWrap workBlock">
         <div className="contentWrap workContent">
             <div className="content">
@@ -244,7 +241,6 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      {/* <a href="#" id='anchor3'></a> */}
       <div className="pageWrap highlightBlock">
         <div className="contentWrap highlightContent">
             <div className="title">
@@ -338,7 +334,6 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      {/* <a href="#" id='anchor4'></a> */}
       <div className="pageWrap roadmapBlock">
         <div className="contentWrap roadmapContent">
             <div className="content">
@@ -384,10 +379,13 @@ const onComingSoon = () => {
                     <span className="circle"></span>
                  </div>
             </div>
+            <div className="nextBtn" onClick={()=>{gotoPage(5)}}>
+                <img src={arrow}></img>
+                <span className="txt">Scroll down to explore more</span>
+            </div>
         </div>
       </div>
 
-      {/* <a href="#" id='anchor2'></a> */}
       <div className="pageWrap partnerBlock">
         <div className="contentWrap partnerContent">
             <div className="content">
@@ -431,7 +429,10 @@ const onComingSoon = () => {
                 </div>
               </div>
             </div>
-           
+            <div className="nextBtn" onClick={()=>{gotoPage(6)}}>
+                <img src={arrow}></img>
+                <span className="txt">Scroll down to explore more</span>
+            </div>
         </div>
       </div>
 
