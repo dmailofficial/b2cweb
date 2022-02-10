@@ -31,62 +31,75 @@ const NewHome = styled.div`
         }
         .contentWrap{
             height: 100vh;
+            max-width: 1440px;
+            margin: 0 auto;
             padding-top: 0;
             position: relative;
             box-sizing: border-box;
-
             .nextBtn{
                 cursor: pointer;
                 position: absolute;
-                bottom: ${48/baseWidth}vw;
-                left: ${160/baseWidth}vw;
+                // bottom: ${48/baseWidth}vw;
+                // left: ${160/baseWidth}vw;
+                bottom: 48px;
+                left: 160px;
                 img{
                     display: inline-block;
-                    width: ${40/baseWidth}vw;
-                    height: ${40/baseWidth}vw;
+                    // width: ${40/baseWidth}vw;
+                    // height: ${40/baseWidth}vw;
+                    width: 40px;
+                    height: 40px;
                     vertical-align: middle;
-                    margin-right: ${16/baseWidth}vw;
+                    // margin-right: ${16/baseWidth}vw;
+                    margin-right: 16px;
                 }
                 .txt{
-                    font-size: ${14/baseWidth}vw;
+                    // font-size: ${14/baseWidth}vw;
+                    font-size: 14px;
                     font-family: Helvetica;
                     color: #FFFFFF;
-                    line-height: ${40/baseWidth}vw;
+                    // line-height: ${40/baseWidth}vw;
+                    line-height: 40px;
                 }
             }
         }
         .bannerBlock{
             height: 100vh;
-            background-image: url(${bannerBackground});
-            background-size: ${1440/baseWidth}vw ${836/baseWidth}vw;
-            background-position: 100% 50%;
-            background-repeat: no-repeat;
+            // background-image: url(${bannerBackground});
+            // background-size: ${1440/baseWidth}vw ${836/baseWidth}vw;
+            // background-position: 100% 50%;
+            // background-repeat: no-repeat;
         }
         
         .bannerContent {
             padding-top: ${67/baseWidth}vw;
+
+            background-image: url(${bannerBackground});
+            background-size: 1440px 836px;
+            background-position: 100% 50%;
+            background-repeat: no-repeat;
             .content{
                 width: 50%;
                 min-height: 300px;
-                margin-left: ${160/baseWidth}vw;
+                margin-left: 160px;
                 margin-top: 19vh;
                 p{
-                    font-size: ${18/1440*100}vw;
+                    font-size: 18px;
                     font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     font-weight: 400;
                     color: #6E6E6E;
-                    line-height: ${20/baseWidth}vw;
+                    line-height: 22px;
                 }
                 .desc{
-                    line-height: ${20/baseWidth}vw;
+                    line-height: 20px;
                     color: #AFAFAF;
                 }
                 h2,h3{
-                    font-size: ${48/baseWidth}vw;
+                    font-size: 48px;
                     font-family: Roboto-Black, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     color: #FFFFFF;
                     font-weight: normal;
-                    line-height: ${65/baseWidth}vw;
+                    line-height: 65px;
                 }
                 h2{
                     font-family: Roboto-Bold, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
@@ -94,25 +107,32 @@ const NewHome = styled.div`
                     margin-top: 5px;
                 }
                 h3{
-                    margin-bottom: ${15/baseWidth}vw;
+                    margin-bottom: 15px;
                 }
                 .launchBtn{
                     display: block;
-                    width: ${225/baseWidth}vw;
-                    height: ${52/baseWidth}vw;
-                    margin-top: ${55/baseWidth}vw;
+                    // width: ${225/baseWidth}vw;
+                    // height: ${52/baseWidth}vw;
+                    // margin-top: ${55/baseWidth}vw;
+                    // font-size: ${16/baseWidth}vw;
+                    width: 225px;
+                    height: 52px;
+                    margin-top: 55px;
+                    font-size: 16px;
+                    line-height: 52px;
                     background-color: #FF6633;
-                    font-size: ${16/baseWidth}vw;
                     font-family: Helvetica;
                     color: #FFFFFF;
-                    line-height: ${52/baseWidth}vw;
                     text-align: center;
                     img{
                         display: inline-block;
                         vertical-align: middle;
-                        margin-left: ${32/baseWidth}vw;
-                        width: ${17/baseWidth}vw;
-                        height: ${14/baseWidth}vw;
+                        // margin-left: ${32/baseWidth}vw;
+                        // width: ${17/baseWidth}vw;
+                        // height: ${14/baseWidth}vw;
+                        margin-left: 32px;
+                        width: 17px;
+                        height: 14px;
                     }
                 }
                 .launchBtn:hover{
