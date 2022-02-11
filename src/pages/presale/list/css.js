@@ -156,6 +156,15 @@ export const ToolBar = styled.div`
       }
     }
   }
+  @media screen and (max-width: 750px) {
+    margin: 0 15px;
+    .left {
+      span {
+        margin-left: 4px;
+        font-size: 16px;
+      }
+    }
+  }
 `
 
 export const Content = styled.div`
@@ -187,6 +196,10 @@ export const Content = styled.div`
     p {
       flex: 1;
     }
+  }
+  @media screen and (max-width: 750px) {
+    margin: 24px 15px 0;
+    padding: 0px;
   }
 `
 

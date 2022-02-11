@@ -13,7 +13,7 @@ const OperateBtn = styled.div`
     text-align: right;
     margin: 0 32px;
     padding: 14px 0;
-    .connectBtn, .ownBtn{
+    .connectBtn, .ownBtn, .roundBtn{
         width: 180px;
         height: 48px;
         display: inline-block;
@@ -37,6 +37,25 @@ const OperateBtn = styled.div`
         height: 44px;
         line-height: 44px;
         color: #FF6633;
+    }
+    .roundBtn{
+        display: none;
+    }
+    @media screen and (max-width: 750px) {
+        margin: 0 10px;
+        .connectBtn{
+            width: auto;
+            padding: 0 15px;
+        }
+        .roundBtn{
+            width: auto;
+            padding: 0 10px;
+            border: 2px solid #FF6633;
+            height: 44px;
+            line-height: 44px;
+            color: #FF6633;
+            display: inline-block;
+        }
     }
 `
 const ContentBox = styled.div`
@@ -66,6 +85,19 @@ const ContentBox = styled.div`
         -ms-overflow-style: none;
     }
     .main::-webkit-scrollbar { width: 0 !important }
+    @media screen and (max-width: 750px) {
+        margin: 0 10px 18px;
+        border: none;
+        .leftWrap{
+            float: none;
+            height: auto;
+        }
+        .main{
+            margin-left: 0px;
+            padding: 0 0 20px 0;
+            height: auto;
+        }
+    }
 `
 
 const Left = styled.div`
@@ -164,6 +196,43 @@ const Left = styled.div`
         overflow: hidden;
         .cover{
             width: 320px;
+        }
+    }
+
+    @media screen and (max-width: 750px) {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        .activityItem{
+            width: 45%;
+            min-height: 140px;
+            height: auto;
+            margin: 23px auto 0;
+            .cover{
+                display:none;
+            }
+            .info{
+                position: relative;
+                height: auto;
+                padding: 10px;
+                h3{
+                    font-size: 14px;
+                    line-height: 20px;
+                }
+                .statusInfo{
+                    display: block;
+                    .time{
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+        .activityItem.active{
+            width: 45%;
+            min-height: 136px;
+            .cover{
+                width: 320px;
+            }
         }
     }
 `
@@ -596,6 +665,121 @@ const Mainpannel = styled.div`
            color: #4C72FF;
         }
     }
+
+    @media screen and (max-width: 750px) {
+        padding: 0 20px;
+        .statusFlag{
+            margin-left: -20px;
+            .triangle{
+                border-width: 50px;
+            }
+            img{
+                width: 16px;
+                height: 16px;
+                top: 6px;
+                left: 6px;
+            }
+        }
+        &.coming{
+            .statusFlag{
+                margin-left: -20px;
+                .triangle{
+                    border-width: 50px;
+                }
+                img{
+                    width: 16px;
+                    height: 16px;
+                    top: 8px;
+                    left: 8px;
+                }
+            }
+        }
+        &.closed .statusFlag{
+            margin-left: -20px;
+            .triangle{
+                border-width: 50px;
+            }
+            img{
+                width: 16px;
+                height: 16px;
+                top: 8px;
+                left: 8px;
+            }
+        }
+        .bref{
+            padding-top: 30px;
+            text-align: center;
+            img {
+                height: 30px;
+            }
+            h2{
+                font-size: 18px;
+            }
+        }
+
+        .formWrap{
+            .inputWrap{
+                .email-suffix {
+                    left: 15px;
+                }
+                input{
+                    width: calc(100% - 16px - 110px);
+                }
+                span{
+                    display: none;
+                }
+
+                .searchBtn{
+                    width: 100px;
+                }
+                .searchBtn:hover{
+                    background: #fa7a4f;
+                }
+                .searchBtn:active{
+                    background: #913719;
+                }
+            }
+            .successResult{
+                min-height: 72px;
+                height: auto;
+                .arrow{
+                    left: 50px;
+                }
+                .pannel{
+                    min-height: 60px;
+                    height: auto;
+                    line-height: 60px;
+                    p{
+                        padding-left: 20px;
+                        .lockBtn{
+                            float: none;
+                            height: 36px;
+                            line-height: 36px;
+                        }
+                    }
+                    
+                }
+            }
+        }
+        .info{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            .item{
+                width: 100%;
+                margin-top: 20px;
+                .item-header{
+                    h3{
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+        .con_footer{
+            padding: 0 0 15px 0;
+        }
+    }
 `
 
 
@@ -831,6 +1015,52 @@ const ConfirmPannel = styled.div`
             }
         }
     }
+
+    @media screen and (max-width: 750px) {
+        padding: 20px 15px;
+        .content{
+            box-sizing: border-box;
+            padding: 30px 0 0 0;
+            .domainImg{
+                display: none;
+            }
+            .orderDetail{
+                margin-left: 0;
+                h3{
+                    font-size: 30px;
+                    line-height: 45px;
+                }
+                .tip{
+                    line-height: 20px;
+                }
+                .info{
+                    .item{
+                        width: 100%;
+                        margin-top: 10px;
+                        .valueWrap{
+                            padding-left: 0px;
+                        }
+                    }
+                    .multiline{
+                        .label{
+                            padding-top: 4px;
+                        }
+                        .valueWrap{
+                            width: 100%;
+                            margin-top: 5px;
+                            p.value{
+                                float: left;
+                                padding-right: 10px;
+                            }
+                        }
+                    }
+                    .notice{
+                        margin-top: 22px;
+                    }
+                }
+            }
+        }
+    }
     
 `
 const WalletWrap = styled.div`
@@ -928,6 +1158,16 @@ const StepDialogWrap = styled.div`
         img{
             width: calc(436px * 0.94);
             height: calc(256px * 0.94);
+        }
+    }
+
+    @media screen and (max-width: 750px) {
+        .stepItem{
+            width: 100%;
+            img{
+                width: 100%;
+                height: auto;
+            }
         }
     }
 `

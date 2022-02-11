@@ -50,7 +50,7 @@ class MetaMaskWallet {
             // help to switch chain
             try {
               if (window.ethereum) {
-                window.ethereum
+                return await window.ethereum
                   .request({
                     method: 'wallet_switchEthereumChain',
                     params: [
@@ -58,10 +58,20 @@ class MetaMaskWallet {
                         chainId: '0x1'
                       },
                     ],
+                  }).then((res) => {
+                    return MetaMaskChainAbiMap['1']
+                  }).catch((error)=>{
+                    console.log("wallet_switchEthereumChain error : ", error)
+                    if(error.code == 4001){
+                      
+                    }else{
+
+                    }
                   })
                 // need to click to pay again
-                return null
+                // return null
               } else {
+                this._install();
                 return null
               }
             } catch (error) {
@@ -107,6 +117,7 @@ class MetaMaskWallet {
 
     initContract = async () => {
         const chainInfo = await this.getChainInfo();
+        console.log("getChainInfo:::::, getChainInfo::::::")
         const {abi, contractAddress} = chainInfo
         try {  
             const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -135,6 +146,7 @@ class MetaMaskWallet {
     transfer = async (address,price, successcallback, failedcallback) => {
         const contract = await this.initContract();
         const chainInfo = await this.getChainInfo();
+        console.log("getChainInfo000000:::::, getChainInfo::::::")
         const { toAddress, decimals } = chainInfo
         // const signRes = await this.sign(sign)
         // // sign failed
