@@ -1,9 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, createRef} from 'react';
 import TextField from '@mui/material/TextField';
 import { NewHome } from './css'
 import ReactPageScroller from "./scroller/index";
 import Header from '@/components/newheader';
 import { subscribeNews } from './request';
+
+import animation1 from '@/static/images/home/animationEffect/1.gif'
+import animation1s from '@/static/images/home/animationEffect/1s.gif'
+import animation2 from '@/static/images/home/animationEffect/2.gif'
+import animation2s from '@/static/images/home/animationEffect/2s.gif'
+import animation3 from '@/static/images/home/animationEffect/3.gif'
+import animation3s from '@/static/images/home/animationEffect/3s.gif'
+import animation4 from '@/static/images/home/animationEffect/4.gif'
+import animation4s from '@/static/images/home/animationEffect/4s.gif'
+import animation5 from '@/static/images/home/animationEffect/5.gif'
+import animation5s from '@/static/images/home/animationEffect/5s.gif'
+import animation6 from '@/static/images/home/animationEffect/6.gif'
 
 import arrow from '@/static/images/home/banner/arrow@2x.png'
 import rightArrow from '@/static/images/home/banner/arrow-right@2x.png'
@@ -50,7 +62,8 @@ import { ToastWrap } from '../presale/css';
 
 
 const Index = () => {
-  const [curPage, setCurPage] = useState(0);
+  const [curPage, setCurPage] = useState(0)
+  const [haschange, setHaschange] = useState(false)
   const [scrolling, setScrolling] = useState(false)
   const [showFooter, setShowFooter] = useState(false)
   const [showToast, setShowToast] = useState(false)
@@ -60,6 +73,46 @@ const Index = () => {
   const [value, setValue] = useState('')
   const [error, setError] = useState(false)
 
+  const [aniEffect1, setAniEffect1] = useState(animation1)
+  const [aniEffect2, setAniEffect2] = useState()
+  const [aniEffect3, setAniEffect3] = useState()
+  const [aniEffect4, setAniEffect4] = useState()
+  const [aniEffect5, setAniEffect5] = useState()
+
+  const effectObj = {
+    '0':{
+      setfn: setAniEffect1,
+      start: animation1,
+      end : animation1s,
+      transtion: 5000,
+    },
+    '1':{
+      setfn: setAniEffect2,
+      start: animation2,
+      end : animation2s,
+      transtion: 3700,
+    },
+    '2':{
+      setfn: setAniEffect3,
+      start: animation3,
+      end : animation3s,
+      transtion: 1500,
+    },
+    '3':{
+      setfn: setAniEffect4,
+      start: animation4,
+      end : animation4s,
+      transtion: 1200,
+    },
+    '4':{
+      setfn: setAniEffect5,
+      start: animation5,
+      end : animation5s,
+      transtion: 3100,
+    }
+  }
+
+  const mapRef = createRef()
 
   const gotoPostion = (top) => {
     document.documentElement.scrollTo({left: 0, top: top, behavior: "smooth"});
@@ -81,6 +134,14 @@ const gotoPage = (number) => {
   setCurPage(number)
 }
 
+const resetAnimate = () => {
+  setAniEffect1()
+  setAniEffect2()
+  setAniEffect3()
+  setAniEffect4()
+  setAniEffect5()
+}
+
 const handlePageChange = number => {
   console.log("handlePageChange:",number)
   let _num = number;
@@ -89,11 +150,27 @@ const handlePageChange = number => {
     gotoPage(0);
   }
   if(_num > 6){
-    _num = 7;
+    _num = 6;
     gotoPage(6);
   }
-  
+  if(curPage == number && haschange){
+    return;
+  }
+  console.log("handlePageChange----:",_num)
   setCurPage(_num)
+  setHaschange(true)
+  resetAnimate()
+  if(_num < 5){
+    let _anobj = effectObj[_num+'']
+    _anobj["setfn"](_anobj["start"])
+    setTimeout(()=>{
+      _anobj["setfn"](_anobj["end"])
+    }, _anobj["transtion"])
+    if(_num == 4){
+      console.log("cut cut....", mapRef)
+    }
+  }
+  
   // if(showFooter && _num !== 7){
   //   setShowFooter(false);
   // }
@@ -167,8 +244,11 @@ const onComingSoon = () => {
         animationTimerBuffer = {300}
         animationTimer ={800}
       >
-      <div className="pageWrap bannerBlock">
+      <div className="pageWrap bannerBlock" style ={{backgroundImage: 'url('+aniEffect1+')'}}>
         <div className="contentWrap bannerContent">
+            {/* <div className="animation animation1">
+              <img src={animation1}></img>
+            </div> */}
             <div className="content">
               <p>Introducing Dmail</p>
               <h2>Construct DID in Web 3.0</h2>
@@ -183,7 +263,7 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      <div className="pageWrap dmailBlock">
+      <div className="pageWrap dmailBlock"  style ={{backgroundImage: 'url('+aniEffect2+')'}}>
         <div className="contentWrap dmailContent">
             <div className="content">
               <p>Introducing Dmail</p>
@@ -225,7 +305,7 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      <div className="pageWrap workBlock">
+      <div className="pageWrap workBlock"  style ={{backgroundImage: 'url('+aniEffect3+')'}}>
         <div className="contentWrap workContent">
             <div className="content">
             <p>Introducing Dmail</p>
@@ -241,7 +321,7 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      <div className="pageWrap highlightBlock">
+      <div className="pageWrap highlightBlock"  style ={{backgroundImage: 'url('+aniEffect4+')'}}>
         <div className="contentWrap highlightContent">
             <div className="title">
               <p>Dmail</p>
@@ -334,13 +414,13 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      <div className="pageWrap roadmapBlock">
+      <div className="pageWrap roadmapBlock" style ={{backgroundImage: 'url('+aniEffect5+')'}}>
         <div className="contentWrap roadmapContent">
             <div className="content">
               <p>Introducing Dmail</p>
               <h2>Product Roadmap</h2>
             </div>
-            <div className="roadMap">
+            <div className="roadMap" ref = {mapRef}>
                 <div className="line"></div>
                 <div className="item item1">
                     <h3>2021 Q2</h3>
@@ -386,7 +466,7 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      <div className="pageWrap partnerBlock">
+      <div className="pageWrap partnerBlock"   style ={{backgroundImage: 'url('+animation6+')'}}>
         <div className="contentWrap partnerContent">
             <div className="content">
               <h2>Partners</h2>

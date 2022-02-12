@@ -15,7 +15,8 @@ const baseWidth1920 = 1920/100
 const NewHome = styled.div`
         height: 100vh;
         width: 100%;
-        background-color: #1D1D1F;
+        // background-color: #1D1D1F;
+        background-color: #000000;
         .header {
             position: fixed;
             top: 0;
@@ -27,14 +28,30 @@ const NewHome = styled.div`
             height: 100vh;
             width: 100%;
             margin: 0 auto;
-            background-color: #1D1D1F;
+            // background-color: #1D1D1F;
+            background-color: #000000;
         }
         .contentWrap{
             height: 100vh;
             padding-top: 0;
             position: relative;
             box-sizing: border-box;
-
+            .content{
+                position: relative;
+                z-index: 1;
+            }
+            .animation{
+                position: absolute;
+                width: 100%;
+                height: auto;
+                bottom: 0;
+                right: 0;
+                left: auto;
+                z-index: 0;
+                img{
+                    width: 100%;
+                }
+            }
             .nextBtn{
                 cursor: pointer;
                 position: absolute;
@@ -59,7 +76,7 @@ const NewHome = styled.div`
             height: 100vh;
             background-image: url(${bannerBackground});
             background-size: ${1440/baseWidth}vw ${836/baseWidth}vw;
-            background-position: 100% 50%;
+            background-position: 100% 100%;
             background-repeat: no-repeat;
         }
         
@@ -388,9 +405,13 @@ const NewHome = styled.div`
         }
 
         .roadmapBlock{
-            background-image: none;
+            // background-image: none;
             height: 100vh;
             padding-top: 0;
+            background-image: url(${roadmapBackground});
+            background-size: ${1440/baseWidth}vw ${835/baseWidth}vw;
+            background-position: 100% 100%;
+            background-repeat: no-repeat;
         }
 
         .roadmapContent{
@@ -422,12 +443,12 @@ const NewHome = styled.div`
             }
             .roadMap{
                 width: 100%;
-                background-image: url(${roadmapBackground});
-                background-size: ${1440/baseWidth}vw ${250/baseWidth}vw;
-                background-position: 100% 50%;
-                background-repeat: no-repeat;
+                // background-image: url(${roadmapBackground});
+                // background-size: ${1440/baseWidth}vw ${835/baseWidth}vw;
+                // background-position: 100% 50%;
+                // background-repeat: no-repeat;
                 height: calc(100vh - ${290/baseWidth}vw);
-                margin-top: ${20/baseWidth}vw;
+                margin-top: ${(20)/baseWidth}vw;
                 position: relative;
                 .item{
                     width: ${120/baseWidth}vw;
