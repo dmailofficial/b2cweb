@@ -62,11 +62,7 @@ class MetaMaskWallet {
                     return MetaMaskChainAbiMap['1']
                   }).catch((error)=>{
                     console.log("wallet_switchEthereumChain error : ", error)
-                    if(error.code == 4001){
-                      
-                    }else{
-
-                    }
+                    return error
                   })
                 // need to click to pay again
                 // return null
@@ -117,7 +113,10 @@ class MetaMaskWallet {
 
     initContract = async () => {
         const chainInfo = await this.getChainInfo();
-        console.log("getChainInfo:::::, getChainInfo::::::")
+        console.log("getChainInfo:::::, getChainInfo::::::---", chainInfo.code)
+        if(chainInfo.code){
+          return chainInfo
+        }
         const {abi, contractAddress} = chainInfo
         try {  
             const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -134,6 +133,9 @@ class MetaMaskWallet {
 
     getBalanceOf = async (address) => {
         const contract = await this.initContract();
+        if(contract.code){
+          return contract
+        }
         const balance = await contract.balanceOf(address);
         console.log("getBalanceOf:::::",balance)
         const chainId = await this._getChainId()
@@ -145,8 +147,16 @@ class MetaMaskWallet {
     
     transfer = async (address,price, successcallback, failedcallback) => {
         const contract = await this.initContract();
+        if(contract.code){
+          failedcallback && failedcallback(contract)
+          return contract
+        }
         const chainInfo = await this.getChainInfo();
-        console.log("getChainInfo000000:::::, getChainInfo::::::")
+        if(chainInfo.code){
+          failedcallback && failedcallback(contract)
+          return chainInfo
+        }
+        
         const { toAddress, decimals } = chainInfo
         // const signRes = await this.sign(sign)
         // // sign failed

@@ -214,6 +214,9 @@ class orderConfirmDetail extends React.Component {
         console.log("this.props.walletStore.walletName:::", this.props.walletStore.info.address);
 
         const balance = await _wallet.getBalanceOf(this.props.walletStore.info.address)
+        if(balance.code){
+            this.payfaild(balance)
+        }
         const myAmount = balance.amount;
         let curPrice = 0;
 
@@ -243,6 +246,7 @@ class orderConfirmDetail extends React.Component {
 
     paysuccess = async (from, hash) => {
         this.closePoptoast();
+        this.setState({paying: false})
         const successMsg = 'Payment successful'
         const _wallet = this.props.wallet
         let { chainId } = await _wallet.getChainInfo();
@@ -266,6 +270,7 @@ class orderConfirmDetail extends React.Component {
 
     payfaild = (error) => {
         this.closePoptoast();
+        this.setState({paying: false})
         const userReject = 'User rejected message signature!'
         if(error.code == 4001){
             this.poptoast(userReject)
