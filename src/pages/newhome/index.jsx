@@ -1,21 +1,10 @@
 import React, {useEffect, useState, createRef} from 'react';
 import TextField from '@mui/material/TextField';
-import { NewHome } from './css'
+import isMobile from 'ismobilejs';
+import { NewHome } from './css';
 import ReactPageScroller from "./scroller/index";
 import Header from '@/components/newheader';
 import { subscribeNews } from './request';
-
-import animation1 from '@/static/images/home/animationEffect/1.gif'
-import animation1s from '@/static/images/home/animationEffect/1s.gif'
-import animation2 from '@/static/images/home/animationEffect/2.gif'
-import animation2s from '@/static/images/home/animationEffect/2s.gif'
-import animation3 from '@/static/images/home/animationEffect/3.gif'
-import animation3s from '@/static/images/home/animationEffect/3s.gif'
-import animation4 from '@/static/images/home/animationEffect/4.gif'
-import animation4s from '@/static/images/home/animationEffect/4s.gif'
-import animation5 from '@/static/images/home/animationEffect/5.gif'
-import animation5s from '@/static/images/home/animationEffect/5s.gif'
-import animation6 from '@/static/images/home/animationEffect/6.gif'
 
 import arrow from '@/static/images/home/banner/arrow@2x.png'
 import rightArrow from '@/static/images/home/banner/arrow-right@2x.png'
@@ -61,6 +50,9 @@ import toTopIcon from '@/static/images/home/totop.png'
 import { ToastWrap } from '../presale/css';
 
 
+console.log(isMobile(window.navigator).phone)
+
+
 const Index = () => {
   const [curPage, setCurPage] = useState(0)
   const [haschange, setHaschange] = useState(false)
@@ -72,8 +64,33 @@ const Index = () => {
   const [comingToast, setComingToast] = useState(false)
   const [value, setValue] = useState('')
   const [error, setError] = useState(false)
-
-  const [aniEffect1, setAniEffect1] = useState(animation1)
+  const isphone = isMobile(window.navigator).phone
+  let animation1 = null, 
+      animation1s = null, 
+      animation2 = null, 
+      animation2s = null, 
+      animation3 = null, 
+      animation3s = null, 
+      animation4 = null, 
+      animation4s = null, 
+      animation5 = null, 
+      animation5s = null, 
+      animation6 = null;
+  if(!isphone){
+    animation1 = require('@/static/images/home/animationEffect/1.gif')
+    animation1s = require('@/static/images/home/animationEffect/1s.gif')
+    animation2 = require('@/static/images/home/animationEffect/2.gif')
+    animation2s = require('@/static/images/home/animationEffect/2s.gif')
+    animation3 = require('@/static/images/home/animationEffect/3.gif')
+    animation3s = require('@/static/images/home/animationEffect/3s.gif')
+    animation4 = require('@/static/images/home/animationEffect/4.gif')
+    animation4s = require('@/static/images/home/animationEffect/4s.gif')
+    animation5 = require('@/static/images/home/animationEffect/5.gif')
+    animation5s = require('@/static/images/home/animationEffect/5s.gif')
+    animation6 = require('@/static/images/home/animationEffect/6.gif')
+    console.log("animation6:::", animation1.default)
+  }
+  const [aniEffect1, setAniEffect1] = useState(animation1?.default)
   const [aniEffect2, setAniEffect2] = useState()
   const [aniEffect3, setAniEffect3] = useState()
   const [aniEffect4, setAniEffect4] = useState()
@@ -82,32 +99,32 @@ const Index = () => {
   const effectObj = {
     '0':{
       setfn: setAniEffect1,
-      start: animation1,
-      end : animation1s,
+      start: animation1?.default,
+      end : animation1s?.default,
       transtion: 5000,
     },
     '1':{
       setfn: setAniEffect2,
-      start: animation2,
-      end : animation2s,
+      start: animation2?.default,
+      end : animation2s?.default,
       transtion: 3700,
     },
     '2':{
       setfn: setAniEffect3,
-      start: animation3,
-      end : animation3s,
+      start: animation3?.default,
+      end : animation3s?.default,
       transtion: 1500,
     },
     '3':{
       setfn: setAniEffect4,
-      start: animation4,
-      end : animation4s,
+      start: animation4?.default,
+      end : animation4s?.default,
       transtion: 1200,
     },
     '4':{
       setfn: setAniEffect5,
-      start: animation5,
-      end : animation5s,
+      start: animation5?.default,
+      end : animation5s?.default,
       transtion: 3100,
     }
   }
@@ -131,6 +148,7 @@ const handleScrollUnavailable = (i) => {
 
 const gotoPage = (number) => {
   console.log("gottopage::", number)
+  
   setCurPage(number)
 }
 
@@ -244,7 +262,7 @@ const onComingSoon = () => {
         animationTimerBuffer = {300}
         animationTimer ={800}
       >
-      <div className="pageWrap bannerBlock" style ={{backgroundImage: 'url('+aniEffect1+')'}}>
+      <div className="pageWrap bannerBlock" style ={!isphone ? {backgroundImage: 'url('+aniEffect1+')'}:{}}>
         <div className="contentWrap bannerContent">
             {/* <div className="animation animation1">
               <img src={animation1}></img>
@@ -263,7 +281,7 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      <div className="pageWrap dmailBlock"  style ={{backgroundImage: 'url('+aniEffect2+')'}}>
+      <div className="pageWrap dmailBlock"  style ={!isphone ? {backgroundImage: 'url('+aniEffect2+')'}:{}}>
         <div className="contentWrap dmailContent">
             <div className="content">
               <p>Introducing Dmail</p>
@@ -305,7 +323,7 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      <div className="pageWrap workBlock"  style ={{backgroundImage: 'url('+aniEffect3+')'}}>
+      <div className="pageWrap workBlock"  style ={!isphone ? {backgroundImage: 'url('+aniEffect3+')'}:{}}>
         <div className="contentWrap workContent">
             <div className="content">
             <p>Introducing Dmail</p>
@@ -321,7 +339,7 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      <div className="pageWrap highlightBlock"  style ={{backgroundImage: 'url('+aniEffect4+')'}}>
+      <div className="pageWrap highlightBlock"  style ={!isphone ? {backgroundImage: 'url('+aniEffect4+')'}:{}}>
         <div className="contentWrap highlightContent">
             <div className="title">
               <p>Dmail</p>
@@ -414,7 +432,7 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      <div className="pageWrap roadmapBlock" style ={{backgroundImage: 'url('+aniEffect5+')'}}>
+      <div className="pageWrap roadmapBlock" style ={!isphone ? {backgroundImage: 'url('+aniEffect5+')'}:{}}>
         <div className="contentWrap roadmapContent">
             <div className="content">
               <p>Introducing Dmail</p>
@@ -466,7 +484,7 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      <div className="pageWrap partnerBlock"   style ={{backgroundImage: 'url('+animation6+')'}}>
+      <div className="pageWrap partnerBlock"   style ={!isphone ? {backgroundImage: 'url('+animation6+')'}:{}}>
         <div className="contentWrap partnerContent">
             <div className="content">
               <h2>Partners</h2>

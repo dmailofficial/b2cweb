@@ -405,10 +405,10 @@ const NewHome = styled.div`
         }
 
         .roadmapBlock{
-            // background-image: none;
+            background-image: none;
             height: 100vh;
             padding-top: 0;
-            background-image: url(${roadmapBackground});
+            // background-image: url(${roadmapBackground});
             background-size: ${1440/baseWidth}vw ${835/baseWidth}vw;
             background-position: 100% 100%;
             background-repeat: no-repeat;
