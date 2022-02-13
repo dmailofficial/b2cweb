@@ -14,20 +14,20 @@ import noDataImg from '../../../static/images/no-data.png'
 const statusMap = {
   0: {
     class: 'ing',
-    text: 'NFT Uncollected',
+    text: 'NFT uncollected',
     operationText: 'Receive NFT',
     operationType: 'primary',
   },
   1: {
     class: 'success',
-    text: 'NFT Issued',
-    operationText: 'Use Email',
+    text: 'NFT issued',
+    operationText: 'Use email',
     operationType: 'normal',
   },
   2: {
     class: 'ing',
-    text: 'NFT Issuing',
-    operationText: 'PENDING',
+    text: 'NFT issuing',
+    operationText: 'Pending',
     operationType: 'disabled',
   },
   99: {

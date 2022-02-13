@@ -448,8 +448,10 @@ const NewHome = styled.div`
                 // background-position: 100% 50%;
                 // background-repeat: no-repeat;
                 height: calc(100vh - ${290/baseWidth}vw);
-                margin-top: ${(20)/baseWidth}vw;
+                margin-top: ${(20+100)/baseWidth}vw;
                 position: relative;
+                opacity: 0;
+                transition: opacity 1s;
                 .item{
                     width: ${120/baseWidth}vw;
                     padding-bottom: ${50/baseWidth}vw;
@@ -561,6 +563,9 @@ const NewHome = styled.div`
                         height: ${50/baseWidth}vw;
                    }
                 }
+            }
+            .roadMap.show{
+                opacity: 1
             }
         }
 
@@ -968,6 +973,11 @@ const NewHome = styled.div`
         .toastWrap.hidden{display:none;}
         .toastWrap.show{display:block}
         @media screen and (min-width: 1536px) {
+            .roadmapContent{
+                .roadMap{
+                    margin-top: ${(20+50)/baseWidth}vw;
+                }
+            }
             .partnerContent{
                 .content{
                     width: ${594/baseWidth1920}vw;

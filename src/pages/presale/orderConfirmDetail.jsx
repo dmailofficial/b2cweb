@@ -229,7 +229,7 @@ class orderConfirmDetail extends React.Component {
         console.log("curPrice:::", curPrice, myAmount)
         if (this.props.walletStore.walletName == "metamask" && myAmount < +curPrice) {
             this.closePoptoast();
-            this.poptoast("Confirm your assist is enough!")
+            this.poptoast("Please make sure there’re sufficient funds.")
             this.setState({paying: false})
             return
         }

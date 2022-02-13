@@ -64,6 +64,7 @@ const Index = () => {
   const [comingToast, setComingToast] = useState(false)
   const [value, setValue] = useState('')
   const [error, setError] = useState(false)
+  const [roadShow, setRoadShow] = useState(false)
   const isphone = isMobile(window.navigator).phone
   let animation1 = null, 
       animation1s = null, 
@@ -113,13 +114,13 @@ const Index = () => {
       setfn: setAniEffect3,
       start: animation3?.default,
       end : animation3s?.default,
-      transtion: 1500,
+      transtion: 1600,
     },
     '3':{
       setfn: setAniEffect4,
       start: animation4?.default,
       end : animation4s?.default,
-      transtion: 1200,
+      transtion: 1300,
     },
     '4':{
       setfn: setAniEffect5,
@@ -152,12 +153,15 @@ const gotoPage = (number) => {
   setCurPage(number)
 }
 
-const resetAnimate = () => {
-  setAniEffect1()
-  setAniEffect2()
-  setAniEffect3()
-  setAniEffect4()
-  setAniEffect5()
+const resetAnimate = (num) => {
+  console.log("resetAnimate:::111:", num)
+  for(let i = 0; i < 5; i++){
+    if(i != num){
+      let _anobj = effectObj[i+'']
+      console.log("resetAnimate::::", i)
+      _anobj["setfn"]()
+    }
+  }
 }
 
 const handlePageChange = number => {
@@ -176,17 +180,22 @@ const handlePageChange = number => {
   }
   console.log("handlePageChange----:",_num)
   setCurPage(_num)
-  setHaschange(true)
-  resetAnimate()
-  if(_num < 5){
+  
+  if(_num < 5 && !isphone){
+    setHaschange(true)
+    setRoadShow(false)
     let _anobj = effectObj[_num+'']
     _anobj["setfn"](_anobj["start"])
+    resetAnimate(_num)
     setTimeout(()=>{
       _anobj["setfn"](_anobj["end"])
+      if(_num == 4){
+        console.log("cut cut....", mapRef)
+        setRoadShow(true)
+      }
     }, _anobj["transtion"])
-    if(_num == 4){
-      console.log("cut cut....", mapRef)
-    }
+
+    
   }
   
   // if(showFooter && _num !== 7){
@@ -438,7 +447,7 @@ const onComingSoon = () => {
               <p>Introducing Dmail</p>
               <h2>Product Roadmap</h2>
             </div>
-            <div className="roadMap" ref = {mapRef}>
+            <div className={roadShow ? "roadMap show" : "roadMap"}>
                 <div className="line"></div>
                 <div className="item item1">
                     <h3>2021 Q2</h3>
@@ -484,7 +493,7 @@ const onComingSoon = () => {
         </div>
       </div>
 
-      <div className="pageWrap partnerBlock"   style ={!isphone ? {backgroundImage: 'url('+animation6+')'}:{}}>
+      <div className="pageWrap partnerBlock"   style={!isphone ? {backgroundImage: 'url('+animation6.default+')'}:{}}>
         <div className="contentWrap partnerContent">
             <div className="content">
               <h2>Partners</h2>
