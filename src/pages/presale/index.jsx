@@ -149,7 +149,7 @@ const Index = ({ store }) => {
   
 
   const toOwn = () => {
-    history.push({ pathname : "presale_list" ,state : {round: curItem.round}})
+    history.push({ pathname : "/presale_list" ,state : {round: curItem.round}})
     // if (walletStore.info) {
     //   history.push({ pathname : "presale_list" })
     // } else {
