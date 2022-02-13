@@ -19,44 +19,69 @@ import {connectWallet} from '../utils'
 import metamasktipIcon from '@/static/images/presale/metamasktip.png'
 import TronIcon from '@/static/images/presale/tronlink.jpeg'
 
-const columns = [
-  {
-    Header: 'Date (UTC)',
-    accessor: 'date',
-  },
-  {
-    Header: 'NFT Domain',
-    accessor: 'domain',
-  },
-  {
-    Header: 'Price',
-    accessor: 'price',
-  },
-  {
-    Header: 'Txn Hash',
-    accessor: 'hash',
-  },
-  {
-    Header: 'Status',
-    accessor: 'status',
-  },
-  {
-    Header: 'NFT Number',
-    accessor: 'number',
-  },
-  {
-    Header: 'Owner',
-    accessor: 'owner',
-  },
-  {
-    Header: 'Expiration Date',
-    accessor: 'expirationDate',
-  },
-  {
-    Header: 'Operation',
-    accessor: 'operation',
-  },
-]
+const isPhone = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)
+const columns = isPhone ? 
+  [
+    {
+      Header: 'Date (UTC)',
+      accessor: 'date',
+    },
+    {
+      Header: 'NFT Domain',
+      accessor: 'domain',
+    },
+    {
+      Header: 'Price',
+      accessor: 'price',
+    },
+    {
+      Header: 'Status',
+      accessor: 'status',
+    },
+    {
+      Header: 'Operation',
+      accessor: 'operation',
+    },
+  ] 
+  : 
+  [
+    {
+      Header: 'Date (UTC)',
+      accessor: 'date',
+    },
+    {
+      Header: 'NFT Domain',
+      accessor: 'domain',
+    },
+    {
+      Header: 'Price',
+      accessor: 'price',
+    },
+    {
+      Header: 'Txn Hash',
+      accessor: 'hash',
+    },
+    {
+      Header: 'Status',
+      accessor: 'status',
+    },
+    {
+      Header: 'NFT Number',
+      accessor: 'number',
+    },
+    {
+      Header: 'Owner',
+      accessor: 'owner',
+    },
+    {
+      Header: 'Expiration Date',
+      accessor: 'expirationDate',
+    },
+    {
+      Header: 'Operation',
+      accessor: 'operation',
+    },
+  ]
 
 function App({ store: { wallet, presale } }) {
   const address = wallet.info && wallet.info.address || ''
