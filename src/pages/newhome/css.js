@@ -1015,7 +1015,7 @@ const NewHome = styled.div`
                             }
                         }
                         .pitem:nth-child(5){
-                            img{
+                        img{
                                 width: ${146/baseWidth1920}vw;
                                 height: ${67/baseWidth1920}vw;
                             }
@@ -1963,7 +1963,7 @@ const NewHome = styled.div`
                     margin-left: 0;
                     box-sizing: border-box;
                     p{
-                        font-size: ${18*2/baseWidth750}vw;
+                        font-size: ${14*2/baseWidth750}vw;
                         line-height: ${24*2/baseWidth750}vw;
                     }
                     .desc{
