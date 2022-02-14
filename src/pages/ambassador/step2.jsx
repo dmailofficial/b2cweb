@@ -50,8 +50,8 @@ const expertise = [
   },
   {
     checked: false,
-    name: "Crazy about Bit country",
-    value: "Crazy about Bit country",
+    name: "Crazy about Dmail",
+    value: "Crazy about Dmail",
     disabled: false
   },
   {

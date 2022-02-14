@@ -64,8 +64,8 @@ const Index = () => {
   const [comingToast, setComingToast] = useState(false)
   const [value, setValue] = useState('')
   const [error, setError] = useState(false)
-  const [roadShow, setRoadShow] = useState(false)
-  const isphone = isMobile(window.navigator).phone
+  const [roadShow, setRoadShow] = useState(true)
+  const isphone = true; /// isMobile(window.navigator).phone
   let animation1 = null, 
       animation1s = null, 
       animation2 = null, 
@@ -447,7 +447,7 @@ const onComingSoon = () => {
               <p>Introducing Dmail</p>
               <h2>Product Roadmap</h2>
             </div>
-            <div className={roadShow ? "roadMap show" : "roadMap"}>
+            <div className={roadShow ? "roadMap show" : "roadMap show"}>
                 <div className="line"></div>
                 <div className="item item1">
                     <h3>2021 Q2</h3>
