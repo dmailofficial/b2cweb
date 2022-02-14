@@ -305,21 +305,9 @@ class Step2Component extends React.Component{
 
     submit(_param).then((res)=>{
       if(res.code == 1){
-        // this.props.nextStep();
-        // let _d = {...JSON.parse(JSON.stringify(rules))}
-        // this.setState({formData: _d})
-        console.log("res.message:", res)
-        this.setState({
-          comingToast: true,
-          errorTip: res.msg,
-        })
-        setTimeout(()=>{
-          this.setState({
-            comingToast: false,
-            errorTip: "",
-          })
-        }, 3000)
-
+        this.props.nextStep();
+        let _d = {...JSON.parse(JSON.stringify(rules))}
+        this.setState({formData: _d})
       }else{
         this.setState({
           comingToast: true,
