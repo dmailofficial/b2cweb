@@ -212,7 +212,9 @@ class Step2Component extends React.Component{
     super(props);
     this.state = {
       formData: {...JSON.parse(JSON.stringify(rules))},
-      showOther: false
+      showOther: false,
+      comingToast: false,
+      errorTip: ''
     }
   }
 
@@ -303,9 +305,32 @@ class Step2Component extends React.Component{
 
     submit(_param).then((res)=>{
       if(res.code == 1){
-        this.props.nextStep();
-        let _d = {...JSON.parse(JSON.stringify(rules))}
-        this.setState({formData: _d})
+        // this.props.nextStep();
+        // let _d = {...JSON.parse(JSON.stringify(rules))}
+        // this.setState({formData: _d})
+        console.log("res.message:", res)
+        this.setState({
+          comingToast: true,
+          errorTip: res.msg,
+        })
+        setTimeout(()=>{
+          this.setState({
+            comingToast: false,
+            errorTip: "",
+          })
+        }, 3000)
+
+      }else{
+        this.setState({
+          comingToast: true,
+          errorTip: res.msg,
+        })
+        setTimeout(()=>{
+          this.setState({
+            comingToast: false,
+            errorTip: "",
+          })
+        }, 3000)
       }
     }).catch((e)=>{
       console.log("e:",e)
@@ -636,9 +661,13 @@ class Step2Component extends React.Component{
               back
             </Button>
           </div>
-          
+        </div>
 
-        
+        <div className={this.state.comingToast ? "toastWrap show": "toastWrap hidden"}>
+          <div className="content">
+            {/* <img src={rocketIcon}></img> */}
+            <span className="tip">{this.state.errorTip}</span>
+          </div>
         </div>
       </Step2>
     );

@@ -608,6 +608,71 @@ const Step2 = styled.div`
             margin-right: 20px;
         }
     }
+    .toastWrap{
+        position: fixed;
+        // width: 60px;
+        // height: 50px;
+        // background: #FFFFFF;
+        text-align: center;
+        top: 90px;
+        left:0;
+        right:0;
+        margin: 0 auto;
+        
+        box-sizing: border-box;
+        
+        .closeBtn{
+            width: 16px;
+            height: 16px;
+            display: block;
+            position: relative;
+            float: right;
+            margin-bottom: 16px;
+            cursor: pointer;
+            span{
+                position: absolute;
+                top: 8px;
+                height:1px;
+                width:16px;
+                display: block;
+                background: #888888;
+                transform: rotate(45deg);
+            }
+            span:nth-child(2){
+                transform: rotate(-45deg);
+            }
+        }
+        .content{
+            padding: 0;
+            display: inline-block;
+            text-align: center;
+            background-color: #1D1D1F;
+            opacity: .8;
+            padding: 20px;
+            border : 1px solid rgba(255,255,255, .4);
+            border-radius: 6px;
+            box-shadow:0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        img{
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 20px 0px 0;
+        }
+        span.tip{
+            display: inline-block;
+            font-size: 20px;
+            font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
+            font-weight: 400;
+            // color: #111111;
+            color: #ffffff;
+            height: 24px;
+            line-height: 24px;
+        }
+      }
+      .toastWrap.hidden{display:none;}
+      .toastWrap.show{display:block}
     @media screen and (max-width: 1024px) {
         padding: 60px 25px;
         .cheader{

@@ -294,7 +294,7 @@ const onComingSoon = () => {
         <div className="contentWrap dmailContent">
             <div className="content">
               <p>Introducing Dmail</p>
-              <h2>What is Dmail ?</h2>
+              <h2>What is Dmail</h2>
               {/* <p className="desc">In Web 3.0, every user and application coexist in a frame of open standards and protocols, which can connected each other freely and form the internet of everything.</p> */}
               <p className="desc">Utilizing Dfinity as the engine to realize decentralized storage and privacy protection, Dmail identifies user identity and User rights with NFT domain account, making connections between information, assets, storage and DApps. Dmail is striving to eliminate data barriers and become the most important interaction tool for the Web 3.0 era. </p>
               

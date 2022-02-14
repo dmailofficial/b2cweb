@@ -303,7 +303,8 @@ const Header = (props) => {
             <div className="nav_item"><Link to="/" className={(pathname === '/' || pathname === '/newhome') ? 'on' : ''}>Home</Link></div>
             <div className="nav_item"><a onClick={onComingSoon}>Mail</a></div>
             <div className="nav_item"><a onClick={onComingSoon}>NFTs</a></div>
-            <div className="nav_item"><Link to="/presale" className={pathname === '/presale' ? 'on ' : ''} >Events</Link></div>
+            <div className="nav_item"><a onClick={onComingSoon}>Events</a></div>
+            {/* <div className="nav_item"><Link to="/presale" className={pathname === '/presale' ? 'on ' : ''} >Events</Link></div> */}
             <div className="nav_item"><Link to="/ambassador" className={pathname === '/ambassador' ? 'on ' : ''} >Ambassador</Link></div>
           </div>
         </div>
