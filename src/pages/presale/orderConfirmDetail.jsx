@@ -248,7 +248,10 @@ class orderConfirmDetail extends React.Component {
         this.closePoptoast();
         this.setState({paying: false})
         const successMsg = 'Payment successful'
-        const _wallet = this.props.wallet
+        let _wallet = this.props.wallet
+        if(!_wallet.getChainInfo){
+            _wallet = new Wallet(this.props.walletStore.walletName);
+        }
         let { chainId } = await _wallet.getChainInfo();
         let curPrice = 0;
         if(this.props.walletStore.walletName == "plug"){
