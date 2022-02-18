@@ -71,7 +71,7 @@ const NoData = () => {
         <img src={noDataImg} alt=""/>
         <div className="no-data-text">
           <p>Not owned Dmail NFT Domain Account</p>
-          <p>Jump to the activity page to search for e-mail</p>
+          <p><a href='/'>Jump to the activity page to search for e-mail</a></p>
         </div>
       </div>
     </NoDataWraper>
@@ -164,7 +164,7 @@ const Table = (props) => {
         </div>
       )
     }
-    return value || '- -'
+    return value ? `#${value}` : '- -'
   }
 
   // Render the UI for your table

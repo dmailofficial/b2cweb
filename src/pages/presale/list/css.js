@@ -293,16 +293,16 @@ export const NoDataWraper = styled.div`
     width: 400px;
   }
 
+  .no-data-text a {
+    color: #4C72FF;
+  }
+
   p {
     line-height: 28px;
     text-align: center;
 
     &:first-child {
       margin-top: 26px;
-    }
-
-    &:last-child {
-      color: #4C72FF;
     }
   }
 `
