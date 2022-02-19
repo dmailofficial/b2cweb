@@ -39,7 +39,7 @@ const Step1Component = (param) => {
           <div className="desc">
               {/* <span>Dmail</span> */}
               <h3><img src={icon2}></img>Financing</h3>
-              <p>Dmail has raised a seed round of funding at 10 million USD valuation. Funding investments is from : @Amino_capital @CapitalHashkey @DraperDragon and 10+ global leading VCs. 10,000 users have participated in the first. Round of Dmail testnet and NFT domain accounts presale. The 2nd round will be hosted soon.</p>
+              <p>Dmail has raised a seed round of funding at 10 million USD valuation. Funding investments is from : @Amino_capital @CapitalHashkey @DraperDragon and 10+ global leading VCs. 10,000 users have participated in the first Round of Dmail testnet and NFT domain accounts presale. The 2nd round will be hosted soon.</p>
           </div>
         </div>
         <div className="citem">
@@ -47,7 +47,7 @@ const Step1Component = (param) => {
             <div className="desc">
               {/* <span>Dmail</span> */}
               <h3><img src={icon3}></img>Join us</h3>
-              <p>Dmail is recruiting global ambassadors to promote decentralized mailbox to replace traditional centralized mailboxes. If you are also looking to be a part of the most influential company in the blockchain &Web3.0 industry and contribute to the revolution that is changing the world, welcome to join us!</p>
+              <p>Dmail is recruiting global ambassadors to promote decentralized mailbox to replace traditional centralized mailboxes. If you are also looking to be a part of the most influential company in the blockchain & Web 3.0 industry and contribute to the revolution that is changing the world, welcome to join us!</p>
             </div>
             <div className="img pc"><img src={p3}></img></div>
         </div>
@@ -57,7 +57,7 @@ const Step1Component = (param) => {
             <span>Dmail</span>
             <h2> Guidelines</h2>
             <p>Location: Global (Remote Online Work)<br></br>
-          Selection Criteria: Passionate about blockchain and Web3.0; Great knowledge of Dfinity.</p>
+          Selection Criteria: Passionate about blockchain and Web 3.0; Great knowledge of Dfinity.</p>
         </div>
         <div className="content">
           <div className="citem">
