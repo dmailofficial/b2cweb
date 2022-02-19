@@ -16,7 +16,6 @@ const NewHome = styled.div`
         height: 100vh;
         width: 100%;
         background-color: #1D1D1F;
-        // background-color: #000000;
         .header {
             position: fixed;
             top: 0;
@@ -29,7 +28,6 @@ const NewHome = styled.div`
             width: 100%;
             margin: 0 auto;
             background-color: #1D1D1F;
-            // background-color: #000000;
         }
         .contentWrap{
             height: 100vh;
@@ -443,7 +441,7 @@ const NewHome = styled.div`
             }
             .roadMap{
                 width: 100%;
-                background-image: url(${roadmapBackground});
+                // background-image: url(${roadmapBackground});
                 background-size: ${1440/baseWidth}vw ${249/baseWidth}vw;
                 background-position: 100% 50%;
                 background-repeat: no-repeat;
