@@ -322,7 +322,11 @@ const Step1 = styled.div`
 
     @media screen and (max-width: 720px) {
         .banner {
+            h1{
+                padding-top:0;
+            }
             p{padding:0 15px;}
+
         }
         .culture{
             padding: 0 20px 60px;

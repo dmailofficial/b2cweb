@@ -15,7 +15,8 @@ const Step1Component = (param) => {
       <div className="banner">
         <h1>Dmail Ambassador Program</h1>
         <p>
-        Dmail Ambassadors are passionate volunteers from within our community that support our platform in various ways, primarily promoting the Dmail Network's ecosystem and assisting our user base with questions and concerns. Dmail Ambassadors are community builders at heart. They are every day users from all walks of life, countries, cultures, and ethnicities who give voice to both our Dmail Network's ecosystem. At Dmail Network, we are focused on creating the best possible customer experience and Dmail Ambassadors play a major role in acting as a bridge between Dmail Network and our local communities around the world. If you are interested in helping out as a Dmail Ambassador, please take 5~10 minutes to fill out this application.
+          By applying for this program, we will add you to the waiting list as Ambassador Candidates.<br></br>
+          This is a volunteer program for true fans who are passionate about what we do.
         </p>
         <span className="applyBtn" onClick={()=>{param.nextStep("next")}}>Apply Now</span>
       </div>
@@ -29,7 +30,7 @@ const Step1Component = (param) => {
             <div className="desc">
               {/* <span>Dmail</span> */}
               <h3><img src={icon1}></img>About Dmail</h3>
-              <p>Dmail Network (https://dmail.ai/) is the first Decentralized Mailbox based on Dfinity. Every Dmail Account is an NFT, DID to the blockchain world, and a gateway to Web 3.0.</p>
+              <p>Dmail Network is the first Decentralized Mailbox based on Dfinity. Every Dmail Account is an NFT, DID to the blockchain world, and a gateway to Web 3.0.</p>
             </div>
             <div className="img pc"><img src={p1}></img></div>
         </div>
