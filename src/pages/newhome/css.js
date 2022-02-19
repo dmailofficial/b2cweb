@@ -441,7 +441,7 @@ const NewHome = styled.div`
             }
             .roadMap{
                 width: 100%;
-                // background-image: url(${roadmapBackground});
+                background-image: url(${roadmapBackground});
                 background-size: ${1440/baseWidth}vw ${249/baseWidth}vw;
                 background-position: 100% 50%;
                 background-repeat: no-repeat;

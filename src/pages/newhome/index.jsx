@@ -65,7 +65,7 @@ const Index = () => {
   const [value, setValue] = useState('')
   const [error, setError] = useState(false)
   const [roadShow, setRoadShow] = useState(true)
-  const isphone = isMobile(window.navigator).phone
+  const isphone = true; // isMobile(window.navigator).phone
   let animation1 = null, 
       animation1s = null, 
       animation2 = null, 

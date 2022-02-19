@@ -55,7 +55,7 @@ const Step1 = styled.div`
             color: #FFFFFF;
             line-height: 32px;
             text-align: center;
-            max-width: 846px;
+            // max-width: 846px;
             margin: 0 auto;
         }
         .applyBtn {
