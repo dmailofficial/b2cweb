@@ -153,8 +153,10 @@ class orderConfirmDetail extends React.Component {
     
 
     toPay = async () => {
+        console.log("state paying111:::", this.state.paying)
         if(this.state.paying || this.state.walletSwitching){return}
-        
+        await this.setState({paying: true})
+
         // change account in wallet app but has no sign --- backup
         console.log("toPay:",this.props.walletStore.walletName)
         if(this.props.walletStore.walletName){
@@ -164,6 +166,7 @@ class orderConfirmDetail extends React.Component {
                 _walletAccount = await _prewallet.requestAccounts();
             } catch (error) {
                 _walletAccount = null
+                this.setState({paying: false})
                 return {
                     code: 2,
                     error: error
@@ -201,12 +204,14 @@ class orderConfirmDetail extends React.Component {
         if(!_wallet.getBalanceOf){
             if(!this.props.walletStore.walletName){
                 this.props.handleWallet("orderpay");
+                this.setState({paying: false})
                 return;
             }else{
                 _wallet = new Wallet(this.props.walletStore.walletName);
             }
         }
-        this.setState({paying: true})
+
+        
         this.poptoast("Payment processing","loading", true)
         // setTimeout(()=>{
         //     this.closePoptoast();
@@ -234,8 +239,9 @@ class orderConfirmDetail extends React.Component {
             return
         }
         try {
+            // this.setState({paying: false})
+            console.log("this.state.paying::", this.state.paying)
             await _wallet.transfer(this.props.walletStore.info.address, curPrice, this.paysuccess, this.payfaild)
-            this.setState({paying: false})
         } catch (error) {
             this.closePoptoast();
             console.log("transfer faild:::::---:", error)
@@ -417,7 +423,11 @@ class orderConfirmDetail extends React.Component {
                                 </div>
                             </div>
                             <div className="btnWrap">
-                                <span className="confirmBtn" onClick={this.toPay}>{this.state.walletSwitching ? "Wallet switching" : "Confirm"}</span>
+                                {!this.state.paying ? 
+                                    <span className="confirmBtn" onClick={this.toPay}>{this.state.walletSwitching ? "Wallet switching" : "Confirm"}</span>
+                                    : 
+                                    <span className="confirmBtn">{this.state.walletSwitching ? "Wallet switching" : "Confirm"}</span>
+                                }
                                 {this.state.countDownSeconds > 0 ? (
                                     <div className="countDown">
                                         <i></i>

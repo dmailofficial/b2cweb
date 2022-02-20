@@ -37,14 +37,14 @@ const Step1 = styled.div`
         
     }
     .banner {
-        height: 478px;
+        padding: 80px 0 72px;
+        text-align: center;
         h1 {
             font-size: 48px;
             font-family: Montserrat-Bold, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: bold;
             color: #FFFFFF;
             line-height: 57px;
-            padding-top: 110px;
             padding-bottom: 25px;
             text-align: center;
         }
@@ -53,8 +53,10 @@ const Step1 = styled.div`
             font-family: Montserrat-Regular, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
             font-weight: 400;
             color: #FFFFFF;
-            line-height: 40px;
+            line-height: 32px;
             text-align: center;
+            // max-width: 846px;
+            margin: 0 auto;
         }
         .applyBtn {
             width: 240px;
@@ -75,7 +77,7 @@ const Step1 = styled.div`
     }
     .culture{
         background: #ffffff;
-        padding: 0 120px 200px;
+        padding: 0 120px 72px;
         .cheader {
             h2 {
                 color: #322F2F;
@@ -86,7 +88,7 @@ const Step1 = styled.div`
             max-width: 1200px;
             margin: 0 auto;
             min-height: 424px; 
-            margin-top: 100px;
+            padding-top: 96px;
             display: flex;
             // align-items: center;
             align-items: flex-start
@@ -97,8 +99,8 @@ const Step1 = styled.div`
                 float: right;
                 img{
                     width: 100%;
-                    max-width:669px;
-                    min-width: 490px;
+                    max-width:711px;
+                    min-width: 656px;
                     height:auto;
                 }
             }
@@ -120,23 +122,47 @@ const Step1 = styled.div`
                     letter-spacing: 3px;
                 }
                 h3 {
-                    font-size: 48px;
+                    font-size: 40px;
                     font-family: Montserrat-Regular, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
-                    font-weight: bold;
+                    font-weight: normal;
                     color: #000000;
-                    line-height: 64px;
+                    line-height: 65px;
+                    min-height: 65px;
+                    img{
+                        width: 65px;
+                        height: 65px;
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin-right: 8px;
+                        float: left;
+                    }
                 }
                 p {
+                    margin-top: 34px;
                     font-size: 20px;
                     font-family: Montserrat-Regular, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
                     color: #4A4A4A;
+                    font-weight: 400;
                     line-height: 32px;
                 }
             }
         }
+        .citem:nth-child(2) {
+            padding-top: 172px;
+            .img{
+                img {
+                    width: 100%;
+                    max-width: 638px;
+                    min-width: 470px;
+                    height: auto;
+                    margin-left: 0px;
+                }
+            }
+        }
         .citem:last-child {
+            padding-top: 228px;
             .desc{
-                padding: 150px 0 0 70px;
+                padding: 15px 0 0 70px;
             }
             .img{
                 img {
@@ -151,12 +177,19 @@ const Step1 = styled.div`
     }
     .criteria {
         padding-bottom: 240px;
+        .cheader{
+            p{
+               width: 670px;
+               margin: 34px auto 0; 
+               text-align: center;
+            }
+        }
         .content {
             display: flex;
             align-items: center;
             justify-content: space-evenly;
             padding-top: 95px;
-            max-width: 1200px;
+            max-width: 1250px;
             margin: 0 auto;
 
             .citem {
@@ -164,7 +197,7 @@ const Step1 = styled.div`
                 flex-direction: column;
                 width: 30%;
                 max-width: 378px;
-                min-height: 440px;
+                min-height: 490px;
                 padding-bottom: 20px;
                 background: #FFFFFF;
                 box-shadow: 0px 4px 32px 0px rgba(34, 41, 77, 0.02), 0px 8px 64px 0px rgba(33, 39, 75, 0.1);
@@ -184,13 +217,24 @@ const Step1 = styled.div`
                     line-height: 64px;
                 }
                 p {
-                    line-height: 20px;
-                    font-size: 16px;
-                    padding: 0 33px;
+                    padding: 0 20px 0 44px;
                     margin-top: 16px;
                     font-family: Montserrat-Regular, Montserrat, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
-                    font-weight: bold;
-                    color: #22294F;
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #4A4A4A;
+                    line-height: 24px;
+                    position: relative;
+                    span{
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 8px;
+                        display: inline-block;
+                        border: 1px solid #FF6633;
+                        position: absolute;
+                        left: 20px;
+                        top: 8px;
+                    }
                 }
                 
             }
@@ -277,10 +321,17 @@ const Step1 = styled.div`
     }
 
     @media screen and (max-width: 720px) {
+        .banner {
+            h1{
+                padding-top:0;
+            }
+            p{padding:0 15px;}
+
+        }
         .culture{
             padding: 0 20px 60px;
             .citem {
-                margin-top: 60px;
+                margin-top: 0px;
                 display: block;
                 .img{
                     width: 100%;
@@ -301,7 +352,7 @@ const Step1 = styled.div`
                     display: block;
                 }
                 .desc {
-                    padding: 0 0 100px;
+                    padding: 0 0 0px;
                     text-align: center;
                     width: 100%;
                     span {
@@ -309,35 +360,65 @@ const Step1 = styled.div`
                     }
                     h3 {
                         font-size: 30px;
-                        line-height: 30px;
+                        line-height: 40px;
+                        img{
+                            width: 40px;
+                            height: 40px;
+                            display: inline-block;
+                            vertical-align: middle;
+                            margin-right: 8px;
+                            float: none;
+                        }
                     }
                     p {
                         font-size: 18px;
-                        line-height: 18px;
+                        line-height: 24px;
                         margin-top: 10px;
+                    }
+                }
+            }
+            .citem:nth-child(2){
+                padding-top: 100px;
+                .img{
+                    width: 100%;
+                    margin: 0 auto;
+                    img {
+                        width: 100%;
+                        max-width: 100%;
+                        min-width: 100%;
+                        height: auto;
+                        margin-left: 0px;
                     }
                 }
             }
             .citem:last-child {
                 margin-top: 0px;
+                padding-top: 100px;
                 .desc{
                     float: none;
                     padding: 0;
                 }
                 .img{
                     width: 100%;
-                    max-width: 100%;
-                    min-width: 100%;
                     margin: 0 auto;
                     img {
                         width: 100%;
                         height: auto;
+                        max-width: 100%;
+                        min-width: 100%;
                         margin-left: 0px;
                     }
                 }
             }
         }
         .criteria {
+            .cheader{
+                p{
+                   width: 95%;
+                   margin: 34px auto 0; 
+                   text-align: center;
+                }
+            }
             .content {
                 display: block;
                 padding: 60px 30px;
@@ -359,6 +440,9 @@ const Step1 = styled.div`
                         line-height: 18px;
                         padding: 0 20px;
                         margin-top: 15px;
+                        span{
+                            display: none;
+                        }
                     }
                 }
                 .citem:last-child {
