@@ -39,7 +39,7 @@ const Step1Component = (param) => {
           <div className="desc">
               {/* <span>Dmail</span> */}
               <h3><img src={icon2}></img>Financing</h3>
-              <p>Dmail has raised a seed round of funding at 10 million USD valuation. Funding investments is from : @Amino_capital @CapitalHashkey @DraperDragon and 10+ global leading VCs. 10,000 users have participated in the first Round of Dmail testnet and NFT domain accounts presale. The 2nd round will be hosted soon.</p>
+              <p>Dmail has raised a seed round of funding at 10 million USD valuation. Funding investments is from : @Amino_capital @CapitalHashkey @DraperDragon and 10+ global leading VCs. 10,000 users have participated in the first round of Dmail testnet and NFT domain accounts presale. The 2nd round will be hosted soon.</p>
           </div>
         </div>
         <div className="citem">
