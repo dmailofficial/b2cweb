@@ -134,7 +134,6 @@ function App({ store: { wallet, presale } }) {
   }
 
   const fetchData = useCallback(async ({ pageIndex, pageSize }) => {
-    console.log(wallet.info)
     if (!wallet.info || !wallet.info.address || !wallet.info.walletName) {
       return
     }
@@ -143,12 +142,13 @@ function App({ store: { wallet, presale } }) {
     const params = walletName === 'metamask' ? { jwt } : { is_verify: true }
     // await new Promise((resolve) => setTimeout(resolve, 1000))
     try {
-      console.log(11212)
       const res = await axios({
         url: `${baseUrl}/trades`,
         method: 'post',
         data: {
           address,
+          page: pageIndex + 1,
+          pageSize: pageSize,
           // address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
           ...params,
         },
