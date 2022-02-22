@@ -985,6 +985,9 @@ const ConfirmPannel = styled.div`
                     .confirmBtn:active{
                         background: #913719;
                     }
+                    .confirmBtn.disabled{
+                        background-color: #969696;
+                    }
 
                     .countDown {
                         font-size: 16px;

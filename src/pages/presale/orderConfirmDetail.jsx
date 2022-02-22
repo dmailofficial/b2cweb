@@ -203,6 +203,7 @@ class orderConfirmDetail extends React.Component {
         let _wallet = this.props.wallet
         if(!_wallet.getBalanceOf){
             if(!this.props.walletStore.walletName){
+                console.log("!this.props.walletStore.walletName , getBalanceOf:")
                 this.props.handleWallet("orderpay");
                 this.setState({paying: false})
                 return;
@@ -426,7 +427,7 @@ class orderConfirmDetail extends React.Component {
                                 {!this.state.paying ? 
                                     <span className="confirmBtn" onClick={this.toPay}>{this.state.walletSwitching ? "Wallet switching" : "Confirm"}</span>
                                     : 
-                                    <span className="confirmBtn">{this.state.walletSwitching ? "Wallet switching" : "Confirm"}</span>
+                                    <span className="confirmBtn disabled">{this.state.walletSwitching ? "Wallet switching" : "Confirm"}</span>
                                 }
                                 {this.state.countDownSeconds > 0 ? (
                                     <div className="countDown">

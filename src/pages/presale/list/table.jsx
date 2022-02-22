@@ -137,7 +137,13 @@ const Table = (props) => {
           ))}
         </>
       )
-    } else if (['hash', 'owner'].includes(key)) {
+    } else if ([ 'domain', 'price', 'expirationDate'].includes(key)) {
+      return (
+        <span className="break-word">
+          {value ? value : '- -'}
+        </span>
+      )
+    }else if ([ 'hash', 'owner'].includes(key)) {
       return (
         <span className="break-word">
           {value}

@@ -195,6 +195,9 @@ export const Content = styled.div`
 
     p {
       flex: 1;
+      a{
+        color: #4C72FF;
+      }
     }
   }
   @media screen and (max-width: 750px) {
