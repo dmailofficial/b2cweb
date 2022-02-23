@@ -196,7 +196,10 @@ export const Content = styled.div`
     p {
       flex: 1;
       a{
-        color: #4C72FF;
+        color: #ffffff;
+      }
+      a:hover{
+        text-decoration: underline;
       }
     }
   }
