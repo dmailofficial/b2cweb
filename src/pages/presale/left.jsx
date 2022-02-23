@@ -18,7 +18,7 @@ const LeftComp = (props) => {
                 cur =  item;
             }
         })
-        console.log("props.walletStore......",props.presaleStore)
+        // console.log("props.walletStore......",props.presaleStore)
         props.presaleStore.setCurPresale(cur)
         props.presaleChange(cur)
     }

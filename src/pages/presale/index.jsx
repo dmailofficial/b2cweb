@@ -39,7 +39,7 @@ const Index = ({ store }) => {
   const {channel_id} = useParams()
 
   const presaleChange = (item) => {
-    console.log("item:::", item)
+    // console.log("item:::", item)
     let id = item.id;
     setCurItem(item)
     setCurId(id)
@@ -78,13 +78,13 @@ const Index = ({ store }) => {
   }
 
   const onRef = (ref) => {
-    console.log("onRef-----:", ref)
+    // console.log("onRef-----:", ref)
     // payOrderChild = ref
     setPayOrderChild(ref)
   }
 
   const topay = () => {
-    console.log("topay:::=======", payOrderChild)
+    // console.log("topay:::=======", payOrderChild)
       payOrderChild.toPay()
   }
 
@@ -99,7 +99,7 @@ const Index = ({ store }) => {
   }
 
   const formartShowName = (address = "") => {
-    console.log("formartShowName::", address)
+    // console.log("formartShowName::", address)
     if(!address){return}
     let _name = address.substr(0,5)+"***"+address.substr(address.length-3, address.length)
     // console.log("formartShowName:", _name)
@@ -107,7 +107,7 @@ const Index = ({ store }) => {
   }
 
   const getLoginInfo = (loginInfo) => {
-    console.log("getLoginInfo:::", loginInfo)
+    // console.log("getLoginInfo:::", loginInfo)
     if(loginInfo.code){
       poptoast(loginInfo.msg)
       return;
@@ -166,7 +166,7 @@ const Index = ({ store }) => {
 
   useEffect(async () => {
     walletStore.info && setLoginInfo(walletStore.info)
-    console.log("presalse effect:::",walletStore.info?.address)
+    // console.log("presalse effect:::",walletStore.info?.address)
     formartShowName(walletStore.info?.address)
   }, [walletStore.info])
 

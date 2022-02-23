@@ -37,7 +37,7 @@ const walletList = [
 ]
 
 function WalletDialog(params) {
-  console.log("WalletDialog::", params)
+  // console.log("WalletDialog::", params)
     const {open , dialogClose, getLoginInfo, getWalletInstance, walletStore, channel} = params;
     const [walletName, setWalletName] = useState('')
     const [toast, setToast] = useState(false)
@@ -72,7 +72,7 @@ function WalletDialog(params) {
     }
     
     const faildCallback = async (data, wallet) => {
-      console.log("faildCallback::::", data)
+      // console.log("faildCallback::::", data)
       let _msg = null;
        _msg = data.msg ? data.msg.toString() : data.message;
       
@@ -98,7 +98,7 @@ function WalletDialog(params) {
 
       setShowloading(true)
       const connectObj = await connectWalletAndLogin(wallet, walletStore);
-      console.log("connectObj:::", connectObj);
+      // console.log("connectObj:::", connectObj);
       if(!connectObj.account){
           if(connectObj.code == 3 && wallet == "tronlink"){
             setVertip(TronIcon)

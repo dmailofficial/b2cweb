@@ -139,7 +139,7 @@ class orderConfirmDetail extends React.Component {
     
     checkProductLock = async (product_name) => {
         const _checkResult = await checkProductLockInfo(product_name)
-        console.log("_checkResult_checkResult_checkResult::", _checkResult)
+        // console.log("_checkResult_checkResult_checkResult::", _checkResult)
         const { address, code, message, success, ttl } = await checkProductLockInfo(product_name)
         if(!success){
             this.poptoast(message, 'faild')
@@ -153,12 +153,12 @@ class orderConfirmDetail extends React.Component {
     
 
     toPay = async () => {
-        console.log("state paying111:::", this.state.paying)
+        // console.log("state paying111:::", this.state.paying)
         if(this.state.paying || this.state.walletSwitching){return}
         await this.setState({paying: true})
 
         // change account in wallet app but has no sign --- backup
-        console.log("toPay:",this.props.walletStore.walletName)
+        // console.log("toPay:",this.props.walletStore.walletName)
         if(this.props.walletStore.walletName){
             let _prewallet = new Wallet(this.props.walletStore.walletName);
             let _walletAccount
@@ -175,7 +175,7 @@ class orderConfirmDetail extends React.Component {
 
             if(!!_walletAccount && _walletAccount != this.props.walletStore.info?.address){
                 if(this.props.walletStore.walletName == "plug" && !_walletAccount.code){
-                    console.log("_walletAccount: plug::::", _walletAccount)
+                    // console.log("_walletAccount: plug::::", _walletAccount)
                     this.props.walletStore.setWalletInfo({
                     ...this.props.walletStore.info,
                     address: _walletAccount
@@ -199,11 +199,11 @@ class orderConfirmDetail extends React.Component {
         //     this.poptoast(_checkResult.message)
         //     return
         // }
-        console.log("this.props.walletStore.walletName:::", this.props.walletStore.walletName);
+        // console.log("this.props.walletStore.walletName:::", this.props.walletStore.walletName);
         let _wallet = this.props.wallet
         if(!_wallet.getBalanceOf){
             if(!this.props.walletStore.walletName){
-                console.log("!this.props.walletStore.walletName , getBalanceOf:")
+                // console.log("!this.props.walletStore.walletName , getBalanceOf:")
                 this.props.handleWallet("orderpay");
                 this.setState({paying: false})
                 return;
@@ -217,7 +217,7 @@ class orderConfirmDetail extends React.Component {
         // setTimeout(()=>{
         //     this.closePoptoast();
         // }, 18*1000)
-        console.log("this.props.walletStore.walletName:::", this.props.walletStore.info.address);
+        // console.log("this.props.walletStore.walletName:::", this.props.walletStore.info.address);
 
         const balance = await _wallet.getBalanceOf(this.props.walletStore.info.address)
         if(balance.code){
@@ -232,7 +232,7 @@ class orderConfirmDetail extends React.Component {
             curPrice = this.state.detail.price
         }
 
-        console.log("curPrice:::", curPrice, myAmount)
+        // console.log("curPrice:::", curPrice, myAmount)
         if (this.props.walletStore.walletName == "metamask" && myAmount < +curPrice) {
             this.closePoptoast();
             this.poptoast("Please make sure there’re sufficient funds.")
@@ -241,7 +241,7 @@ class orderConfirmDetail extends React.Component {
         }
         try {
             // this.setState({paying: false})
-            console.log("this.state.paying::", this.state.paying)
+            // console.log("this.state.paying::", this.state.paying)
             await _wallet.transfer(this.props.walletStore.info.address, curPrice, this.paysuccess, this.payfaild)
         } catch (error) {
             this.closePoptoast();
@@ -326,7 +326,7 @@ class orderConfirmDetail extends React.Component {
     }
 
     handleEndCallback = () => {
-        console.log('countDown end')
+        // console.log('countDown end')
         // this.state.expiredDialog = true;
         this.setState({expiredDialog : true})
     }
