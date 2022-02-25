@@ -30,6 +30,7 @@ class orderConfirmDetail extends React.Component {
             expiredDialog: false,
         };
         this.timer = null;
+        this.paying = false;
     }
 
     componentWillMount(){
@@ -154,7 +155,8 @@ class orderConfirmDetail extends React.Component {
 
     toPay = async () => {
         // console.log("state paying111:::", this.state.paying)
-        if(this.state.paying || this.state.walletSwitching){return}
+        if(this.state.paying || this.paying || this.state.walletSwitching){return}
+        this.paying = true
         await this.setState({paying: true})
 
         // change account in wallet app but has no sign --- backup
@@ -167,6 +169,7 @@ class orderConfirmDetail extends React.Component {
             } catch (error) {
                 _walletAccount = null
                 this.setState({paying: false})
+                this.paying = false
                 return {
                     code: 2,
                     error: error
@@ -206,6 +209,7 @@ class orderConfirmDetail extends React.Component {
                 // console.log("!this.props.walletStore.walletName , getBalanceOf:")
                 this.props.handleWallet("orderpay");
                 this.setState({paying: false})
+                this.paying = false
                 return;
             }else{
                 _wallet = new Wallet(this.props.walletStore.walletName);
@@ -237,6 +241,7 @@ class orderConfirmDetail extends React.Component {
             this.closePoptoast();
             this.poptoast("Please make sure there’re sufficient funds.")
             this.setState({paying: false})
+            this.paying = false
             return
         }
         try {
@@ -254,6 +259,7 @@ class orderConfirmDetail extends React.Component {
     paysuccess = async (from, hash) => {
         this.closePoptoast();
         this.setState({paying: false})
+        this.paying = false
         const successMsg = 'Payment successful'
         let _wallet = this.props.wallet
         if(!_wallet.getChainInfo){
@@ -272,6 +278,7 @@ class orderConfirmDetail extends React.Component {
             this.poptoast(msg, 'faild')
             return
         }
+
         this.poptoast(successMsg, 'success')
         setTimeout(()=>{
             this.props.toOwn()
@@ -280,6 +287,7 @@ class orderConfirmDetail extends React.Component {
 
     payfaild = (error) => {
         this.closePoptoast();
+        this.paying = false
         this.setState({paying: false})
         const userReject = 'User rejected message signature!'
         if(error.code == 4001){
