@@ -1,4 +1,4 @@
-const { override, overrideDevServer, fixBabelImports, addWebpackAlias, addWebpackModuleRule } = require('customize-cra');
+const { override, overrideDevServer, fixBabelImports, addWebpackAlias, addWebpackModuleRule, setWebpackOptimizationSplitChunks, addBundleVisualizer } = require('customize-cra');
 
 const path = require('path')
 const resolve = dir => path.join(__dirname, '.', dir)
@@ -29,6 +29,7 @@ const closedMap = config => {
 
 module.exports = {
   webpack: override(
+      addBundleVisualizer({}, true),
       removeManifest(),
       addWebpackAlias({
         ['@']: resolve('src')
