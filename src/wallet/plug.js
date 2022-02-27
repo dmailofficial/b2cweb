@@ -1,3 +1,4 @@
+import BigNumber from "bignumber.js";
 const PlugAbiMap = {
   toAddress: 'i5bf3-hm467-bc7sn-d4yc7-g3rib-2khxw-u6wve-mdvsw-qxzby-2hzyd-xae',
 }
@@ -77,11 +78,11 @@ class PlugWallet {
     transfer = async (address, price, successcallback, failedcallback) => {
       const chainInfo = await this.getChainInfo();
       const { toAddress } = chainInfo
-      // console.log("100000000 * price:::",price, 100000000 * price)
+      // console.log("100000000 * price:::",price, new BigNumber(100000000).times(price).toString());
       try {
         const result = await window.ic.plug.requestTransfer({
           to: toAddress,
-          amount: parseInt(100000000 * price),
+          amount: Number(new BigNumber(100000000).times(price).toString()),
           // opts: {
           //   fee: '',
           //   memo,
