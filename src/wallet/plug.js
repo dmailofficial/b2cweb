@@ -77,11 +77,11 @@ class PlugWallet {
     transfer = async (address, price, successcallback, failedcallback) => {
       const chainInfo = await this.getChainInfo();
       const { toAddress } = chainInfo
+      // console.log("100000000 * price:::",price, 100000000 * price)
       try {
         const result = await window.ic.plug.requestTransfer({
           to: toAddress,
-          // amount: 4000000 * price,
-          amount: 100000000 * price,
+          amount: parseInt(100000000 * price),
           // opts: {
           //   fee: '',
           //   memo,
