@@ -203,7 +203,7 @@ const ReceiveDialog = ({ receiveId, setReceiveId, receive, errorIndex }) => {
   };
 
   const onConfirm = () => {
-    const reg = /([a-z0-9]{5}\-){10}[a-z0-9]{3}/g
+    const reg = /^([a-z0-9]{5}\-){10}[a-z0-9]{3}$/g
     if(!reg.test(address)){
       setError(true)
       return;
