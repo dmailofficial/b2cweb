@@ -28,7 +28,7 @@ import partnerIcon2 from '@/static/images/home/partner/logos/CapAMINO.png'
 import partnerIcon3 from '@/static/images/home/partner/logos/DraperDragon.png'
 import partnerIcon4 from '@/static/images/home/partner/logos/outliers.png'
 import partnerIcon5 from '@/static/images/home/partner/logos/parallelVentures.png'
-import partnerIcon6 from '@/static/images/home/partner/logos/FBG.png'
+import partnerIcon6 from '@/static/images/home/partner/logos/BlackVentures.png'
 import partnerIcon7 from '@/static/images/home/partner/logos/paka.png'
 import partnerIcon8 from '@/static/images/home/partner/logos/sparkCap.png'
 import partnerIcon9 from '@/static/images/home/partner/logos/TsingTingCap.png'
@@ -514,7 +514,7 @@ const onComingSoon = () => {
                   <img src={partnerIcon5} alt="parallelVentures"></img>
                 </div>
                 <div className="pitem">
-                  <img src={partnerIcon6} alt="FBG"></img>
+                  <img src={partnerIcon6} alt="BlackVentures"></img>
                 </div>
                 <div className="pitem">
                   <img src={partnerIcon7} alt="paka"></img>

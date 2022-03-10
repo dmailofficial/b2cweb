@@ -637,8 +637,8 @@ const NewHome = styled.div`
                     }
                     .pitem:nth-child(6){
                         img{
-                            width: ${122/baseWidth}vw;
-                            height: ${35/baseWidth}vw;
+                            width: ${130/baseWidth}vw;
+                            height: auto;
                         }
                     }
                     .pitem:nth-child(7){
