@@ -1020,7 +1020,7 @@ const NewHome = styled.div`
                         }
                         .pitem:nth-child(6){
                             img{
-                                width: ${130/baseWidth1920}vw;
+                                width: ${135/baseWidth1920}vw;
                                 height: auto;
                             }
                         }
@@ -2381,7 +2381,7 @@ const NewHome = styled.div`
                         }
                         .pitem:nth-child(6){
                             img{
-                                width: ${122/baseWidth750}vw;
+                                width: ${130/baseWidth750}vw;
                                 height: auto;
                             }
                         }
