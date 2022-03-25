@@ -234,7 +234,7 @@ class MainpannelComp extends React.Component {
                         {this.state.errorShow ?
                             <div className="errorTip">
                                 {this.state.occupError ? 
-                                    <p><span></span>Try another one, this NFT Domain Acccount is occupied.</p>:null
+                                    <p><span></span>Try another one, this NFT Domain Account is occupied.</p>:null
                                 }
                                 {this.state.formatError ?
                                     <p><span></span>Format error ! Only 4-7 bits domain account without special characters allowed.</p> : null
