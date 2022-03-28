@@ -576,7 +576,7 @@ const onComingSoon = () => {
                 <li><a href="javascript:;" target="" onClick={onComingSoon}>DApps</a></li>
               </ul>
               <ul>
-                <li>Supprot</li>
+                <li>Support</li>
                 <li><a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank">Demo</a></li>
                 <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Litepaper</a></li>
                 <li><a href="javascript:;" target="" onClick={onComingSoon}>Docs</a></li>

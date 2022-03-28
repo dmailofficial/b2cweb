@@ -63,7 +63,7 @@ const Step1Component = (param) => {
           <div className="citem">
             <h3>Criteria</h3>
             <p><span className="icon"></span>Having a passion of Web 3.0, our vision and mission.</p>
-            <p><span className="icon"></span>Very active and enraging on Discord, Telegram, and Twitter.</p>
+            <p><span className="icon"></span>Very active and engaging on Discord, Telegram, and Twitter.</p>
             <p><span className="icon"></span>Experience of community engagement on social media & meetups.</p>
             <p><span className="icon"></span>Experience of working with Dfinity ecosystem.</p>
             <p><span className="icon"></span>Content creation skills.</p>
