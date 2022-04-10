@@ -284,6 +284,12 @@ class MainpannelComp extends React.Component {
                         <p><span></span>1-3 digits: Open in sale during NFT Domain Accounts auction</p>
                         <p className='active'><span></span>4-7 digits: Partially open<img src={successIcon} ></img></p>
                         <p><span></span>8 digits and above: Will open after mainnet release</p>
+                        <br />
+                        <div className="item-header">
+                            <h3>Supported Payment Methods</h3>
+                        </div>
+                        <p><span></span>USDT - Ethereum/BNB Chain</p>
+                        <p><span></span>ICP - Dfinity</p>
                     </div>
                 </div>
                 <div className="con_footer">
