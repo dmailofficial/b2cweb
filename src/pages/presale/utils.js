@@ -1,7 +1,9 @@
 import {login, verifySign} from './request'
 import Wallet from '@/wallet/index'
+import { payBaseUrl } from '@/utils/index'
 
-export const baseUrl = 'https://pay.dmail.ai'
+// export const baseUrl = 'https://pay.dmail.ai'
+export const baseUrl = payBaseUrl
 
 export const loginAndGetLoginInfo = async (account, wallInstance, walletName, walletStore, isfirst) => {
 
@@ -56,10 +58,10 @@ export const loginAndGetLoginInfo = async (account, wallInstance, walletName, wa
 }
 
 export const  connectWalletAndLogin = async (wallet, walletStore) => {
-        wallet = wallet ? wallet : "metamask";
-console.log("connectWalletAndLogin::21111::", wallet)
+  wallet = wallet ? wallet : "metamask";
+  // console.log("connectWalletAndLogin::21111::", wallet)
   const _walletInstance = new Wallet({walletName: wallet, accountChangeHandle});
-  console.log("connectWalletAndLogin:::222:", _walletInstance)
+  // console.log("connectWalletAndLogin:::222:", _walletInstance)
   let walletAccount = null
   try {
     walletAccount = await _walletInstance.requestAccounts();
@@ -71,16 +73,16 @@ console.log("connectWalletAndLogin::21111::", wallet)
       error: error
     }
   }
-console.log("connectWalletAndLogin:", walletAccount)
+  //console.log("connectWalletAndLogin:", walletAccount)
   if(walletAccount.code){
       return walletAccount;
   }
   const userInfo = await accountChangeHandle(walletAccount, "first")
-  console.log("connectWalletAndLogin2222:", userInfo)
+  // console.log("connectWalletAndLogin2222:", userInfo)
   return userInfo;
 
   async function accountChangeHandle(address, isfirst){
-    console.log("connectWalletAndLogin33333322222:", address)
+    // console.log("connectWalletAndLogin33333322222:", address)
     if(!address){return false}
     let _loginInfo = await loginAndGetLoginInfo(
         address, 
@@ -89,7 +91,7 @@ console.log("connectWalletAndLogin:", walletAccount)
         walletStore,
         isfirst
     );
-    console.log("connectWalletAndLogin333333:", _loginInfo)
+    // console.log("connectWalletAndLogin333333:", _loginInfo)
     if(!_loginInfo.address){
         return _loginInfo;
     }

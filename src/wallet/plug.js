@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
-const PlugAbiMap = {
-  toAddress: 'i5bf3-hm467-bc7sn-d4yc7-g3rib-2khxw-u6wve-mdvsw-qxzby-2hzyd-xae',
-}
+// const PlugAbiMap = {
+//   toAddress: 'i5bf3-hm467-bc7sn-d4yc7-g3rib-2khxw-u6wve-mdvsw-qxzby-2hzyd-xae',
+// }
 
 class PlugWallet {
     constructor(props){
@@ -9,9 +9,9 @@ class PlugWallet {
       this.accountChangeHandle = props?.accountChangeHandle || function(){}
     }
 
-    getChainInfo = async () => {
-      return PlugAbiMap
-    }
+    // getChainInfo = async () => {
+    //   return PlugAbiMap
+    // }
 
     requestAccounts = async () => {
       if (window.ic && window.ic.plug) {
@@ -75,9 +75,9 @@ class PlugWallet {
         return _icp;
     }
 
-    transfer = async (address, price, successcallback, failedcallback) => {
-      const chainInfo = await this.getChainInfo();
-      const { toAddress } = chainInfo
+    transfer = async (toAddress, address, price, successcallback, failedcallback) => {
+      // const chainInfo = await this.getChainInfo();
+      // const { toAddress } = chainInfo
       // console.log("100000000 * price:::",price, new BigNumber(100000000).times(price).toString());
       try {
         const result = await window.ic.plug.requestTransfer({

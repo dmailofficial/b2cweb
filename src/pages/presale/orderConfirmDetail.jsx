@@ -10,6 +10,7 @@ import { CompatibleClassCountDown } from '@/components/countDown'
 import axios from '@/utils/axios';
 import { baseUrl } from './utils'
 import Wallet from '@/wallet/index'
+import { getAddress } from '@/wallet/utils'
 import Dialog from './Dialog'
 
 import nftcover from '@/static/images/presale/nftcover2.png'
@@ -28,6 +29,7 @@ class orderConfirmDetail extends React.Component {
             countDownSeconds: 0,
             accountChangeDialog: false,
             expiredDialog: false,
+            toPayAddress: null,
         };
         this.timer = null;
         this.paying = false;
@@ -155,9 +157,25 @@ class orderConfirmDetail extends React.Component {
 
     toPay = async () => {
         // console.log("state paying111:::", this.state.paying)
-        if(this.state.paying || this.paying || this.state.walletSwitching){return}
+        if(this.state.paying || this.paying || this.state.walletSwitching){
+            return
+        }
         this.paying = true
         await this.setState({paying: true})
+
+        let toPayAddress = this.state.toPayAddress
+        if (!toPayAddress) {
+            const res = await getAddress(this.props.loginInfo.jwt)
+            if (res) {
+                toPayAddress = res
+                this.setState({
+                    toPayAddress: res
+                })
+            } else {
+                this.poptoast("Get wallet address failed!")
+                return
+            }
+        }
 
         // change account in wallet app but has no sign --- backup
         // console.log("toPay:",this.props.walletStore.walletName)
@@ -245,9 +263,11 @@ class orderConfirmDetail extends React.Component {
             return
         }
         try {
+            // just metamask and plug, no support tron and others
+            const toAddress = toPayAddress[this.props.walletStore.walletName == "metamask" ? 'erc' : 'icp']
             // this.setState({paying: false})
             // console.log("this.state.paying::", this.state.paying)
-            await _wallet.transfer(this.props.walletStore.info.address, curPrice, this.paysuccess, this.payfaild)
+            await _wallet.transfer(toAddress, this.props.walletStore.info.address, curPrice, this.paysuccess, this.payfaild)
         } catch (error) {
             this.closePoptoast();
             console.log("transfer faild:::::---:", error)
@@ -343,8 +363,6 @@ class orderConfirmDetail extends React.Component {
         this.setState({expiredDialog : false})
         this.handleBack()
     }
-
-    
     
     componentDidMount() {
         this.props.onRef(this)
@@ -364,11 +382,18 @@ class orderConfirmDetail extends React.Component {
         this.timer = setInterval(()=>{
             this.correctLockTime();
         }, 1000*30)
+
+        getAddress(this.props.loginInfo.jwt).then((res) => {
+            if (res) {
+                this.setState({
+                    toPayAddress: res
+                })
+            }
+        })
     }
 
     componentWillUnmount(){
         clearInterval(this.timer)
-
         const hiddenProperty = 'hidden' in document ? 'hidden' :    
                 'webkitHidden' in document ? 'webkitHidden' :    
                 'mozHidden' in document ? 'mozHidden' :  null;
@@ -482,6 +507,5 @@ class orderConfirmDetail extends React.Component {
         );
     }
 }
-
 
 export default orderConfirmDetail;

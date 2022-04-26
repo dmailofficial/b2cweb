@@ -8,14 +8,14 @@ const MetaMaskChainAbiMap = {
     '1': {
       contractAddress: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
       abi: ERC_abi,
-      toAddress: '0xeC4B76ef0F79bc8FEeE9c5C10bc711EEe1e423D2',
+      // toAddress: '0xeC4B76ef0F79bc8FEeE9c5C10bc711EEe1e423D2',
       decimals: 6,
       chainId: "1"
     },
     '56': {
       contractAddress: '0x55d398326f99059fF775485246999027B3197955',
       abi: BSC_abi,
-      toAddress: '0xeC4B76ef0F79bc8FEeE9c5C10bc711EEe1e423D2',
+      // toAddress: '0xeC4B76ef0F79bc8FEeE9c5C10bc711EEe1e423D2',
       decimals: 18,
       chainId: "56"
     },
@@ -78,26 +78,26 @@ class MetaMaskWallet {
     }
 
     requestAccounts = async () => {
-        if (window.ethereum) {
-            try {
-            // https://docs.metamask.io/guide/accessing-accounts.html
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            this.listenerAccountsChanged(this.accountChangeHandle);
-            return accounts[0]
-            
-            } catch (error) {
-                return {
-                    code: 1,
-                    msg: 'User denied account access!'
-                }
-            }
-        } else {
-            this._install();
-            return {
-                code: 2,
-                msg: 'Please install MetaMask!'
-            }
-        }
+      if (window.ethereum) {
+          try {
+          // https://docs.metamask.io/guide/accessing-accounts.html
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          this.listenerAccountsChanged(this.accountChangeHandle);
+          return accounts[0]
+          
+          } catch (error) {
+              return {
+                  code: 1,
+                  msg: 'User denied account access!'
+              }
+          }
+      } else {
+          this._install();
+          return {
+              code: 2,
+              msg: 'Please install MetaMask!'
+          }
+      }
     }
 
     listenerAccountsChanged = (handleCallback) => {
@@ -145,7 +145,7 @@ class MetaMaskWallet {
         return {amount: amount};
     }
     
-    transfer = async (address,price, successcallback, failedcallback) => {
+    transfer = async (toAddress, address ,price, successcallback, failedcallback) => {
         const contract = await this.initContract();
         if(contract.code){
           failedcallback && failedcallback(contract)
@@ -157,7 +157,7 @@ class MetaMaskWallet {
           return chainInfo
         }
         
-        const { toAddress, decimals } = chainInfo
+        const { decimals } = chainInfo
         // const signRes = await this.sign(sign)
         // // sign failed
         // if (!Array.isArray(signRes)) {
