@@ -71,7 +71,7 @@ const NoData = () => {
         <img src={noDataImg} alt=""/>
         <div className="no-data-text">
           <p>Not owned Dmail NFT Domain Account</p>
-          <p><a href='/presale'>Jump to the activity page to search for e-mail</a></p>
+          <p><a rel="noopener noreferrer"  href='/presale'>Jump to the activity page to search for e-mail</a></p>
         </div>
       </div>
     </NoDataWraper>

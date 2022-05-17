@@ -293,8 +293,8 @@ class MainpannelComp extends React.Component {
                     </div>
                 </div>
                 <div className="con_footer">
-                    <p>Follow <a href="https://twitter.com/dmailofficial" target="_blank">twitter</a> to get the latest updates about the release.</p>
-                    <p>What is DMAIL? Click to learn more <a href="https://medium.com/@dmailofficial" target="_blank">https://medium.com/@dmailofficial</a></p>
+                    <p>Follow <a rel="noopener noreferrer"  href="https://twitter.com/dmailofficial" target="_blank">twitter</a> to get the latest updates about the release.</p>
+                    <p>What is DMAIL? Click to learn more <a rel="noopener noreferrer"  href="https://medium.com/@dmailofficial" target="_blank">https://medium.com/@dmailofficial</a></p>
                 </div>
                 <StepDialog
                     open = {this.state.openStep}

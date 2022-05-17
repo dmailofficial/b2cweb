@@ -252,7 +252,7 @@ const ReceiveDialog = ({ receiveId, setReceiveId, receive, errorIndex }) => {
               className={error ? 'error' : (focus ? 'focus' : '')} 
               placeholder="Please enter the 53-digits Principal ID of your Plug wallet" 
             />
-            <a href="https://dmailofficial.gitbook.io/how-to-use-dmail-1/v/english-1/" target="_blank">How to get?</a>
+            <a rel="noopener noreferrer"  href="https://dmailofficial.gitbook.io/how-to-use-dmail-1/v/english-1/" target="_blank">How to get?</a>
             <div className={`errorTip ${error ? 'show' : ''}`}><i></i><span>ID format is not correct, please re-enter</span></div>
           </div>
         </div>

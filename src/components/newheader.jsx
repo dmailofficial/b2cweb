@@ -301,9 +301,9 @@ const Header = (props) => {
           <span onClick={onShowNavs}><i></i></span>
           <div className="nav_wrapper">
             <div className="nav_item"><Link to="/" className={(pathname === '/' || pathname === '/newhome') ? 'on' : ''}>Home</Link></div>
-            <div className="nav_item"><a onClick={onComingSoon}>Mail</a></div>
-            <div className="nav_item"><a onClick={onComingSoon}>NFTs</a></div>
-            {/* <div className="nav_item"><a onClick={onComingSoon}>Events</a></div> */}
+            <div className="nav_item"><a rel="noopener noreferrer"  onClick={onComingSoon}>Mail</a></div>
+            <div className="nav_item"><a rel="noopener noreferrer"  onClick={onComingSoon}>NFTs</a></div>
+            {/* <div className="nav_item"><a rel="noopener noreferrer"  onClick={onComingSoon}>Events</a></div> */}
             <div className="nav_item"><Link to="/presale" className={pathname === '/presale' ? 'on ' : ''} >Events</Link></div>
             <div className="nav_item"><Link to="/ambassador" className={pathname === '/ambassador' ? 'on ' : ''} >Ambassador</Link></div>
           </div>
@@ -315,8 +315,8 @@ const Header = (props) => {
         <div className="support">
           <span>Support</span>
           <ul>
-            <li><a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank">Demo</a></li>
-            <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Litepaper</a></li>
+            <li><a rel="noopener noreferrer"  href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank">Demo</a></li>
+            <li><a rel="noopener noreferrer"  href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Litepaper</a></li>
             <li onClick={onComingSoon} >Docs</li>
             <li onClick={onComingSoon}>API</li>
           </ul>

@@ -28,8 +28,8 @@ const Index = () => {
           Dmail makes it safe&private for you to communicate storage and transfer tokens&NFTs on Dfinity
         </div>
         <div className="note hide">Mail Interaction，Transfer Tokens&NFTs, DApp API，Airdrop&IMO，NFTs Market</div>
-        <a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" className="demo"></a>
-        <a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank" className="docs"></a>
+        <a rel="noopener noreferrer"  href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" className="demo"></a>
+        <a rel="noopener noreferrer"  href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank" className="docs"></a>
         <div className="build"><span>built on</span> DFINITY</div>
       </div>
       <div className="container">
@@ -84,31 +84,31 @@ const Index = () => {
           <h2>Sign up and stay informed</h2>
           <div className="sign_up">
             <input type="text" placeholder="Your email address" />
-            <a onClick={onSignClick}>Sign up</a>
+            <a rel="noopener noreferrer"  onClick={onSignClick}>Sign up</a>
           </div>
         </div>
         <div className="chunk contact_us">
           <h2>Contact us</h2>
           <ul>
             <li>
-              <a className="img" href="https://twitter.com/dmailofficial"><img src={p1} alt="" /></a>
-              <a className="name" href="https://twitter.com/dmailofficial"><span>Twitter</span></a>
+              <a rel="noopener noreferrer"  className="img" href="https://twitter.com/dmailofficial"><img src={p1} alt="" /></a>
+              <a rel="noopener noreferrer"  className="name" href="https://twitter.com/dmailofficial"><span>Twitter</span></a>
             </li>
             <li>
-              <a className="img" href="https://t.me/dmailofficial"><img src={p2} alt="" /></a>
-              <a className="name" href="https://t.me/dmailofficial"><span>Telegram</span></a>
+              <a rel="noopener noreferrer"  className="img" href="https://t.me/dmailofficial"><img src={p2} alt="" /></a>
+              <a rel="noopener noreferrer"  className="name" href="https://t.me/dmailofficial"><span>Telegram</span></a>
             </li>
             <li>
-              <a className="img" href="https://medium.com/@dmail_official"><img src={p3} alt="" /></a>
-              <a className="name" href="https://medium.com/@dmail_official"><span>Medium</span></a>
+              <a rel="noopener noreferrer"  className="img" href="https://medium.com/@dmail_official"><img src={p3} alt="" /></a>
+              <a rel="noopener noreferrer"  className="name" href="https://medium.com/@dmail_official"><span>Medium</span></a>
             </li>
             <li>
-              <a className="img" href="https://github.com/dmailofficial"><img src={p4} alt="" /></a>
-              <a className="name" href="https://github.com/dmailofficial"><span>Github</span></a>
+              <a rel="noopener noreferrer"  className="img" href="https://github.com/dmailofficial"><img src={p4} alt="" /></a>
+              <a rel="noopener noreferrer"  className="name" href="https://github.com/dmailofficial"><span>Github</span></a>
             </li>
             <li>
-              <a className="img" href="contact@dmail.ai"><img src={p5} alt="" /></a>
-              <a className="name" href="contact@dmail.ai"><span>Email</span></a>
+              <a rel="noopener noreferrer"  className="img" href="contact@dmail.ai"><img src={p5} alt="" /></a>
+              <a rel="noopener noreferrer"  className="name" href="contact@dmail.ai"><span>Email</span></a>
             </li>
           </ul>
         </div>
@@ -123,28 +123,28 @@ const Index = () => {
             <dl>
               <dt>About</dt>
               <dd>
-                <p><a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/">Demo</a></p>
-                <p><a href="https://dmail.ai/Dmail_litepaper.pdf">Litepaper</a></p>
-                <p><a>Support</a></p>
-                <p><a>FAQs</a></p>
+                <p><a rel="noopener noreferrer"  href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/">Demo</a></p>
+                <p><a rel="noopener noreferrer"  href="https://dmail.ai/Dmail_litepaper.pdf">Litepaper</a></p>
+                <p><a rel="noopener noreferrer" >Support</a></p>
+                <p><a rel="noopener noreferrer" >FAQs</a></p>
               </dd>
             </dl>
             <dl>
               <dt>Procotrol</dt>
               <dd>
-                <p><a href="">Overview</a></p>
-                <p><a>Mailbox</a></p>
-                <p><a>NFTs</a></p>
-                <p><a>DApps</a></p>
+                <p><a rel="noopener noreferrer"  href="">Overview</a></p>
+                <p><a rel="noopener noreferrer" >Mailbox</a></p>
+                <p><a rel="noopener noreferrer" >NFTs</a></p>
+                <p><a rel="noopener noreferrer" >DApps</a></p>
               </dd>
             </dl>
             <dl>
               <dt>Community</dt>
               <dd className="icons">
-                <p><a href="contact@dmail.ai">Email</a></p>
-                <p><a href="https://twitter.com/dmailofficial">Twitter</a></p>
-                <p><a href="https://t.me/dmailofficial">Telegram</a></p>
-                <p><a href="https://medium.com/@dmail_official">Medium</a></p>
+                <p><a rel="noopener noreferrer"  href="contact@dmail.ai">Email</a></p>
+                <p><a rel="noopener noreferrer"  href="https://twitter.com/dmailofficial">Twitter</a></p>
+                <p><a rel="noopener noreferrer"  href="https://t.me/dmailofficial">Telegram</a></p>
+                <p><a rel="noopener noreferrer"  href="https://medium.com/@dmail_official">Medium</a></p>
               </dd>
             </dl>
           </div>

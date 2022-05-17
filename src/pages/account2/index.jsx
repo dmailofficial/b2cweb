@@ -1448,7 +1448,7 @@ const Account = () => {
             <div className="input-wrap">
               <span></span>
               <input value={email} onInput={onInput} type="text" placeholder="Check the NFT domain account of your choice" />
-              <a onClick={onSearch} className={searching ? 'waiting' : ''}>Search</a>
+              <a rel="noopener noreferrer"  onClick={onSearch} className={searching ? 'waiting' : ''}>Search</a>
             </div>
             <div className="desc">
               <p>Current opening progress:</p>
@@ -1457,14 +1457,14 @@ const Account = () => {
                 <li>4-7 bits partially open;</li>
                 <li>8 bits and above, will open after mainnet releases.</li>
               </ul>
-              <p>Follow <a href="https://twitter.com/dmailofficial" target="_blank">twitter</a> to be the first to get the latest notifications about the release.</p>
+              <p>Follow <a rel="noopener noreferrer"  href="https://twitter.com/dmailofficial" target="_blank">twitter</a> to be the first to get the latest notifications about the release.</p>
               <p>What is DMAIL?  </p>
               <p>Click to learn more from Medium articles</p>
-              <p><a href="https://medium.com/@dmail_official" target="_blank">https://medium.com/@dmail_official</a></p>
+              <p><a rel="noopener noreferrer"  href="https://medium.com/@dmail_official" target="_blank">https://medium.com/@dmail_official</a></p>
             </div>
             <Generated className={emailData ? 'on' : ''}>
               <span>Congratulations, this NFT domain account is open!</span>
-              <a onClick={toView}>Click to view</a>
+              <a rel="noopener noreferrer"  onClick={toView}>Click to view</a>
             </Generated>
             <Error className={errorShow ? 'on' : ''}>
               <i></i>
@@ -1488,8 +1488,8 @@ const Account = () => {
                   <div className="price">{currentDetail.price} {currentDetail.symbal}</div>
                 </div>
                 <div className="pay-footer">
-                  <a className="pay-btn forbid" onClick={onAdd}>Sign Up</a>
-                  <a className="pay-btn" onClick={onChangeEmail}>Set Email</a>
+                  <a rel="noopener noreferrer"  className="pay-btn forbid" onClick={onAdd}>Sign Up</a>
+                  <a rel="noopener noreferrer"  className="pay-btn" onClick={onChangeEmail}>Set Email</a>
                 </div>
               </>
             ) : null}

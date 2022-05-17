@@ -46,15 +46,15 @@ const Header = (props) => {
           <span onClick={onShowNavs}><i></i></span>
           <div className="nav_wrapper">
             <div className="nav_item"><Link to="/" className={pathname === '/' ? 'on' : ''}>Home</Link></div>
-            <div className="nav_item"><a onClick={onCommingSoon}>Mail</a></div>
-            <div className="nav_item"><a onClick={onCommingSoon}>NFTs</a></div>
+            <div className="nav_item"><a rel="noopener noreferrer"  onClick={onCommingSoon}>Mail</a></div>
+            <div className="nav_item"><a rel="noopener noreferrer"  onClick={onCommingSoon}>NFTs</a></div>
             <div className="nav_item dropdown">
-              <a style={{ marginRight: 0 }}>Resources</a>
+              <a rel="noopener noreferrer"  style={{ marginRight: 0 }}>Resources</a>
               <ul>
-                <li><a href="https://github.com/dmailofficial">Github</a></li>
-                <li><a href="https://medium.com/@dmail_official">Medium</a></li>
-                <li><a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/">Demo</a></li>
-                <li><a href="https://dmail.ai/Dmail_litepaper.pdf">Litepaper</a></li>
+                <li><a rel="noopener noreferrer"  href="https://github.com/dmailofficial">Github</a></li>
+                <li><a rel="noopener noreferrer"  href="https://medium.com/@dmail_official">Medium</a></li>
+                <li><a rel="noopener noreferrer"  href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/">Demo</a></li>
+                <li><a rel="noopener noreferrer"  href="https://dmail.ai/Dmail_litepaper.pdf">Litepaper</a></li>
               </ul>
             </div>
             <div className="nav_item"><Link to="/account" className={pathname === '/account' ? 'on account' : 'account'} >Account</Link></div>

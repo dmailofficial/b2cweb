@@ -303,13 +303,13 @@ function App({ store: { wallet, presale } }) {
             <span>My orders</span>
           </div>
           <div className="right">
-            <a onClick={() => setWalletDialog(true)}>{filterAddress  || 'Connect wallet'}</a>
+            <a rel="noopener noreferrer"  onClick={() => setWalletDialog(true)}>{filterAddress  || 'Connect wallet'}</a>
           </div>
         </ToolBar>
         <Content>
           <div className="tip">
             <i></i>
-            <p>When the payment is done, please claim your NFT domain account. The Dmail NFT Domain Account will be sent to your Principal ID account in 48 hours. If you have any problem, please contact us via our Discord: <a href="https://discord.com/invite/5HH4R5KTA3" target="_blank">https://discord.com/invite/5HH4R5KTA3</a></p>
+            <p>When the payment is done, please claim your NFT domain account. The Dmail NFT Domain Account will be sent to your Principal ID account in 48 hours. If you have any problem, please contact us via our Discord: <a rel="noopener noreferrer"  href="https://discord.com/invite/5HH4R5KTA3" target="_blank">https://discord.com/invite/5HH4R5KTA3</a></p>
           </div>
           <Table columns={columns} loading={loading} data={data} pageCount={pageCount} fetchData={fetchData} setReceiveId={setReceiveId} />
         </Content>

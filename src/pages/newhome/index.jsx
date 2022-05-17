@@ -281,7 +281,7 @@ const onComingSoon = () => {
               <h2>Construct DID in Web 3.0</h2>
               <h3>Not Just an Email </h3>
               <p className="desc">Dmail guarantees a safe & private environment for your<br></br> communication, storage, and tokens & NFTs transfer on the Web 3.0.</p>
-              <a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank" className="launchBtn" >Launch Demo <img src={rightArrow}></img></a>
+              <a rel="noopener noreferrer"  href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank" className="launchBtn" >Launch Demo <img src={rightArrow}></img></a>
             </div>
             <div className="nextBtn" onClick={()=>{gotoPage(1)}}>
                 <img src={arrow}></img>
@@ -571,23 +571,23 @@ const onComingSoon = () => {
             <div className="links">
               <ul>
                 <li>Product</li>
-                <li><a href="javascript:;" target="" onClick={onComingSoon}>Mailbox</a></li>
-                <li><a href="javascript:;" target="" onClick={onComingSoon}>NFTs</a></li>
-                <li><a href="javascript:;" target="" onClick={onComingSoon}>DApps</a></li>
+                <li><a rel="noopener noreferrer"  href="javascript:;" target="" onClick={onComingSoon}>Mailbox</a></li>
+                <li><a rel="noopener noreferrer"  href="javascript:;" target="" onClick={onComingSoon}>NFTs</a></li>
+                <li><a rel="noopener noreferrer"  href="javascript:;" target="" onClick={onComingSoon}>DApps</a></li>
               </ul>
               <ul>
                 <li>Support</li>
-                <li><a href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank">Demo</a></li>
-                <li><a href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Litepaper</a></li>
-                <li><a href="javascript:;" target="" onClick={onComingSoon}>Docs</a></li>
-                <li><a href="javascript:;" target="" onClick={onComingSoon}>API</a></li>
+                <li><a rel="noopener noreferrer"  href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank">Demo</a></li>
+                <li><a rel="noopener noreferrer"  href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Litepaper</a></li>
+                <li><a rel="noopener noreferrer"  href="javascript:;" target="" onClick={onComingSoon}>Docs</a></li>
+                <li><a rel="noopener noreferrer"  href="javascript:;" target="" onClick={onComingSoon}>API</a></li>
               </ul>
               <ul>
                 <li>Community</li>
-                <li><a href="https://twitter.com/dmailofficial" target="_blank"><img src={footericon1}></img>Twitter</a></li>
-                <li><a href="https://t.me/dmailofficial" target="_blank"><img src={footericon2}></img>Telegram</a></li>
-                <li><a href="https://medium.com/@dmail_official" target="_blank"><img src={footericon3}></img>Medium</a></li>
-                <li><a href="https://discord.gg/QbvaeqwMFg" target="_blank"><img src={footericon4}></img>Discord</a></li>
+                <li><a rel="noopener noreferrer"  href="https://twitter.com/dmailofficial" target="_blank"><img src={footericon1}></img>Twitter</a></li>
+                <li><a rel="noopener noreferrer"  href="https://t.me/dmailofficial" target="_blank"><img src={footericon2}></img>Telegram</a></li>
+                <li><a rel="noopener noreferrer"  href="https://medium.com/@dmail_official" target="_blank"><img src={footericon3}></img>Medium</a></li>
+                <li><a rel="noopener noreferrer"  href="https://discord.gg/QbvaeqwMFg" target="_blank"><img src={footericon4}></img>Discord</a></li>
               </ul>
             </div>
           </div>

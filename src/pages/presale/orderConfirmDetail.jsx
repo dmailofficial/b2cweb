@@ -160,22 +160,28 @@ class orderConfirmDetail extends React.Component {
         if(this.state.paying || this.paying || this.state.walletSwitching){
             return
         }
-        this.paying = true
-        await this.setState({paying: true})
 
         let toPayAddress = this.state.toPayAddress
-        if (!toPayAddress) {
-            const res = await getAddress(this.props.loginInfo.jwt)
-            if (res) {
-                toPayAddress = res
-                this.setState({
-                    toPayAddress: res
-                })
-            } else {
-                this.poptoast("Get wallet address failed!")
-                return
+        if (this.props.loginInfo.jwt) {
+            if (!toPayAddress) {
+                const res = await getAddress(this.props.loginInfo.jwt)
+                if (res) {
+                    toPayAddress = res
+                    this.setState({
+                        toPayAddress: res
+                    })
+                } else {
+                    this.poptoast("Get wallet address failed!")
+                    return
+                }
             }
+        } else {
+            this.props.handleWallet("orderpay")
+            return
         }
+
+        this.paying = true
+        await this.setState({paying: true})
 
         // change account in wallet app but has no sign --- backup
         // console.log("toPay:",this.props.walletStore.walletName)
@@ -233,7 +239,6 @@ class orderConfirmDetail extends React.Component {
                 _wallet = new Wallet(this.props.walletStore.walletName);
             }
         }
-
         
         this.poptoast("Payment processing","loading", true)
         // setTimeout(()=>{
@@ -383,13 +388,15 @@ class orderConfirmDetail extends React.Component {
             this.correctLockTime();
         }, 1000*30)
 
-        getAddress(this.props.loginInfo.jwt).then((res) => {
-            if (res) {
-                this.setState({
-                    toPayAddress: res
-                })
-            }
-        })
+        if (this.props.loginInfo.jwt) {
+            getAddress(this.props.loginInfo.jwt).then((res) => {
+                if (res) {
+                    this.setState({
+                        toPayAddress: res
+                    })
+                }
+            })
+        }
     }
 
     componentWillUnmount(){
