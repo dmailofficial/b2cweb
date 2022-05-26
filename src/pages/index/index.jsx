@@ -123,7 +123,6 @@ const Index = () => {
             <dl>
               <dt>About</dt>
               <dd>
-                <p><a rel="noopener noreferrer"  href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/">Demo</a></p>
                 <p><a rel="noopener noreferrer"  href="https://dmail.ai/Dmail_litepaper.pdf">Litepaper</a></p>
                 <p><a rel="noopener noreferrer" >Support</a></p>
                 <p><a rel="noopener noreferrer" >FAQs</a></p>

@@ -1,6 +1,7 @@
 import React, {useEffect, useState, createRef} from 'react';
 import TextField from '@mui/material/TextField';
 import isMobile from 'ismobilejs';
+import { Link, withRouter } from 'react-router-dom';
 import { NewHome } from './css';
 import ReactPageScroller from "./scroller/index";
 import Header from '@/components/newheader';
@@ -263,6 +264,10 @@ const onComingSoon = () => {
       <Header
         comingSoonHandle = {onComingSoon}
       />
+      <div className="topbar">
+        Own your first Web 3.0 mailbox. 
+        <Link to="/presale">Get Now</Link>
+      </div>
       <ReactPageScroller
         handleScrollUnavailable = {handleScrollUnavailable}
         pageOnChange={handlePageChange}
@@ -277,11 +282,9 @@ const onComingSoon = () => {
               <img src={animation1}></img>
             </div> */}
             <div className="content">
-              <p>Introducing Dmail</p>
-              <h2>Construct DID in Web 3.0</h2>
-              <h3>Not Just an Email </h3>
-              <p className="desc">Dmail guarantees a safe & private environment for your<br></br> communication, storage, and tokens & NFTs transfer on the Web 3.0.</p>
-              <a rel="noopener noreferrer"  href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank" className="launchBtn" >Launch Demo <img src={rightArrow}></img></a>
+              <h2 className='beta'>Dmail Network<span>Beta</span></h2>
+              <p className="desc" style={{ marginTop: '15px' }}>Construct DID in Web3.0, Not Just an Email</p>
+              <a rel="noopener noreferrer"  href="https://xfed4-4yaaa-aaaak-aapya-cai.ic0.app/inbox" target="_blank" className="launchBtn" >Launch Dmail <img src={rightArrow}></img></a>
             </div>
             <div className="nextBtn" onClick={()=>{gotoPage(1)}}>
                 <img src={arrow}></img>
@@ -571,13 +574,12 @@ const onComingSoon = () => {
             <div className="links">
               <ul>
                 <li>Product</li>
-                <li><a rel="noopener noreferrer"  href="javascript:;" target="" onClick={onComingSoon}>Mailbox</a></li>
-                <li><a rel="noopener noreferrer"  href="javascript:;" target="" onClick={onComingSoon}>NFTs</a></li>
-                <li><a rel="noopener noreferrer"  href="javascript:;" target="" onClick={onComingSoon}>DApps</a></li>
+                <li><a rel="noopener noreferrer" target="_blank"  href="https://xfed4-4yaaa-aaaak-aapya-cai.ic0.app/inbox">Mailbox</a></li>
+                <li><a rel="noopener noreferrer" target="_blank"  href="https://skeh5-daaaa-aaaai-aar4q-cai.raw.ic0.app/#/collection/ICDmail/items">NFTs</a></li>
+                <li><a rel="noopener noreferrer"  href="javascript:;" onClick={onComingSoon}>DApps</a></li>
               </ul>
               <ul>
                 <li>Support</li>
-                <li><a rel="noopener noreferrer"  href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/" target="_blank">Demo</a></li>
                 <li><a rel="noopener noreferrer"  href="https://dmail.ai/Dmail_litepaper.pdf" target="_blank">Litepaper</a></li>
                 <li><a rel="noopener noreferrer"  href="javascript:;" target="" onClick={onComingSoon}>Docs</a></li>
                 <li><a rel="noopener noreferrer"  href="javascript:;" target="" onClick={onComingSoon}>API</a></li>

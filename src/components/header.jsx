@@ -46,14 +46,13 @@ const Header = (props) => {
           <span onClick={onShowNavs}><i></i></span>
           <div className="nav_wrapper">
             <div className="nav_item"><Link to="/" className={pathname === '/' ? 'on' : ''}>Home</Link></div>
-            <div className="nav_item"><a rel="noopener noreferrer"  onClick={onCommingSoon}>Mail</a></div>
-            <div className="nav_item"><a rel="noopener noreferrer"  onClick={onCommingSoon}>NFTs</a></div>
+            <div className="nav_item"><a rel="noopener noreferrer" target="_blank" href='https://xfed4-4yaaa-aaaak-aapya-cai.ic0.app/inbox'>Mail</a></div>
+            <div className="nav_item"><a rel="noopener noreferrer" target="_blank" href='https://skeh5-daaaa-aaaai-aar4q-cai.raw.ic0.app/#/collection/ICDmail/items'>NFTs</a></div>
             <div className="nav_item dropdown">
               <a rel="noopener noreferrer"  style={{ marginRight: 0 }}>Resources</a>
               <ul>
                 <li><a rel="noopener noreferrer"  href="https://github.com/dmailofficial">Github</a></li>
                 <li><a rel="noopener noreferrer"  href="https://medium.com/@dmail_official">Medium</a></li>
-                <li><a rel="noopener noreferrer"  href="https://pyr3m-ciaaa-aaaai-qasua-cai.ic0.app/">Demo</a></li>
                 <li><a rel="noopener noreferrer"  href="https://dmail.ai/Dmail_litepaper.pdf">Litepaper</a></li>
               </ul>
             </div>
