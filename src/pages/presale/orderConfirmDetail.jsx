@@ -161,8 +161,12 @@ class orderConfirmDetail extends React.Component {
             return
         }
 
+        this.paying = true
+        await this.setState({paying: true})
+
+
         let toPayAddress = this.state.toPayAddress
-        if (this.props.loginInfo.jwt) {
+        // if (this.props.loginInfo.jwt) {
             if (!toPayAddress) {
                 const res = await getAddress(this.props.loginInfo.jwt)
                 if (res) {
@@ -175,13 +179,13 @@ class orderConfirmDetail extends React.Component {
                     return
                 }
             }
-        } else {
-            this.props.handleWallet("orderpay")
-            return
-        }
+        // } else {
+        //     this.props.handleWallet("orderpay")
+        //     return
+        // }
 
-        this.paying = true
-        await this.setState({paying: true})
+        // this.paying = true
+        // await this.setState({paying: true})
 
         // change account in wallet app but has no sign --- backup
         // console.log("toPay:",this.props.walletStore.walletName)
@@ -238,8 +242,7 @@ class orderConfirmDetail extends React.Component {
             }else{
                 _wallet = new Wallet(this.props.walletStore.walletName);
             }
-        }
-        
+        }        
         this.poptoast("Payment processing","loading", true)
         // setTimeout(()=>{
         //     this.closePoptoast();
@@ -388,7 +391,7 @@ class orderConfirmDetail extends React.Component {
             this.correctLockTime();
         }, 1000*30)
 
-        if (this.props.loginInfo.jwt) {
+        // if (this.props.loginInfo.jwt) {
             getAddress(this.props.loginInfo.jwt).then((res) => {
                 if (res) {
                     this.setState({
@@ -396,7 +399,7 @@ class orderConfirmDetail extends React.Component {
                     })
                 }
             })
-        }
+        // }
     }
 
     componentWillUnmount(){
