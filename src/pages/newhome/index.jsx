@@ -299,7 +299,7 @@ const onComingSoon = () => {
               <p>Introducing Dmail</p>
               <h2>What is Dmail?</h2>
               {/* <p className="desc">In Web 3.0, every user and application coexist in a frame of open standards and protocols, which can connected each other freely and form the internet of everything.</p> */}
-              <p className="desc">Utilizing Dfinity as the engine to realize decentralized storage and privacy protection, Dmail identifies user identity and User rights with NFT domain account, making connections between information, assets, storage and DApps. Dmail is striving to eliminate data barriers and become the most important interaction tool for the Web 3.0 era. </p>
+              <p className="desc">Deployed on Dfinity, Dmail guarantees a purely decentralized and privacy protected environment for users' information, assets & Dapp management.  Each user will be identified by an NFT domain account which is the unique access to their Web 3.0 gate. Dmail will eliminate data barriers and in the progress to become the most important DID for the Web 3.0 era. </p>
               
               <div className="dmailItem">
                   <div className="item item1">
@@ -341,7 +341,7 @@ const onComingSoon = () => {
             <p>Introducing Dmail</p>
               <h2>How does Dmail work？</h2>
               <p className="desc">
-                Dmail is an on-chain E-mail tool with the function of Web 3.0 asset transfer. Deployed on Dfinity,  each Dmail mailbox corresponds to a private "canister". Dmail guarantees the safety of user information, and forms the fundamental decentralized identity (DID). With Dmail, users can access information, assets and DApps securely and seamlessly.
+              Dmail forms the fundamental decentralized identity (DID) and distributes a private "canister" for each mailbox correspondingly on chain (Dfinity) . Users can access information, assets and DApps securely and seamlessly with Dmail.
               </p>
             </div>
             <div className="nextBtn" onClick={()=>{gotoPage(3)}}>
@@ -399,7 +399,7 @@ const onComingSoon = () => {
                       <img src={highlightIcon5}></img>
                     </div>
                     <h3>Permanent Data Storage</h3>
-                    <p>Data is stored on chain decentralized and Permanently.</p>
+                    <p>Dmail users' data is stored on chain permanently in a decentralized method.</p>
                   </div>
                   <div className="item item6">
                     {/* <img src={highlightIcon6}></img> */}
@@ -407,7 +407,7 @@ const onComingSoon = () => {
                       <img src={highlightIcon6}></img>
                     </div>
                     <h3>Tradable NFT Domain Account</h3>
-                    <p>Build an NFT domain market, in which your e-mail can be an asset as well.</p>
+                    <p>Dmail domain is a tradable asset in the NFT domain market.</p>
                   </div>
               </div>
               <div className="highlightItem">
@@ -417,15 +417,15 @@ const onComingSoon = () => {
                       <img src={highlightIcon7}></img>
                     </div>
                     <h3>Message Notification API</h3>
-                    <p>Open API to provide the messages interaction smoothly in Web 3.0 world</p>
+                    <p>Provide an API services for instant information transfer in Web 3.0 world.</p>
                   </div>
                   <div className="item item8">
                     {/* <img src={highlightIcon8}></img> */}
                     <div>
                       <img src={highlightIcon8}></img>
                     </div>
-                    <h3>Compatible with Web2 Emails</h3>
-                    <p>Dmail's DID function will support logins through Web 2.0 emails</p>
+                    <h3>Integrating with Web 2.0 Emails</h3>
+                    <p>Login through Web 2.0 email address is acceptable.</p>
                   </div>
                   <div className="item item9">
                     {/* <img src={highlightIcon9}></img> */}
@@ -433,7 +433,7 @@ const onComingSoon = () => {
                       <img src={highlightIcon9}></img>
                     </div>
                     <h3>Message Subscription</h3>
-                    <p>Monitor new messages from projects or contract address in Dfinity ecosystem.</p>
+                    <p>Get updates from projects or addresses you are following.</p>
                   </div>
               </div>
             </div>

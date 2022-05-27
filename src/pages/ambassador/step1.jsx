@@ -15,42 +15,10 @@ const Step1Component = (param) => {
       <div className="banner">
         <h1>Dmail Ambassador Program</h1>
         <p>
-          By applying for this program, we will add you to the waiting list as Ambassador Candidates.<br></br>
+          After applying for this program, you'll be added to the waiting list of Ambassador Candidates.<br></br>
           This is a volunteer program for true fans who are passionate about what we do.
         </p>
         <span className="applyBtn" onClick={()=>{param.nextStep("next")}}>Apply Now</span>
-      </div>
-      <div className="culture">
-        {/* <div className="cheader">
-            <span>Dmail</span>
-            <h2>Culture & Mission</h2>
-        </div> */}
-        <div className="citem">
-            <div className="img h5"><img src={p1}></img></div>
-            <div className="desc">
-              {/* <span>Dmail</span> */}
-              <h3><img src={icon1}></img>About Dmail</h3>
-              <p>Dmail Network is the first Decentralized Mailbox based on Dfinity. Every Dmail Account is an NFT, DID to the blockchain world, and a gateway to Web 3.0.</p>
-            </div>
-            <div className="img pc"><img src={p1}></img></div>
-        </div>
-        <div className="citem">
-          <div className="img"><img src={p2}></img></div>
-          <div className="desc">
-              {/* <span>Dmail</span> */}
-              <h3><img src={icon2}></img>Financing</h3>
-              <p>Dmail has raised a seed round of funding at 10 million USD valuation. Funding investments is from : @Amino_capital @CapitalHashkey @DraperDragon and 10+ global leading VCs. 10,000 users have participated in the first round of Dmail testnet and NFT domain accounts presale. The 2nd round will be hosted soon.</p>
-          </div>
-        </div>
-        <div className="citem">
-            <div className="img h5"><img src={p3}></img></div>
-            <div className="desc">
-              {/* <span>Dmail</span> */}
-              <h3><img src={icon3}></img>Join us</h3>
-              <p>Dmail is recruiting global ambassadors to promote decentralized mailbox to replace traditional centralized mailboxes. If you are also looking to be a part of the most influential company in the blockchain & Web 3.0 industry and contribute to the revolution that is changing the world, welcome to join us!</p>
-            </div>
-            <div className="img pc"><img src={p3}></img></div>
-        </div>
       </div>
       <div className="criteria">
         <div className="cheader">

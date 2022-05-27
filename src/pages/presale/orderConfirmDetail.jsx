@@ -29,7 +29,7 @@ class orderConfirmDetail extends React.Component {
             countDownSeconds: 0,
             accountChangeDialog: false,
             expiredDialog: false,
-            toPayAddress: null,
+            toPayAddress: {},
         };
         this.timer = null;
         this.paying = false;
@@ -153,7 +153,6 @@ class orderConfirmDetail extends React.Component {
             ttl
         }
     }
-    
 
     toPay = async () => {
         // console.log("state paying111:::", this.state.paying)
@@ -161,31 +160,28 @@ class orderConfirmDetail extends React.Component {
             return
         }
 
-        this.paying = true
-        await this.setState({paying: true})
-
+        // this.paying = true
+        // await this.setState({paying: true})
 
         let toPayAddress = this.state.toPayAddress
+        // console.log('topay', this.props.loginInfo.jwt, toPayAddress)
         // if (this.props.loginInfo.jwt) {
-            if (!toPayAddress) {
-                const res = await getAddress(this.props.loginInfo.jwt)
-                if (res) {
-                    toPayAddress = res
-                    this.setState({
-                        toPayAddress: res
-                    })
-                } else {
-                    this.poptoast("Get wallet address failed!")
-                    return
-                }
-            }
+        //     if (!toPayAddress) {
+        //         const res = await getAddress(this.props.loginInfo.jwt)
+        //         if (res) {
+        //             toPayAddress = res
+        //             this.setState({
+        //                 toPayAddress: res
+        //             })
+        //         }
+        //     }
         // } else {
         //     this.props.handleWallet("orderpay")
         //     return
         // }
 
-        // this.paying = true
-        // await this.setState({paying: true})
+        this.paying = true
+        await this.setState({paying: true})
 
         // change account in wallet app but has no sign --- backup
         // console.log("toPay:",this.props.walletStore.walletName)
@@ -272,7 +268,7 @@ class orderConfirmDetail extends React.Component {
         }
         try {
             // just metamask and plug, no support tron and others
-            const toAddress = toPayAddress[this.props.walletStore.walletName == "metamask" ? 'erc' : 'icp']
+            const toAddress = toPayAddress ? toPayAddress[this.props.walletStore.walletName == "metamask" ? 'erc' : 'icp'] : ''
             // this.setState({paying: false})
             // console.log("this.state.paying::", this.state.paying)
             await _wallet.transfer(toAddress, this.props.walletStore.info.address, curPrice, this.paysuccess, this.payfaild)
@@ -392,13 +388,13 @@ class orderConfirmDetail extends React.Component {
         }, 1000*30)
 
         // if (this.props.loginInfo.jwt) {
-            getAddress(this.props.loginInfo.jwt).then((res) => {
-                if (res) {
-                    this.setState({
-                        toPayAddress: res
-                    })
-                }
-            })
+            // getAddress(this.props.loginInfo.jwt).then((res) => {
+            //     if (res) {
+            //         this.setState({
+            //             toPayAddress: res
+            //         })
+            //     }
+            // })
         // }
     }
 

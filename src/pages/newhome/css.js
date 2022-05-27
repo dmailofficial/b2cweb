@@ -1540,7 +1540,7 @@ const NewHome = styled.div`
                 .content{
                     width: 100%;
                     min-height: 300px;
-                    padding:${150 / baseWidth750}vw ${30 / baseWidth750}vw 0;
+                    padding:${220 / baseWidth750}vw ${30 / baseWidth750}vw 0;
                     margin-top: 0;
                     margin-left: 0;
                     box-sizing: border-box;
@@ -1937,7 +1937,7 @@ const NewHome = styled.div`
             }
             .contentWrap{
                 height: 100vh;
-                padding-top: 67px;
+                padding-top: 110px;
                 position: relative;
                 box-sizing: border-box;
     
@@ -1966,7 +1966,7 @@ const NewHome = styled.div`
                 .content{
                     width: 100%;
                     min-height: 300px;
-                    padding: ${50 / baseWidth750}vw ${
+                    padding: ${150 / baseWidth750}vw ${
   (30 * 2) / baseWidth750
 }vw 0;
                     margin-top: 0;
@@ -2013,7 +2013,7 @@ const NewHome = styled.div`
                 .content{
                     width: 100%;
                     margin-left: 0;
-                    padding: ${50 / baseWidth750}vw ${
+                    padding: ${150 / baseWidth750}vw ${
   (30 * 2) / baseWidth750
 }vw 0;
                     box-sizing: border-box;
@@ -2081,7 +2081,7 @@ const NewHome = styled.div`
                     width: 100%;
                     min-height: 300px;
                     margin-left: 0;
-                    padding: ${50 / baseWidth750}vw ${
+                    padding: ${150 / baseWidth750}vw ${
   (30 * 2) / baseWidth750
 }vw 0;
                     box-sizing: border-box;
@@ -2238,7 +2238,7 @@ const NewHome = styled.div`
                     width: 100%;
                     min-height: ${(100 * 2) / baseWidth750}vw;
                     margin-left: ${(30 * 2) / baseWidth750}vw;
-                    padding-top: ${50 / baseWidth750}vw;
+                    padding-top: ${110 / baseWidth750}vw;
                     p{
                         font-size: ${(14 * 2) / baseWidth750}vw;
                         line-height: ${(20 * 2) / baseWidth750}vw;
