@@ -248,7 +248,7 @@ class MainpannelComp extends React.Component {
                                     <p>
                                         <img src={successIcon}></img>
                                         <span>{this.state.email}@dmail.ai</span> is available!
-                                        <span className="lockBtn" onClick={this.handleLock}>Lock&Buy</span>
+                                        <span className="lockBtn" onClick={this.handleLock}>Lock & Buy</span>
                                     </p>
                                 </div>
                             </div>:null

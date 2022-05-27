@@ -354,7 +354,7 @@ const onComingSoon = () => {
       <div className="pageWrap highlightBlock"  style ={!isphone ? {backgroundImage: 'url('+aniEffect4+')'}:{}}>
         <div className="contentWrap highlightContent">
             <div className="title">
-              <p>Dmail</p>
+              <p>Introducing Dmail</p>
               <h2>What’s unique about Dmail?</h2>
             </div>
             <div className="content">
