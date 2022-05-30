@@ -301,7 +301,7 @@ const Header = (props) => {
           <span onClick={onShowNavs}><i></i></span>
           <div className="nav_wrapper">
             <div className="nav_item"><Link to="/" className={(pathname === '/' || pathname === '/newhome') ? 'on' : ''}>Home</Link></div>
-            <div className="nav_item"><a rel="noopener noreferrer" target="_blank" href='https://xfed4-4yaaa-aaaak-aapya-cai.ic0.app/inbox'>Mail</a></div>
+            <div className="nav_item"><a rel="noopener noreferrer" target="_blank" href='https://evyc3-ziaaa-aaaak-aam5a-cai.ic0.app/inbox'>Mail</a></div>
             <div className="nav_item"><a rel="noopener noreferrer" target="_blank" href='https://skeh5-daaaa-aaaai-aar4q-cai.raw.ic0.app/#/collection/ICDmail/items'>NFTs</a></div>
             {/* <div className="nav_item"><a rel="noopener noreferrer"  onClick={onComingSoon}>Events</a></div> */}
             <div className="nav_item"><Link to="/presale" className={pathname === '/presale' ? 'on ' : ''} >Presale</Link></div>
