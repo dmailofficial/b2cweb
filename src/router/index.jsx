@@ -6,6 +6,7 @@ const Account = lazy(() => import('@/pages/account2/index'));
 const Ambassador = lazy(() => import('@/pages/ambassador/index'));
 const Presale = lazy(() => import('@/pages/presale/index'));
 const PresaleList = lazy(() => import('@/pages/presale/list/index'));
+const Referrals = lazy(() => import('@/pages/referrals/index'));
 
 const Routes = () => (
   <Suspense fallback={'loading...'}>
@@ -16,7 +17,8 @@ const Routes = () => (
       < Route exact path='/newhome' component={Home} />
       < Route exact path='/presale' component={Presale} />
       < Route exact path='/presale/:channel_id' component={Presale} />
-      < Route exact name="presale_list" path='/presale_list' component={PresaleList} />
+      < Route exact path='/presale_list' name="presale_list" component={PresaleList} />
+      < Route exact path='/referrals' name="referrals" component={Referrals} />
       
       <Redirect from="*" to='/' />
     </Switch>

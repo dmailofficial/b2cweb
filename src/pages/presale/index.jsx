@@ -164,6 +164,11 @@ const Index = ({ store }) => {
     // }
   }
 
+  const toReferrals = () => { 
+    history.push({ pathname : "/referrals" ,state : {round: curItem.round}})
+  }
+
+
   useEffect(async () => {
     walletStore.info && setLoginInfo(walletStore.info)
     // console.log("presalse effect:::",walletStore.info?.address)
@@ -256,11 +261,13 @@ const Index = ({ store }) => {
       <OperateBtn>
         {step == 2 ?
           <span className="connectBtn" 
-                onClick = {step == 2 ? walletDialogShow : null}
+            onClick = {step == 2 ? walletDialogShow : null}
           >
             {loginInfo?.address ? showName : "Connect wallet"}
-          </span>: null
+          </span>
+          : null
         }
+        <span className="ownBtn" onClick={toReferrals}>Referrals</span>
         <span className="ownBtn" onClick={toOwn}>My orders</span>
       </OperateBtn>
       <ContentBox>
