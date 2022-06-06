@@ -295,7 +295,7 @@ const Header = (props) => {
     <>
       <HeaderWrap className="header">
         <div className="logo">
-          <img src={logo} alt="Dmail logo"></img>
+          <a href='/'><img src={logo} alt="Dmail logo"></img></a>
         </div>
         <div className="nav">
           <span onClick={onShowNavs}><i></i></span>

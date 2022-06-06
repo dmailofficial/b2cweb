@@ -569,7 +569,7 @@ const onComingSoon = () => {
             </div>
             <div className="bref">
               <p>Dmail guarantees a safe & private environment for your communication, storage, tokens & NFTs transfer on Web 3.0</p>
-              <p>contact@dmail.ai</p>
+              <p>contact@mail.dmail.ai</p>
             </div>
             <div className="links">
               <ul>

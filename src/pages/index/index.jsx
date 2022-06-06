@@ -107,8 +107,8 @@ const Index = () => {
               <a rel="noopener noreferrer"  className="name" href="https://github.com/dmailofficial"><span>Github</span></a>
             </li>
             <li>
-              <a rel="noopener noreferrer"  className="img" href="contact@dmail.ai"><img src={p5} alt="" /></a>
-              <a rel="noopener noreferrer"  className="name" href="contact@dmail.ai"><span>Email</span></a>
+              <a rel="noopener noreferrer"  className="img" href="contact@mail.dmail.ai"><img src={p5} alt="" /></a>
+              <a rel="noopener noreferrer"  className="name" href="contact@mail.dmail.ai"><span>Email</span></a>
             </li>
           </ul>
         </div>
@@ -140,7 +140,7 @@ const Index = () => {
             <dl>
               <dt>Community</dt>
               <dd className="icons">
-                <p><a rel="noopener noreferrer"  href="contact@dmail.ai">Email</a></p>
+                <p><a rel="noopener noreferrer"  href="contact@mail.dmail.ai">Email</a></p>
                 <p><a rel="noopener noreferrer"  href="https://twitter.com/dmailofficial">Twitter</a></p>
                 <p><a rel="noopener noreferrer"  href="https://t.me/dmailofficial">Telegram</a></p>
                 <p><a rel="noopener noreferrer"  href="https://medium.com/@dmail_official">Medium</a></p>
