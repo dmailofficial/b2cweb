@@ -155,8 +155,13 @@ const Table = (props) => {
         return null
       }
       const obj = statusMap[status]
+      if (obj.operationType === 'normal') {
+        return (
+          <Button type={obj.operationType} rel="noopener noreferrer" target="_blank" href='https://evyc3-ziaaa-aaaak-aam5a-cai.ic0.app/login'>{obj.operationText}</Button>
+        )
+      }
       return (
-        <Button type={obj.operationType} onClick={onBtnClick(obj.operationType, original)}>{obj.operationText}</Button>
+        <Button type={obj.operationType} rel="noopener noreferrer" onClick={onBtnClick(obj.operationType, original)}>{obj.operationText}</Button>
       )
     } else if (key === 'status') {
       const current = statusMap[value]
