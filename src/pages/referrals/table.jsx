@@ -11,59 +11,6 @@ import { Wrapper, ToolBar, Content, TableChunk, Button, Circle, NoDataWraper } f
 import Pagination from './pagination'
 import noDataImg from '../../static/images/empty.png'
 
-const statusMap = {
-  0: {
-    class: 'ing',
-    text: 'NFT uncollected',
-    operationText: 'Receive NFT',
-    operationType: 'primary',
-  },
-  1: {
-    class: 'success',
-    text: 'NFT issued',
-    operationText: 'Use email',
-    operationType: 'normal',
-  },
-  2: {
-    class: 'ing',
-    text: 'NFT issuing',
-    operationText: 'Pending',
-    operationType: 'disabled',
-  },
-  99: {
-    class: 'ing',
-    // text: 'To be paid',
-    text: 'Confirming transaction',
-    operationText: 'Receive NFT',
-    operationType: 'disabled',
-    // operationText: 'Payment',
-    // operationType: 'ghost',
-  },
-  9: {
-    class: 'close',
-    text: 'Transaction failed'
-  },
-}
-
-// const operationMap = {
-//   1: {
-//     text: 'Use Email',
-//     type: 'normal',
-//   },
-//   2: {
-//     text: 'PENDING',
-//     type: 'disabled',
-//   },
-//   3: {
-//     text: 'Receive NFT',
-//     type: 'primary',
-//   },
-//   4: {
-//     text: 'Payment',
-//     type: 'ghost',
-//   },
-// }
-
 const NoData = () => {
   return (
     <NoDataWraper>
@@ -120,56 +67,11 @@ const Table = (props) => {
     const key = cell.column.id
     const original = cell.row.original
     const value = original[key]
-    // console.log(key, original, cell)
-    if (key === 'date') {
-      if (!value?.includes(' ')) {
-        return value
-      }
-      const aDate = value.split(' ')
-      return (
-        <>
-          {aDate.map((date, key) => (
-            <span key={key}>
-              {date}
-              {key !== aDate.length - 1 ? <br /> : null}
-            </span>
-          ))}
-        </>
-      )
-    } else if ([ 'domain', 'price', 'expirationDate'].includes(key)) {
-      return (
-        <span className="break-word">
-          {value ? value : '- -'}
-        </span>
-      )
-    }else if ([ 'hash', 'owner'].includes(key)) {
-      return (
-        <span className="break-word">
-          {value}
-        </span>
-      )
-    } else if (key === 'operation') {
-      const status = original['status']
-      if (!(status in statusMap)) {
-        return null
-      }
-      const obj = statusMap[status]
-      return (
-        <Button type={obj.operationType} onClick={onBtnClick(obj.operationType, original)}>{obj.operationText}</Button>
-      )
-    } else if (key === 'status') {
-      const current = statusMap[value]
-      const aStatusText = current ? current.text : '- -'
-      return (
-        <div className="status">
-          <Circle type={current ? current.class : ''}></Circle>
-          <span>
-            {aStatusText}
-          </span>
-        </div>
-      )
+    console.log('render', key, original)
+    if (key === 'priceValue') {
+      return value ? `${value} ${original.tokenType.toUpperCase()}` : '- -'
     }
-    return value ? `#${value}` : '- -'
+    return value || '- -'
   }
 
   // Render the UI for your table

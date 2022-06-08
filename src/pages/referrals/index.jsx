@@ -17,28 +17,37 @@ import { copyTextToClipboard } from '@/utils/index'
 const columns = [
   {
     Header: 'NO.',
-    accessor: 'no',
+    accessor: 'index',
   },
   {
     Header: 'Invitees',
-    accessor: 'invitees',
+    accessor: 'address',
   },
   {
     Header: 'Order Quantity',
-    accessor: 'quantity',
+    accessor: 'buyCount',
   },
   {
     Header: 'Total amount',
-    accessor: 'total',
+    accessor: 'priceValue',
   },
 ] 
-  
+
+const defaultInviteInfo = {
+  channelId: '--',
+  inviteNum: '--',
+  totalOrders: '--',
+  totalAmount: '--',
+  commission: '--',
+}
 function App({ store: { wallet } }) {
   const address = wallet.info && wallet.info.address || ''
   const walletName = wallet.info && wallet.info.walletName || ''
-  const filterAddress = typeof address === 'string' && address.length ?  address.substr(0,6)+"***"+address.substr(address.length-4, address.length) : ''
+  const filterAddress = typeof address === 'string' && address.length ?  address.substring(0,6)+"***"+address.substring(address.length-4, address.length) : ''
 
   const history = useHistory();
+  const [tokenType, setTokenType] = useState('usdt')
+  const [inviteInfo, setInviteInfo] = useState(defaultInviteInfo)
   const [data, setData] = useState([])
   const [pageCount, setPageCount] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -51,8 +60,6 @@ function App({ store: { wallet } }) {
   const [vertip, setVertip] = useState(null)
   const [round, setRound] = useState(0)
 
-  const [link, setLink] = useState('--')
-  
   const walletDialogClose = () => {
     setWalletDialog(false);
   }
@@ -93,43 +100,51 @@ function App({ store: { wallet } }) {
     const { jwt, address, walletName } = wallet.info
     setLoading(true)
     const params = walletName === 'metamask' ? { jwt } : { is_verify: true }
-    // await new Promise((resolve) => setTimeout(resolve, 1000))
+    if (tokenType === 'icp') {
+      params.network = 998
+    }
     try {
       const res = await axios({
-        url: `${baseUrl}/trades`,
+        url: `${baseUrl}/usersrewards`,
         method: 'post',
         data: {
           address,
           page: pageIndex + 1,
           pageSize: pageSize,
-          // address: '0xedfAa9fea4275dbaAc341Fd1EE9c782cb838818A',
           ...params,
         },
         // errorTitle: '',
       })
-      const { code, data, totalPages, message, success } = res.data
-      if (res.data) {
-        const list = res.data.data || []
+      const { data, totalPages, totalCount, totalValus, totalTx, totalcommission, user_channel_id, success } = res.data
+      if (success && user_channel_id) {
+        setInviteInfo({
+          channelId: user_channel_id,
+          inviteNum: totalCount,
+          totalOrders: totalTx,
+          totalAmount: totalValus,
+          commission: totalcommission,
+        })
+      } else {
+        setInviteInfo(defaultInviteInfo)
+      }
+      if (success && Array.isArray(data)) {
         setPageCount(totalPages || 0)
-        setData(list.map(({ created, id, price, product_name, status, tx, nft_id, p_id }) => ({
-          id,
-          date: created,
-          product_name,
-          domain: `${product_name}@dmail.ai`,
-          price: `${price} ${walletName === 'plug' ? 'ICP' : 'USDT'}`,
-          hash: tx,
-          status,
-          number: nft_id,
-          owner: p_id,
-          expirationDate: 'Permanent',
+        setData(data.map(({ address, buy_count, price_value }, index) => ({
+          index: index + 1,
+          address: typeof address === 'string' && address.length ?  address.substring(0,6)+"***"+address.substring(address.length-4, address.length) : '',
+          buyCount: buy_count, priceValue: price_value, tokenType
         })))
+      } else {
+        setPageCount(0)
+        setData([])
       }
     } catch (error) {
       console.log(error)      
     }
     setLoading(false)
-  }, [wallet.info])
+  }, [wallet.info, tokenType])
 
+  const link = `https://dmail.ai/presale/${inviteInfo.channelId}`
   const onCopy = () => {
     copyTextToClipboard(link)
   }
@@ -179,9 +194,9 @@ function App({ store: { wallet } }) {
             <p>
               Get 5% commision by inviting your friends to purchase and successfully claim NFT. You may withdraw after the preslae event.<br /> Referral link:&nbsp;&nbsp;
               {
-                link === '--' ? '--' : (
+                inviteInfo.channelId === '--' ? '--' : (
                   <>
-                    <a rel="noopener noreferrer" href={link} target="_blank">{link}</a>
+                    <span onClick={onCopy}>{link}</span>
                     <i onClick={onCopy}></i>
                   </>
                 )
@@ -192,19 +207,19 @@ function App({ store: { wallet } }) {
             <div className="tokens">
               <div className='select'>
                 <span>Tokens:</span>
-                <p onClick={() => setWalletDialog(true)}>
-                  <span className={`raInput ${walletName === 'metamask' ? 'checked' : ''}`}><span></span></span>
+                <p onClick={() => setTokenType('usdt')}>
+                  <span className={`raInput ${tokenType === 'usdt' ? 'checked' : ''}`}><span></span></span>
                   <span>USDT</span>
                 </p>
-                <p onClick={() => setWalletDialog(true)}>
-                  <span className={`raInput ${walletName === 'plug' ? 'checked' : ''}`}><span></span></span>
+                <p onClick={() => setTokenType('icp')}>
+                  <span className={`raInput ${tokenType === 'icp' ? 'checked' : ''}`}><span></span></span>
                   <span>ICP</span>
                 </p>
               </div>
-              <span className='text'>Number of invites: 211</span>
-              <span className='text'>Total orders: 32</span>
-              <span className='text' style={{ marginRight: '62px' }}>Total amount: 3214.112</span>
-              <span className='text'>Commission: 21321.22</span>
+              <span className='text'>Number of invites: {inviteInfo.inviteNum}</span>
+              <span className='text'>Total orders: {inviteInfo.totalOrders}</span>
+              <span className='text' style={{ marginRight: '62px' }}>Total amount: {inviteInfo.totalAmount} {tokenType.toUpperCase()}</span>
+              <span className='text'>Commission: {inviteInfo.commission} {tokenType.toUpperCase()}</span>
             </div>
             <Table columns={columns} loading={loading} data={data} pageCount={pageCount} fetchData={fetchData} />
           </div>

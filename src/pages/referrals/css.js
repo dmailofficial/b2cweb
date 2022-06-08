@@ -1,5 +1,8 @@
 import styled, { keyframes } from "styled-components";
 
+import icpIcon from "@/static/images/presale/ICP@3x.png";
+import usdtIcon from "@/static/images/presale/USDT@3x.png";
+
 const redNormal = `#FF6633`;
 const redBright = `#cf4517`;
 
@@ -182,11 +185,16 @@ export const Content = styled.div`
 
   .tip {
     ${flex};
-    ${font500};
+    // ${font500};
     align-items: start;
     padding: 12px 22px 12px;
     background: rgba(76, 114, 255, 0.26);
     line-height: 22px;
+
+    span {
+      color: #3e94f5;
+      cursor: pointer;
+    }
 
     i {
       width: 13px;
@@ -276,6 +284,25 @@ export const Content = styled.div`
 
     .text {
       margin-right: 28px;
+
+      i {
+        width: 20px;
+        height: 20px;
+        background-size: 100%;
+        display: inline-block;
+        margin-left: 8px;
+        vertical-align: middle;
+      }
+
+      .icp {
+        width: 22px;
+        height: 11px;
+        background-image: url(${icpIcon});
+      }
+
+      .usdt {
+        background-image: url(${usdtIcon});
+      }
     }
   }
 `;
