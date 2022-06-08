@@ -267,7 +267,7 @@ const Index = ({ store }) => {
           </span>
           : null
         }
-        <span className="ownBtn" onClick={toReferrals}>Referrals</span>
+        {step == 1 && <span className="ownBtn" onClick={toReferrals}>Referrals</span>}
         <span className="ownBtn" onClick={toOwn}>My orders</span>
       </OperateBtn>
       <ContentBox>

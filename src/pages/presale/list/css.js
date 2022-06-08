@@ -225,6 +225,7 @@ export const TableChunk = styled.div`
   background: #1d1d1f;
   box-shadow: inset 0px -1px 0px 0px #414142;
   overflow-x: auto;
+  min-height: 470px;
 
   table {
     width: 100%;

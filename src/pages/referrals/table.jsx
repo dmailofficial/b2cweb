@@ -67,7 +67,6 @@ const Table = (props) => {
     const key = cell.column.id
     const original = cell.row.original
     const value = original[key]
-    console.log('render', key, original)
     if (key === 'priceValue') {
       return value ? `${value} ${original.tokenType.toUpperCase()}` : '- -'
     }

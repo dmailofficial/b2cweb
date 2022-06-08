@@ -231,7 +231,7 @@ export const Content = styled.div`
   }
 
   .tokens {
-    ${flexAlign};
+    ${flexBetween};
 
     p {
       ${flexAlign};
@@ -266,7 +266,6 @@ export const Content = styled.div`
 
     .select {
       ${flexAlign};
-      margin-right: 150px;
 
       p {
         margin-right: 25px;
@@ -280,6 +279,21 @@ export const Content = styled.div`
       .raInput {
         margin-right: 10px;
       }
+    }
+
+    a {
+      display: inline-block;
+      vertical-align: middle;
+      padding: 0 20px;
+      height: 28px;
+      line-height: 28px;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .disabled {
+      background: #969b9e;
     }
 
     .text {
@@ -318,6 +332,7 @@ export const TableChunk = styled.div`
   background: #1d1d1f;
   box-shadow: inset 0px -1px 0px 0px #414142;
   overflow-x: auto;
+  min-height: 470px;
 
   table {
     width: 100%;
@@ -360,18 +375,18 @@ export const TableChunk = styled.div`
   td {
     ${font14};
     border: none;
+    text-align: center;
   }
 
   td {
     padding: 12px 16px;
     box-shadow: inset 0px -1px 0px 0px #414142;
-    height: 68px;
+    height: 40px;
     line-height: 22px;
   }
 
   th {
     padding: 0 16px;
-    text-align: left;
     color: #8e8e8f;
   }
 

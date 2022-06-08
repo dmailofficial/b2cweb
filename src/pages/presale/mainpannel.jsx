@@ -268,7 +268,7 @@ class MainpannelComp extends React.Component {
                     <div className="item">
                         <div className="item-header">
                             <h3>Presale process</h3>
-                            <span onClick={this.handleStepShow}>View tutorial -></span>
+                            <span onClick={this.handleStepShow}>View tutorial -&gt;</span>
                         </div>
                         <p><span></span>Find the Dmail NFT Domain Account of your choice</p>
                         <p><span></span>Check out</p>

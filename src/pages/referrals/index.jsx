@@ -119,10 +119,10 @@ function App({ store: { wallet } }) {
       if (success && user_channel_id) {
         setInviteInfo({
           channelId: user_channel_id,
-          inviteNum: totalCount,
-          totalOrders: totalTx,
-          totalAmount: totalValus,
-          commission: totalcommission,
+          inviteNum: totalCount || 0,
+          totalOrders: totalTx || 0,
+          totalAmount: totalValus || 0,
+          commission: totalcommission || 0,
         })
       } else {
         setInviteInfo(defaultInviteInfo)
@@ -147,6 +147,13 @@ function App({ store: { wallet } }) {
   const link = `https://dmail.ai/presale/${inviteInfo.channelId}`
   const onCopy = () => {
     copyTextToClipboard(link)
+  }
+
+  const onWithdraw = () => {
+    setAlertInfo({
+      title: 'Your refferal rewards will be open for withdraw after the NFT presale.',
+      isError: false,
+    })
   }
 
   useEffect(async () => {
@@ -192,7 +199,7 @@ function App({ store: { wallet } }) {
         <Content>
           <div className="tip">
             <p>
-              Get 5% commision by inviting your friends to purchase and successfully claim NFT. You may withdraw after the preslae event.<br /> Referral link:&nbsp;&nbsp;
+              Get 4% commision by inviting your friends to purchase and successfully claim NFT. You may withdraw after the preslae event.<br /> Referral link:&nbsp;&nbsp;
               {
                 inviteInfo.channelId === '--' ? '--' : (
                   <>
@@ -216,10 +223,15 @@ function App({ store: { wallet } }) {
                   <span>ICP</span>
                 </p>
               </div>
-              <span className='text'>Number of invites: {inviteInfo.inviteNum}</span>
-              <span className='text'>Total orders: {inviteInfo.totalOrders}</span>
-              <span className='text' style={{ marginRight: '62px' }}>Total amount: {inviteInfo.totalAmount} {tokenType.toUpperCase()}</span>
-              <span className='text'>Commission: {inviteInfo.commission} {tokenType.toUpperCase()}</span>
+              <div>
+                <span className='text'>Number of invites: {inviteInfo.inviteNum}</span>
+                <span className='text'>Total orders: {inviteInfo.totalOrders}</span>
+                <span className='text' style={{ marginRight: '0' }}>Total amount: {inviteInfo.totalAmount} {inviteInfo.totalAmount !== '--' ? tokenType.toUpperCase() : null}</span>
+              </div>
+              <div>
+                <span className='text'>Commission: {inviteInfo.commission} {inviteInfo.commission !== '--' ? tokenType.toUpperCase() : null}</span>
+                {inviteInfo.channelId !== '--' ? <a className='disabled' onClick={onWithdraw}>withdraw</a> : null}
+              </div>
             </div>
             <Table columns={columns} loading={loading} data={data} pageCount={pageCount} fetchData={fetchData} />
           </div>
