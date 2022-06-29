@@ -1,12 +1,15 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 // https://github.com/mui-org/material-ui
 import Dialog from '@mui/material/Dialog';
-import styled  from 'styled-components';
+import styled from 'styled-components';
 
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import TableTopInvites from './tableTopInvites'
+
+
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogContent from '@mui/material/DialogContent';
+// import DialogContentText from '@mui/material/DialogContentText';
+// import DialogTitle from '@mui/material/DialogTitle';
 
 import { Button, SuccessToast } from './css'
 
@@ -192,77 +195,25 @@ export const Alert = ({ info, setInfo }) => {
   )
 }
 
-const ReceiveDialog = ({ receiveId, setReceiveId, receive, errorIndex }) => {
-  const [address, setAddress] = useState('');
-  const [error, setError] = useState(false);
-  const [focus, setFocus] = useState(false);
-  const inputRef = useRef(null)
-
-  const handleClose = () => {
-    setReceiveId(0);
-  };
-
-  const onConfirm = () => {
-    const reg = /^([a-z0-9]{5}\-){10}[a-z0-9]{3}$/g
-    if(!reg.test(address)){
-      setError(true)
-      return;
-    }
-    receive && receive(address, receiveId)
-  };
-
-  const onchange = (ev) => {
-    const address = ev.target.value
-    setAddress(address)
-    if (address) {
-      setError(false)
-    }
-  }
-
-  useEffect(() => {
-    !receiveId && setTimeout(() => {
-      setAddress('')
-    }, 400);
-  }, [receiveId])
-
-  useEffect(() => {
-    if (errorIndex) {
-      setError(true)
-      inputRef.current && inputRef.current.focus && inputRef.current.focus()
-    }
-  }, [errorIndex])
+const TopReferresDialog = ({ visible, setVisible }) => {
+  const onClose = () => setVisible(false)
 
   return (
     <Dialog
-      open={!!receiveId}
-      onClose={handleClose}
+      open={visible}
+      onClose={onClose}
     >
       <DialogWrapper>
-        <div className="title">Receive NFT</div>
+        <div className="title">Top 10 Invitation Orders</div>
         <div className="content">
-          <div className="text">*Please enter your Principal ID of your Plug wallet to receive NFT. We recommend using Plug wallet. Please make sure the ID is correct and usable, otherwise you will lose your NFT domain account</div>
-          <div className="form">
-            <input 
-              type="text" 
-              value={address} 
-              ref={inputRef} 
-              onChange={onchange} 
-              onFocus={() => setFocus(true)}
-              onBlur={() => setFocus(false)}
-              className={error ? 'error' : (focus ? 'focus' : '')} 
-              placeholder="Please enter the 53-digits Principal ID of your Plug wallet" 
-            />
-            <a rel="noopener noreferrer"  href="https://dmailofficial.gitbook.io/how-to-use-dmail-1/v/english-1/" target="_blank">How to get?</a>
-            <div className={`errorTip ${error ? 'show' : ''}`}><i></i><span>ID format is not correct, please re-enter</span></div>
-          </div>
+          <TableTopInvites />
         </div>
         <div className="actions">
-          <Button type="primary" onClick={onConfirm}>Confirm</Button>
+          <Button type="primary" onClick={onClose}>Ok</Button>
         </div>
-        <div className="close" onClick={handleClose}></div>
       </DialogWrapper>
     </Dialog>
   );
 }
 
-export default ReceiveDialog
+export default TopReferresDialog

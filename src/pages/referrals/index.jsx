@@ -3,9 +3,9 @@ import { useHistory } from "react-router-dom";
 import { observer, inject } from 'mobx-react';
 
 import Header from '@/components/newheader'
-import { Wrapper, ToolBar, Content } from './css'
+import { Wrapper, ToolBar, Content, FlexJustBetweenWrapper } from './css'
 import Table from './table'
-import ReceiveDialog, { Alert, Success } from './dialog'
+import TopReferresDialog, { Alert, Success } from './dialog'
 import axios from '@/utils/axios';
 import { baseUrl } from '@/pages/presale/utils'
 import WalletDialog from '@/pages/presale/walletDialog'
@@ -13,25 +13,6 @@ import Toast from '@/pages/presale/toast'
 import {connectWallet} from '@/pages/presale/utils'
 import metamasktipIcon from '@/static/images/presale/metamasktip.png'
 import { copyTextToClipboard } from '@/utils/index'
-
-const columns = [
-  {
-    Header: 'NO.',
-    accessor: 'index',
-  },
-  {
-    Header: 'Invitees',
-    accessor: 'address',
-  },
-  {
-    Header: 'Order Quantity',
-    accessor: 'buyCount',
-  },
-  {
-    Header: 'Total amount',
-    accessor: 'priceValue',
-  },
-] 
 
 const defaultInviteInfo = {
   channelId: '--',
@@ -52,6 +33,7 @@ function App({ store: { wallet } }) {
   const [pageCount, setPageCount] = useState(0)
   const [loading, setLoading] = useState(false)
   const [alertInfo, setAlertInfo] = useState(null)
+  const [topReferresVisible, setTopReferresVisible] = useState(null)
   const [successText, setSuccessText] = useState('')
 
   const [walletInstance, setWalletInstance] = useState({})
@@ -149,6 +131,10 @@ function App({ store: { wallet } }) {
     copyTextToClipboard(link)
   }
 
+  const viewTopReferres = () => {
+    setTopReferresVisible(true)
+  }
+
   const onWithdraw = () => {
     setAlertInfo({
       title: 'Your refferal rewards will be open for withdraw after the NFT presale.',
@@ -197,19 +183,52 @@ function App({ store: { wallet } }) {
           </div>
         </ToolBar>
         <Content>
-          <div className="tip">
-            <p>
-              Get 4% commision by inviting your friends to purchase and successfully claim NFT. You may withdraw after the preslae event.<br /> Referral link:&nbsp;&nbsp;
-              {
-                inviteInfo.channelId === '--' ? '--' : (
-                  <>
-                    <span onClick={onCopy}>{link}</span>
-                    <i onClick={onCopy}></i>
-                  </>
-                )
-              }
-            </p>
-          </div>
+          <FlexJustBetweenWrapper>
+            <div className="info">
+              <ul>
+                <li>
+                  <strong>Referral link:</strong>
+                  <div>
+                  {
+                    inviteInfo.channelId === '--' ? '--' : (
+                      <span className="copy">
+                        <span onClick={onCopy}>{link}</span>
+                        <i onClick={onCopy}></i>
+                      </span>
+                    )
+                  }
+                  </div>
+                </li>
+                <li>
+                  <strong>Commission:</strong>
+                  <div>
+                    <p><a className='view' onClick={viewTopReferres}>View top referres</a></p>
+                    <p><span className={inviteInfo.commission !== '--' ? 'commission' : ''}>{inviteInfo.commission}</span> <span className='unit'>{inviteInfo.commission !== '--' ? tokenType.toUpperCase() : null}</span>{inviteInfo.channelId !== '--' ? <a className='withdraw disabled' onClick={onWithdraw}>withdraw</a> : null}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div className="tip">
+              <p style={{ marginBottom: '5px' }}>
+                Rule Description:
+              </p>
+              <p className='item'>
+                <strong>1.</strong> Get 4% commision by inviting your friends to purchase and successfully claim NFT.
+              </p>
+              <p className='item'>
+                <strong>2.</strong> Commission withdrawal will open after the end of the current presale.
+              </p>
+              <p className='item'>
+                <strong>3.</strong> USDT withdrawals support BSC address, ICP withdrawals support Dfinity address.
+              </p>
+              <p className='item'>
+                <strong>4.</strong> The minimum amount of withdrawals: USDT ≥ 1U; ICP ≥ 0.1ICP.
+              </p>
+              <p className='item'>
+                <strong>5.</strong> Withdrawal fee: USDT 1U/time; ICP 0.1ICP/time.
+              </p>
+            </div>
+          </FlexJustBetweenWrapper>
           <div className="tabel-wrapper">
             <div className="tokens">
               <div className='select'>
@@ -229,11 +248,10 @@ function App({ store: { wallet } }) {
                 <span className='text' style={{ marginRight: '0' }}>Total amount: {inviteInfo.totalAmount} {inviteInfo.totalAmount !== '--' ? tokenType.toUpperCase() : null}</span>
               </div>
               <div>
-                <span className='text'>Commission: {inviteInfo.commission} {inviteInfo.commission !== '--' ? tokenType.toUpperCase() : null}</span>
-                {inviteInfo.channelId !== '--' ? <a className='disabled' onClick={onWithdraw}>withdraw</a> : null}
+                {/* <span className='text'>Commission: {inviteInfo.commission} {inviteInfo.commission !== '--' ? tokenType.toUpperCase() : null}</span> */}
               </div>
             </div>
-            <Table columns={columns} loading={loading} data={data} pageCount={pageCount} fetchData={fetchData} />
+            <Table loading={loading} data={data} pageCount={pageCount} fetchData={fetchData} />
           </div>
         </Content>
       </Wrapper>
@@ -244,7 +262,7 @@ function App({ store: { wallet } }) {
         getWalletInstance = {getWalletInstance}
         walletStore = {wallet}
         round = {round}
-      ></WalletDialog>
+      />
       <Alert info={alertInfo} setInfo={setAlertInfo} />
       <Success text={successText} setText={setSuccessText} />
       <Toast
@@ -252,7 +270,11 @@ function App({ store: { wallet } }) {
         type = "warn"
         txt = {errorToastMsg}
         tipimg = {vertip}
-      ></Toast>
+      />
+      <TopReferresDialog
+        visible={topReferresVisible}
+        setVisible={setTopReferresVisible}
+      />
     </>
   )
 }

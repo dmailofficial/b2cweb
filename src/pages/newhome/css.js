@@ -467,13 +467,15 @@ const NewHome = styled.div`
                     line-height: ${24 / baseWidth}vw;
                     margin-bottom: ${12 / baseWidth}vw;
                    }
-                   p{
-                    font-size: ${14 / baseWidth}vw;
-                    font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
-                    font-weight: 500;
-                    color: rgba(225,225,225,.52);
-                    line-height: ${16 / baseWidth}vw;
+                   p {
+                        font-size: ${14 / baseWidth}vw;
+                        font-family: Roboto-Medium, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
+                        font-weight: 500;
+                        color: rgba(225,225,225,.52);
+                        line-height: 1.3;
+                        white-space: nowrap;
                    }
+                   
                    .line{
                         width: 0;
                         height: ${27 / baseWidth}vw;
@@ -495,6 +497,13 @@ const NewHome = styled.div`
                         margin-left: -${8 / baseWidth}vw;
                    }
                 }
+                .item1 .icon {
+                    // transform: translate(-45px);
+                }
+                .item1 {
+                    // width: ${180 / baseWidth}vw;
+                    // margin-bottom: ${80 / baseWidth}vw;
+                }
                 .item.bottom{
                     .line{
                         bottom: auto;
@@ -514,10 +523,10 @@ const NewHome = styled.div`
                     top: 50%;
                     bottom: auto;
                     margin-bottom: 0;
-                    margin-top: -${40 / baseWidth}vw;
+                    margin-top: ${30 / baseWidth}vw;
                     left: ${300 / baseWidth}vw;
                     .line{
-                        height: ${80 / baseWidth}vw;
+                        height: ${70 / baseWidth}vw;
                         left: 50%;
                         margin-left: -${35 / baseWidth}vw;
                     }
@@ -527,18 +536,18 @@ const NewHome = styled.div`
                     }
                 }
                 .item3{
-                    padding-bottom: ${80 / baseWidth}vw;
+                    padding-bottom: ${60 / baseWidth}vw;
                     bottom: 50%;
-                    margin-bottom: ${50 / baseWidth}vw;
+                    margin-bottom: ${70 / baseWidth}vw;
                     left: ${530 / baseWidth}vw;
                 }
                 .item4{
-                    width: ${160 / baseWidth}vw;
+                    // width: ${176 / baseWidth}vw;
                     padding: ${80 / baseWidth}vw 0 0px;
                     top: 50%;
                     bottom: auto;
                     margin-bottom: 0;
-                    margin-top: 0px;
+                    margin-top: ${40 / baseWidth}vw;
                     left: ${760 / baseWidth}vw;
                     .line{
                         height: ${60 / baseWidth}vw;
@@ -557,7 +566,7 @@ const NewHome = styled.div`
                     top: 50%;
                     bottom: auto;
                     margin-bottom: 0;
-                    margin-top: ${50 / baseWidth}vw;
+                    margin-top: ${60 / baseWidth}vw;
                     left: ${1130 / baseWidth}vw;
                     .line{
                         height: ${50 / baseWidth}vw;
@@ -1434,7 +1443,7 @@ const NewHome = styled.div`
                         top: 50%;
                         bottom: auto;
                         margin-bottom: 0;
-                        margin-top: -${30 / baseWidth750}vw;
+                        margin-top: ${20 / baseWidth750}vw;
                         left: ${160 / baseWidth750}vw;
                         .line{
                             height: ${40 / baseWidth750}vw;
@@ -1455,6 +1464,7 @@ const NewHome = styled.div`
                     .item4.bottom{
                         width: ${160 / baseWidth750}vw;
                         padding: ${50 / baseWidth750}vw 0 0px;
+                        margin-top: ${16 / baseWidth750}vw;
                         left: ${380 / baseWidth750}vw;
                         .line{
                             height: ${40 / baseWidth750}vw;
@@ -1838,6 +1848,7 @@ const NewHome = styled.div`
                         box-sizing: border-box;
                         text-align: right;
                         padding-right: ${(35 * 1.5) / baseWidth750}vw;
+
                        h3{
                         font-size: ${(16 * 1.5) / baseWidth750}vw;
                         line-height: ${(20 * 1.5) / baseWidth750}vw;

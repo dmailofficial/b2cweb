@@ -299,7 +299,7 @@ const onComingSoon = () => {
               <p>Introducing Dmail</p>
               <h2>What is Dmail?</h2>
               {/* <p className="desc">In Web 3.0, every user and application coexist in a frame of open standards and protocols, which can connected each other freely and form the internet of everything.</p> */}
-              <p className="desc">Deployed on Dfinity, Dmail guarantees a purely decentralized and privacy protected environment for users' information, assets & Dapp management.  Each user will be identified by an NFT domain account which is the unique access to their Web 3.0 gate. Dmail will eliminate data barriers and in the progress to become the most important DID for the Web 3.0 era. </p>
+              <p className="desc">Dmail Network is a Web 3.0-based collaborative platform which integrates the functions of message communication, asset management, data storage, workspace and etc. In the end, Dmail will be a fundamental infrastructure tool and DID for users to come into the Web 3.0 era and a bridge that links Web 2.0 users to easily use blockchain services. </p>
               
               <div className="dmailItem">
                   <div className="item item1">
@@ -339,9 +339,9 @@ const onComingSoon = () => {
         <div className="contentWrap workContent">
             <div className="content">
             <p>Introducing Dmail</p>
-              <h2>How does Dmail work？</h2>
+              <h2>How does Dmail work?</h2>
               <p className="desc">
-              Dmail forms the fundamental decentralized identity (DID) and distributes a private "canister" for each mailbox correspondingly on chain (Dfinity) . Users can access information, assets and DApps securely and seamlessly with Dmail.
+              Dmail forms the fundamental decentralized identity (DID) and distributes a private "decentralized storage" for each mailbox correspondingly on chain. Users can access information, assets and DApps securely and seamlessly with Dmail.
               </p>
             </div>
             <div className="nextBtn" onClick={()=>{gotoPage(3)}}>
@@ -365,7 +365,7 @@ const onComingSoon = () => {
                       <img src={highlightIcon1}></img>
                     </div>
                     <h3>Data Sovereignty</h3>
-                    <p>Decentralized storage keeps data sovereignty under user’s control.</p>
+                    <p>Decentralized storage keeps data sovereignty under user's control.</p>
                   </div>
                   <div className="item item2">
                     {/* <img src={highlightIcon2}></img> */}
@@ -453,40 +453,40 @@ const onComingSoon = () => {
             <div className={roadShow ? "roadMap show" : "roadMap show"}>
                 <div className="line"></div>
                 <div className="item item1">
-                    <h3>2021 Q2</h3>
-                    <p>Project kickoff<br></br>Dmail demo<br></br>Dfinty identity</p>
-                    <span className="line"></span>
-                    <span className="circle"></span>
+                    <h3>2021 Q4</h3>
+                    <div><p>Website</p><p>Mailbox Base</p><p>Domain Account Pre-sale</p><p>Seed Funding</p></div>
+                    <span className="line icon"></span>
+                    <span className="circle icon"></span>
                  </div>
                  <div className="item item2 bottom">
-                    <h3>2021 Q4</h3>
-                    <p>Website<br></br>Mailbox base<br></br>Testnet<br></br>Bounty<br></br>Community AMA<br></br>NFTs account presale</p>
-                    <span className="line"></span>
-                    <span className="circle"></span>
+                    <h3>2022 Q1</h3>
+                    <div><p>Brand Update</p><p>Ambassadors</p><p>Partnerships</p><p>Strategic Funding</p></div>
+                    <span className="line icon"></span>
+                    <span className="circle icon"></span>
                  </div>
                  <div className="item item3">
-                    <h3>2022 Q1</h3>
-                    <p>NFT<br></br>Wallet assets<br></br>DApp<br></br>Group push</p>
-                    <span className="line"></span>
-                    <span className="circle"></span>
+                    <h3>2022 Q2</h3>
+                    <div><p>Beta Network</p><p>Wallet Assets</p><p>Bulk Send</p><p>Message Alerts</p><p>Multiple logins</p></div>
+                    <span className="line icon"></span>
+                    <span className="circle icon"></span>
                  </div>
                  <div className="item item4 bottom">
-                    <h3>2022 Q2</h3>
-                    <p>Intialization core assets<br></br>DAO<br></br>Mainnet<br></br>API<br></br>More DApps</p>
-                    <span className="line"></span>
-                    <span className="circle"></span>
+                    <h3>2022 Q3</h3>
+                    <div><p>SDK&API</p><p>DApp Library</p><p>Mainnet Release</p><p>Communication Protocol</p></div>
+                    <span className="line icon"></span>
+                    <span className="circle icon"></span>
                  </div>
                  <div className="item item5">
-                    <h3>2022 Q3</h3>
-                    <p>News<br></br>Mail business version<br></br>Dfinity core exchange</p>
-                    <span className="line"></span>
-                    <span className="circle"></span>
+                    <h3>2022 Q4</h3>
+                    <div><p>APP</p><p>Plugin</p><p>DAO</p><p>Enterprise workspace</p></div>
+                    <span className="line icon"></span>
+                    <span className="circle icon"></span>
                  </div>
                  <div className="item item6 bottom">
-                    <h3>2022 Q4</h3>
-                    <p>Assets exchange<br></br>More cross-chain</p>
-                    <span className="line"></span>
-                    <span className="circle"></span>
+                    <h3>2023 Q1</h3>
+                    <div><p>DID</p><p>EVM</p><p>Multi-chain</p></div>
+                    <span className="line icon"></span>
+                    <span className="circle icon"></span>
                  </div>
             </div>
             <div className="nextBtn" onClick={()=>{gotoPage(5)}}>

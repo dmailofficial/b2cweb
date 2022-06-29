@@ -11,6 +11,25 @@ import { Wrapper, ToolBar, Content, TableChunk, Button, Circle, NoDataWraper } f
 import Pagination from './pagination'
 import noDataImg from '../../static/images/empty.png'
 
+const columns = [
+  {
+    Header: 'NO.',
+    accessor: 'index',
+  },
+  {
+    Header: 'Invitees',
+    accessor: 'address',
+  },
+  {
+    Header: 'Order Quantity',
+    accessor: 'buyCount',
+  },
+  {
+    Header: 'Total amount',
+    accessor: 'priceValue',
+  },
+] 
+
 const NoData = () => {
   return (
     <NoDataWraper>
@@ -25,7 +44,7 @@ const NoData = () => {
 }
 
 const Table = (props) => {
-  const { store: { wallet }, columns, data, fetchData, pageCount, loading, setReceiveId } = props
+  const { store: { wallet }, data, fetchData, pageCount, loading, setReceiveId } = props
   const history = useHistory();
   const [alertInfo, setAlertInfo] = useState(null)
 
@@ -105,7 +124,7 @@ const Table = (props) => {
         {pageCount <= 0 ? <NoData /> : null}
       </TableChunk>
       <Alert info={alertInfo} setInfo={setAlertInfo} />
-      <Pagination {...props} />
+      <Pagination columns={columns} {...props} />
     </>
   )
 }
