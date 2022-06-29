@@ -519,14 +519,14 @@ const NewHome = styled.div`
                 }
                 .item2.bottom{
                     width: ${160 / baseWidth}vw;
-                    padding: ${90 / baseWidth}vw 0 0px;
+                    padding: ${60 / baseWidth}vw 0 0px;
                     top: 50%;
                     bottom: auto;
                     margin-bottom: 0;
-                    margin-top: ${30 / baseWidth}vw;
-                    left: ${300 / baseWidth}vw;
+                    margin-top: ${50 / baseWidth}vw;
+                    left: ${350 / baseWidth}vw;
                     .line{
-                        height: ${70 / baseWidth}vw;
+                        height: ${40 / baseWidth}vw;
                         left: 50%;
                         margin-left: -${35 / baseWidth}vw;
                     }
@@ -984,7 +984,7 @@ const NewHome = styled.div`
         @media screen and (min-width: 1536px) {
             .roadmapContent{
                 .roadMap{
-                    margin-top: ${(20 + 50) / baseWidth}vw;
+                    margin-top: ${50 / baseWidth}vw;
                 }
             }
             .partnerContent{
@@ -1396,7 +1396,7 @@ const NewHome = styled.div`
                     background-image: url(${roadmapBackground});
                     background-size: 100% auto;
                     background-position: 100% 50%;
-                    height: calc(100vh - ${290 / baseWidth750}vw);
+                    height: calc(100vh - ${350 / baseWidth750}vw);
                     .item{
                         width: ${120 / baseWidth750}vw;
                         padding-bottom: ${45 / baseWidth750}vw;
