@@ -18,7 +18,7 @@ const Routes = () => (
       < Route exact path='/presale' component={Presale} />
       < Route exact path='/presale/:channel_id' component={Presale} />
       < Route exact path='/presale_list' name="presale_list" component={PresaleList} />
-      {/* < Route exact path='/referrals' name="referrals" component={Referrals} /> */}
+      < Route exact path='/referrals' name="referrals" component={Referrals} />
       
       <Redirect from="*" to='/' />
     </Switch>

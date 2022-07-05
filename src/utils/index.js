@@ -46,3 +46,16 @@ function fallbackCopyTextToClipboard(text) {
   document.body.removeChild(textArea);
   return success;
 }
+
+export const remainDecimal = (num, digits = 2) => {
+  const n = Math.pow(10, digits);
+  return Math.round(+num * n) / n;
+};
+
+export const remainDecimalByString = (num, digits = 2) => {
+  if (!/^[0-9]+.?[0-9]*$/.test(num + "")) {
+    return num;
+  }
+  const n = Math.pow(10, digits);
+  return Math.round(+num * n) / n;
+};

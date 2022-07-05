@@ -6,12 +6,16 @@ import Dialog from '@mui/material/Dialog';
 import { observer, inject } from 'mobx-react';
 import { Alert } from './dialog'
 
-import { Wrapper, ToolBar, Content, TableChunk, Button, Circle, NoDataWraper } from './css'
+import { TableChunk } from './css'
+import first from "@/static/images/first.png";
+import second from "@/static/images/second.png";
+import third from "@/static/images/third.png";
+
 
 const columns = [
   {
     Header: 'Ranking',
-    accessor: 'ranking',
+    accessor: 'channel_id',
   },
   {
     Header: 'Address',
@@ -19,16 +23,11 @@ const columns = [
   },
   {
     Header: 'Total orders',
-    accessor: 'total',
+    accessor: 'order_count',
   },
 ] 
 
-const Table = (props) => {
-  const { store: { wallet } } = props
-
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(false)
-
+const Table = ({ data }) => {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -41,72 +40,32 @@ const Table = (props) => {
     data,
   })
 
-  const renderTd = (cell) => {
+  const renderTd = (cell, index) => {
     const key = cell.column.id
     const original = cell.row.original
     const value = original[key]
+    if (key === 'channel_id') {
+      if (index === 0) {
+        return <img src={first} width="25" />
+      } else if (index === 1) {
+        return <img src={second} width="25" />
+      } else if (index === 2) {
+        return <img src={third} width="25" />
+      }
+      return index + 1
+    }
     if (key === 'address') {
       return value.substring(0,6)+"***"+value.substring(value.length-4, value.length)
     }
     return value || '- -'
   }
 
-  useEffect(() => {
-    setData([
-      {
-        ranking: 1,
-        address: '0xE92210810151Ca42c6E38aeeda294981991Aa93b',
-        total: 12
-      },
-      {
-        ranking: 2,
-        address: '0xE92210810151Ca42c6E38aeeda294981991Aa93b',
-        total: 11
-      },
-      {
-        ranking: 3,
-        address: '0xE92210810151Ca42c6E38aeeda294981991Aa93b',
-        total: 10
-      },
-      {
-        ranking: 4,
-        address: '0xE92210810151Ca42c6E38aeeda294981991Aa93b',
-        total: 9
-      },
-      {
-        ranking: 5,
-        address: '0xE92210810151Ca42c6E38aeeda294981991Aa93b',
-        total: 8
-      },
-      {
-        ranking: 6,
-        address: '0xE92210810151Ca42c6E38aeeda294981991Aa93b',
-        total: 7
-      },
-      {
-        ranking: 7,
-        address: '0xE92210810151Ca42c6E38aeeda294981991Aa93b',
-        total: 6
-      },
-      {
-        ranking: 8,
-        address: '0xE92210810151Ca42c6E38aeeda294981991Aa93b',
-        total: 5
-      },
-      {
-        ranking: 9,
-        address: '0xE92210810151Ca42c6E38aeeda294981991Aa93b',
-        total: 4
-      },
-    ])
-  }, [])
-
   // Render the UI for your table
   return (
-    <TableChunk className={loading ? 'loading top-invites' : 'top-invites'}>
+    <TableChunk className={'top-invites'}>
       <div className="thead">
         {columns.map(({ Header }) => (
-          <span>{Header}</span>
+          <span key={Header}>{Header}</span>
         ))}
       </div>
       <div className="table">
@@ -118,7 +77,7 @@ const Table = (props) => {
                 return (
                   <tr {...row.getRowProps()}>
                     {row.cells.map(cell => {
-                      return <td className={cell.column.id} {...cell.getCellProps()}>{renderTd(cell)}</td>
+                      return <td className={cell.column.id} {...cell.getCellProps()}>{renderTd(cell, i)}</td>
                     })}
                   </tr>
                 )

@@ -13,6 +13,7 @@ import Toast from '@/pages/presale/toast'
 import {connectWallet} from '@/pages/presale/utils'
 import metamasktipIcon from '@/static/images/presale/metamasktip.png'
 import { copyTextToClipboard } from '@/utils/index'
+import { remainDecimalByString } from '@/utils/'
 
 const defaultInviteInfo = {
   channelId: '--',
@@ -30,10 +31,11 @@ function App({ store: { wallet } }) {
   const [tokenType, setTokenType] = useState('usdt')
   const [inviteInfo, setInviteInfo] = useState(defaultInviteInfo)
   const [data, setData] = useState([])
+  const [topList, setTopList] = useState([])
   const [pageCount, setPageCount] = useState(0)
   const [loading, setLoading] = useState(false)
   const [alertInfo, setAlertInfo] = useState(null)
-  const [topReferresVisible, setTopReferresVisible] = useState(null)
+  const [topReferresVisible, setTopReferresVisible] = useState(false)
   const [successText, setSuccessText] = useState('')
 
   const [walletInstance, setWalletInstance] = useState({})
@@ -97,7 +99,7 @@ function App({ store: { wallet } }) {
         },
         // errorTitle: '',
       })
-      const { data, totalPages, totalCount, totalValus, totalTx, totalcommission, user_channel_id, success } = res.data
+      const { data, toplist, totalPages, totalCount, totalValus, totalTx, totalcommission, user_channel_id, success } = res.data
       if (success && user_channel_id) {
         setInviteInfo({
           channelId: user_channel_id,
@@ -119,6 +121,11 @@ function App({ store: { wallet } }) {
       } else {
         setPageCount(0)
         setData([])
+      }
+      if (success && Array.isArray(toplist)) {
+        setTopList(toplist.slice(0, 20))
+      } else {
+        setTopList([])
       }
     } catch (error) {
       console.log(error)      
@@ -202,8 +209,15 @@ function App({ store: { wallet } }) {
                 <li>
                   <strong>Commission:</strong>
                   <div>
-                    <p><a className='view' onClick={viewTopReferres}>View top referres</a></p>
-                    <p><span className={inviteInfo.commission !== '--' ? 'commission' : ''}>{inviteInfo.commission}</span> <span className='unit'>{inviteInfo.commission !== '--' ? tokenType.toUpperCase() : null}</span>{inviteInfo.channelId !== '--' ? <a className='withdraw disabled' onClick={onWithdraw}>withdraw</a> : null}</p>
+                    {/* {topList.length ? <p><a className='view' onClick={viewTopReferres}>View top referres</a></p> : '--'} */}
+                    <p className='commission' style={{ margin: '40px 0 0 -63px' }}>
+                    {/* <p className='commission'> */}
+                      <span className={inviteInfo.commission !== '--' ? 'coin' : ''}>
+                        {remainDecimalByString(inviteInfo.commission, 4)}
+                      </span>
+                      <span className='unit'>{inviteInfo.commission !== '--' ? tokenType.toUpperCase() : null}</span>
+                      {inviteInfo.channelId !== '--' ? <a className='withdraw disabled' onClick={onWithdraw}>withdraw</a> : null}
+                    </p>
                   </div>
                 </li>
               </ul>
@@ -232,7 +246,7 @@ function App({ store: { wallet } }) {
           <div className="tabel-wrapper">
             <div className="tokens">
               <div className='select'>
-                <span>Tokens:</span>
+                <span>Payment:</span>
                 <p onClick={() => setTokenType('usdt')}>
                   <span className={`raInput ${tokenType === 'usdt' ? 'checked' : ''}`}><span></span></span>
                   <span>USDT</span>
@@ -245,10 +259,7 @@ function App({ store: { wallet } }) {
               <div>
                 <span className='text'>Number of invites: {inviteInfo.inviteNum}</span>
                 <span className='text'>Total orders: {inviteInfo.totalOrders}</span>
-                <span className='text' style={{ marginRight: '0' }}>Total amount: {inviteInfo.totalAmount} {inviteInfo.totalAmount !== '--' ? tokenType.toUpperCase() : null}</span>
-              </div>
-              <div>
-                {/* <span className='text'>Commission: {inviteInfo.commission} {inviteInfo.commission !== '--' ? tokenType.toUpperCase() : null}</span> */}
+                <span className='text' style={{ marginRight: '0' }}>Total amount: {remainDecimalByString(inviteInfo.totalAmount, 4)} {inviteInfo.totalAmount !== '--' ? tokenType.toUpperCase() : null}</span>
               </div>
             </div>
             <Table loading={loading} data={data} pageCount={pageCount} fetchData={fetchData} />
@@ -272,6 +283,7 @@ function App({ store: { wallet } }) {
         tipimg = {vertip}
       />
       <TopReferresDialog
+        data={topList}
         visible={topReferresVisible}
         setVisible={setTopReferresVisible}
       />

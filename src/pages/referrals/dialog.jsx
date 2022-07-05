@@ -1,17 +1,32 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import styled from 'styled-components';
 // https://github.com/mui-org/material-ui
 import Dialog from '@mui/material/Dialog';
-import styled from 'styled-components';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ClearIcon from '@mui/icons-material/Clear';
 
 import TableTopInvites from './tableTopInvites'
-
-
-// import DialogActions from '@mui/material/DialogActions';
-// import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
-// import DialogTitle from '@mui/material/DialogTitle';
-
 import { Button, SuccessToast } from './css'
+
+const darkDialogTheme = createTheme({
+  components: {
+    MuiDialog: {
+      styleOverrides: {
+        root: {
+          '& .MuiBackdrop-root': {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          }
+        },
+        paper: {
+          maxWidth: 'none',
+          padding: 0,
+          // boxShadow: '0 0 5px 5px rgba(0, 0, 0, .4)',
+          background: "#333",
+        },
+      },
+    },
+  }
+})
 
 const DialogWrapper = styled.div`
   min-width: 310px;
@@ -24,6 +39,31 @@ const DialogWrapper = styled.div`
 
     .title {
       padding-top: 20px;
+    }
+  }
+
+  &.top-referres-dialog-wrapper {
+    min-width: 900px;
+    padding: 0;
+    color: #cecece;
+
+    .title {
+      padding: 0 20px;
+      height: 50px;
+      background: #444;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    svg {
+      cursor: pointer;
+      transition: transform 0.6s ease;
+
+      &:hover {
+        transform: rotate(180deg);
+      }
     }
   }
 
@@ -51,7 +91,6 @@ const DialogWrapper = styled.div`
   }
 
   .content {
-    margin-top: 25px;
     font-size: 14px;
     line-height: 22px;
     font-family: Roboto-Regular, Roboto, PingFangSC-Medium, PingFang SC, "Microsoft YaHei";
@@ -195,24 +234,30 @@ export const Alert = ({ info, setInfo }) => {
   )
 }
 
-const TopReferresDialog = ({ visible, setVisible }) => {
+const TopReferresDialog = ({ visible, setVisible, data }) => {
   const onClose = () => setVisible(false)
 
   return (
-    <Dialog
-      open={visible}
-      onClose={onClose}
-    >
-      <DialogWrapper>
-        <div className="title">Top 10 Invitation Orders</div>
-        <div className="content">
-          <TableTopInvites />
-        </div>
-        <div className="actions">
-          <Button type="primary" onClick={onClose}>Ok</Button>
-        </div>
-      </DialogWrapper>
-    </Dialog>
+    <ThemeProvider theme={darkDialogTheme}>
+      <Dialog
+        open={visible}
+        onClose={onClose}
+      >
+        <DialogWrapper className='top-referres-dialog-wrapper'>
+          <div className="title">
+            <span style={{ width: '24px' }}></span>
+            <span>Top referrers</span>
+            <ClearIcon onClick={onClose} />
+          </div>
+          <div className="content">
+            <TableTopInvites data={data} />
+          </div>
+          {/* <div className="actions">
+            <Button type="primary" onClick={onClose}>Ok</Button>
+          </div> */}
+        </DialogWrapper>
+      </Dialog>
+    </ThemeProvider>
   );
 }
 

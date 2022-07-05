@@ -40,13 +40,18 @@ export const FlexJustBetweenWrapper = styled.div`
         font-size: 14px;
       }
 
-      p:nth-child(2) {
-        margin-top: 10px;
-      }
-
       strong {
         width: 108px;
         display: inline-block;
+      }
+      .commission {
+        margin-top: 15px;
+        margin-left: -108px;
+        text-align: right;
+
+        .coin {
+          font-size: 28px;
+        }
       }
 
       .view {
@@ -54,14 +59,11 @@ export const FlexJustBetweenWrapper = styled.div`
         cursor: pointer;
       }
 
-      .commission {
-        font-size: 28px;
-      }
-
       .unit {
         font-size: 12px;
         position: relative;
         top: -2px;
+        margin-left: 5px;
       }
 
       .copy {
@@ -310,6 +312,7 @@ export const Content = styled.div`
 
   .tokens {
     ${flexBetween};
+    margin-bottom: 15px;
 
     p {
       ${flexAlign};
@@ -390,16 +393,15 @@ const rotateAnimation = keyframes`
 `;
 
 export const TableChunk = styled.div`
-  margin-top: 24px;
   color: #fff;
-  background: #1d1d1f;
   box-shadow: inset 0px -1px 0px 0px #414142;
   overflow-x: auto;
   min-height: 470px;
 
   &.top-invites {
-    min-width: 450px;
-    margin-top: 10px;
+    overflow: visible;
+    min-width: 500px;
+    padding: 0 30px;
     min-height: 0;
     flex: 1;
     box-shadow: none;
@@ -407,27 +409,49 @@ export const TableChunk = styled.div`
     // padding-top: 42px;
 
     .table {
-      max-height: 300px;
+      height: 460px;
       overflow-y: auto;
     }
 
-    th {
-      padding: 0 16px;
+    tr:last-child {
+      td {
+        box-shadow: none;
+      }
     }
 
+    // th {
+    //   padding: 0 12px;
+    // }
+
     .thead {
-      padding: 0 20px;
-      background: #29335a;
-      height: 42px;
+      padding: 0 130px;
+      height: 50px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 14px;
+      // font-size: 16px;
+      font-weight: bold;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      position: relative;
+      z-index: 10;
+      color: #999;
     }
 
     td {
       height: auto;
-      padding: 10px 0px;
+      padding: 12px 0px;
+      line-height: 26px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+    }
+
+    .channel_id {
+      padding-left: 60px;
+    }
+
+    .order_count {
+      padding-right: 72px;
     }
 
     .ranking {
