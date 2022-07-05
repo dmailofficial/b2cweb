@@ -240,7 +240,7 @@ const ReceiveDialog = ({ receiveId, setReceiveId, receive, errorIndex }) => {
       <DialogWrapper>
         <div className="title">Receive NFT</div>
         <div className="content">
-          <div className="text">*Please enter your Principal ID of your Plug wallet to receive NFT. We recommend using Plug wallet. Please make sure the ID is correct and usable, otherwise you will lose your NFT domain account</div>
+          <div className="text">*Please enter your Principal ID to receive NFT. Please make sure the ID is correct and usable, otherwise you will lose your NFT domain account</div>
           <div className="form">
             <input 
               type="text" 
@@ -252,7 +252,7 @@ const ReceiveDialog = ({ receiveId, setReceiveId, receive, errorIndex }) => {
               className={error ? 'error' : (focus ? 'focus' : '')} 
               placeholder="Please enter the 53-digits Principal ID of your Plug wallet" 
             />
-            <a rel="noopener noreferrer"  href="https://dmailofficial.gitbook.io/how-to-use-dmail-1/v/english-1/" target="_blank">How to get?</a>
+            <a rel="noopener noreferrer"  href="https://dmailofficial.gitbook.io/how-to-use-dmail-1/v/english-1/" target="_blank">Help Center</a>
             <div className={`errorTip ${error ? 'show' : ''}`}><i></i><span>ID format is not correct, please re-enter</span></div>
           </div>
         </div>
