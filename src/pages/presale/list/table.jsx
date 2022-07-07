@@ -6,6 +6,7 @@ import Dialog from '@mui/material/Dialog';
 import { useHistory } from "react-router-dom";
 import { observer, inject } from 'mobx-react';
 import { Alert } from './dialog'
+import { emailLogin } from '@/utils/index'
 
 import { Wrapper, ToolBar, Content, TableChunk, Button, Circle, NoDataWraper } from './css'
 import Pagination from './pagination'
@@ -157,7 +158,7 @@ const Table = (props) => {
       const obj = statusMap[status]
       if (obj.operationType === 'normal') {
         return (
-          <Button type={obj.operationType} rel="noopener noreferrer" target="_blank" href='https://evyc3-ziaaa-aaaak-aam5a-cai.ic0.app/login'>{obj.operationText}</Button>
+          <Button type={obj.operationType} rel="noopener noreferrer" target="_blank" href={emailLogin}>{obj.operationText}</Button>
         )
       }
       return (

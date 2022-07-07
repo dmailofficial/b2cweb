@@ -6,6 +6,7 @@ import { NewHome } from './css';
 import ReactPageScroller from "./scroller/index";
 import Header from '@/components/newheader';
 import { subscribeNews } from './request';
+import { emailLogin } from '@/utils/index'
 
 import arrow from '@/static/images/home/banner/arrow@2x.png'
 import rightArrow from '@/static/images/home/banner/arrow-right@2x.png'
@@ -284,7 +285,7 @@ const onComingSoon = () => {
             <div className="content">
               <h2 className='beta'>Dmail Network<span>Beta</span></h2>
               <p className="desc" style={{ marginTop: '15px' }}>Construct DID in Web3.0, Not Just an Email</p>
-              <a rel="noopener noreferrer"  href="https://evyc3-ziaaa-aaaak-aam5a-cai.ic0.app/inbox" target="_blank" className="launchBtn" >Launch Dmail <img src={rightArrow}></img></a>
+              <a rel="noopener noreferrer"  href={emailLogin} target="_blank" className="launchBtn" >Launch Dmail <img src={rightArrow}></img></a>
             </div>
             <div className="nextBtn" onClick={()=>{gotoPage(1)}}>
                 <img src={arrow}></img>
@@ -574,7 +575,7 @@ const onComingSoon = () => {
             <div className="links">
               <ul>
                 <li>Product</li>
-                <li><a rel="noopener noreferrer" target="_blank"  href="https://evyc3-ziaaa-aaaak-aam5a-cai.ic0.app/inbox">Mailbox</a></li>
+                <li><a rel="noopener noreferrer" target="_blank" href={emailLogin}>Mailbox</a></li>
                 <li><a rel="noopener noreferrer" target="_blank"  href="https://skeh5-daaaa-aaaai-aar4q-cai.raw.ic0.app/#/collection/ICDmail/items">NFTs</a></li>
                 <li><a rel="noopener noreferrer"  href="javascript:;" onClick={onComingSoon}>DApps</a></li>
               </ul>
