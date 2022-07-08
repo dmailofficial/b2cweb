@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { observer, inject } from 'mobx-react';
 
 import Header from '@/components/newheader'
-import { Wrapper, ToolBar, Content, FlexJustBetweenWrapper } from './css'
+import { Wrapper, ToolBar, Content, Info } from './css'
 import Table from './table'
 import TopReferresDialog, { Alert, Success } from './dialog'
 import axios from '@/utils/axios';
@@ -11,9 +11,10 @@ import { baseUrl } from '@/pages/presale/utils'
 import WalletDialog from '@/pages/presale/walletDialog'
 import Toast from '@/pages/presale/toast'
 import {connectWallet} from '@/pages/presale/utils'
-import metamasktipIcon from '@/static/images/presale/metamasktip.png'
 import { copyTextToClipboard } from '@/utils/index'
 import { remainDecimalByString } from '@/utils/'
+import Popover from './popover'
+import metamasktipIcon from '@/static/images/presale/metamasktip.png'
 
 const defaultInviteInfo = {
   channelId: '--',
@@ -149,6 +150,8 @@ function App({ store: { wallet } }) {
     })
   }
 
+  const twitterShare = link => `https://twitter.com/share?text=${link}&url=www.damil.ai`
+
   useEffect(async () => {
     if (!wallet.info) {
       setWalletDialog(true)
@@ -190,60 +193,41 @@ function App({ store: { wallet } }) {
           </div>
         </ToolBar>
         <Content>
-          <FlexJustBetweenWrapper>
-            <div className="info">
-              <ul>
-                <li>
-                  <strong>Referral link:</strong>
-                  <div>
+          <Info>
+            <ul>
+              <li className='commission'>
+                <div><span>Commission:</span> {topList.length ? <a className='view' onClick={viewTopReferres}>View top referres</a> : '--'}</div>
+                <p className='usdt'>
+                  <span className={inviteInfo.commission !== '--' ? 'coin' : ''}>
+                    {remainDecimalByString(inviteInfo.commission, 4)}
+                  </span>
+                  <span className='unit'>{inviteInfo.commission !== '--' ? tokenType.toUpperCase() : null}</span>
+                </p>
+                <p className='btns'>
+                  {inviteInfo.channelId !== '--' ? <a className='withdraw disabled' onClick={onWithdraw}>withdraw</a> : null}
+                </p>
+              </li>
+              <li className='referral'>
+                <div>
+                  <span>Referral link:</span> 
                   {
                     inviteInfo.channelId === '--' ? '--' : (
-                      <span className="copy">
-                        <span onClick={onCopy}>{link}</span>
-                        <i onClick={onCopy}></i>
-                      </span>
+                      <>
+                        <span onClick={onCopy} className="copy">{link}</span>
+                        <Popover />
+                      </>
                     )
                   }
-                  </div>
-                </li>
-                <li>
-                  <strong>Commission:</strong>
-                  <div>
-                    {/* {topList.length ? <p><a className='view' onClick={viewTopReferres}>View top referres</a></p> : '--'} */}
-                    <p className='commission' style={{ margin: '40px 0 0 -63px' }}>
-                    {/* <p className='commission'> */}
-                      <span className={inviteInfo.commission !== '--' ? 'coin' : ''}>
-                        {remainDecimalByString(inviteInfo.commission, 4)}
-                      </span>
-                      <span className='unit'>{inviteInfo.commission !== '--' ? tokenType.toUpperCase() : null}</span>
-                      {inviteInfo.channelId !== '--' ? <a className='withdraw disabled' onClick={onWithdraw}>withdraw</a> : null}
-                    </p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div className="tip">
-              <p style={{ marginBottom: '5px' }}>
-                Rule Description:
-              </p>
-              <p className='item'>
-                <strong>1.</strong> Get 4% commision by inviting your friends to purchase and successfully claim NFT.
-              </p>
-              <p className='item'>
-                <strong>2.</strong> Commission withdrawal will open after the end of the current presale.
-              </p>
-              <p className='item'>
-                <strong>3.</strong> USDT withdrawals support BSC address, ICP withdrawals support Dfinity address.
-              </p>
-              <p className='item'>
-                <strong>4.</strong> The minimum amount of withdrawals: USDT ≥ 1U; ICP ≥ 0.1ICP.
-              </p>
-              <p className='item'>
-                <strong>5.</strong> Withdrawal fee: USDT 1U/time; ICP 0.1ICP/time.
-              </p>
-            </div>
-          </FlexJustBetweenWrapper>
-          <div className="tabel-wrapper">
+                </div>
+                {inviteInfo.channelId === '--' ? null : (
+                  <p className='btns'>
+                    <a href={twitterShare(link)} target="_blank" className='share'><i></i>share</a>
+                  </p>
+                )}
+              </li>
+            </ul>
+          </Info>
+          <div className="table-wrapper">
             <div className="tokens">
               <div className='select'>
                 <span>Payment:</span>

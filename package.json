@@ -36,6 +36,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "build:analyze": "react-app-rewired build --analyze",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
   },

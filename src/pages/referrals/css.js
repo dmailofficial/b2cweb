@@ -2,6 +2,8 @@ import styled, { keyframes } from "styled-components";
 
 import icpIcon from "@/static/images/presale/ICP@3x.png";
 import usdtIcon from "@/static/images/presale/USDT@3x.png";
+import questionIcon from "@/static/images/question.png";
+import twitterIcon from "@/static/images/twitter.png";
 
 const redNormal = `#FF6633`;
 const redBright = `#cf4517`;
@@ -13,112 +15,137 @@ const flexJustBetween = `${flex}; justify-content: space-between;`;
 const font500 = `font-weight: 500;`;
 const font14 = "font-size: 14px;";
 
-export const FlexJustBetweenWrapper = styled.div`
-  ${flexJustBetween};
-  padding: 20px 40px 20px 0;
+export const Info = styled.div`
+  padding: 45px;
   line-height: 22px;
-  border: 1px solid #272727;
-  box-shadow: 0 0 5px 3px rgb(0, 0, 0, 30%);
-  border-radius: 5px;
+  background: #252527;
+  // box-shadow: 0 0 5px 3px rgb(0, 0, 0, 30%);
+  border-radius: 8px;
 
-  .info {
+  ul {
     display: flex;
-    justify-content: center;
+    // flex: 1;
+  }
+
+  li {
+    ${flexAlign};
+    flex-direction: column;
     flex: 1;
+    // justify-content: center;
+    font-size: 14px;
 
-    li {
-      ${flex};
-      align-items: start;
-      margin-bottom: 35px;
+    &:first-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
 
-      &:last-child {
-        margin-bottom: 0;
-      }
+    p,
+    div {
+      ${flexAlign};
+    }
 
-      p,
-      div {
+    .btns {
+      a {
+        font-weight: 600;
+        padding: 0 30px;
+        line-height: 40px;
+        border-radius: 7px;
+        cursor: pointer;
+        color: #fff;
         font-size: 14px;
-      }
-
-      strong {
-        width: 108px;
-        display: inline-block;
-      }
-      .commission {
-        margin-top: 15px;
-        margin-left: -108px;
-        text-align: right;
-
-        .coin {
-          font-size: 28px;
-        }
-      }
-
-      .view {
-        color: #ff6633;
-        cursor: pointer;
-      }
-
-      .unit {
-        font-size: 12px;
-        position: relative;
-        top: -2px;
-        margin-left: 5px;
-      }
-
-      .copy {
-        color: #3e94f5;
-        cursor: pointer;
 
         i {
-          width: 13px;
-          height: 14px;
-          position: relative;
-          top: 1px;
-          display: inline-block;
-          margin-left: 12px;
-          cursor: pointer;
-          background: url(data:image/png;base64,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);
-          background-size: 100%;
+          vertical-align: middle;
         }
-      }
-
-      .withdraw {
-        display: inline-block;
-        vertical-align: middle;
-        padding: 0 15px;
-        margin-left: 25px;
-        line-height: 32px;
-        border-radius: 4px;
-        text-align: center;
-        cursor: pointer;
-        position: relative;
-        top: -3px;
       }
 
       .disabled {
-        background: #969b9e;
+        background: #666;
+      }
+
+      .share {
+        background: #ff563f;
+
+        i {
+          width: 18px;
+          height: 15px;
+          display: inline-block;
+          margin-right: 10px;
+          cursor: pointer;
+          background: url(${twitterIcon});
+          background-size: 100%;
+        }
       }
     }
+
+    & > div {
+      margin-bottom: 30px;
+    }
+
+    div {
+      font-weight: 600;
+
+      span {
+        margin-right: 5px;
+      }
+
+      a {
+        color: #3e94f5;
+        cursor: pointer;
+      }
+
+      .copy {
+        color: #8ebbff;
+        cursor: pointer;
+      }
+
+      .icon-question {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        margin-left: 10px;
+        cursor: pointer;
+        background: url(${questionIcon});
+        background-size: 100%;
+      }
+    }
+
+    .usdt {
+      margin-bottom: 12px;
+      align-items: baseline;
+      font-weight: 600;
+    }
+
+    .coin {
+      font-size: 24px;
+      color: #f3c788;
+      line-height: 28px;
+      margin-right: 10px;
+    }
+
+    .unit {
+      font-size: 12px;
+    }
+
+    .view {
+      color: #ff6633;
+      cursor: pointer;
+    }
+  }
+`;
+
+export const Tip = styled.div`
+  padding: 12px 18px;
+  background: #252527;
+  line-height: 20px;
+  color: #fff;
+
+  p {
+    flex: 1;
   }
 
-  .tip {
-    p {
-      flex: 1;
-
-      // a {
-      //   color: #3e94f5;
-      // }
-
-      // a:hover {
-      //   text-decoration: underline;
-      // }
-    }
-
-    .item {
-      font-size: 13px;
-      text-indent: 1.2em;
-    }
+  .item {
+    font-size: 13px;
+    text-indent: 1.2em;
   }
 `;
 
@@ -303,7 +330,7 @@ export const Content = styled.div`
     padding: 0px;
   }
 
-  .tabel-wrapper {
+  .table-wrapper {
     margin-top: 18px;
     padding: 22px;
     background: #252527;
@@ -313,6 +340,7 @@ export const Content = styled.div`
   .tokens {
     ${flexBetween};
     margin-bottom: 15px;
+    font-size: 14px;
 
     p {
       ${flexAlign};
