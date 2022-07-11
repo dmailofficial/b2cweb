@@ -58,6 +58,10 @@ export const Info = styled.div`
         }
       }
 
+      .withdraw {
+        margin-left: 30px;
+      }
+
       .disabled {
         background: #666;
       }

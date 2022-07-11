@@ -150,7 +150,7 @@ function App({ store: { wallet } }) {
     })
   }
 
-  const twitterShare = link => `https://twitter.com/share?text=${link}&url=www.damil.ai`
+  const twitterShare = link => `https://twitter.com/share?text=I am saying "Hi" to you by the global first decentralized mailbox Dmail Network! Come to choose your favorite Dmail Domain Account, surf with me in the Web3 era, it will be permanently available and absolutely safe: ${link}&url=`
 
   useEffect(async () => {
     if (!wallet.info) {
@@ -196,15 +196,18 @@ function App({ store: { wallet } }) {
           <Info>
             <ul>
               <li className='commission'>
-                <div><span>Commission:</span> {topList.length ? <a className='view' onClick={viewTopReferres}>View top referres</a> : '--'}</div>
-                <p className='usdt'>
+                <div>
+                  <span>Commission:</span>
+                  {/* {topList.length ? <a className='view' onClick={viewTopReferres}>View top referres</a> : '--'} */}
+                </div>
+                <p className='usdt btns'>
                   <span className={inviteInfo.commission !== '--' ? 'coin' : ''}>
                     {remainDecimalByString(inviteInfo.commission, 4)}
                   </span>
                   <span className='unit'>{inviteInfo.commission !== '--' ? tokenType.toUpperCase() : null}</span>
+                  {inviteInfo.channelId !== '--' ? <a className='withdraw disabled' onClick={onWithdraw}>withdraw</a> : null}
                 </p>
                 <p className='btns'>
-                  {inviteInfo.channelId !== '--' ? <a className='withdraw disabled' onClick={onWithdraw}>withdraw</a> : null}
                 </p>
               </li>
               <li className='referral'>
