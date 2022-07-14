@@ -54,7 +54,7 @@ const Table = ({ data }) => {
       }
       return index + 1
     }
-    if (key === 'address') {
+    if (key === 'address' && typeof value === 'string') {
       return value.substring(0,6)+"***"+value.substring(value.length-4, value.length)
     }
     return value || '- -'

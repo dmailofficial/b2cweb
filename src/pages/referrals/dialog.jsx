@@ -57,6 +57,10 @@ const DialogWrapper = styled.div`
       font-weight: bold;
     }
 
+    .content {
+      padding-bottom: 18px;
+    }
+
     svg {
       cursor: pointer;
       transition: transform 0.6s ease;

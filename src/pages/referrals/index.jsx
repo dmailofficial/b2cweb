@@ -124,7 +124,8 @@ function App({ store: { wallet } }) {
         setData([])
       }
       if (success && Array.isArray(toplist)) {
-        setTopList(toplist.slice(0, 20))
+        const fToplist = toplist.filter(({ address }) => !!address)
+        setTopList(fToplist.slice(0, 20))
       } else {
         setTopList([])
       }
@@ -198,7 +199,7 @@ function App({ store: { wallet } }) {
               <li className='commission'>
                 <div>
                   <span>Commission:</span>
-                  {/* {topList.length ? <a className='view' onClick={viewTopReferres}>View top referres</a> : '--'} */}
+                  {topList.length ? <a className='view' onClick={viewTopReferres}>View top referres</a> : '--'}
                 </div>
                 <p className='usdt btns'>
                   <span className={inviteInfo.commission !== '--' ? 'coin' : ''}>

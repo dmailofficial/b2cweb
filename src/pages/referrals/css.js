@@ -447,7 +447,7 @@ export const TableChunk = styled.div`
 
     tr:last-child {
       td {
-        box-shadow: none;
+        border: none;
       }
     }
 
