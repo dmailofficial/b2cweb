@@ -151,7 +151,7 @@ function App({ store: { wallet } }) {
     })
   }
 
-  const twitterShare = link => `https://twitter.com/share?text=I am saying "Hi" to you by the global first decentralized mailbox Dmail Network! Come to choose your favorite Dmail Domain Account, surf with me in the Web3 era, it will be permanently available and absolutely safe: ${link}&url=`
+  const twitterShare = link => `https://twitter.com/share?text=I am saying "Hi" to you via global 1st Decentralized Mailbox Dmail Network!%0A%0ACome to pick your favorite Dmail NFT Domain Account, permanent %26 safer, surf with me in the Web3 era: ${link}%0A%0A%23DmailNetwork %23Web3 %23DID %23NFT %23Domain&url=`
 
   useEffect(async () => {
     if (!wallet.info) {
