@@ -289,6 +289,7 @@ class MainpannelComp extends React.Component {
                             <h3>Supported Payment Methods</h3>
                         </div>
                         <p><span></span>USDT - Ethereum/BNB Chain</p>
+                        <p><span></span>BUSD-BNB Chain</p>
                         <p><span></span>ICP - Dfinity</p>
                     </div>
                 </div>
