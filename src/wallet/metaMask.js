@@ -1,7 +1,7 @@
 import Web3 from "web3";
 import { Contract, ethers } from "ethers";
 import BigNumber from "bignumber.js";
-import { BSC_abi, ERC_abi } from "./abis";
+import { BSC_abi, ERC_abi, BSC_BUSD_ABI } from "./abis";
 import { setNumber } from "./setByNumber";
 
 const MetaMaskChainAbiMap = {
@@ -13,14 +13,24 @@ const MetaMaskChainAbiMap = {
     chainId: "1",
   },
   56: {
-    contractAddress: "0x55d398326f99059fF775485246999027B3197955",
-    abi: BSC_abi,
-    toAddress: "0xeC4B76ef0F79bc8FEeE9c5C10bc711EEe1e423D2",
-    decimals: 18,
-    chainId: "56",
+    usdt: {
+      contractAddress: "0x55d398326f99059fF775485246999027B3197955",
+      abi: BSC_abi,
+      toAddress: "0xeC4B76ef0F79bc8FEeE9c5C10bc711EEe1e423D2",
+      decimals: 18,
+      chainId: "56",
+    },
+    busd: {
+      contractAddress: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+      abi: BSC_BUSD_ABI,
+      toAddress: "0xeC4B76ef0F79bc8FEeE9c5C10bc711EEe1e423D2",
+      decimals: 18,
+      chainId: "56",
+    },
   },
 };
 
+const hasMultiTokenChainIds = [56];
 class MetaMaskWallet {
   constructor(props) {
     this.walletName = props?.walletName || "";
@@ -36,7 +46,45 @@ class MetaMaskWallet {
     });
   };
 
-  getChainInfo = async () => {
+  async switchChain(chainId = 1, token) {
+    try {
+      if (window.ethereum) {
+        return await window.ethereum
+          .request({
+            method: "wallet_switchEthereumChain",
+            params: [
+              {
+                chainId: `0x${chainId.toString(16)}`,
+              },
+            ],
+          })
+          .then((res) => {
+            return this._getChainInfo(chainId, token);
+          })
+          .catch((error) => {
+            console.log("wallet_switchEthereumChain error : ", error);
+            return error;
+          });
+        // need to click to pay again
+        // return null
+      } else {
+        this._install();
+        return null;
+      }
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  _getChainInfo = (chainId, token = "usdt") => {
+    if (hasMultiTokenChainIds.includes(chainId)) {
+      return MetaMaskChainAbiMap[chainId][token];
+    }
+    return MetaMaskChainAbiMap[chainId];
+  };
+
+  getChainInfo = async (token = "usdt") => {
     let chainId = "";
     let chainInfo = null;
     try {
@@ -45,38 +93,11 @@ class MetaMaskWallet {
       return null;
     }
     if (chainId && chainId in MetaMaskChainAbiMap) {
+      return this._getChainInfo(chainId, token);
       // if the chain already has
-      return MetaMaskChainAbiMap[chainId];
     } else {
+      return await this.switchChain(1, token);
       // help to switch chain
-      try {
-        if (window.ethereum) {
-          return await window.ethereum
-            .request({
-              method: "wallet_switchEthereumChain",
-              params: [
-                {
-                  chainId: "0x1",
-                },
-              ],
-            })
-            .then((res) => {
-              return MetaMaskChainAbiMap["1"];
-            })
-            .catch((error) => {
-              console.log("wallet_switchEthereumChain error : ", error);
-              return error;
-            });
-          // need to click to pay again
-          // return null
-        } else {
-          this._install();
-          return null;
-        }
-      } catch (error) {
-        console.log(error);
-        return null;
-      }
     }
   };
 
@@ -116,9 +137,13 @@ class MetaMaskWallet {
     window.open(install);
   };
 
-  initContract = async () => {
-    const chainInfo = await this.getChainInfo();
-    console.log("getChainInfo:::::, getChainInfo::::::---", chainInfo.code);
+  initContract = async (token = "usdt") => {
+    const chainInfo = await this.getChainInfo(token);
+    console.log(
+      "getChainInfo:::::, getChainInfo::::::---",
+      chainInfo.code,
+      chainInfo
+    );
     if (chainInfo.code) {
       return chainInfo;
     }
@@ -134,8 +159,8 @@ class MetaMaskWallet {
     }
   };
 
-  getBalanceOf = async (address) => {
-    const contract = await this.initContract();
+  getBalanceOf = async (address, token) => {
+    const contract = await this.initContract(token);
     if (contract.code) {
       return contract;
     }
@@ -154,14 +179,15 @@ class MetaMaskWallet {
     address,
     price,
     successcallback,
-    failedcallback
+    failedcallback,
+    token
   ) => {
-    const contract = await this.initContract();
+    const contract = await this.initContract(token);
     if (contract.code) {
       failedcallback && failedcallback(contract);
       return contract;
     }
-    const chainInfo = await this.getChainInfo();
+    const chainInfo = await this.getChainInfo(token);
     if (chainInfo.code) {
       failedcallback && failedcallback(contract);
       return chainInfo;

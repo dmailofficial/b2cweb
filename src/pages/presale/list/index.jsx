@@ -158,12 +158,12 @@ function App({ store: { wallet, presale } }) {
       if (res.data) {
         const list = res.data.data || []
         setPageCount(totalPages || 0)
-        setData(list.map(({ created, id, price, product_name, status, tx, nft_id, p_id }) => ({
+        setData(list.map(({ created, id, price, product_name, status, tx, nft_id, p_id, network }) => ({
           id,
           date: created,
           product_name,
           domain: `${product_name}@dmail.ai`,
-          price: `${price} ${walletName === 'plug' ? 'ICP' : 'USDT'}`,
+          price: `${price} ${walletName === 'plug' ? 'ICP' : (network === '5656' ? 'BUSD' : 'USDT')}`,
           hash: tx,
           status,
           number: nft_id,

@@ -87,6 +87,8 @@ function App({ store: { wallet } }) {
     const params = walletName === 'metamask' ? { jwt } : { is_verify: true }
     if (tokenType === 'icp') {
       params.network = 998
+    } else if (tokenType === 'busd') {
+      params.network = 5656
     }
     try {
       const res = await axios({
@@ -117,7 +119,9 @@ function App({ store: { wallet } }) {
         setData(data.map(({ address, buy_count, price_value }, index) => ({
           index: index + 1,
           address: typeof address === 'string' && address.length ?  address.substring(0,6)+"***"+address.substring(address.length-4, address.length) : '',
-          buyCount: buy_count, priceValue: price_value, tokenType
+          buyCount: buy_count,
+          priceValue: price_value,
+          tokenType
         })))
       } else {
         setPageCount(0)
@@ -238,6 +242,10 @@ function App({ store: { wallet } }) {
                 <p onClick={() => setTokenType('usdt')}>
                   <span className={`raInput ${tokenType === 'usdt' ? 'checked' : ''}`}><span></span></span>
                   <span>USDT</span>
+                </p>
+                <p onClick={() => setTokenType('busd')}>
+                  <span className={`raInput ${tokenType === 'busd' ? 'checked' : ''}`}><span></span></span>
+                  <span>BUSD</span>
                 </p>
                 <p onClick={() => setTokenType('icp')}>
                   <span className={`raInput ${tokenType === 'icp' ? 'checked' : ''}`}><span></span></span>

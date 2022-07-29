@@ -73,7 +73,7 @@ class DDialog extends React.Component {
     }
 
     componentDidMount(){
-        console.log("this.props.children:", this.props.children)
+        // console.log("this.props.children:", this.props.children)
     }
 
     handleClose = () => {

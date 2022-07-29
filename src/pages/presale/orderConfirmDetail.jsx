@@ -6,6 +6,7 @@ import Toast from './toast'
 import backArrow from '@/static/images/presale/arrow-left@2x.png'
 import icpIcon from '@/static/images/presale/ICP@3x.png'
 import usdtIcon from '@/static/images/presale/USDT@3x.png'
+import busdIcon from '@/static/images/presale/busd.png'
 import { CompatibleClassCountDown } from '@/components/countDown'
 import axios from '@/utils/axios';
 import { baseUrl } from './utils'
@@ -19,7 +20,7 @@ class orderConfirmDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            radioVal: "usdt",
+            token: "",
             errorToast: false,
             errorToastMsg: '',
             detail: {},
@@ -39,11 +40,11 @@ class orderConfirmDetail extends React.Component {
         this.getAddressDetail();
         if(this.props.walletStore.walletName == "plug"){
             this.setState({
-                radioVal: "icp"
+                token: "icp"
             })
         }else{
             this.setState({
-                radioVal: "usdt"
+                token: "usdt"
             })
         }
     }
@@ -54,33 +55,49 @@ class orderConfirmDetail extends React.Component {
         }
         if(nextProps.walletStore.walletName == "plug"){
             this.setState({
-                radioVal: "icp"
+                token: "icp"
             })
         }else{
             this.setState({
-                radioVal: "usdt"
+                token: "usdt"
             })
         }
         return true
     }
 
-    handleRadioCheck = async (type) => {
-        return;
-        if(this.state.walletSwitching || this.state.radioVal != type){return;}
-        this.setState({
-            radioVal: type,
-            walletSwitching: true
-        })
-        if(type == "icp"){
-           await this.props.handleWallet("plug")
-        }else{
-           await this.props.handleWallet("metamask")
+    handleRadioCheck = async (token, disabled) => {
+        if (disabled) {
+            return;
         }
-
+        let wallet = this.props.wallet
+        if(!wallet.getChainInfo){
+            wallet = new Wallet(this.props.walletStore.walletName);
+        }
+        const chainId = await wallet._getChainId();
+        if (token === 'busd') {
+            if (chainId !== 56) {
+                const res = await wallet.switchChain(56, token)
+                if (!res) {
+                    return false;
+                }
+            }
+            this.setState({
+                token
+            })
+            
+        } else if (token === 'usdt') {
+            let _chainId = chainId
+            if (![1, 56].includes(chainId)) {
+                _chainId = 1
+                const res = await wallet.switchChain(_chainId, token)
+                if (!res) {
+                    return false;
+                }
+            }
+        }
         this.setState({
-            walletSwitching: false
+            token
         })
-        
     }
 
     handleBack = () => {
@@ -226,7 +243,7 @@ class orderConfirmDetail extends React.Component {
         //     this.poptoast(_checkResult.message)
         //     return
         // }
-        // console.log("this.props.walletStore.walletName:::", this.props.walletStore.walletName);
+        // console.log("this.props.walletStore.walletName:::", this.props.walletStore.walletName, this.props.wallet);
         let _wallet = this.props.wallet
         if(!_wallet.getBalanceOf){
             if(!this.props.walletStore.walletName){
@@ -245,7 +262,7 @@ class orderConfirmDetail extends React.Component {
         // }, 18*1000)
         // console.log("this.props.walletStore.walletName:::", this.props.walletStore.info.address);
 
-        const balance = await _wallet.getBalanceOf(this.props.walletStore.info.address)
+        const balance = await _wallet.getBalanceOf(this.props.walletStore.info.address, this.state.token)
         if(balance.code){
             this.payfaild(balance)
         }
@@ -271,7 +288,7 @@ class orderConfirmDetail extends React.Component {
             const toAddress = toPayAddress ? toPayAddress[this.props.walletStore.walletName == "metamask" ? 'erc' : 'icp'] : ''
             // this.setState({paying: false})
             // console.log("this.state.paying::", this.state.paying)
-            await _wallet.transfer(toAddress, this.props.walletStore.info.address, curPrice, this.paysuccess, this.payfaild)
+            await _wallet.transfer(toAddress, this.props.walletStore.info.address, curPrice, this.paysuccess, this.payfaild, this.state.token)
         } catch (error) {
             this.closePoptoast();
             console.log("transfer faild:::::---:", error)
@@ -296,6 +313,9 @@ class orderConfirmDetail extends React.Component {
             chainId = 998
         }else{
             curPrice = this.state.detail.price
+        }
+        if ( this.state.token === 'busd' ) {
+            chainId = 5656
         }
         const { success, msg, data } = await detectTransferIsSuccess(hash, from, curPrice, this.state.detail.name, this.props.loginInfo.jwt, chainId, this.props.presaleStore.channelId)
         if(!success){
@@ -369,6 +389,22 @@ class orderConfirmDetail extends React.Component {
     }
     
     componentDidMount() {
+        window.ethereum && window.ethereum.on('chainChanged', (res) => {
+            const chainId = parseInt(res)
+            console.log('chainChanged~~', chainId)
+            let token = this.state.token
+            if (chainId === 1) {
+                token = "usdt"
+            } else if (chainId === 56) {
+                !token && (token = "usdt")
+            } else {
+                token = ""
+            }
+            this.setState({
+                token
+            })
+        });
+
         this.props.onRef(this)
         this.hiddenProperty = 'hidden' in document ? 'hidden' :    
                 'webkitHidden' in document ? 'webkitHidden' :    
@@ -409,6 +445,10 @@ class orderConfirmDetail extends React.Component {
     }
 
     render() {
+        const { walletName } = this.props.walletStore
+        const { token } = this.state
+        console.log(walletName, token)
+
         return (
             <ConfirmPannel>
                 <div className="backBtn">
@@ -423,33 +463,44 @@ class orderConfirmDetail extends React.Component {
                         <p className="tip">Dmail NFT Domain Account is locked, please complete payment </p>
                         <div className = "info">
                             <div className = "item">
-                                <span className="label">Owner：</span>
+                                <span className="label">Owner:</span>
                                 <span className="value">None</span>
                             </div>
                             <div className = "item">
                                 <span className="label">Expiration Date:</span>
                                 <span className="value">Permanent</span>
                             </div>
-                            <div className = "item multiline">
+                            <div className = "item payTypes">
                                 <span className="label">Select payment method:</span>
                                 <div className="valueWrap">
-                                    <div className="radios">
+                                    <div className="radios" style={{ flexFlow: 'column', alignItems: 'start'}}>
+                                        <div style={{display: "flex"}}>
+                                            <div 
+                                                className={`radio ${walletName !== "metamask" ? 'disabled' : ''} ${walletName == "metamask" && token === "usdt" ? 'checked' : ''}`}
+                                                onClick={()=>{this.handleRadioCheck("usdt", walletName !== "metamask")}}
+                                            >
+                                                <span className="raInput"><span></span></span>
+                                                <img src={usdtIcon}></img>
+                                                <span className="raLabel">USDT</span>
+                                            </div>
+                                            <div 
+                                                className={`radio ${walletName !== "metamask" ? 'disabled' : ''} ${walletName == "metamask" && token === "busd" ? 'checked' : ''}`}
+                                                style={{marginRight: 0}}
+                                                onClick={()=>{this.handleRadioCheck("busd", walletName !== "metamask")}}
+                                            >
+                                                <span className="raInput"><span></span></span>
+                                                <img src={busdIcon} className="busd" />
+                                                <span className="raLabel">BUSD</span>
+                                            </div>
+                                        </div>
                                         <div 
-                                            className={this.props.walletStore.walletName == "plug" ? "radio checked" : "radio disabled"}
-                                            onClick={()=>{this.handleRadioCheck("icp")}}
+                                            className={walletName == "plug" ? "radio checked" : "radio disabled"}
+                                            style={{marginTop: '8px'}}
+                                            onClick={()=>{this.handleRadioCheck("icp", walletName !== "plug")}}
                                         >
                                             <span className="raInput"><span></span></span>
                                             <img className="icp" src={icpIcon}></img>
                                             <span className="raLabel">ICP</span>
-                                        </div>
-
-                                        <div 
-                                            className={this.props.walletStore.walletName == "metamask" ? "radio checked" : "radio disabled"}
-                                            onClick={()=>{this.handleRadioCheck("usdt")}}
-                                        >
-                                            <span className="raInput"><span></span></span>
-                                            <img src={usdtIcon}></img>
-                                            <span className="raLabel">USDT</span>
                                         </div>
                                     </div>
                                     
@@ -458,7 +509,7 @@ class orderConfirmDetail extends React.Component {
                             <div className = "item multiline">
                                 <span className="label">Registiation price to pay:</span>
                                 <div className="valueWrap">
-                                    <p className="value"><span>{this.state.detail.price}</span> USDT</p>
+                                    <p className="value"><span>{this.state.detail.price}</span> USDT/BUSD</p>
                                     <p className="value"><b>≈ </b><span className="small">{this.state.detail.icpPrice}</span> ICP</p>
                                 </div>
                             </div>
