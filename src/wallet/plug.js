@@ -96,6 +96,7 @@ class PlugWallet {
       successcallback && successcallback(address, result.height);
       return result;
     } catch (error) {
+      console.error('plug transfer', error)
       failedcallback && failedcallback(error);
     }
   };

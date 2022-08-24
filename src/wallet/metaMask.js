@@ -153,6 +153,7 @@ class MetaMaskWallet {
       const signer = provider.getSigner();
 
       const contract = new Contract(contractAddress, abi, signer);
+      // console.log('initContract~~', contract.provider.sendTransaction, contract)
       return contract;
     } catch (error) {
       console.error("initContract: ", error);
@@ -165,11 +166,10 @@ class MetaMaskWallet {
       return contract;
     }
     const balance = await contract.balanceOf(address);
-    console.log("getBalanceOf:::::", balance);
     const chainId = await this._getChainId();
     let powNum = chainId == 1 ? 6 : 18;
-    const amount =
-      new BigNumber(balance._hex, 16).toNumber() / Math.pow(10, powNum);
+    const amount = new BigNumber(balance._hex, 16).toNumber() / Math.pow(10, powNum);
+    // console.log("getBalanceOf:::::", address, balance, amount);
 
     return { amount: amount };
   };
@@ -204,8 +204,12 @@ class MetaMaskWallet {
     //     return false
     // }
     try {
+      const  gasPrice = await contract.provider.getGasPrice();
       return contract
-        .transfer(toAddress || chainInfo.toAddress, setNumber(+price, decimals))
+        .transfer(toAddress || chainInfo.toAddress, setNumber(+price, decimals), {
+          // gasLimit: gasLimit,
+          gasPrice: gasPrice
+        })
         .then((res) => {
           const { from, hash } = res;
           console.log("from::hash::::", from, hash);
