@@ -6,7 +6,7 @@ const isPro = window.location.host === "dmail.ai";
 export const emailHost = isPro
   ? "evyc3-ziaaa-aaaak-aam5a-cai.ic0.app"
   : "ofbzl-tqaaa-aaaak-aav5q-cai.ic0.app";
-export const emailLogin = `https://${emailHost}/login`;
+export const emailLogin = `https://${emailHost}/inbox`;
 
 export const copyTextToClipboard = (text, successText) => {
   if (!navigator.clipboard) {
