@@ -5,7 +5,8 @@ import { observer, inject } from 'mobx-react';
 import Header from '@/components/newheader'
 import { Wrapper, ToolBar, Content, Info } from './css'
 import Table from './table'
-import TopReferresDialog, { Alert, Success } from './dialog'
+import TopReferresDialog, { Alert, Success, WithdrawalsRecordDialog } from './dialog'
+import WithdrawDialog from './withdrawDialog'
 import axios from '@/utils/axios';
 import { baseUrl } from '@/pages/presale/utils'
 import WalletDialog from '@/pages/presale/walletDialog'
@@ -15,6 +16,8 @@ import { copyTextToClipboard } from '@/utils/index'
 import { remainDecimalByString } from '@/utils/'
 import Popover from './popover'
 import metamasktipIcon from '@/static/images/presale/metamasktip.png'
+import { getChannelPrice } from './api'
+import { getNetwork } from './utils'
 
 const defaultInviteInfo = {
   channelId: '--',
@@ -38,12 +41,16 @@ function App({ store: { wallet } }) {
   const [alertInfo, setAlertInfo] = useState(null)
   const [topReferresVisible, setTopReferresVisible] = useState(false)
   const [successText, setSuccessText] = useState('')
+  const [withdrawVisible, setWithdrawVisible] = useState(false)
+  const [showWithdrawalsRecordPop, setShowWithdrawalsRecordPop] = useState(false)
 
   const [walletInstance, setWalletInstance] = useState({})
   const [walletDialog, setWalletDialog] = useState(false)
 
   const [vertip, setVertip] = useState(null)
   const [round, setRound] = useState(0)
+  
+  const onSelect = (type) => () => setTokenType(type)
 
   const walletDialogClose = () => {
     setWalletDialog(false);
@@ -78,10 +85,23 @@ function App({ store: { wallet } }) {
     history.push("/presale")
   }
 
+  const [currentCoin, setCurrentCoin] = useState(0)
+  const fetchCurrentCoin = useCallback(async (payType, channelId) => {
+    if (!channelId) {
+      return
+    }
+    const balance = await getChannelPrice(getNetwork(payType), channelId)
+    setCurrentCoin(balance)
+  }, [])
+
+  const pageIndexRef = useRef(0)
+  const pageSizeRef = useRef(0)
   const fetchData = useCallback(async ({ pageIndex, pageSize }) => {
     if (!wallet.info || !wallet.info.address || !wallet.info.walletName) {
       return
     }
+    pageIndexRef.current = pageIndex
+    pageSizeRef.current = pageSize
     const { jwt, address, walletName } = wallet.info
     setLoading(true)
     const params = walletName === 'metamask' ? { jwt } : { is_verify: true }
@@ -90,12 +110,13 @@ function App({ store: { wallet } }) {
     } else if (tokenType === 'busd') {
       params.network = 5656
     }
+    const _address = process.env.NODE_ENV === "development" ? '0xBAB174033c9e8B8a129e8fce58495F2Cfa4A5A3b' : address
     try {
       const res = await axios({
         url: `${baseUrl}/usersrewards`,
         method: 'post',
         data: {
-          address,
+          address: _address,
           page: pageIndex + 1,
           pageSize: pageSize,
           ...params,
@@ -109,8 +130,9 @@ function App({ store: { wallet } }) {
           inviteNum: totalCount || 0,
           totalOrders: totalTx || 0,
           totalAmount: totalValus || 0,
-          commission: totalcommission || 0,
+          // commission: totalcommission || 0,
         })
+        fetchCurrentCoin(tokenType, user_channel_id)
       } else {
         setInviteInfo(defaultInviteInfo)
       }
@@ -138,6 +160,9 @@ function App({ store: { wallet } }) {
     }
     setLoading(false)
   }, [wallet.info, tokenType])
+  const reFetchData = () => {
+    fetchData(pageIndexRef.current, pageSizeRef.current)
+  }
 
   const link = `https://dmail.ai/presale/${inviteInfo.channelId}`
   const onCopy = () => {
@@ -149,10 +174,15 @@ function App({ store: { wallet } }) {
   }
 
   const onWithdraw = () => {
-    setAlertInfo({
-      title: 'Your refferal rewards will be open for withdraw after the NFT presale.',
-      isError: false,
-    })
+    if (inviteInfo.channelId === '--') {
+      return
+    }
+
+    setWithdrawVisible(true)
+    // setAlertInfo({
+    //   title: 'Your refferal rewards will be open for withdraw after the NFT presale.',
+    //   isError: false,
+    // })
   }
 
   const twitterShare = link => `https://twitter.com/share?text=I am saying "Hi" to you via global 1st Decentralized Mailbox Dmail Network!%0A%0ACome to pick your favorite Dmail NFT Domain Account, permanent %26 safer, surf with me in the Web3 era: ${link}%0A%0A%23DmailNetwork %23Web3 %23DID %23NFT %23Domain&url=`
@@ -201,19 +231,20 @@ function App({ store: { wallet } }) {
           <Info>
             <ul>
               <li className='commission'>
-                <div>
+                {/* <div>
                   <span>Commission:</span>
                   {topList.length ? <a className='view' onClick={viewTopReferres}>View top referres</a> : '--'}
-                </div>
+                </div> */}
                 <p className='usdt btns'>
-                  <span className={inviteInfo.commission !== '--' ? 'coin' : ''}>
-                    {remainDecimalByString(inviteInfo.commission, 4)}
+                  <span className={'coin'}>
+                    {remainDecimalByString(currentCoin, 4)}
                   </span>
-                  <span className='unit'>{inviteInfo.commission !== '--' ? tokenType.toUpperCase() : null}</span>
-                  {inviteInfo.channelId !== '--' ? <a className='withdraw disabled' onClick={onWithdraw}>withdraw</a> : null}
+                  <span className='unit'>{tokenType.toUpperCase()}</span>
                 </p>
                 <p className='btns'>
+                {inviteInfo.channelId !== '--' ? <a className='withdraw disabled' onClick={onWithdraw}>withdraw</a> : null}
                 </p>
+                <p className="text" style={{ cursor: 'pointer' }} onClick={() => setShowWithdrawalsRecordPop(true)}>Withdrawals record</p>
               </li>
               <li className='referral'>
                 <div>
@@ -270,6 +301,17 @@ function App({ store: { wallet } }) {
         walletStore = {wallet}
         round = {round}
       />
+      <WithdrawDialog
+        loginAddress={address}
+        loading={loading}
+        available={currentCoin}
+        tokenType={tokenType}
+        payTypeSelect={onSelect}
+        channelId={inviteInfo.channelId}
+        reFetchData={reFetchData}
+        visible={withdrawVisible}
+        setVisible={setWithdrawVisible}
+      />
       <Alert info={alertInfo} setInfo={setAlertInfo} />
       <Success text={successText} setText={setSuccessText} />
       <Toast
@@ -282,6 +324,12 @@ function App({ store: { wallet } }) {
         data={topList}
         visible={topReferresVisible}
         setVisible={setTopReferresVisible}
+      />
+      <WithdrawalsRecordDialog
+        tokenType={tokenType}
+        channelId={inviteInfo.channelId}
+        visible={showWithdrawalsRecordPop}
+        setVisible={setShowWithdrawalsRecordPop}
       />
     </>
   )

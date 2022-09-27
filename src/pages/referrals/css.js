@@ -59,7 +59,7 @@ export const Info = styled.div`
       }
 
       .withdraw {
-        margin-left: 30px;
+        margin-bottom: 15px;
       }
 
       .disabled {
@@ -114,7 +114,7 @@ export const Info = styled.div`
     }
 
     .usdt {
-      margin-bottom: 12px;
+      margin-bottom: 15px;
       align-items: baseline;
       font-weight: 600;
     }
@@ -429,6 +429,47 @@ export const TableChunk = styled.div`
   box-shadow: inset 0px -1px 0px 0px #414142;
   overflow-x: auto;
   min-height: 470px;
+
+  &.withdrawals-record {
+    box-shadow: none;
+    tr {
+      th:first-child, td:first-child {
+        padding-left: 40px;
+      }
+      th:last-child, td:last-child {
+        padding-right: 40px;
+      }
+    }
+    .state {
+      ${flexAlign};
+      i {
+        width: 6px;
+        height: 6px;
+        margin-right: 4px;
+        border-radius: 50%;
+      }
+      &.withdrawing i {
+        background-color: #FF563F;
+      }
+      &.completed i {
+        background-color: #55CADB;
+      }
+      &.failed {
+        i {
+          background-color: #999;
+        }
+        svg {
+          font-size: 14px;
+          font-weight: normal;
+          color: #fff;
+          border: 1px solid #fff;
+          border-radius: 50%;
+          margin-left: 5px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 
   &.top-invites {
     overflow: visible;

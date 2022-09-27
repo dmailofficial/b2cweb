@@ -1,6 +1,7 @@
 import axios from '@/utils/axios';
 
 const baseUrl = 'https://pay.dmail.ai'
+// const baseUrl = 'https://testmail.dmail.ai'
 
 const plugShim = (address, data) => {
   if(data.address.indexOf('-')>0){
@@ -137,11 +138,13 @@ export const verifySign = async (address, signature) => {
 export const detectTransferIsSuccess = async (hash, address, price, product_name, jwt, network = '56', channel_id) => {
   let data = {
     address, price, product_name, tx: hash, jwt, network, channel_id
+    // address, price, product_name, tx: `${hash}`, jwt, network, channel_id
   }
   data = plugShim(data.address, data)
 
   return axios({
     url: `${baseUrl}/transfer`,
+    // url: `${baseUrl}/api2/v2/tradeTrans/createTradeTrans`,
     method: 'post',
     data: data
     // errorTitle: '',

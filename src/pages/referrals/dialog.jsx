@@ -6,9 +6,10 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ClearIcon from '@mui/icons-material/Clear';
 
 import TableTopInvites from './tableTopInvites'
+import WithdrawalsRecord from './withdrawalsRecord'
 import { Button, SuccessToast } from './css'
 
-const darkDialogTheme = createTheme({
+export const darkDialogTheme = createTheme({
   components: {
     MuiDialog: {
       styleOverrides: {
@@ -28,7 +29,7 @@ const darkDialogTheme = createTheme({
   }
 })
 
-const DialogWrapper = styled.div`
+export const DialogWrapper = styled.div`
   min-width: 310px;
   padding: 16px 32px 24px;
   color: #1D1D1F;
@@ -55,20 +56,24 @@ const DialogWrapper = styled.div`
       align-items: center;
       font-size: 16px;
       font-weight: bold;
+
+      svg {
+        cursor: pointer;
+        transition: transform 0.6s ease;
+  
+        &:hover {
+          transform: rotate(180deg);
+        }
+      }
     }
 
     .content {
       padding-bottom: 18px;
     }
+  }
 
-    svg {
-      cursor: pointer;
-      transition: transform 0.6s ease;
-
-      &:hover {
-        transform: rotate(180deg);
-      }
-    }
+  &.withdrawals-record-wrapper {
+    min-width: 1100px;
   }
 
   .title {
@@ -236,6 +241,36 @@ export const Alert = ({ info, setInfo }) => {
       )}
     </Dialog>
   )
+}
+
+export const WithdrawalsRecordDialog = ({ visible, setVisible, channelId, tokenType }) => {
+  const onClose = () => setVisible(false)
+
+  return (
+    <ThemeProvider theme={darkDialogTheme}>
+      <Dialog
+        open={visible}
+        onClose={onClose}
+      >
+        <DialogWrapper className='top-referres-dialog-wrapper withdrawals-record-wrapper'>
+          <div className="title">
+            <span style={{ width: '24px' }}></span>
+            <span>Withdrawals record</span>
+            <ClearIcon onClick={onClose} />
+          </div>
+          <div className="content">
+            <WithdrawalsRecord
+              tokenType={tokenType}
+              channelId={channelId}
+            />
+          </div>
+          {/* <div className="actions">
+            <Button type="primary" onClick={onClose}>Ok</Button>
+          </div> */}
+        </DialogWrapper>
+      </Dialog>
+    </ThemeProvider>
+  );
 }
 
 const TopReferresDialog = ({ visible, setVisible, data }) => {

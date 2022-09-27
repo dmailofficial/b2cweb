@@ -30,7 +30,7 @@ const columns = [
   },
 ] 
 
-const NoData = () => {
+export const NoData = () => {
   return (
     <NoDataWraper>
       <div className="no-data">

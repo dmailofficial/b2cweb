@@ -214,7 +214,6 @@ const Pagination = ({ store: { presale }, children, columns, data, fetchData, lo
   }, [loading])
 
   useEffect(() => {
-    console.log('presale.triggerReload', presale.triggerReload, pageInfo.current, loadingRef.current)
     if (presale.triggerReload > 0) {
       const { pageIndex, pageSize } = pageInfo.current
       !loadingRef.current && fetchData({ pageIndex, pageSize })

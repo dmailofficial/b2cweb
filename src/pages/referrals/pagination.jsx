@@ -173,7 +173,7 @@ const Pagination = ({ store: { presale }, children, columns, data, fetchData, lo
   } = useTable({
     columns,
     data,
-    initialState: { pageIndex: 0 }, // Pass our hoisted table state
+    initialState: { pageIndex: 0, pageSize: 10 }, // Pass our hoisted table state
     manualPagination: true, // Tell the usePagination
     // hook that we'll handle our own data fetching
     // This means we'll also have to provide our own
@@ -214,7 +214,6 @@ const Pagination = ({ store: { presale }, children, columns, data, fetchData, lo
   }, [loading])
 
   useEffect(() => {
-    console.log('presale.triggerReload', presale.triggerReload, pageInfo.current, loadingRef.current)
     if (presale.triggerReload > 0) {
       const { pageIndex, pageSize } = pageInfo.current
       !loadingRef.current && fetchData({ pageIndex, pageSize })

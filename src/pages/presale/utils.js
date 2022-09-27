@@ -3,7 +3,7 @@ import Wallet from '@/wallet/index'
 import { payBaseUrl } from '@/utils/index'
 
 // export const baseUrl = 'https://pay.dmail.ai'
-export const baseUrl = payBaseUrl
+export const baseUrl = process.env.NODE_ENV === 'development' ? 'https://testmail.dmail.ai' : payBaseUrl
 
 export const loginAndGetLoginInfo = async (account, wallInstance, walletName, walletStore, isfirst) => {
 
