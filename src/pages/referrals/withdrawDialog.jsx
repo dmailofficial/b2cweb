@@ -446,7 +446,7 @@ const WithdrawDialog = ({ loading, loginAddress, reFetchData, channelId, payType
                   </div>
                 </div>
                 <div className="item">
-                  <div className="label">handling fee</div>
+                  <div className="label">Network fee</div>
                   <div className="value">
                     {feeMap[tokenType].coin} {feeMap[tokenType].unit}
                   </div>
