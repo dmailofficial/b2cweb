@@ -31,6 +31,24 @@ export const searchEmail = async (key) => {
   }
 }
 
+export const getEmailInfo = async (key) => {
+  return axios({
+    url: `${baseUrl}/products/detail`,
+    data: {
+      key
+    },
+    method: 'post',
+    // errorTitle: '',
+  }).then((res) => {
+    try {
+      const { code, data, message, success } = res.data
+      return { success, msg: message, data }
+    } catch (error) {
+      return { success: false, msg: error, data: null }
+    }
+  })
+}
+
 // data {address}
 export const blockEmail = async (data) => {
   try {
@@ -65,21 +83,6 @@ export const blockEmail = async (data) => {
 //     return { success: false, msg: error, data: null }
 //   }
 // }
-
-export const getDetail = async (email) => {
-  return axios({
-    url: `${baseUrl}/products/${email}`,
-    method: 'get',
-    // errorTitle: '',
-  }).then((res) => {
-    try {
-      const { code, data, message, success } = res.data
-      return { success, msg: message, data }
-    } catch (error) {
-      return { success: false, msg: error, data: null }
-    }
-  })
-}
 
 // data {address,address,product_name }
 export const getIcpPrice = async (data) => {
@@ -135,9 +138,9 @@ export const verifySign = async (address, signature) => {
   })
 }
 
-export const detectTransferIsSuccess = async (hash, address, price, product_name, jwt, network = '56', channel_id) => {
+export const detectTransferIsSuccess = async (hash, address, price, product_name, jwt, network = '56', channel_id, wallet_name) => {
   let data = {
-    address, price, product_name, tx: hash, jwt, network, channel_id
+    address, price, product_name, tx: hash, jwt, network, channel_id, wallet_name
     // address, price, product_name, tx: `${hash}`, jwt, network, channel_id
   }
   data = plugShim(data.address, data)

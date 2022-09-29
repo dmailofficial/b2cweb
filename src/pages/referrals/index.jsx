@@ -284,7 +284,7 @@ function App({ store: { wallet } }) {
                 </p>
               </div>
               <div>
-                <span className='text'>Number of invites: {inviteInfo.inviteNum}</span>
+                <span className='text'>Number of invitees: {inviteInfo.inviteNum}</span>
                 <span className='text'>Total orders: {inviteInfo.totalOrders}</span>
                 <span className='text' style={{ marginRight: '0' }}>Total amount: {remainDecimalByString(inviteInfo.totalAmount, 4)} {inviteInfo.totalAmount !== '--' ? tokenType.toUpperCase() : null}</span>
               </div>

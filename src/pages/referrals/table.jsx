@@ -14,7 +14,7 @@ import noDataImg from '../../static/images/empty.png'
 
 const columns = [
   {
-    Header: 'NO.',
+    Header: 'No.',
     accessor: 'index',
   },
   {

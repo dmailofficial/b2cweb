@@ -5,8 +5,8 @@ import { useTable, usePagination } from 'react-table'
 import { observer, inject } from 'mobx-react';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import Tooltip from '@mui/material/Tooltip';
-import { shortPrincipalId, copyTextToClipboard } from '@/utils/index'
 
+import { shortPrincipalId, copyTextToClipboard, remainDecimalByString } from '@/utils/index'
 import Pagination from './pagination'
 import { NoData } from './table'
 import { getRecordList } from './api'
@@ -44,19 +44,19 @@ const  columns = [
     accessor: 'date',
   },
   {
-    Header: 'Available',
+    Header: 'Balance',
     accessor: 'quantity',
   },
   {
-    Header: 'Withdrawal Amount ',
+    Header: 'Withdraw amount ',
     accessor: 'withdrawal',
   },
   {
-    Header: 'Handling fee',
+    Header: 'Network fee',
     accessor: 'fee',
   },
   {
-    Header: 'Amount to account',
+    Header: 'Receive amount',
     accessor: 'account',
   },
   {
@@ -98,6 +98,7 @@ const renderTd = (cell, index) => {
   const key = cell.column.id
   const original = cell.row.original
   const value = original[key]
+  const isIcp = original['unit'] === 'icp'
   if (key === 'date') {
     if (!value?.includes(' ')) {
       return value
@@ -120,14 +121,12 @@ const renderTd = (cell, index) => {
     const failedReason = value == 2 ? <Tooltip title={original['mark']} arrow><QuestionMarkIcon /></Tooltip> : null
     return <span className={`state ${className}`}><i></i>{text}{ failedReason }</span>
   } else if (key === 'address') {
-    const isIcp = original['unit'] === 'icp'
     return <span style={{cursor: 'pointer'}} onClick={() => copyTextToClipboard(value)}>{shortPrincipalId(value, isIcp)}</span>
   } else if (['quantity', 'fee', 'account', 'withdrawal'].includes(key)) {
     const unit = original['unit']
-    return value ? `${value} ${unit}` : '--'
+    return value ? `${remainDecimalByString(value, isIcp ? 2 : 4)} ${unit}` : '--'
   } else if (key === 'hash') {
-    const isIcp = original['unit'] === 'icp'
-    return <span style={{cursor: 'pointer'}} onClick={() => copyTextToClipboard(value)}>{shortPrincipalId(value, isIcp)}</span>
+    return <span style={{cursor: 'pointer'}} onClick={() => copyTextToClipboard(value)}>{value.length > 10 ? shortPrincipalId(value, isIcp) : value}</span>
   }
   return value || '- -'
 }

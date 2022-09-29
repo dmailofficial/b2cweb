@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 import {ConfirmPannel } from './css'
-import {getDetail, getIcpPrice, detectTransferIsSuccess, checkProductLockInfo} from './request'
+import {getEmailInfo, getIcpPrice, detectTransferIsSuccess, checkProductLockInfo} from './request'
 import Toast from './toast'
 import backArrow from '@/static/images/presale/arrow-left@2x.png'
 import icpIcon from '@/static/images/presale/ICP@3x.png'
@@ -125,7 +125,7 @@ class orderConfirmDetail extends React.Component {
     }
 
     getAddressDetail = async () => {
-        const { success, msg, data } = await getDetail(this.props.email)
+        const { success, msg, data } = await getEmailInfo(this.props.email)
         if (!success) {
             this.poptoast(msg)
             return
@@ -317,7 +317,7 @@ class orderConfirmDetail extends React.Component {
         if ( this.state.token === 'busd' ) {
             chainId = 5656
         }
-        const { success, msg, data } = await detectTransferIsSuccess(hash, from, curPrice, this.state.detail.name, this.props.loginInfo.jwt, chainId, this.props.presaleStore.channelId)
+        const { success, msg, data } = await detectTransferIsSuccess(hash, from, curPrice, this.state.detail.name, this.props.loginInfo.jwt, chainId, this.props.presaleStore.channelId, `of_${this.props.walletStore.walletName}`)
         if(!success){
             this.poptoast(msg, 'faild')
             return

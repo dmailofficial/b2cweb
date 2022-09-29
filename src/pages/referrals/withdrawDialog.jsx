@@ -35,7 +35,7 @@ const dialogTheme = createTheme({
 
 
 const DialogWrapper = styled.div`
-  min-width: 900px;
+  width: 800px;
   padding: 16px 32px 24px;
   color: #1D1D1F;
   position: relative;
@@ -98,7 +98,6 @@ const Withdrawal = styled.div`
   }
 
   .desc {
-    max-width: 760px;
     margin-top: 20px;
     color: #FF563F;
     line-height: 20px;
@@ -327,7 +326,7 @@ const WithdrawDialog = ({ loading, loginAddress, reFetchData, channelId, payType
       } else if (num > available) {
         _setErrors('amount', 'Insufficient balance')
       } else if (num - feeMap[tokenType].coin <= 0) { 
-        _setErrors('amount', `Minimum amount ${feeMap[tokenType].coin} ${feeMap[tokenType].unit}`)
+        _setErrors('amount', `Minimal ${feeMap[tokenType].coin} ${feeMap[tokenType].unit}`)
       } else {
         _setErrors('amount', '')
       }
@@ -341,7 +340,7 @@ const WithdrawDialog = ({ loading, loginAddress, reFetchData, channelId, payType
         _setErrors('address', "")
         return
       }
-      _setErrors('address', "Please enter the correct address")
+      _setErrors('address', "The withdrawal address format is wrong")
       return 
     }
     const _payType = typeof type === 'string' ? type : tokenType
@@ -350,11 +349,11 @@ const WithdrawDialog = ({ loading, loginAddress, reFetchData, channelId, payType
     }
     if (_payType === 'icp') {
       if (!isPrincipalIdFn(address)) {
-        _setErrors('address', "Please enter the correct address")
+        _setErrors('address', "The withdrawal address format is wrong")
         return
       }
     } else if (address.indexOf('0x') !== 0) {
-      _setErrors('address', "Please enter the correct address")
+      _setErrors('address', "The withdrawal address format is wrong")
       return
     }
     _setErrors('address', "")
@@ -430,18 +429,18 @@ const WithdrawDialog = ({ loading, loginAddress, reFetchData, channelId, payType
                   </div>
                 </div>
                 <div className="item">
-                  <div className="label">Withdrawal Amount</div>
+                  <div className="label">Withdraw amount</div>
                   <div className={`value ${errors.amount ? 'has-error' : ''}`}>
                     <div className="withdrawal input">
-                      <input type="text" value={amount} onInput={onAmountInput} onBlur={checkAmountValid} placeholder={`Minimum amount ${feeMap[tokenType].coin}`} />
+                      <input type="text" value={amount} onInput={onAmountInput} onBlur={checkAmountValid} placeholder={`Minimal ${feeMap[tokenType].coin}`} />
                       <span>{feeMap[tokenType].unit}</span>
                     </div>
-                    <a onClick={onWithdrawalAll}>All</a>
+                    <a onClick={onWithdrawalAll}>Max</a>
                     <div className="error">{errors.amount}</div>
                   </div>
                 </div>
                 <div className="item">
-                  <div className="label">Available</div>
+                  <div className="label">Balance</div>
                   <div className="value">
                     {available} {feeMap[tokenType].unit}
                   </div>
@@ -453,7 +452,7 @@ const WithdrawDialog = ({ loading, loginAddress, reFetchData, channelId, payType
                   </div>
                 </div>
                 <div className="item">
-                  <div className="label">Amount to account</div>
+                  <div className="label">Receive amount</div>
                   <div className="value">
                     {Math.max(new BigNumber(amount).minus(feeMap[tokenType].coin).toNumber() || 0, 0)} {feeMap[tokenType].unit}
                   </div>
@@ -462,7 +461,7 @@ const WithdrawDialog = ({ loading, loginAddress, reFetchData, channelId, payType
               <div className="action">
                 <a onClick={toWithdrawal} className={loading || !!Object.values(errorsRef.current).filter(error => !!error).length ? 'disabled' : '' }>Ok</a>
               </div>
-              <div className="desc">The withdrawal request will be processed within 48 hours, you can check the withdrawal status and transaction hash in the withdrawal record. Please make sure that the withdrawal address is correct, and you shall be responsible for any non-receipt and loss arising therefrom.</div>
+              <div className="desc">The withdrawal request will be processed within 48 hours, you can check the withdrawal status and transaction hash in the withdrawal record. Please make sure that the withdrawal address is correct, or you shall be responsible for any non-receipt and loss arising therefrom.</div>
             </Withdrawal>
           </div>
         </DialogWrapper>
