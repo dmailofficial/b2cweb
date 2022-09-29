@@ -417,7 +417,7 @@ const WithdrawDialog = ({ loading, loginAddress, reFetchData, channelId, payType
                   </div>
                 </div>
                 <div className="item">
-                  <div className="label">Network/Token</div>
+                  <div className="label">Network/Coin</div>
                   <div className="value select">
                     {tokenTypeList.map(({ name, type }) => (
                       <p onClick={() => onSelectPayType(type)} className={`${tokenType === type ? 'selected' : ''}`} key={type}>
