@@ -345,7 +345,6 @@ class orderConfirmDetail extends React.Component {
         return new Promise(async(resolve) => {
             try {
                 const res = await axios({
-                    // TODO: xxxxxxxxxxx need to replace
                     url: `${baseUrl}/timer/${this.props.email}`,
                     method: 'get',
                 })
