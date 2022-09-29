@@ -68,7 +68,7 @@ export const Info = styled.div`
       }
 
       .share {
-        background: #ff563f;
+        background: #299DED;
 
         i {
           width: 18px;
