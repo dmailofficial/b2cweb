@@ -60,6 +60,7 @@ export const Info = styled.div`
 
       .withdraw {
         margin-bottom: 15px;
+        background: #FF563F;
       }
 
       .disabled {
@@ -581,7 +582,7 @@ export const TableChunk = styled.div`
   }
 
   td {
-    padding: 12px 16px;
+    padding: 12px;
     box-shadow: inset 0px -1px 0px 0px #414142;
     height: 40px;
     line-height: 22px;

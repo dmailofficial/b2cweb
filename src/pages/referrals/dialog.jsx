@@ -73,7 +73,7 @@ export const DialogWrapper = styled.div`
   }
 
   &.withdrawals-record-wrapper {
-    min-width: 1100px;
+    width: 1100px;
   }
 
   .title {
@@ -255,7 +255,7 @@ export const WithdrawalsRecordDialog = ({ visible, setVisible, channelId, tokenT
         <DialogWrapper className='top-referres-dialog-wrapper withdrawals-record-wrapper'>
           <div className="title">
             <span style={{ width: '24px' }}></span>
-            <span>Withdrawals record</span>
+            <span>Withdraw record</span>
             <ClearIcon onClick={onClose} />
           </div>
           <div className="content">

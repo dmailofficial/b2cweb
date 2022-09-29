@@ -112,7 +112,7 @@ const Withdrawal = styled.div`
       margin-bottom: 30px;
     }
     .label {
-      width: 140px;
+      width: 150px;
       margin-right: 18px;
       text-align: right;
     }
@@ -418,7 +418,7 @@ const WithdrawDialog = ({ loading, loginAddress, reFetchData, channelId, payType
                   </div>
                 </div>
                 <div className="item">
-                  <div className="label">Network/Currency</div>
+                  <div className="label">Network/Token</div>
                   <div className="value select">
                     {tokenTypeList.map(({ name, type }) => (
                       <p onClick={() => onSelectPayType(type)} className={`${tokenType === type ? 'selected' : ''}`} key={type}>

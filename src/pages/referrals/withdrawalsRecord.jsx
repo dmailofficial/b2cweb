@@ -5,6 +5,7 @@ import { useTable, usePagination } from 'react-table'
 import { observer, inject } from 'mobx-react';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import Tooltip from '@mui/material/Tooltip';
+import { shortPrincipalId, copyTextToClipboard } from '@/utils/index'
 
 import Pagination from './pagination'
 import { NoData } from './table'
@@ -119,10 +120,14 @@ const renderTd = (cell, index) => {
     const failedReason = value == 2 ? <Tooltip title={original['mark']} arrow><QuestionMarkIcon /></Tooltip> : null
     return <span className={`state ${className}`}><i></i>{text}{ failedReason }</span>
   } else if (key === 'address') {
-    return <p style={{ width: '275px', wordBreak: 'break-word' }}>{value}</p>
-  } else if (['quantity', 'fee', 'account'].includes(key)) {
+    const isIcp = original['unit'] === 'icp'
+    return <span style={{cursor: 'pointer'}} onClick={() => copyTextToClipboard(value)}>{shortPrincipalId(value, isIcp)}</span>
+  } else if (['quantity', 'fee', 'account', 'withdrawal'].includes(key)) {
     const unit = original['unit']
     return value ? `${value} ${unit}` : '--'
+  } else if (key === 'hash') {
+    const isIcp = original['unit'] === 'icp'
+    return <span style={{cursor: 'pointer'}} onClick={() => copyTextToClipboard(value)}>{shortPrincipalId(value, isIcp)}</span>
   }
   return value || '- -'
 }

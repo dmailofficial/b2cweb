@@ -65,3 +65,7 @@ export const remainDecimalByString = (num, digits = 2) => {
   const n = Math.pow(10, digits);
   return Math.round(+num * n) / n;
 };
+
+export const shortPrincipalId = (principalId, isPid = true) => {
+  return principalId.slice(0, isPid ? 9 : 5) + "****" + principalId.slice(isPid ? -6 : -5);
+};

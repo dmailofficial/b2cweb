@@ -242,9 +242,9 @@ function App({ store: { wallet } }) {
                   <span className='unit'>{tokenType.toUpperCase()}</span>
                 </p>
                 <p className='btns'>
-                {inviteInfo.channelId !== '--' ? <a className='withdraw disabled' onClick={onWithdraw}>withdraw</a> : null}
+                {inviteInfo.channelId !== '--' ? <a className='withdraw' onClick={onWithdraw}>withdraw</a> : null}
                 </p>
-                <p className="text" style={{ cursor: 'pointer' }} onClick={() => setShowWithdrawalsRecordPop(true)}>Withdrawals record</p>
+                {inviteInfo.channelId !== '--' ? <p className="text" style={{ cursor: 'pointer' }} onClick={() => setShowWithdrawalsRecordPop(true)}>Withdraw record</p> : null}
               </li>
               <li className='referral'>
                 <div>

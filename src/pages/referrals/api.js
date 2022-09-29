@@ -1,8 +1,8 @@
 import axios from "@/utils/axios";
 import Message from "@/components/Message/index";
-import { payBaseUrl } from '@/utils/index'
 
-const baseURL = process.env.NODE_ENV === 'development' ? 'http://192.168.0.100:8888' : payBaseUrl
+const baseURL = 'https://ic.dmail.ai/api/v4'
+// const baseURL = process.env.NODE_ENV === 'development' ? 'http://192.168.0.100:8888' : 'https://ic.dmail.ai/api/v4/'
 
 export const withdraw = async (org_address, channel_id, dst_address, network, fee, real_withdraw) => {
   try {

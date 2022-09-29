@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import { observer, inject } from 'mobx-react';
 import { Alert } from './dialog'
 
+import { remainDecimalByString } from '@/utils/index'
 import { Wrapper, ToolBar, Content, TableChunk, Button, Circle, NoDataWraper } from './css'
 import Pagination from './pagination'
 import noDataImg from '../../static/images/empty.png'
@@ -87,7 +88,7 @@ const Table = (props) => {
     const original = cell.row.original
     const value = original[key]
     if (key === 'priceValue') {
-      return value ? `${value} ${original.tokenType.toUpperCase()}` : '- -'
+      return value ? `${remainDecimalByString(value, 4)} ${original.tokenType.toUpperCase()}` : '- -'
     }
     return value || '- -'
   }
