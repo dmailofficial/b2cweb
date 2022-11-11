@@ -56,7 +56,7 @@ class MainpannelComp extends React.Component {
 
     onInput = (ev) => {
         const value = ev.target.value
-        let reg = /^[a-zA-Z0-9]{4,7}$/
+        let reg = /^[a-zA-Z0-9]{4,11}$/
         if(value.trim() && !reg.test(value)){
             this.setState({
                 errorShow: true,
@@ -209,7 +209,7 @@ class MainpannelComp extends React.Component {
                     <div className="formWrap notStarted">
                         <div className="inputWrap">
                             <span></span>
-                            <input value="Check for 4-7digits NFT Domain Account availability" disabled placeholder="Check for 4-7digits NFT Domain Account availability"></input>
+                            <input value="Check for 4-11digits NFT Domain Account availability" disabled placeholder="Check for 4-11digits NFT Domain Account availability"></input>
                             <span className="searchBtn">Not Started</span>
                         </div>
                     </div>:null
@@ -223,7 +223,7 @@ class MainpannelComp extends React.Component {
                                 onInput={this.onInput} 
                                 onFocus = {this.onFocusHandle}
                                 onKeyDown={this.onKeyDownchange} 
-                                placeholder="Check for 4-7digits NFT Domain Account availability"
+                                placeholder="Check for 4-11digits NFT Domain Account availability"
                             ></input>
                             <span className="searchBtn" onClick={this.onSearch}>Search</span>
                             <div className={`email-suffix ${this.state.email.length ? 'show' : ''}`}>
@@ -237,7 +237,7 @@ class MainpannelComp extends React.Component {
                                     <p><span></span>Try another one, this NFT Domain Account is occupied.</p>:null
                                 }
                                 {this.state.formatError ?
-                                    <p><span></span>Format error ! Only 4-7 bits domain account without special characters allowed.</p> : null
+                                    <p><span></span>Format error ! Only 4-11 bits domain account without special characters allowed.</p> : null
                                 }
                             </div>: null
                         }
@@ -259,7 +259,7 @@ class MainpannelComp extends React.Component {
                     <div className="formWrap disabled">
                         <div className="inputWrap">
                             <span></span>
-                            <input value="The event has ended." disabled placeholder="Check for 4-7digits NFT Domain Account availability"></input>
+                            <input value="The event has ended." disabled placeholder="Check for 4-11digits NFT Domain Account availability"></input>
                             <span className="searchBtn">Closed</span>
                         </div>
                     </div>:null
@@ -282,8 +282,8 @@ class MainpannelComp extends React.Component {
                             <h3>Account opening status</h3>
                         </div>
                         <p><span></span>1-3 digits: Open in sale during NFT Domain Accounts auction</p>
-                        <p className='active'><span></span>4-7 digits: Partially open<img src={successIcon} ></img></p>
-                        <p><span></span>8 digits and above: Will open after mainnet release</p>
+                        <p className='active'><span></span>4-7 digits: Partially open<img src={successIcon} /></p>
+                        <p className='active'><span></span>8 digits and above: Partially open<img src={successIcon} /></p>
                         <br />
                         <div className="item-header">
                             <h3>Supported Payment Methods</h3>
